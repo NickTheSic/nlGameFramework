@@ -102,6 +102,23 @@
 #include "third_party/stb_image.c"
 
 
+#elif defined(__PSX__)
+#include "private/common/nl_camera.c"
+#include "private/common/nl_fileio.c"
+#include "private/common/nl_input.c"
+#include "private/common/nl_memory.c"
+#include "private/common/nl_random.c"
+
+#include "private/null/nl_shader_null.c"
+#include "private/null/nl_vertex_attrib_null.c"
+
+#include "private/psx/nl_platform_psx.c"
+#include "private/psx/nl_window_psx.c"
+#include "private/psx/nl_deltatime_psx.c"
+#include "private/psx/nl_gamepad_psx.c"
+#include "private/psx/nl_math_psx.c"
+
+
 #else
 #warning Incomplete Library for this platform. Using null platform
 

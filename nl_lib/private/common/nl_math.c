@@ -1,10 +1,10 @@
 #include "../nl_math.h"
-#include "math.h"
+#include <math.h>
 #include "string.h" // memset
 
 #define PI 3.14159f
 
-#ifdef __GBA__
+#if defined(__GBA__) || defined(__PSX__)
 #define sqrtf(x) x
 #define sinf(x) x
 #define cosf(x) x

@@ -4,6 +4,10 @@
 extern "C" {
 #endif
 
+#ifdef __PSX__
+#define float int
+#endif
+
 
 typedef struct v2i v2i;
 struct v2i
@@ -82,6 +86,12 @@ v2f   v2f_cross(const v2f lhs, const v2f rhs);
 
 void  v2i_mat4_transfrom(v2i* const lhs, const mat4x4f* const mat);
 void  v2f_mat4_transform(v2f* const lhs, const mat4x4f* const mat);
+
+
+#ifdef __PSX__
+#undef float
+#endif
+
 
 #ifdef __cplusplus
 }
