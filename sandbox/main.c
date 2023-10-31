@@ -1,8 +1,9 @@
 #include "nl_lib.h"
+#include "nl_gl.h"
 
 int main(int count, char** args)
 {
-    if (initialize_window(800,800, "Now a Horror Game") != 0)
+    if (initialize_window(800,800, "Sandbox Mode") != 0)
     {
         return -1;
     }
@@ -11,16 +12,15 @@ int main(int count, char** args)
     {
         return -1;
     }
-    set_background_colour_4f(0.7f,0.5f,0.9f,1.0f);
+    set_background_colour_4f(0.4f,0.6f,0.8f,1.0f);
 
     while (window_active())
     {
         poll_events();
-
-        // game_update?
-
         begin_render_frame();
-        // game_render?
+        
+        
+
         end_render_frame();
     }
 

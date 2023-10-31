@@ -201,7 +201,7 @@ int initialize_window(int width, int height, const char* title)
     return 0;
 }
 
-void swap_buffers()
+void window_swap_buffers()
 {
 	SwapBuffers(g_window.device);
 }

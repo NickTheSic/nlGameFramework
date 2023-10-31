@@ -1,6 +1,4 @@
 #include "../nl_renderer.h"
-
-#include "../nl_window.h"
 #include "../nl_gl.h"
 
 int initialize_renderer_subsystem()
@@ -21,7 +19,7 @@ void begin_render_frame()
 
 void end_render_frame()
 {
-    swap_buffers();
+    renderer_swap_buffers();
 }
 
 void set_background_colour_4f(float r, float g, float b, float a)

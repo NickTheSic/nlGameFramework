@@ -17,6 +17,7 @@ int initialize_renderer_subsystem();
 
 void begin_render_frame();
 void end_render_frame();
+void renderer_swap_buffers();
 
 void set_background_colour_4f(float r, float g, float b, float a);
 
