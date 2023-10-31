@@ -11,12 +11,12 @@ void run()
 
 int main(int count, char** args)
 {
-    if (initialize_window(800,800, "Sandbox Mode") != 0)
+    if (!initialize_window(800,800, "Sandbox Mode"))
     {
         return -1;
     }
 
-    if (initialize_renderer_subsystem() != 0)
+    if (!initialize_renderer_subsystem())
     {
         return -1;
     }

@@ -85,7 +85,7 @@ int initialize_window(int width, int height, const char* title)
 
     if (!RegisterClassExW(&wc))
     {
-        return -1;
+        return 0;
     }
 
     AdjustWindowRectEx(&window_rect, dw_style, 0, dw_ex_style);
@@ -104,13 +104,13 @@ int initialize_window(int width, int height, const char* title)
 
     if (g_window.window == 0)
     {
-        return -1;
+        return 0;
     }
 
     g_window.device = GetDC(g_window.window);
     if (g_window.device == 0)
     {
-        return -1;
+        return 0;
     }
 
     //@todo: Learn more about zbits and stencil bits
@@ -143,23 +143,23 @@ int initialize_window(int width, int height, const char* title)
 
 	if (!pixel_format)
 	{
-		return -1;
+		return 0;
 	}
 
 	if (!SetPixelFormat(g_window.device, pixel_format, &pfd))
 	{
-        return -1;
+        return 0;
 	}
 
 	g_window.context = wglCreateContext(g_window.device);
 	if (g_window.context == 0)
 	{
-		return -1;
+		return 0;
 	}
 
 	if (!wglMakeCurrent(g_window.device, g_window.context))
 	{
-		return -1;
+		return 0;
 	}
 
 	typedef BOOL(WINAPI* PFNWGLSWAPINTERVALEXTPROC) (int interval);
@@ -198,7 +198,7 @@ int initialize_window(int width, int height, const char* title)
 
     g_window.running = 1;
 
-    return 0;
+    return 1;
 }
 
 void window_swap_buffers()

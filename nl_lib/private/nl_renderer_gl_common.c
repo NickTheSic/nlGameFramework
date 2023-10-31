@@ -5,10 +5,10 @@ int initialize_renderer_subsystem()
 {
     if (!initialize_gl())
     {
-        return -1;
+        return 0;
     }
 
-    return 0;
+    return 1;
 }
 
 void begin_render_frame()
