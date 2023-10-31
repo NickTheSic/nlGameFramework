@@ -1,5 +1,7 @@
 #include "../nl_gl.h"
 
+EGLRenderer g_EGLRenderer;
+
 int initialize_gl()
 {
     EmscriptenWebGLContextAttributes attr = {};
@@ -15,10 +17,10 @@ int initialize_gl()
 	eglChooseConfig(g_EGLRenderer.display, attribute_list, &config, 1, &num_config);
 		
 	/* create an EGL rendering context */
-	g_EGLRenderer.context = eglCreateContext(g_EGLRenderer.display, config, EGL_NO_CONTEXT, context_config);
 	g_EGLRenderer.surface = eglCreateWindowSurface(g_EGLRenderer.display, config, 0, NULL);
+	g_EGLRenderer.context = eglCreateContext(g_EGLRenderer.display, config, EGL_NO_CONTEXT, context_config);
 		
 	eglMakeCurrent(g_EGLRenderer.display, g_EGLRenderer.surface, g_EGLRenderer.surface, g_EGLRenderer.context);
 
-    return 0;
+    return 1;
 }

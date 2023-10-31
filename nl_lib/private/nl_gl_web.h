@@ -25,6 +25,6 @@ struct EGLRenderer
    EGLSurface surface;
    EGLContext context;
 };
-static EGLRenderer g_EGLRenderer;
+extern EGLRenderer g_EGLRenderer;
 
 #endif //__NL_GL_WEB_H__

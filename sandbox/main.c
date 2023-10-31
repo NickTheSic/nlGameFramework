@@ -5,9 +5,7 @@ void run()
 {
     poll_events();
     begin_render_frame();
-        
     
-
     end_render_frame();
 }
 

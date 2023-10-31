@@ -12,4 +12,4 @@ set output=_build/web/
 
 @echo on
 
-emcc -c nl_lib/build_nl_lib.c -o%lib_output%nl_lib.o && emcc %flags% %shell_file% %includes% %lib_output%nl_lib.o sandbox/main.c -o%output%index.html
+emcc %flags% %shell_file% %includes% nl_lib/build_nl_lib.c sandbox/main.c -o%output%index.html
