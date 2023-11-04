@@ -16,6 +16,8 @@ void run()
 
 int main(int count, char** args)
 {
+    (void)count;(void)args;
+    
     if (!initialize_window(800,800, "Sandbox Mode"))
     {
         return -1;

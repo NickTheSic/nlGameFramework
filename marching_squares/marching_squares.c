@@ -53,11 +53,13 @@ void app_specific_init()
         ""
         ""
         "";
+        (void)vertex_shader_code;
 
         const char* fragment_shader_code = 
         ""
         ""
         "";
+        (void)fragment_shader_code;
     }
 }
 
