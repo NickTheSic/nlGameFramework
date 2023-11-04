@@ -15,4 +15,10 @@ struct v2f
     float y;
 };
 
+typedef struct v3f v3f;
+struct v3f
+{
+    float x, y, z;
+};
+
 #endif

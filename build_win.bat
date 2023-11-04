@@ -8,7 +8,7 @@ set includes=/I../../nl_lib
 
 echo on
 
-cl %flags% %includes% %1 %libs%
+cl %flags% %includes% %1 %2 %libs%
 
 @echo off
 popd

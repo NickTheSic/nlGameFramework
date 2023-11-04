@@ -1,1 +1,1 @@
-call "build_win.bat" ../../sandbox/main.c
+call "build_win.bat" ../../sandbox/main.c %1
