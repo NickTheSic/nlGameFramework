@@ -25,7 +25,8 @@ void app_specific_init()
 {
     // gl stuff to init
     {
-        AtrributePtrData attrib_data[2];
+        #define ATTRIBUTE_COUNT 2
+        AtrributePtrData attrib_data[ATTRIBUTE_COUNT];
         // vertex pos
         {
             AtrributePtrData* ad0 = &attrib_data[0];
@@ -42,6 +43,21 @@ void app_specific_init()
             ad1->stride = sizeof(vertex_data);
             ad1->offset = (void*)8;
         }
+
+        for (int i = 0; i < ATTRIBUTE_COUNT; ++i)
+        {
+
+        }
+
+        const char* vertex_shader_code = 
+        ""
+        ""
+        "";
+
+        const char* fragment_shader_code = 
+        ""
+        ""
+        "";
     }
 }
 
