@@ -4,7 +4,6 @@
 
 #include "private/nl_fileio.c"
 #include "private/nl_memory.c"
-#include "private/nl_shader.c"
 
 
 #if defined(_WIN32)
