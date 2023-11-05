@@ -8,6 +8,7 @@ int initialize_window(int width, int height, const char* title)
 {
     emscripten_set_window_title(title);
     emscripten_set_canvas_element_size("#canvas", width, height);
+    set_viewport_size(width, height);
 
     return 1;
 }
