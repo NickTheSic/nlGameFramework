@@ -10,8 +10,8 @@ void run()
     begin_render_frame();
 
     double dt = get_frame_delta_time();
-    NL_LOG("Delta Time: %f", dt);
-    NL_LOG("1/60: %f", 1.0/60.0);
+    // NL_LOG("Delta Time: %f", dt);
+    // NL_LOG("1/60: %f", 1.0/60.0);
 
     app_specific_update(dt);
     

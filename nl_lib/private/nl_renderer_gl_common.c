@@ -26,3 +26,8 @@ void set_background_colour_4f(float r, float g, float b, float a)
 {
     glClearColor(r,g,b,a);
 }
+
+void set_viewport_size(int width, int height)
+{
+    glViewport(0, 0, width, height);
+}

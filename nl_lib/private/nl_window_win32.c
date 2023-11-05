@@ -1,5 +1,6 @@
 #include "../nl_window.h"
-
+#include "../nl_renderer.h"
+#include "../nl_debug.h"
 #include "nl_win32_include.h"
 
 typedef struct win32_window win32_window;
@@ -26,6 +27,14 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
             PostQuitMessage(0);
             g_window.running = 0;
         } break;
+
+		case WM_SIZE:
+		{
+			int width = LOWORD(lParam);
+			int height = HIWORD(lParam);
+			NL_LOG("New Width: %i Height: %i", width, height);
+			set_viewport_size(width, height);
+		} break;
 
         default:
         {

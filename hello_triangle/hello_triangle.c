@@ -36,6 +36,9 @@ unsigned int shader_program;
 
 extern void app_specific_init(void)
 {
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -64,5 +67,7 @@ extern void app_specific_init(void)
 
 extern void app_specific_update(double dt)
 {
-
+    glUseProgram(shader_program);
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 }
