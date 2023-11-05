@@ -35,28 +35,41 @@ struct mesh
     vertex_data* vertices;
 };
 
-// Mesh
-float vertices[] = 
+void generate_mesh_from_vertices_count(mesh* mesh, vertex_data* vertices, int vertice_count)
 {
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
-};
+    glGenVertexArrays(1, &mesh->VAO);
+    glBindVertexArray(mesh->VAO);
 
-unsigned int VBO;
-unsigned int VAO;
+    size_t vertices_data_size = sizeof(vertex_data) * vertice_count;
+
+    glGenBuffers(1, &mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, vertices_data_size, vertices, GL_STATIC_DRAW);
+
+    mesh->vertices = (vertex_data*)memory_allocate(vertices_data_size);
+    for (int i = 0; i < vertice_count; ++i)
+    {
+        mesh->vertices[i].pos.x = vertices[i].pos.x;
+        mesh->vertices[i].pos.y = vertices[i].pos.y;
+        mesh->vertices[i].pos.z = vertices[i].pos.z;
+    }
+}
+
+mesh triangle;
+
+vertex_data vertices[] = 
+{
+    {-0.5f, -0.5f, 0.0f},
+    { 0.5f, -0.5f, 0.0f},
+    { 0.0f,  0.5f, 0.0f}
+};
 
 // Required
 unsigned int shader_program;
 
 extern void app_specific_init(void)
 {
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    generate_mesh_from_vertices_count(&triangle, vertices, 3);
     
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
@@ -68,6 +81,6 @@ extern void app_specific_init(void)
 extern void app_specific_update(double dt)
 {
     glUseProgram(shader_program);
-    glBindVertexArray(VAO);
+    glBindVertexArray(triangle.VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }

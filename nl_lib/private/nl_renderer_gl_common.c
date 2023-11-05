@@ -56,16 +56,17 @@ unsigned int compile_shader_source(int type, const char* code)
 unsigned int create_shader_program(const char* vertex_shader_code, const char* fragment_shader_code)
 {
     unsigned int vertex_shader = compile_shader_source(GL_VERTEX_SHADER, vertex_shader_code);
-    if (vertex_shader == -1)
+    if (vertex_shader == 0)
     {
         NL_LOG("Failed to make Vertex Shader"); 
         return 0;
     }
 
     unsigned int fragment_shader = compile_shader_source(GL_FRAGMENT_SHADER, fragment_shader_code);
-    if (fragment_shader == -1)
+    if (fragment_shader == 0)
     {
         NL_LOG("Failed to make Fragment Shader"); 
+        glDeleteShader(vertex_shader);
         return 0;
     }
 
