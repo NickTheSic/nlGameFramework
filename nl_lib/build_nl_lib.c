@@ -11,13 +11,14 @@
 #include "private/nl_renderer_gl_win32.c"
 #include "private/nl_renderer_gl_common.c"
 #include "private/nl_gl_win32.c"
-
+#include "private/nl_deltatime_win32.c"
 
 #elif defined(__EMSCRIPTEN__)
 #include "private/nl_window_web.c"
 #include "private/nl_renderer_gl_web.c"
 #include "private/nl_renderer_gl_common.c"
 #include "private/nl_gl_web.c"
+#include "private/nl_deltatime_web.c"
 
 
 #elif 

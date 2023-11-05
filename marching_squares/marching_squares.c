@@ -57,7 +57,7 @@ int CompileShaderCode(const char* shader_code, unsigned int type)
     return (shader_program);
 }
 
-void app_specific_init()
+void app_specific_init(void)
 {
     // gl stuff to init
     {
@@ -102,13 +102,13 @@ void app_specific_init()
     }
 }
 
-void app_specific_update()
+void app_specific_update(double dt)
 {
     if (r <= 0.0f) flip_flop = 1;
     else if (r >= 1.0f) flip_flop = 0;
 
-    if (flip_flop) r+=0.0003f;
-    else r -= 0.0003;
+    if (flip_flop) r+= 1.0f * dt;
+    else r -= 1.0f * dt;
 
     set_background_colour_4f(r, 0.4f, 0.8f-r, 1.0f);
 }

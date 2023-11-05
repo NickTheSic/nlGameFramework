@@ -2,6 +2,7 @@
 #define __NL_LIB_H__
 
 #include "nl_debug.h"
+#include "nl_deltatime.h"
 #include "nl_fileio.h"
 #include "nl_math.h"
 #include "nl_memory.h"
