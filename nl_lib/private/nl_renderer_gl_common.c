@@ -33,7 +33,7 @@ void set_viewport_size(int width, int height)
     glViewport(0, 0, width, height);
 }
 
-unsigned int compile_shader_source(int type, const char* code)
+internal_function unsigned int compile_shader_source(int type, const char* code)
 {
     unsigned int shader = glCreateShader(type);
     glShaderSource(shader, 1, &code, 0);

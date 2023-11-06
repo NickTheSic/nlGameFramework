@@ -2,8 +2,8 @@
 
 #include <emscripten.h>
 
-double dt1 = 0;
-double dt2 = 0;
+global_variable double dt1 = 0;
+global_variable double dt2 = 0;
 
 void init_delta_time()
 {

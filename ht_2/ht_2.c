@@ -10,21 +10,26 @@
 const char* vert_shader_code =
 SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
+"layout (location = 1) in vec4 aColor;                 \n"
+"out vec4 oColor;                                      \n"
 "void main() {                                         \n"
 "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);   \n"
+"   oColor = aColor;                                   \n"
 "}                                                     \0";
 
 const char* fragment_shader_code =
 SHADER_VERSION_HEADER
 "out vec4 FragColor;                                   \n"
+"in vec4 oColor;                                       \n"
 "void main() {                                         \n"
-"    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);         \n"
+"    FragColor = oColor;                               \n"
 "}                                                     \0";
 
 typedef struct vertex_data vertex_data;
 struct vertex_data
 {
     v3f pos;
+    colourf color;
 };
 
 typedef struct mesh mesh;
@@ -32,6 +37,7 @@ struct mesh
 {
     unsigned int VAO;
     unsigned int VBO;
+    unsigned int EBO;
     vertex_data* vertices;
 };
 
@@ -55,32 +61,64 @@ void generate_mesh_from_vertices_count(mesh* mesh, vertex_data* vertices, int ve
     }
 }
 
+void generate_mesh_from_vertices_indices_count(mesh* mesh, vertex_data* vertices, int vertice_count, int* indices, int indice_count)
+{
+    generate_mesh_from_vertices_count(mesh, vertices, vertice_count);
+
+    glGenBuffers(1, &mesh->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indice_count, indices, GL_STATIC_DRAW); 
+}
+
 mesh triangle;
+mesh square;
 
 vertex_data vertices[] = 
 {
-    {-0.5f, -0.5f, 0.0f},
-    { 0.5f, -0.5f, 0.0f},
-    { 0.0f,  0.5f, 0.0f}
+    {{-0.5f, -0.5f, 0.0f}, {1.0f, 0.5f, 0.8f, 1.0f}},
+    {{ 0.5f, -0.5f, 0.0f}, {0.8f, 1.0f, 0.5f, 1.0f}},
+    {{ 0.0f,  0.5f, 0.0f}, {0.5f, 0.8f, 1.0f, 1.0f}}
 };
 
-// Required
+vertex_data square_verts[] =
+{
+    {{-0.5f, -0.5f, 0.0f}, {1.0f, 0.5f, 0.8f, 1.0f}},
+    {{ 0.5f, -0.5f, 0.0f}, {0.8f, 1.0f, 0.5f, 1.0f}},
+    {{ 0.5f,  0.5f, 0.0f}, {0.5f, 0.8f, 1.0f, 1.0f}},
+    {{-0.5f,  0.5f, 0.0f}, {0.7f, 0.2f, 0.0f, 1.0f}}
+};
+
+int square_indices[] =
+{
+    0,1,2,
+    2,3,0
+};
+
+// Required - Could be renderer or material
 unsigned int shader_program;
 
 extern void app_specific_init(void)
 {
     generate_mesh_from_vertices_count(&triangle, vertices, 3);
+    generate_mesh_from_vertices_count(&square, square_verts, 4);
     
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)0);
     glEnableVertexAttribArray(0);  
+
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)12);
+    glEnableVertexAttribArray(1);  
 }
 
 extern void app_specific_update(double dt)
 {
     glUseProgram(shader_program);
-    glBindVertexArray(triangle.VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+    //glBindVertexArray(triangle.VAO);
+    //glDrawArrays(GL_TRIANGLES, 0, 3);
+
+    glBindVertexArray(square.VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 4);
 }

@@ -2,9 +2,9 @@
 
 #include "nl_win32_include.h"
 
-double previous_time = 0.0;
+global_variable double previous_time = 0.0;
 
-double get_system_time()
+internal_function double get_system_time()
 {
     unsigned __int64 freq;
     unsigned __int64 time;
@@ -16,7 +16,6 @@ double get_system_time()
 
     return time_seconds;
 }
-
 
 void init_delta_time()
 {

@@ -12,9 +12,9 @@ struct win32_window
 
     int running;
 };
-static win32_window g_window;
+global_variable win32_window g_window;
 
-static LRESULT CALLBACK 
+internal_function LRESULT CALLBACK 
 window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     LRESULT result = {0};
