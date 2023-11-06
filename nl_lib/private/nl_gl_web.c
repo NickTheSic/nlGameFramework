@@ -1,6 +1,6 @@
 #include "../nl_gl.h"
 
-global_variable EGLRenderer g_EGLRenderer;
+EGLRenderer g_EGLRenderer;
 
 int initialize_gl()
 {

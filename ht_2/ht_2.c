@@ -61,9 +61,24 @@ void generate_mesh_from_vertices_count(mesh* mesh, vertex_data* vertices, int ve
     }
 }
 
-void generate_mesh_from_vertices_indices_count(mesh* mesh, vertex_data* vertices, int vertice_count, int* indices, int indice_count)
+void generate_mesh_from_vertices_indices_count(mesh* mesh, vertex_data* vertices, int vertice_count, unsigned int* indices, int indice_count)
 {
-    generate_mesh_from_vertices_count(mesh, vertices, vertice_count);
+    glGenVertexArrays(1, &mesh->VAO);
+    glBindVertexArray(mesh->VAO);
+
+    size_t vertices_data_size = sizeof(vertex_data) * vertice_count;
+
+    glGenBuffers(1, &mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, vertices_data_size, vertices, GL_STATIC_DRAW);
+
+    mesh->vertices = (vertex_data*)memory_allocate(vertices_data_size);
+    for (int i = 0; i < vertice_count; ++i)
+    {
+        mesh->vertices[i].pos.x = vertices[i].pos.x;
+        mesh->vertices[i].pos.y = vertices[i].pos.y;
+        mesh->vertices[i].pos.z = vertices[i].pos.z;
+    }
 
     glGenBuffers(1, &mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->EBO);
@@ -88,7 +103,7 @@ vertex_data square_verts[] =
     {{-0.5f,  0.5f, 0.0f}, {0.7f, 0.2f, 0.0f, 1.0f}}
 };
 
-int square_indices[] =
+unsigned int square_indices[] =
 {
     0,1,2,
     2,3,0
@@ -97,10 +112,10 @@ int square_indices[] =
 // Required - Could be renderer or material
 unsigned int shader_program;
 
-extern void app_specific_init(void)
+void app_specific_init(void)
 {
-    generate_mesh_from_vertices_count(&triangle, vertices, 3);
-    generate_mesh_from_vertices_count(&square, square_verts, 4);
+    //generate_mesh_from_vertices_count(&triangle, vertices, 3);
+    generate_mesh_from_vertices_indices_count(&square, square_verts, 4, square_indices, 6);
     
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
@@ -112,13 +127,13 @@ extern void app_specific_init(void)
     glEnableVertexAttribArray(1);  
 }
 
-extern void app_specific_update(double dt)
+void app_specific_update(double dt)
 {
     glUseProgram(shader_program);
 
     //glBindVertexArray(triangle.VAO);
     //glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    glBindVertexArray(square.VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 4);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, square.EBO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
