@@ -33,6 +33,16 @@ void set_viewport_size(int width, int height)
     glViewport(0, 0, width, height);
 }
 
+void set_wireframe_rendering(void)
+{
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+}
+
+void set_fill_rendering(void)
+{
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
 internal_function unsigned int compile_shader_source(int type, const char* code)
 {
     unsigned int shader = glCreateShader(type);
