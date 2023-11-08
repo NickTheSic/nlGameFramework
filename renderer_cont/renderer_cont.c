@@ -1,7 +1,6 @@
 #include "nl_lib.h"
 #include "nl_gl.h"
 
-
 #if defined __EMSCRIPTEN__
 #define SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"
 #else
@@ -25,7 +24,6 @@ struct mesh
     unsigned int indice_count;
     unsigned int vertice_count;
 };
-
 
 const char* vert_shader_code =
 SHADER_VERSION_HEADER
@@ -52,12 +50,12 @@ void generate_mesh_from_vertices_indices_count(mesh* mesh, vertex_data* vertices
 
     size_t vertices_data_size = sizeof(vertex_data) * vertice_count;
 
+    mesh->vertice_count = vertice_count;
+    mesh->indice_count = indice_count;
+
     glGenBuffers(1, &mesh->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, mesh->VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices_data_size, vertices, GL_STATIC_DRAW);
-
-    mesh->vertice_count = vertice_count;
-    mesh->indice_count = indice_count;
 
     glGenBuffers(1, &mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->EBO);
@@ -85,7 +83,7 @@ void render_mesh(mesh* m)
     glBindVertexArray(0);
 }
 
-mesh untitled;
+mesh untitled = {0};
 
 // Required - Could be renderer or material
 unsigned int shader_program;
@@ -107,7 +105,7 @@ void app_specific_update(double dt)
     render_mesh(&untitled);
 }
 
-void parse_vertices_indices(const file_contents *const content, int* vertices, int* indices, int* face_value_count)
+void parse_vertices_indices(const file_contents *const content, int*const vertices, int*const indices, int*const face_value_count)
 {
     int vertice_count = 0;
     int indice_count = 0;
@@ -123,7 +121,11 @@ void parse_vertices_indices(const file_contents *const content, int* vertices, i
     {
         if (line[0] == 'v')
         {
-            vertice_count++;
+            // TODO: Handle vn, vt
+            if (line[1] == ' ')
+            {
+                vertice_count++;
+            }
         }
 
         else if (line[0] == 'f')
@@ -145,6 +147,7 @@ void parse_vertices_indices(const file_contents *const content, int* vertices, i
                 }
                 NL_LOG("Face Values = %d", face_values);
             }
+
             indice_count++;
         }
 
@@ -156,19 +159,19 @@ void parse_vertices_indices(const file_contents *const content, int* vertices, i
     *indices = indice_count;
     *face_value_count = face_values;
 
-    //memory_free(buffer);
+    memory_free(buffer);
 }
 
 void load_mesh_from_file()
 {
     NL_LOG("Loading Mesh From File");
 
-    file_contents loaded_mesh;
-    read_entire_file("untitled.obj", &loaded_mesh);
-
     int vertice_count = 0;
     int indice_line_count = 0;
     int face_values = 0;
+
+    file_contents loaded_mesh;
+    read_entire_file("untitled.obj", &loaded_mesh);
 
     parse_vertices_indices(&loaded_mesh, &vertice_count, &indice_line_count, &face_values);
 
@@ -178,6 +181,7 @@ void load_mesh_from_file()
     }
 
     NL_LOG("Vertices: %d, Indices line count: %d, Face Values: %d", vertice_count, indice_line_count, face_values);
+    
     vertex_data* vd = (vertex_data*)memory_allocate(vertice_count * sizeof(vertex_data));
     unsigned int* indices =  (unsigned int*)memory_allocate(indice_line_count * 3 * sizeof(unsigned int));
 

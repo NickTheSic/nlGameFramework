@@ -2,7 +2,7 @@
 pushd _build\win32
 
 set libs=User32.lib OpenGl32.lib gdi32.lib
-set flags=/Od /EHa /Zi /c /analyze /F 4096
+set flags=/Od /EHa /Zi /c /analyze
 
 
 echo on
