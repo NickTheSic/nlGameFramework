@@ -1,9 +1,9 @@
-
 #include "nl_lib.h"
 
 
 #include "private/nl_fileio.c"
 #include "private/nl_memory.c"
+#include "private/nl_math.c"
 
 
 #if defined(_WIN32)
@@ -23,6 +23,5 @@
 
 #elif 
 #error Incomplete Library for this platform
-
 
 #endif // Platform
