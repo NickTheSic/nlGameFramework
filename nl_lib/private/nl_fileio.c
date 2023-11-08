@@ -30,3 +30,9 @@ void read_entire_file(const char* filename, file_contents* contents)
         fclose(fp);
     }
 }
+
+void clear_file_read(file_contents* content)
+{
+    memory_free(content->content);
+    content->size = 0;
+}

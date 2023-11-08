@@ -9,5 +9,6 @@ struct file_contents
 };
 
 void read_entire_file(const char* filename, file_contents* contents);
+void clear_file_read(file_contents* content);
 
 #endif //__NL_FILE_IO_H__

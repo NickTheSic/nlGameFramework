@@ -1,1 +1,1 @@
-call "build_win32_lib.bat" && call "build_win_sandbox.bat"
+call "build_win32_lib.bat" && call "build_win_sandbox.bat" %1

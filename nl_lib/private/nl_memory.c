@@ -4,7 +4,8 @@
 
 void *memory_allocate(size_t size)
 {
-    return (void*)malloc(size);
+    void* memory = (void*)malloc(size);
+    return memory;
 }
 
 void memory_free(void* memory)
