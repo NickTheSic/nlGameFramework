@@ -38,6 +38,10 @@ struct mesh
     unsigned int VAO;
     unsigned int VBO;
     unsigned int EBO;
+
+    unsigned int indice_count;
+    unsigned int vertice_count;
+
     vertex_data* vertices;
 };
 
@@ -59,6 +63,17 @@ void generate_mesh_from_vertices_count(mesh* mesh, vertex_data* vertices, int ve
         mesh->vertices[i].pos.y = vertices[i].pos.y;
         mesh->vertices[i].pos.z = vertices[i].pos.z;
     }
+
+    mesh->vertice_count = vertice_count;
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)0);
+    glEnableVertexAttribArray(0);  
+
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)12);
+    glEnableVertexAttribArray(1);  
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 void generate_mesh_from_vertices_indices_count(mesh* mesh, vertex_data* vertices, int vertice_count, unsigned int* indices, int indice_count)
@@ -79,10 +94,33 @@ void generate_mesh_from_vertices_indices_count(mesh* mesh, vertex_data* vertices
         mesh->vertices[i].pos.y = vertices[i].pos.y;
         mesh->vertices[i].pos.z = vertices[i].pos.z;
     }
+    mesh->vertice_count = vertice_count;
+    mesh->indice_count = indice_count;
 
     glGenBuffers(1, &mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indice_count, indices, GL_STATIC_DRAW); 
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)0);
+    glEnableVertexAttribArray(0);  
+
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)12);
+    glEnableVertexAttribArray(1);  
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
+void render_mesh(mesh* m)
+{
+    glBindVertexArray(m->VAO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->EBO);
+
+    glDrawElements(GL_TRIANGLES, m->indice_count, GL_UNSIGNED_INT, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 mesh triangle;
@@ -91,8 +129,8 @@ mesh square;
 vertex_data vertices[] = 
 {
     {{-0.5f, -0.5f, 0.0f}, {1.0f, 0.5f, 0.8f, 1.0f}},
-    {{ 0.5f, -0.5f, 0.0f}, {0.8f, 1.0f, 0.5f, 1.0f}},
-    {{ 0.0f,  0.5f, 0.0f}, {0.5f, 0.8f, 1.0f, 1.0f}}
+    {{ 0.5f, -0.5f, 0.0f}, {1.0f, 0.5f, 0.8f, 1.0f}},
+    {{ 0.0f,  0.5f, 0.0f}, {1.0f, 0.5f, 0.8f, 1.0f}}
 };
 
 vertex_data square_verts[] =
@@ -114,26 +152,17 @@ unsigned int shader_program;
 
 void app_specific_init(void)
 {
-    //generate_mesh_from_vertices_count(&triangle, vertices, 3);
+    generate_mesh_from_vertices_indices_count(&triangle, vertices, 3, square_indices, 3);
     generate_mesh_from_vertices_indices_count(&square, square_verts, 4, square_indices, 6);
     
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)0);
-    glEnableVertexAttribArray(0);  
-
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)12);
-    glEnableVertexAttribArray(1);  
 }
 
 void app_specific_update(double dt)
 {
     glUseProgram(shader_program);
 
-    //glBindVertexArray(triangle.VAO);
-    //glDrawArrays(GL_TRIANGLES, 0, 3);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, square.EBO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    render_mesh(&square);
+    render_mesh(&triangle);
 }
