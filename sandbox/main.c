@@ -31,7 +31,7 @@ int main(int count, char** args)
     {
         return -1;
     }
-    set_background_colour_4f(0.4f,0.6f,0.8f,1.0f);
+    set_background_colour_4f(0.4f,0.6f,0.6f,1.0f);
     init_delta_time();
 
     app_specific_init();

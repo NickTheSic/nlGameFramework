@@ -1,11 +1,7 @@
 #include "nl_lib.h"
 #include "nl_gl.h"
 
-#if defined __EMSCRIPTEN__
-#define SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"
-#else
-#define SHADER_VERSION_HEADER  "#version 330 core\n"
-#endif
+#include "renderer_setup.h"
 
 const char* vert_shader_code =
 SHADER_VERSION_HEADER
@@ -24,26 +20,6 @@ SHADER_VERSION_HEADER
 "void main() {                                         \n"
 "    FragColor = oColor;                               \n"
 "}                                                     \0";
-
-typedef struct vertex_data vertex_data;
-struct vertex_data
-{
-    v3f pos;
-    colourf color;
-};
-
-typedef struct mesh mesh;
-struct mesh
-{
-    unsigned int VAO;
-    unsigned int VBO;
-    unsigned int EBO;
-
-    unsigned int indice_count;
-    unsigned int vertice_count;
-
-    vertex_data* vertices;
-};
 
 void generate_mesh_from_vertices_count(mesh* mesh, vertex_data* vertices, int vertice_count)
 {
