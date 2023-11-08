@@ -112,9 +112,11 @@ void parse_vertices_indices(const file_contents *const content, int*const vertic
     int face_values = 0;
 
     char* buffer = (char*)memory_allocate(content->size * sizeof(char));
-    memcpy(buffer, content->content, content->size);
+    memcpy(buffer, content->content, content->size * sizeof(char));
 
     char* next_token = 0;
+
+    // creating a new buffer based of data since strtok will replace "\n" with a "\0" and return that buffer....
     char* line = strtok_s(buffer, "\n", &next_token);
 
     while (line)
@@ -188,8 +190,11 @@ void load_mesh_from_file()
     int position_in_vertex_data = 0;
     int position_in_indice_data = 0;
 
+    char* buffer = (char*)memory_allocate(loaded_mesh.size * sizeof(char));
+    memcpy(buffer, loaded_mesh.content, loaded_mesh.size * sizeof(char));
+
     char* next_token = 0;
-    char* line = strtok_s(loaded_mesh.content, "\n", &next_token);
+    char* line = strtok_s(buffer, "\n", &next_token);
 
     while (line)
     {
@@ -227,6 +232,7 @@ void load_mesh_from_file()
 
     generate_mesh_from_vertices_indices_count(&untitled, vd, vertice_count, indices, indice_line_count * 3);
 
+    memory_free(buffer);
     memory_free(indices);
     memory_free(vd);
     clear_file_read(&loaded_mesh);
