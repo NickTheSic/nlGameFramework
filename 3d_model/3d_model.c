@@ -23,15 +23,19 @@ struct mesh
 
     unsigned int indice_count;
     unsigned int vertice_count;
-};
+
+    // vertex_data* vertices;
+    // unsigned int* indices;
+}; 
 
 const char* vert_shader_code =
 SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
 "layout (location = 1) in vec4 aColor;                 \n"
+"uniform mat4 transform;                               \n"
 "out vec4 oColor;                                      \n"
 "void main() {                                         \n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);   \n"
+"   gl_Position = transform * vec4(aPos, 1.0);         \n"
 "   oColor = aColor;                                   \n"
 "}                                                     \0";
 
@@ -64,7 +68,7 @@ void generate_mesh_from_vertices_indices_count(mesh* mesh, vertex_data* vertices
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)0);
     glEnableVertexAttribArray(0);  
 
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)12);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)sizeof(v3f));
     glEnableVertexAttribArray(1);  
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -85,6 +89,8 @@ void render_mesh(mesh* m)
 
 mesh untitled = {0};
 
+mat4x4f matrix = {0};
+
 // Required - Could be renderer or material
 unsigned int shader_program;
 
@@ -94,13 +100,29 @@ void app_specific_init(void)
 {
     load_mesh_from_file();
 
+    create_identity_matrix(&matrix);
+
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
+
+    set_depth_test_enabled(1);
 }
 
 void app_specific_update(double dt)
 {
     glUseProgram(shader_program);
+
+    unsigned int transformLoc = glGetUniformLocation(shader_program, "transform");
+
+    local_persist float rotation;
+
+    rotation += dt * 0.1;
+    matrix.m11 += cos(rotation);
+    matrix.m13 += sin(rotation);
+    matrix.m31 += -sin(rotation);
+    matrix.m33 += cos(rotation);
+
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &matrix.m11);
 
     render_mesh(&untitled);
 }

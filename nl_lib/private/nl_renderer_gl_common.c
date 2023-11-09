@@ -14,8 +14,7 @@ int initialize_renderer_subsystem()
 
 void begin_render_frame()
 {
-    glClear(GL_COLOR_BUFFER_BIT); 
-    glClear(GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void end_render_frame()
@@ -41,6 +40,18 @@ void set_wireframe_rendering(void)
 void set_fill_rendering(void)
 {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+void set_depth_test_enabled(int enabled)
+{
+    if (enabled)
+    {
+        glEnable(GL_DEPTH_TEST); 
+    } 
+    else
+    {
+        glDisable(GL_DEPTH_TEST); 
+    }
 }
 
 internal_function unsigned int compile_shader_source(int type, const char* code)
