@@ -17,6 +17,9 @@
 #ifndef glDeleteVertexArrays
 #define glDeleteVertexArrays glDeleteVertexArraysOES
 #endif
+#ifndef glPolygonMode
+#define glPolygonMode        glPolygonModeNV
+#endif
 
 typedef struct EGLRenderer EGLRenderer;
 struct EGLRenderer

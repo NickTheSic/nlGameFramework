@@ -32,16 +32,6 @@ void set_viewport_size(int width, int height)
     glViewport(0, 0, width, height);
 }
 
-void set_wireframe_rendering(void)
-{
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-}
-
-void set_fill_rendering(void)
-{
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-}
-
 void set_depth_test_enabled(int enabled)
 {
     if (enabled)
@@ -109,10 +99,14 @@ void use_shader_program(unsigned int shader_program)
 
 void generate_mesh_using_vertices_and_indices(mesh* const mesh, const vertex_data* const vertices, int vertice_count, const unsigned int* const indices, unsigned int indice_count)
 {
-    size_t vertices_data_size = sizeof(vertex_data) * vertice_count;
+    const size_t vertices_data_size = sizeof(vertex_data) * vertice_count;
+    const size_t indice_data_size = indice_count * sizeof(unsigned int);
 
     mesh->vertices = (vertex_data*)memory_allocate(vertices_data_size);
     memcpy(mesh->vertices, vertices, vertices_data_size);
+
+    mesh->indices = (unsigned int*)memory_allocate(indice_data_size);
+    memcpy(mesh->indices, indices, indice_data_size);
 
     mesh->vertice_count = vertice_count;
     mesh->indice_count = indice_count;

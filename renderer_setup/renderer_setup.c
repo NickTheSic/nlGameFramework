@@ -58,12 +58,12 @@ void app_specific_init(void)
     generate_mesh_using_vertices_and_indices(&square, square_verts, 4, square_indices, 6);
     
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
-    glUseProgram(shader_program);
+    use_shader_program(shader_program);
 }
 
 void app_specific_update(double dt)
 {
-    glUseProgram(shader_program);
+    use_shader_program(shader_program);
 
     render_single_mesh(&square);
     render_single_mesh(&triangle);
