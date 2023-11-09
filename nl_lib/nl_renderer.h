@@ -24,6 +24,8 @@ struct vertex_data
     colourf color;
 };
 
+// not batch able?
+// creates own VAO, VBO, EBO which could be avoided in some cases
 typedef struct mesh mesh;
 struct mesh
 {
@@ -55,6 +57,7 @@ void renderer_swap_buffers();
 // Does not yet take into account batching
 void generate_mesh_using_vertices_and_indices(mesh* const mesh, const vertex_data* const vertice, int vertice_count, const unsigned int* const indices, unsigned int indice_count);
 void render_single_mesh(mesh* mesh);
+
 
 /////////////////////////////////////////////////////////////////
 //                    Shader Functions                         //
