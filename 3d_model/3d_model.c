@@ -43,7 +43,7 @@ void app_specific_init(void)
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
 
-    set_depth_test_enabled(0);
+    set_depth_test_enabled(1);
 }
 
 void app_specific_update(double dt)
