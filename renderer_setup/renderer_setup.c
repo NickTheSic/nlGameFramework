@@ -1,7 +1,11 @@
 #include "nl_lib.h"
 #include "nl_gl.h"
 
-#include "renderer_setup.h"
+#if defined __EMSCRIPTEN__
+#define SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"
+#else
+#define SHADER_VERSION_HEADER  "#version 330 core\n"
+#endif
 
 const char* vert_shader_code =
 SHADER_VERSION_HEADER
@@ -88,17 +92,6 @@ void generate_mesh_from_vertices_indices_count(mesh* mesh, vertex_data* vertices
     glBindVertexArray(0);
 }
 
-void render_mesh(mesh* m)
-{
-    glBindVertexArray(m->VAO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->EBO);
-
-    glDrawElements(GL_TRIANGLES, m->indice_count, GL_UNSIGNED_INT, 0);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-}
-
 mesh triangle;
 mesh square;
 
@@ -139,6 +132,6 @@ void app_specific_update(double dt)
 {
     glUseProgram(shader_program);
 
-    render_mesh(&square);
-    render_mesh(&triangle);
+    render_single_mesh(&square);
+    render_single_mesh(&triangle);
 }

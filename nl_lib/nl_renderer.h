@@ -17,17 +17,41 @@ struct colourf
     float r,g,b,a;
 };
 
+typedef struct vertex_data vertex_data;
+struct vertex_data
+{
+    v3f pos;
+    colourf color;
+};
+
+typedef struct mesh mesh;
+struct mesh
+{
+    unsigned int VAO;
+    unsigned int VBO;
+    unsigned int EBO;
+
+    unsigned int indice_count;
+    unsigned int vertice_count;
+
+    unsigned int* indices;
+    vertex_data* vertices;
+};
+
 
 /////////////////////////////////////////////////////////////////
 //                     Renderer System                         //
 /////////////////////////////////////////////////////////////////
-
 int initialize_renderer_subsystem();
 
 void begin_render_frame();
 void end_render_frame();
 void renderer_swap_buffers();
 
+/////////////////////////////////////////////////////////////////
+//                     Drawing Functions                       //
+/////////////////////////////////////////////////////////////////
+void render_single_mesh(mesh* mesh);
 
 /////////////////////////////////////////////////////////////////
 //                    Shader Functions                         //

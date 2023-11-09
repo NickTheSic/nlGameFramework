@@ -107,3 +107,13 @@ void use_shader_program(unsigned int shader_program)
     glUseProgram(shader_program);
 }
 
+void render_single_mesh(mesh* mesh)
+{
+    glBindVertexArray(mesh->VAO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->EBO);
+
+    glDrawElements(GL_TRIANGLES, mesh->indice_count, GL_UNSIGNED_INT, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}

@@ -7,27 +7,6 @@
 #define SHADER_VERSION_HEADER  "#version 330 core\n"
 #endif
 
-typedef struct vertex_data vertex_data;
-struct vertex_data
-{
-    v3f pos;
-    colourf color;
-};
-
-typedef struct mesh mesh;
-struct mesh
-{
-    unsigned int VAO;
-    unsigned int VBO;
-    unsigned int EBO;
-
-    unsigned int indice_count;
-    unsigned int vertice_count;
-
-    // vertex_data* vertices;
-    // unsigned int* indices;
-}; 
-
 const char* vert_shader_code =
 SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
@@ -76,19 +55,7 @@ void generate_mesh_from_vertices_indices_count(mesh* mesh, vertex_data* vertices
     glBindVertexArray(0);
 }
 
-void render_mesh(mesh* m)
-{
-    glBindVertexArray(m->VAO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->EBO);
-
-    glDrawElements(GL_TRIANGLES, m->indice_count, GL_UNSIGNED_INT, 0);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-}
-
 mesh untitled = {0};
-
 mat4x4f matrix = {0};
 
 // Required - Could be renderer or material
@@ -116,15 +83,9 @@ void app_specific_update(double dt)
 
     local_persist float rotation;
 
-    rotation += dt * 0.1;
-    matrix.m11 += cos(rotation);
-    matrix.m13 += sin(rotation);
-    matrix.m31 += -sin(rotation);
-    matrix.m33 += cos(rotation);
-
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &matrix.m11);
 
-    render_mesh(&untitled);
+    render_single_mesh(&untitled);
 }
 
 void parse_vertices_indices(const file_contents *const content, int*const vertices, int*const indices, int*const face_value_count)
