@@ -43,19 +43,14 @@ void app_specific_init(void)
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
 
-    set_depth_test_enabled(1);
+    set_depth_test_enabled(0);
 }
 
 void app_specific_update(double dt)
 {
     glUseProgram(shader_program);
-
     unsigned int transformLoc = glGetUniformLocation(shader_program, "transform");
-
-    local_persist float rotation;
-
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &matrix.m11);
-
     render_single_mesh(&untitled);
 }
 
@@ -161,10 +156,22 @@ void load_mesh_from_file()
             vd0->pos.x = pos.x;
             vd0->pos.y = pos.y;
             vd0->pos.z = pos.z;
-            vd0->color.r = 1.0f;
-            vd0->color.g = 1.0f;
-            vd0->color.b = 1.0f;
-            vd0->color.a = 1.0f;
+
+            // so the mesh isn't completely white for now
+            {
+                local_persist float colour_shift;
+
+                vd0->color.r = colour_shift;
+                colour_shift += 0.2f;
+                vd0->color.g = colour_shift;
+                colour_shift += 0.1;
+                vd0->color.b = colour_shift;
+                if (colour_shift - 0.5f < 0)
+                    colour_shift += 0.2;
+                vd0->color.a = 1.0f;
+
+                if (colour_shift > 1.0f) colour_shift -= 1.0f;
+            }
 
             ++position_in_vertex_data;
         }

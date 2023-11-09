@@ -1,5 +1,6 @@
 #include "../nl_renderer.h"
 #include "../nl_window.h"
+#include "../nl_gl.h"
 
 void renderer_swap_buffers()
 {
