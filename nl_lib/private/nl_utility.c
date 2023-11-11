@@ -1,6 +1,6 @@
 #include "../nl_utility.h"
 
-const char* const find_file_type_from_name(const char* const filename)
+const char* find_file_type_from_name(const char* const filename)
 {
     int name_length = strlen(filename);
     const char* file_type = &filename[name_length-1];
