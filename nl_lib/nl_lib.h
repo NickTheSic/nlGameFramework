@@ -1,6 +1,7 @@
 #ifndef __NL_LIB_H__
 #define __NL_LIB_H__
 
+#include "nl_audio.h"
 #include "nl_debug.h"
 #include "nl_deltatime.h"
 #include "nl_fileio.h"

@@ -4,6 +4,8 @@
 #include "private/nl_fileio.c"
 #include "private/nl_memory.c"
 #include "private/nl_math.c"
+#include "private/nl_audio_loading.c"
+#include "private/nl_utility.c"
 
 
 #if defined(_WIN32)
@@ -12,6 +14,7 @@
 #include "private/nl_renderer_gl_common.c"
 #include "private/nl_gl_win32.c"
 #include "private/nl_deltatime_win32.c"
+
 
 #elif defined(__EMSCRIPTEN__)
 #include "private/nl_window_web.c"
