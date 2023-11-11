@@ -5,6 +5,7 @@
 
 // This could be included in fileio since it is strictly about loading audio.
 
+// Might have to use a WaveformatEx instead of this.
 #pragma pack(push, 1)
 typedef struct wav_file_header wav_file_header;
 struct wav_file_header
@@ -49,9 +50,10 @@ internal_function void load_wav(const char* const filename, audio_data* const ad
     ad->sample_rate = file_header->sample_rate;
     ad->bytes_per_second = file_header->bytes_per_second;
     ad->bits_per_sample = file_header->bits_per_sample;
+    ad->data_size = file_header->data_size;
     ad->the_audio = memory_allocate(file_header->data_size);
 
-    // Dislike the file_header[1] but it was warning me about adding sizeof(wav_file_header)
+    // Dislike the &file_header[1] but it was warning me about adding sizeof(wav_file_header)
     memcpy(ad->the_audio, &file_header[1], file_header->data_size);
 
     clear_file_read(&audio_content);

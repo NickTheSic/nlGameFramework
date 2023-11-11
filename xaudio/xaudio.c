@@ -9,6 +9,7 @@
 
 IXAudio2* pXAudio2 = 0;
 IXAudio2MasteringVoice* pMasterVoice = 0;
+XAUDIO2_BUFFER audio_buffer = {0};
 
 void app_specific_init(void)
 {
@@ -22,7 +23,7 @@ void app_specific_init(void)
 
     if ( FAILED(hr = XAudio2Create( &pXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR ) ) )
     {
-        NL_LOG("XAudio 2 Create failed");
+        NL_LOG("XAudio2Create failed");
         return;
     }
 
@@ -36,12 +37,16 @@ void app_specific_init(void)
 
     if (FAILED(hr))
     {
-        NL_LOG("Create Mastering Voice");
+        NL_LOG("Failed to Create Mastering Voice");
         return;
     }
 
     audio_data ad = {0};
     load_audio_data("Safe to Say - With Everything In Between - 09 Funeral.wav", &ad);
+
+    audio_buffer.AudioBytes = ad->data_size;
+    audio_buffer.pAudioData = ad->the_audio;
+    audio_buffer.Flags = XAUDIO2_END_OF_STREAM;
 }
 
 void app_specific_update(double dt)

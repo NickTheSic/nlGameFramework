@@ -11,6 +11,8 @@ struct audio_data
 	short bytes_per_sample; // ^^ One of these is not needed? vv
 	short bits_per_sample;
 
+    int data_size;
+
 	char* the_audio;
 };
 
