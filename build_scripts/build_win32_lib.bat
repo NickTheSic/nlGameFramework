@@ -1,7 +1,7 @@
 @echo off
 pushd _build\win32
 
-set libs=User32.lib OpenGl32.lib gdi32.lib
+set libs=User32.lib OpenGl32.lib gdi32.lib OpenAL32.lib
 set flags=/Od /EHa /Zi /c /analyze /std:c11
 
 
