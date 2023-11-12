@@ -44,8 +44,8 @@ void app_specific_init(void)
     audio_data ad = {0};
     load_audio_data("Safe to Say - With Everything In Between - 09 Funeral.wav", &ad);
 
-    audio_buffer.AudioBytes = ad->data_size;
-    audio_buffer.pAudioData = ad->the_audio;
+    audio_buffer.AudioBytes = ad.data_size;
+    audio_buffer.pAudioData = ad.the_audio;
     audio_buffer.Flags = XAUDIO2_END_OF_STREAM;
 }
 
