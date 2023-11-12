@@ -1,3 +1,2 @@
-pushd _build\win32
-main
-popd
+
+call "_build//win32//main.exe"

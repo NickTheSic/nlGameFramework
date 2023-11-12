@@ -5,7 +5,7 @@
 
 // This could be included in fileio since it is strictly about loading audio.
 
-// Might have to use a WaveformatEx instead of this.
+// Might have to use a WaveformatEx instead of this when using xaudio
 #pragma pack(push, 1)
 typedef struct wav_file_header wav_file_header;
 struct wav_file_header
