@@ -1,4 +1,4 @@
-#include "nl_math.h"
+#include "../nl_math.h"
 
 void create_identity_matrix(mat4x4f* const mat)
 {

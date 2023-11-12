@@ -5,7 +5,6 @@
 
 ALCdevice *audio_device = {0};
 
-
 extern void app_specific_init(void)
 {
     audio_device = alcOpenDevice(0);

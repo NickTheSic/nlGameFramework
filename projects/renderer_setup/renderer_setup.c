@@ -1,5 +1,5 @@
 #include "nl_lib.h"
-#include "nl_gl.h"
+#include "private/nl_gl.h"
 
 #if defined __EMSCRIPTEN__
 #define SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"

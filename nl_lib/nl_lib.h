@@ -1,13 +1,13 @@
 #ifndef __NL_LIB_H__
 #define __NL_LIB_H__
 
-#include "nl_audio.h"
-#include "nl_debug.h"
-#include "nl_deltatime.h"
-#include "nl_fileio.h"
-#include "nl_math.h"
-#include "nl_memory.h"
-#include "nl_renderer.h"
-#include "nl_window.h"
+#include "private/nl_audio.h"
+#include "private/nl_debug.h"
+#include "private/nl_deltatime.h"
+#include "private/nl_fileio.h"
+#include "private/nl_math.h"
+#include "private/nl_memory.h"
+#include "private/nl_renderer.h"
+#include "private/nl_window.h"
 
 #endif //__NL_LIB_H__
