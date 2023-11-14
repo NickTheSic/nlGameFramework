@@ -53,7 +53,6 @@ void renderer_swap_buffers();
 /////////////////////////////////////////////////////////////////
 //                        Mesh Functions                       //
 /////////////////////////////////////////////////////////////////
-
 // Does not yet take into account batching
 void generate_mesh_using_vertices_and_indices(mesh* const mesh, const vertex_data* const vertice, int vertice_count, const unsigned int* const indices, unsigned int indice_count);
 void render_single_mesh(mesh* mesh);
