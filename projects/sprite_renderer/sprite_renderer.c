@@ -6,7 +6,7 @@ typedef int sprite_handle;
 typedef struct sprite_vertex_data sprite_vertex_data;
 struct sprite_vertex_data
 {
-    v3f world_pos;
+    v3f game_pos;
     v2f texture_coords;
     colourf colour;
 };
@@ -30,9 +30,9 @@ struct sprite_sheet
     unsigned int EBO;
 
     unsigned int max_vertices;
-    unsigned int max_sprites;
-
     unsigned int current_vertices;
+
+    unsigned int max_sprites;
     unsigned int sprite_count;
 
     sprite* sprites;
