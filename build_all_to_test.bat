@@ -1,0 +1,1 @@
+call "build.bat" win 3d_model && call "build.bat" win batch_render && call "build.bat" web batch_render && call "build.bat" win open_al && call "build.bat" web open_al && call "build.bat" web renderer_setup && call "build.bat" win renderer_setup

@@ -1,14 +1,10 @@
 #include "nl_lib.h"
-#include "nl_gl.h"
+#include "private/nl_gl.h"
 
-#if defined __EMSCRIPTEN__
-#define SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"
-#else
-#define SHADER_VERSION_HEADER  "#version 330 core\n"
-#endif
+#include <string.h>
 
 const char* vert_shader_code =
-SHADER_VERSION_HEADER
+NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
 "layout (location = 1) in vec4 aColor;                 \n"
 "out vec4 oColor;                                      \n"
@@ -18,7 +14,7 @@ SHADER_VERSION_HEADER
 "}                                                     \0";
 
 const char* fragment_shader_code =
-SHADER_VERSION_HEADER
+NL_SHADER_VERSION_HEADER
 "out vec4 FragColor;                                   \n"
 "in vec4 oColor;                                       \n"
 "void main() {                                         \n"
@@ -119,7 +115,7 @@ void add_mesh_to_batch(batch_render* const batch, const mesh* const mesh)
     memcpy(vertex_buffer, mesh->vertices, sizeof(vertex_data) * mesh->vertice_count);
 
     unsigned int* index_buffer = &batch->indice_batch[current_index];
-    for (int i = 0; i < mesh->indice_count; i++)
+    for (unsigned int i = 0; i < mesh->indice_count; i++)
     {
         index_buffer[i] = current_index + mesh->indices[i];
     }
@@ -171,6 +167,8 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
+    (void)dt;
+    
     use_shader_program(shader_program);
 
     add_mesh_to_batch(&batch, &triangle);

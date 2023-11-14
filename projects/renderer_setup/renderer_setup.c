@@ -1,14 +1,8 @@
 #include "nl_lib.h"
 #include "private/nl_gl.h"
 
-#if defined __EMSCRIPTEN__
-#define SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"
-#else
-#define SHADER_VERSION_HEADER  "#version 330 core\n"
-#endif
-
 const char* vert_shader_code =
-SHADER_VERSION_HEADER
+NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
 "layout (location = 1) in vec4 aColor;                 \n"
 "out vec4 oColor;                                      \n"
@@ -18,7 +12,7 @@ SHADER_VERSION_HEADER
 "}                                                     \0";
 
 const char* fragment_shader_code =
-SHADER_VERSION_HEADER
+NL_SHADER_VERSION_HEADER
 "out vec4 FragColor;                                   \n"
 "in vec4 oColor;                                       \n"
 "void main() {                                         \n"
@@ -63,6 +57,8 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
+    (void)dt;
+    
     use_shader_program(shader_program);
 
     render_single_mesh(&square);

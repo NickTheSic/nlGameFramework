@@ -1,8 +1,8 @@
 #include "nl_lib.h"
-#include "nl_gl.h"
+#include "private/nl_gl.h"
 
 const char* vert_shader_code =
-SHADER_VERSION_HEADER
+NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
 "layout (location = 1) in vec4 aColor;                 \n"
 "uniform mat4 transform;                               \n"
@@ -13,7 +13,7 @@ SHADER_VERSION_HEADER
 "}                                                     \0";
 
 const char* fragment_shader_code =
-SHADER_VERSION_HEADER
+NL_SHADER_VERSION_HEADER
 "out vec4 FragColor;                                   \n"
 "in vec4 oColor;                                       \n"
 "void main() {                                         \n"
@@ -47,6 +47,20 @@ void app_specific_update(double dt)
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &matrix.m11);
     render_single_mesh(&untitled);
 }
+
+#ifdef __EMSCRIPTEN__
+char* strtok_s(char* buffer, char* delim, char** ptr)
+{
+    (void)(ptr);
+    return strtok(buffer, delim);
+}
+
+void sscanf_s(char* line, const char* str, __va_list__ args)
+{
+    
+}
+
+#endif
 
 void parse_vertices_indices(const file_contents *const content, int*const vertices, int*const indices, int*const face_value_count)
 {

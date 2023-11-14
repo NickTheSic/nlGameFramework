@@ -1,5 +1,6 @@
 #include "nl_lib.h"
 
+
 /*-------Common Files--------------*/
 #include "private/common/nl_fileio.c"
 #include "private/common/nl_memory.c"
@@ -7,6 +8,7 @@
 #include "private/common/nl_audio_loading.c"
 #include "private/common/nl_utility.c"
 #include "private/common/nl_renderer_gl_common.c"
+#include "private/common/nl_shader.c"
 
 
 #if defined(_WIN32)
@@ -25,5 +27,6 @@
 
 #elif 
 #error Incomplete Library for this platform
+
 
 #endif // Platform
