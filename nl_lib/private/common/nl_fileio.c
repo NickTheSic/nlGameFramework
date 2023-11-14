@@ -10,7 +10,7 @@ void fopen_s(FILE** file, const char* filename, const char* descript)
 }
 #endif
 
-void read_entire_file(const char* filename, file_contents* contents)
+void read_entire_file(const char* filename, file_contents* const contents)
 {
     FILE* fp = {0};
     fopen_s(&fp, filename, "rb");
@@ -31,7 +31,7 @@ void read_entire_file(const char* filename, file_contents* contents)
     }
 }
 
-void clear_file_read(file_contents* content)
+void clear_file_read(file_contents* const content)
 {
     memory_free(content->content);
     

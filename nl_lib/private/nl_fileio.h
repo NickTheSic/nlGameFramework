@@ -8,7 +8,7 @@ struct file_contents
     char* content;
 };
 
-void read_entire_file(const char* filename, file_contents* contents);
-void clear_file_read(file_contents* content);
+void read_entire_file(const char* const filename, file_contents* const contents);
+void clear_file_read(file_contents* const content);
 
 #endif //__NL_FILE_IO_H__
