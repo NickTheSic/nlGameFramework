@@ -1,12 +1,6 @@
 #include "nl_lib.h"
 #include "nl_gl.h"
 
-#if defined __EMSCRIPTEN__
-#define SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"
-#else
-#define SHADER_VERSION_HEADER  "#version 330 core\n"
-#endif
-
 const char* vert_shader_code =
 SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"

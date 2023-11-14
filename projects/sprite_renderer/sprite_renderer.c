@@ -1,6 +1,9 @@
 #include "nl_lib.h"
 #include "private/nl_gl.h"
 
+#define STBI_ONLY_PNG
+#include "stb_image.h"
+
 typedef int sprite_handle;
 
 typedef struct sprite_vertex_data sprite_vertex_data;
@@ -41,7 +44,7 @@ struct sprite_sheet
 
 extern void app_specific_init(void)
 {
-
+    
 }
 
 extern void app_specific_update(double dt)

@@ -59,13 +59,6 @@ void render_single_mesh(mesh* mesh);
 
 
 /////////////////////////////////////////////////////////////////
-//                    Shader Functions                         //
-/////////////////////////////////////////////////////////////////
-unsigned int create_shader_program(const char* vertex_shader_code, const char* fragment_shader_code);
-void use_shader_program(unsigned int shader_program);
-
-
-/////////////////////////////////////////////////////////////////
 //              Wrappers around GL specific calls              //
 /////////////////////////////////////////////////////////////////
 void set_background_colour_4f(float r, float g, float b, float a);
