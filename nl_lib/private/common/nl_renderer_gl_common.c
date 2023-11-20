@@ -95,3 +95,21 @@ void render_single_mesh(mesh* mesh)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
+
+void setup_vertex_atrributes(size_t data_size, vertex_atrribute_info* const attrib_info, const int attrib_count)
+{
+    for (int i = 0; i < attrib_count - 1; ++i)
+    {
+
+        glVertexAttribPointer(
+            i, 
+            attrib_info[i].value_count, 
+            attrib_info[i].type, 
+            attrib_info[i].normalized, 
+            data_size, 
+            (const void*)attrib_info[i].offset // hate this but might be needed and hopefully doesn't cause problems
+        );
+        
+        glEnableVertexAttribArray(i);  
+    }
+}

@@ -21,8 +21,8 @@ NL_SHADER_VERSION_HEADER
 "    FragColor = oColor;                               \n"
 "}                                                     \0";
 
-typedef struct batch_render batch_render;
-struct batch_render
+typedef struct batch_render3d batch_render;
+struct batch_render3d
 {
     unsigned int VAO;
     unsigned int VBO;
