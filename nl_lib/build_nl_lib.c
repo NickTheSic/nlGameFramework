@@ -9,6 +9,7 @@
 #include "private/common/nl_utility.c"
 #include "private/common/nl_renderer_gl_common.c"
 #include "private/common/nl_shader.c"
+#include "private/common/nl_input.c"
 
 
 #if defined(_WIN32)

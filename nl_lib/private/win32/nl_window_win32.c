@@ -1,4 +1,5 @@
 #include "../nl_window.h"
+#include "../nl_input.h"
 #include "../nl_renderer.h"
 #include "../nl_debug.h"
 #include "nl_win32_include.h"
@@ -34,6 +35,18 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 			int height = HIWORD(lParam);
 			NL_LOG("New Width: %i Height: %i", width, height);
 			set_viewport_size(width, height);
+		} break;
+
+		case WM_KEYDOWN:
+		{
+			nl_key k = (nl_key)wParam;
+			set_key_state_down(k);
+		} break;
+
+		case WM_KEYUP:
+		{
+			nl_key k = (nl_key)wParam;
+			set_key_state_up(k);
 		} break;
 
         default:
