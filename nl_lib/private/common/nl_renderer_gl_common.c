@@ -44,11 +44,6 @@ void set_depth_test_enabled(int enabled)
     }
 }
 
-void use_shader_program(unsigned int shader_program)
-{
-    glUseProgram(shader_program);
-}
-
 void generate_mesh_using_vertices_and_indices(mesh* const mesh, const vertex_data* const vertices, int vertice_count, const unsigned int* const indices, unsigned int indice_count)
 {
     const size_t vertices_data_size = sizeof(vertex_data) * vertice_count;

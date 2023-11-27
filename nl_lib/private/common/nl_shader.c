@@ -49,3 +49,8 @@ unsigned int create_shader_program(const char* vertex_shader_code, const char* f
 
     return local_shader_program; 
 }
+
+void use_shader_program(unsigned int shader_program)
+{
+    glUseProgram(shader_program);
+}

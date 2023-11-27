@@ -4,7 +4,7 @@ IF "%1"=="" (
 )
 
 IF %1==win (
-    call "_build//win32//main.exe"
+    call "_build//win32//build_nl_lib.exe"
 )
 
 IF %1==web (
