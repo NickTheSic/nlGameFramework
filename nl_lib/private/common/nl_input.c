@@ -10,6 +10,7 @@ struct input_key_state
     unsigned char down_state : 1;
     unsigned char prev_state : 1;
 
+    // explicit padding
     unsigned char pad : 3;
 };
 

@@ -1,5 +1,9 @@
 #ifndef __NL_AUDIO_H__
 #define __NL_AUDIO_H__
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 typedef struct audio_data audio_data; 
 struct audio_data
@@ -16,6 +20,11 @@ struct audio_data
 	char* the_audio;
 };
 
+
 void load_audio_data(const char *const filename, audio_data* audio_data);
 
+
+#ifdef __cplusplus
+}
+#endif
 #endif //__NL_AUDIO_H__

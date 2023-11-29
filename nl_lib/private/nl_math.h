@@ -1,5 +1,9 @@
 #ifndef __NL_MATH_H__
 #define __NL_MATH_H__
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 typedef struct v2i v2i;
 struct v2i
@@ -32,4 +36,7 @@ struct mat4x4f
 
 void create_identity_matrix(mat4x4f* const mat);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

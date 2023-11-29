@@ -9,4 +9,6 @@
 #define global_variable static
 #define local_persist static
 
+#define NL_UNUSED(x) (void)(x)
+
 #endif //__NL_DEBUG_H__

@@ -9,6 +9,15 @@
 #include "web/nl_gl_web.h"
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 int initialize_gl();
 
+
+#ifdef __cplusplus
+}
+#endif
 #endif //__NL_GL_H__
