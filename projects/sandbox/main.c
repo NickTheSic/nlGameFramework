@@ -10,6 +10,8 @@ extern void app_specific_update(double dt);
 void run()
 {
     poll_events();
+    update_input_frame_state();
+    
     begin_render_frame();
 
     double dt = get_frame_delta_time();
