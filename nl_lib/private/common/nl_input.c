@@ -1,4 +1,5 @@
 #include "../nl_input.h"
+#include "../nl_debug.h"
 
 typedef struct  input_key_state input_key_state;
 struct input_key_state
@@ -14,8 +15,8 @@ struct input_key_state
     unsigned char pad : 3;
 };
 
-input_key_state key_states[NL_KEY_COUNT];
-int last_key_pressed = 0;
+global_variable input_key_state key_states[NL_KEY_COUNT];
+global_variable int last_key_pressed = 0;
 
 void update_input_frame_state()
 {
