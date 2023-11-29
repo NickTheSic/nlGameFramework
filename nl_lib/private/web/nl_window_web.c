@@ -4,6 +4,7 @@
 #include "../nl_debug.h"
 
 #include <emscripten.h>
+#include <emscripten/dom_pk_codes.h>
 #include <emscripten/html5.h>
 
 internal_function EM_BOOL keyboard_callback(int eventType, const EmscriptenKeyboardEvent* e, void* user_data)
