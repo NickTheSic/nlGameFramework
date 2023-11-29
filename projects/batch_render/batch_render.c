@@ -3,7 +3,7 @@
 
 #include <string.h>
 
-const char* vert_shader_code =
+global_variable const char* vert_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
 "layout (location = 1) in vec4 aColor;                 \n"
@@ -13,7 +13,7 @@ NL_SHADER_VERSION_HEADER
 "   oColor = aColor;                                   \n"
 "}                                                     \0";
 
-const char* fragment_shader_code =
+global_variable const char* fragment_shader_code =
 NL_SHADER_VERSION_HEADER
 "out vec4 FragColor;                                   \n"
 "in vec4 oColor;                                       \n"
