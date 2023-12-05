@@ -63,6 +63,15 @@ void app_specific_update(double dt)
         matrix.m33 = -matrix.m33;
     }
 
+    if (was_key_pressed(key_d))
+    {
+        set_depth_test_enabled(0);
+    }
+    else if (was_key_released(key_d))
+    {
+        set_depth_test_enabled(1);
+    }
+
     camera_bounds += get_mouse_scroll_this_frame() * dt;
     if (get_mouse_scroll_this_frame() != 0)
     {
@@ -128,6 +137,10 @@ void parse_vertices_indices(const file_contents *const content, int*const vertic
                     else if (*cline == ' ')
                     {
                         face_values++;
+                    }
+                    else if (*cline == '/')
+                    {
+                        NL_LOG("Have not handled how to parse / yet but this model contains one");
                     }
                     cline++;
                 }

@@ -34,7 +34,7 @@ void set_viewport_size(int width, int height)
 
 void set_depth_test_enabled(int enabled)
 {
-    if (enabled)
+    if (enabled == 1)
     {
         glEnable(GL_DEPTH_TEST); 
     } 
