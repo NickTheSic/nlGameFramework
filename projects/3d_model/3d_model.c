@@ -32,7 +32,7 @@ void app_specific_init(void)
 {
     load_mesh_from_file();
 
-    create_identity_matrix(&matrix);
+    create_orthographic_projection(&matrix, -1.f, 1.f, -1.f, 1.f, -2.f, 2.f);
 
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
@@ -42,6 +42,15 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
+    if (was_key_pressed(key_a) || was_key_released(key_a))
+    {
+        matrix.m11 = -matrix.m11;
+    }
+    if (was_key_pressed(key_s) || was_key_released(key_s))
+    {
+        matrix.m22 = -matrix.m22;
+    }
+
     glUseProgram(shader_program);
     unsigned int transformLoc = glGetUniformLocation(shader_program, "transform");
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &matrix.m11);
@@ -170,12 +179,12 @@ void load_mesh_from_file()
                 local_persist float colour_shift;
 
                 vd0->color.r = colour_shift;
-                colour_shift += 0.2f;
+                colour_shift += 0.1912354f;
                 vd0->color.g = colour_shift;
-                colour_shift += 0.1;
+                colour_shift += 0.11244212;
                 vd0->color.b = colour_shift;
                 if (colour_shift - 0.5f < 0)
-                    colour_shift += 0.2;
+                    colour_shift += 0.326;
                 vd0->color.a = 1.0f;
 
                 if (colour_shift > 1.0f) colour_shift -= 1.0f;
