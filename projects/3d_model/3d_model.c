@@ -54,10 +54,10 @@ char* strtok_s(char* buffer, char* delim, char** ptr)
     (void)(ptr);
     return strtok(buffer, delim);
 }
-
+ 
 void sscanf_s(char* line, const char* str, __va_list__ args)
 {
-    
+    // TODO: Implement proper?
 }
 
 #endif
@@ -130,7 +130,7 @@ void load_mesh_from_file()
     int face_values = 0;
 
     file_contents loaded_mesh;
-    read_entire_file("untitled.obj", &loaded_mesh);
+    read_entire_file("data/untitled.obj", &loaded_mesh);
 
     parse_vertices_indices(&loaded_mesh, &vertice_count, &indice_line_count, &face_values);
 

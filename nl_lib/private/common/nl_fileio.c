@@ -27,7 +27,15 @@ void read_entire_file(const char* filename, file_contents* const contents)
         {
             fread(contents->content, file_size, 1, fp);
         }
+        else 
+        {
+            NL_LOG("Could not allocate memory for Contents");
+        }
         fclose(fp);
+    }
+    else
+    {
+        NL_LOG("Failed to open file %s", filename);
     }
 }
 
