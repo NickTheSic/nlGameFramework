@@ -3,7 +3,7 @@
 
 void create_identity_matrix(mat4x4f* const mat)
 {
-    memset(mat, 0, sizeof(mat));
+    memset(mat, 0, sizeof(mat4x4f));
     mat->m11 = 1;
     mat->m22 = 1;
     mat->m33 = 1;
@@ -27,7 +27,7 @@ void create_identity_matrix(mat4x4f* const mat)
 
 void create_orthographic_projection(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z)
 {
-    memset(mat, 0, sizeof(mat));
+    memset(mat, 0, sizeof(mat4x4f));
 
     float delta_x = right-left;
     float delta_y = top-bottom;

@@ -32,11 +32,11 @@ internal_function EM_BOOL mouse_callback(int event_type, const EmscriptenMouseEv
 	{
 		if (event_type == EMSCRIPTEN_EVENT_MOUSEDOWN)
 		{
-			
+			set_mouse_button_down(NL_MOUSE_BUTTON_LEFT);
 		}
 		else if (event_type == EMSCRIPTEN_EVENT_MOUSEUP)
 		{
-			
+			set_mouse_button_up(NL_MOUSE_BUTTON_LEFT);
 		}
 	}
 
@@ -44,11 +44,11 @@ internal_function EM_BOOL mouse_callback(int event_type, const EmscriptenMouseEv
 	{
 		if (event_type == EMSCRIPTEN_EVENT_MOUSEDOWN)
 		{
-			
+			set_mouse_button_down(NL_MOUSE_BUTTON_RIGHT);
 		}
 		else if (event_type == EMSCRIPTEN_EVENT_MOUSEUP)
 		{
-			
+			set_mouse_button_up(NL_MOUSE_BUTTON_RIGHT);
 		}
 	}
 
@@ -62,6 +62,9 @@ int initialize_window(int width, int height, const char* title)
 
     emscripten_set_keydown_callback("#canvas", 0, 1, keyboard_callback);
 	emscripten_set_keyup_callback("#canvas", 0, 1, keyboard_callback);
+	
+	emscripten_set_mouseup_callback("#canvas", 0, 1, mouse_callback);
+	emscripten_set_mousedown_callback("#canvas", 0, 1, mouse_callback);
 
     return 1;
 }

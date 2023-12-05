@@ -17,8 +17,6 @@ void update_input_frame_state(void);
 void set_key_state_down(nl_key k);
 void set_key_state_up(nl_key k);
 
-void set_key_state(nl_key key, int state);
-
 int is_key_held(nl_key k);
 int was_key_pressed(nl_key k);
 int was_key_released(nl_key k);

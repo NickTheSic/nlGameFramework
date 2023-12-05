@@ -1,5 +1,6 @@
 #include "nl_lib.h"
 #include "private/nl_gl.h"
+#include "string.h" //memcpy
 
 const char* vert_shader_code =
 NL_SHADER_VERSION_HEADER
