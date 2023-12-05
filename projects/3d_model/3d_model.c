@@ -47,18 +47,6 @@ void app_specific_init(void)
     set_depth_test_enabled(1);
 }
 
-global_variable indices_to_draw = 0;
-void render_single_mesh_by_triangle(mesh* mesh)
-{
-    glBindVertexArray(mesh->VAO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->EBO);
-
-    glDrawElements(GL_TRIANGLES, indices_to_draw, GL_UNSIGNED_INT, 0);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-}
-
 void app_specific_update(double dt)
 {
     if (was_key_pressed(key_a) || was_key_released(key_a))
@@ -71,11 +59,7 @@ void app_specific_update(double dt)
     }
     if (is_mouse_button_held(NL_MOUSE_BUTTON_LEFT))
     {
-        //matrix.m33 = -matrix.m33;
-        local_persist float itd;
-        itd += 5*dt;
-        indices_to_draw = itd;
-        NL_LOG("%f", itd);
+        matrix.m33 = -matrix.m33;
     }
 
     if (was_key_pressed(key_d))
@@ -98,14 +82,10 @@ void app_specific_update(double dt)
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &matrix.m11);
     
     render_single_mesh(&untitled);
-    //render_single_mesh_by_triangle(&untitled);
-    
-    //set_wireframe_rendering();
-    
-    
-    //glClear(GL_DEPTH_BUFFER_BIT);
-    //render_single_mesh(&untitled);
-    //set_fill_rendering();
+    set_wireframe_rendering(); 
+    glClear(GL_DEPTH_BUFFER_BIT);
+    render_single_mesh(&untitled);
+    set_fill_rendering();
 }
 
 #ifdef __EMSCRIPTEN__
