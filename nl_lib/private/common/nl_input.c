@@ -142,7 +142,6 @@ int was_mouse_button_released(int mb)
 void add_mouse_scroll(int val)
 {
     input_mouse_scroll_delta = val;
-    NL_LOG("scroll: %i", input_mouse_scroll_delta)
 }
 
 int get_mouse_scroll_this_frame(void)

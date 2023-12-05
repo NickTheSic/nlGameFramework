@@ -32,8 +32,7 @@ unsigned int shader_program;
 void load_mesh_from_file();
 void recalculate_camera()
 {
-    create_orthographic_projection(&matrix, -camera_bounds, camera_bounds, -camera_bounds, camera_bounds, -camera_bounds, camera_bounds);
-    NL_LOG("Camera Bound: %f", camera_bounds);
+    create_orthographic_projection(&matrix, -camera_bounds, camera_bounds, -camera_bounds, camera_bounds, -0.1, 100);
 }
 
 void app_specific_init(void)
@@ -48,6 +47,18 @@ void app_specific_init(void)
     set_depth_test_enabled(1);
 }
 
+global_variable indices_to_draw = 0;
+void render_single_mesh_by_triangle(mesh* mesh)
+{
+    glBindVertexArray(mesh->VAO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->EBO);
+
+    glDrawElements(GL_TRIANGLES, indices_to_draw, GL_UNSIGNED_INT, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
 void app_specific_update(double dt)
 {
     if (was_key_pressed(key_a) || was_key_released(key_a))
@@ -58,9 +69,13 @@ void app_specific_update(double dt)
     {
         matrix.m22 = -matrix.m22;
     }
-    if (was_mouse_button_pressed(NL_MOUSE_BUTTON_LEFT) || was_mouse_button_released(NL_MOUSE_BUTTON_LEFT))
+    if (is_mouse_button_held(NL_MOUSE_BUTTON_LEFT))
     {
-        matrix.m33 = -matrix.m33;
+        //matrix.m33 = -matrix.m33;
+        local_persist float itd;
+        itd += 5*dt;
+        indices_to_draw = itd;
+        NL_LOG("%f", itd);
     }
 
     if (was_key_pressed(key_d))
@@ -81,7 +96,16 @@ void app_specific_update(double dt)
     glUseProgram(shader_program);
     unsigned int transformLoc = glGetUniformLocation(shader_program, "transform");
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &matrix.m11);
+    
     render_single_mesh(&untitled);
+    //render_single_mesh_by_triangle(&untitled);
+    
+    //set_wireframe_rendering();
+    
+    
+    //glClear(GL_DEPTH_BUFFER_BIT);
+    //render_single_mesh(&untitled);
+    //set_fill_rendering();
 }
 
 #ifdef __EMSCRIPTEN__
@@ -101,7 +125,7 @@ void sscanf_s(char* line, const char* str, __va_list__ args)
 void parse_vertices_indices(const file_contents *const content, int*const vertices, int*const indices, int*const face_value_count)
 {
     int vertice_count = 0;
-    int indice_count = 0;
+    int indice_line_count = 0;
     int face_values = 0;
 
     char* buffer = (char*)memory_allocate(content->size * sizeof(char));
@@ -147,7 +171,7 @@ void parse_vertices_indices(const file_contents *const content, int*const vertic
                 NL_LOG("Face Values = %d", face_values);
             }
 
-            indice_count++;
+            indice_line_count++;
         }
 
         line = strtok_s(0, "\n", &next_token);
@@ -155,7 +179,7 @@ void parse_vertices_indices(const file_contents *const content, int*const vertic
 
     // TODO: Probably should null check
     *vertices = vertice_count;
-    *indices = indice_count;
+    *indices = indice_line_count;
     *face_value_count = face_values;
 
     memory_free(buffer);
@@ -181,8 +205,9 @@ void load_mesh_from_file()
 
     NL_LOG("Vertices: %d, Indices line count: %d, Face Values: %d", vertice_count, indice_line_count, face_values);
     
+    const int indice_count = indice_line_count * 3;
     vertex_data* vd = (vertex_data*)memory_allocate(vertice_count * sizeof(vertex_data));
-    unsigned int* indices =  (unsigned int*)memory_allocate(indice_line_count * 3 * sizeof(unsigned int));
+    unsigned int* indices =  (unsigned int*)memory_allocate(indice_count * 3 * sizeof(unsigned int));
 
     int position_in_vertex_data = 0;
     int position_in_indice_data = 0;
@@ -230,16 +255,16 @@ void load_mesh_from_file()
             sscanf_s(line, "f %d %d %d", &i1, &i2, &i3);
 
             unsigned int* const ind = &indices[position_in_indice_data];
-            ind[0] = i1;
-            ind[1] = i2;
-            ind[2] = i3;
+            ind[0] = i1-1;
+            ind[1] = i2-1;
+            ind[2] = i3-1;
             position_in_indice_data += 3;
         }
 
         line = strtok_s(0, "\n", &next_token);
     }
 
-    generate_mesh_using_vertices_and_indices(&untitled, vd, vertice_count, indices, indice_line_count * 3);
+    generate_mesh_using_vertices_and_indices(&untitled, vd, vertice_count, indices, indice_count);
 
     memory_free(buffer);
     memory_free(indices);

@@ -67,12 +67,12 @@ void generate_mesh_using_vertices_and_indices(mesh* const mesh, const vertex_dat
 
     glGenBuffers(1, &mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indice_count, indices, GL_STATIC_DRAW); 
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indice_data_size, indices, GL_STATIC_DRAW); 
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)offsetof(vertex_data, pos));
     glEnableVertexAttribArray(0);  
 
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)12);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)offsetof(vertex_data, color));
     glEnableVertexAttribArray(1);  
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
