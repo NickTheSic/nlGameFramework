@@ -23,16 +23,23 @@ NL_SHADER_VERSION_HEADER
 mesh untitled = {0};
 mat4x4f matrix = {0};
 
+float camera_bounds = 1.f;
+
 // Required - Could be renderer or material
 unsigned int shader_program;
 
 void load_mesh_from_file();
+void recalculate_camera()
+{
+    create_orthographic_projection(&matrix, -camera_bounds, camera_bounds, -camera_bounds, camera_bounds, -camera_bounds, camera_bounds);
+    NL_LOG("Camera Bound: %f", camera_bounds);
+}
 
 void app_specific_init(void)
 {
     load_mesh_from_file();
 
-    create_orthographic_projection(&matrix, -1.f, 1.f, -1.f, 1.f, -2.f, 2.f);
+    recalculate_camera();
 
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
@@ -49,6 +56,16 @@ void app_specific_update(double dt)
     if (was_key_pressed(key_s) || was_key_released(key_s))
     {
         matrix.m22 = -matrix.m22;
+    }
+    if (was_mouse_button_pressed(NL_MOUSE_BUTTON_LEFT) || was_mouse_button_released(NL_MOUSE_BUTTON_LEFT))
+    {
+        matrix.m33 = -matrix.m33;
+    }
+
+    camera_bounds += get_mouse_scroll_this_frame() * dt;
+    if (get_mouse_scroll_this_frame() != 0)
+    {
+        recalculate_camera();
     }
 
     glUseProgram(shader_program);

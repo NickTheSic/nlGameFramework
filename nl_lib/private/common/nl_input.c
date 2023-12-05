@@ -18,7 +18,11 @@ struct input_key_state
 global_variable input_key_state key_states[NL_KEY_COUNT];
 global_variable int last_key_pressed = 0;
 
-void update_input_frame_state()
+global_variable input_key_state mouse_button_states[NL_MOUSE_BUTTON_COUNT];
+global_variable int input_mouse_scroll_delta = 0;
+global_variable int input_mouse_scroll = 0;
+
+void update_input_frame_state(void)
 {
     for (int i = 0; i < NL_KEY_COUNT; ++i)
     {
@@ -41,6 +45,36 @@ void update_input_frame_state()
 
 		key_states[i].prev_state = key_states[i].down_state;
     }
+
+    for (int i = 0; i < NL_MOUSE_BUTTON_COUNT; ++i)
+    {
+        mouse_button_states[i].pressed = 0;
+		mouse_button_states[i].released = 0;
+		if (mouse_button_states[i].down_state != mouse_button_states[i].prev_state)
+		{
+			if (mouse_button_states[i].down_state)
+			{
+				mouse_button_states[i].pressed = (mouse_button_states[i].held == 0);
+				mouse_button_states[i].held = 1;
+			}
+			else
+			{
+				mouse_button_states[i].released = 1;
+				mouse_button_states[i].held = 0;
+			}
+		}
+
+		mouse_button_states[i].prev_state = mouse_button_states[i].down_state;
+    }
+
+    input_mouse_scroll = input_mouse_scroll_delta;
+    input_mouse_scroll_delta = 0;
+}
+
+
+internal_function void set_key_state(nl_key k, int state)
+{
+    key_states[k].down_state = state;
 }
 
 void set_key_state_down(nl_key k)
@@ -52,11 +86,6 @@ void set_key_state_down(nl_key k)
 void set_key_state_up(nl_key k)
 {
     set_key_state(k,0);
-}
-
-void set_key_state(nl_key k, int state)
-{
-    key_states[k].down_state = state;
 }
 
 int is_key_held(nl_key k)
@@ -77,4 +106,46 @@ int was_key_released(nl_key k)
 int get_last_key_pressed()
 {
     return last_key_pressed;
+}
+
+
+internal_function void set_mouse_button_state(int mb, int state)
+{
+    mouse_button_states[mb].down_state = state;
+}
+
+void set_mouse_button_down(int mb)
+{
+    set_mouse_button_state(mb, 1);
+}
+
+void set_mouse_button_up(int mb)
+{
+    set_mouse_button_state(mb, 0);
+}
+
+int is_mouse_button_held(int mb)
+{
+    return (mouse_button_states[mb].held == 1);
+}
+
+int was_mouse_button_pressed(int mb)
+{
+    return (mouse_button_states[mb].pressed == 1);
+}
+
+int was_mouse_button_released(int mb)
+{
+    return (mouse_button_states[mb].released == 1);
+}
+
+void add_mouse_scroll(int val)
+{
+    input_mouse_scroll_delta = val;
+    NL_LOG("scroll: %i", input_mouse_scroll_delta)
+}
+
+int get_mouse_scroll_this_frame(void)
+{
+    return input_mouse_scroll;
 }

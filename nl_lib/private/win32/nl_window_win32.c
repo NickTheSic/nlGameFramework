@@ -49,6 +49,34 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 			set_key_state_up(k);
 		} break;
 
+		case WM_LBUTTONDOWN:
+		{
+			set_mouse_button_down(NL_MOUSE_BUTTON_LEFT);
+		} break;
+	
+		case WM_LBUTTONUP:
+		{
+			set_mouse_button_up(NL_MOUSE_BUTTON_LEFT);
+		} break;
+	
+		case WM_RBUTTONDOWN:
+		{
+			set_mouse_button_down(NL_MOUSE_BUTTON_RIGHT);
+		} break;
+	
+		case WM_RBUTTONUP:
+		{
+			set_mouse_button_up(NL_MOUSE_BUTTON_RIGHT);
+		} break;
+
+		case WM_MOUSEWHEEL:
+		{
+			short mouse_delta = GET_WHEEL_DELTA_WPARAM(wParam);
+			short modifier = GET_KEYSTATE_WPARAM(wParam);
+			
+			add_mouse_scroll(mouse_delta);
+		} break;
+
         default:
         {
             result = DefWindowProcW(window,msg, wParam, lParam);
