@@ -6,4 +6,6 @@ void poll_events();
 int window_active();
 void window_swap_buffers();
 
+v2i get_screen_size();
+
 #endif // __NL_WINDOW_H__

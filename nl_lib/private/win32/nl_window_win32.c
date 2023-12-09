@@ -255,3 +255,11 @@ void window_swap_buffers()
 {
 	SwapBuffers(g_window.device);
 }
+
+v2i get_screen_size()
+{	
+	RECT rect = {0};
+	GetClientRect(g_window.window, &rect);
+
+	return (v2i){rect.right - rect.left, rect.bottom - rect.top};
+}

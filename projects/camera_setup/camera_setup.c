@@ -24,30 +24,72 @@ NL_SHADER_VERSION_HEADER
 unsigned int shader_program;
 mesh untitled = {0};
 
-
-
 typedef struct camera camera;
 struct camera
 {
     mat4x4f matrix;
+    
     v3f position;
-    float bounds;
-};
-camera cam = {0};
+    v2f size;
 
-void recalculate_camera()
+};
+global_variable camera cam = {0};
+int assume_half_size = 0;
+
+void recalculate_camera(camera* const cam);
+void initialize_camera(camera* const cam, const v3f pos, const v2f size)
 {
-    create_orthographic_projection(&cam.matrix, -cam.bounds, cam.bounds, -cam.bounds, cam.bounds, -0.1, 100);
+    cam->position.x = pos.x;
+    cam->position.y = pos.y;
+    cam->position.z = pos.z;
+    cam->size.x = size.x;
+    cam->size.y = size.y;
+
+    recalculate_camera(cam);
 }
 
+void recalculate_camera_assuming_half_size(camera* const cam)
+{
+    create_orthographic_projection(
+        &cam->matrix, 
+        cam->position.x-cam->size.x, 
+        cam->position.x+cam->size.x, 
+        cam->position.y-cam->size.y, 
+        cam->position.y+cam->size.y, 
+        -0.1, 100
+    );
+}
 
+void recalculate_camera_assuming_zero_to_size(camera* const cam)
+{
+    create_orthographic_projection(
+        &cam->matrix, 
+        cam->position.x, 
+        cam->position.x + cam->size.x, 
+        cam->position.y, 
+        cam->position.y + cam->size.y, 
+        -0.1, 100
+        );
+}
+
+void recalculate_camera(camera* const cam)
+{
+    if (assume_half_size == 1)
+    {
+        recalculate_camera_assuming_half_size(cam);
+    }
+    else
+    {
+        recalculate_camera_assuming_zero_to_size(cam);
+    }
+}
 
 void load_mesh_from_file();
 void app_specific_init(void)
 {
     load_mesh_from_file();
 
-    recalculate_camera();
+    initialize_camera(&cam, (v3f){0.0f,0.0f,0.0f}, (v2f){2.0f,2.0f});
 
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
@@ -57,33 +99,28 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
-    if (was_key_pressed(key_a) || was_key_released(key_a))
+    if (is_key_held(key_a))
     {
-        cam.matrix.m11 = -cam.matrix.m11;
-    }
-    if (was_key_pressed(key_s) || was_key_released(key_s))
-    {
-        cam.matrix.m22 = -cam.matrix.m22;
-    }
-    if (is_mouse_button_held(NL_MOUSE_BUTTON_LEFT))
-    {
-        cam.matrix.m33 = -cam.matrix.m33;
+        cam.position.x -= 10.f * dt;
     }
 
-    if (was_key_pressed(key_d))
+    if (is_key_held(key_d))
     {
-        set_depth_test_enabled(0);
-    }
-    else if (was_key_released(key_d))
-    {
-        set_depth_test_enabled(1);
+        cam.position.x += 10.f * dt;
     }
 
-    cam.bounds += get_mouse_scroll_this_frame() * dt;
-    if (get_mouse_scroll_this_frame() != 0)
+    if (was_mouse_button_pressed(NL_MOUSE_BUTTON_LEFT))
     {
-        recalculate_camera();
+        assume_half_size = (assume_half_size ^ 0b1);
+        NL_LOG("Pressed Value: %d", assume_half_size);
     }
+
+    const int mouse_frame_scroll = get_mouse_scroll_this_frame();
+    cam.size.x += mouse_frame_scroll * dt;
+    cam.size.y += mouse_frame_scroll * dt;
+
+    recalculate_camera(&cam);
+    
 
     glUseProgram(shader_program);
     unsigned int transformLoc = glGetUniformLocation(shader_program, "transform");
