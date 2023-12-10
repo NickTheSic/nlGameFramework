@@ -19,6 +19,7 @@
 #define GL_ELEMENT_ARRAY_BUFFER  0x8893 		  
 #define GL_CLAMP_TO_EDGE         0x812F
 #define GL_CLAMP_TO_BORDER       0x812D
+#define GL_FRAMEBUFFER           0x8D40
 
 
 typedef void   (APIENTRY* PFNGLATTACHSHADERPROC) (GLuint program, GLuint shader);
@@ -128,5 +129,11 @@ extern  PFNGLUNIFORM4FVPROC glUniform4fv;
 
 typedef void   (APIENTRY* PFNGLBUFFERSUBDATAPROC)  (GLenum target, ptrdiff_t offset, ptrdiff_t size, const void* data);
 extern  PFNGLBUFFERSUBDATAPROC glBufferSubData;
+
+typedef void   (APIENTRY* PFNGLGENFRAMEBUFFERPROC) (GLsizei n, const GLuint* buffers);
+extern PFNGLGENFRAMEBUFFERPROC glGenFramebuffers;
+
+typedef void   (APIENTRY* PFNGLBINDFRAMEBUFFERPROC) (GLenum target, GLuint buffer);
+extern PFNGLBINDFRAMEBUFFERPROC glBindFramebuffer;
 
 #endif //__NL_GL_WIN32_H__
