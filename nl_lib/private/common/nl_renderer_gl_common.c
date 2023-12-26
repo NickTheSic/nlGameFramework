@@ -108,3 +108,29 @@ void setup_vertex_atrributes(size_t data_size, vertex_atrribute_info* const attr
         glEnableVertexAttribArray(i);  
     }
 }
+
+void set_face_culling(int enabled, int side, int front)
+{
+    if (enabled != 0)
+    {
+        glEnable(GL_CULL_FACE);
+    }
+
+    if (side == 0)
+    {
+        glCullFace(GL_BACK);
+    }
+    else
+    {
+        glCullFace(GL_FRONT);
+    }
+
+    if (front == 0)
+    {
+        glFrontFace(GL_CW);
+    }  
+    else
+    {
+        glFrontFace(GL_CCW);
+    }
+}

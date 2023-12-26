@@ -66,6 +66,7 @@ void set_viewport_size(int width, int height);
 void set_wireframe_rendering(void);
 void set_fill_rendering(void);
 void set_depth_test_enabled(int enabled);
+void set_face_culling(int enabled, int side, int front);
 
 
 /////////////////////////////////////////////////////////////////

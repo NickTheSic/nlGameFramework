@@ -89,7 +89,8 @@ void app_specific_init(void)
 {
     load_mesh_from_file();
 
-    initialize_camera(&cam, (v3f){0.0f,0.0f,0.0f}, (v2f){2.0f,2.0f});
+    const v2i screen_size = get_screen_size();
+    initialize_camera(&cam, (v3f){0.0f,0.0f,0.0f}, (v2f){2.f, 2.f});
 
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
@@ -109,6 +110,19 @@ void app_specific_update(double dt)
         cam.position.x += 10.f * dt;
     }
 
+    if (was_key_pressed(key_c))
+    {
+        set_face_culling(1, 0, 0);
+    }
+    if (was_key_pressed(key_z))
+    {
+        set_face_culling(1, 1, 0);
+    }
+    if (was_key_pressed(key_x))
+    {
+        set_face_culling(1, 0, 1);
+    }
+
     if (was_mouse_button_pressed(NL_MOUSE_BUTTON_LEFT))
     {
         assume_half_size = (assume_half_size ^ 0b1);
@@ -116,8 +130,8 @@ void app_specific_update(double dt)
     }
 
     const int mouse_frame_scroll = get_mouse_scroll_this_frame();
-    cam.size.x += mouse_frame_scroll * dt;
-    cam.size.y += mouse_frame_scroll * dt;
+    cam.size.x += mouse_frame_scroll * 100 * dt;
+    cam.size.y += mouse_frame_scroll * 100 * dt;
 
     recalculate_camera(&cam);
     
