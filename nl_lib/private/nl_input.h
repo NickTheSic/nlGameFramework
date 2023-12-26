@@ -2,6 +2,7 @@
 #define __NL_INPUT_H__
 
 #include "nl_keys.h"
+#include "nl_math.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,6 +36,8 @@ int was_mouse_button_released(int mb);
 void add_mouse_scroll(int val);
 int get_mouse_scroll_this_frame(void);
 
+void set_mouse_position_from_system(int x, int y);
+v2i get_mouse_position_from_system(void);
 
 #ifdef __cplusplus
 }

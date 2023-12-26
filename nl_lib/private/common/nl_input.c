@@ -22,6 +22,8 @@ global_variable input_key_state mouse_button_states[NL_MOUSE_BUTTON_COUNT];
 global_variable int input_mouse_scroll_delta = 0;
 global_variable int input_mouse_scroll = 0;
 
+global_variable v2i input_mouse_position = {0};
+
 void update_input_frame_state(void)
 {
     for (int i = 0; i < NL_KEY_COUNT; ++i)
@@ -147,4 +149,15 @@ void add_mouse_scroll(int val)
 int get_mouse_scroll_this_frame(void)
 {
     return input_mouse_scroll;
+}
+
+void set_mouse_position_from_system(int x, int y)
+{
+    input_mouse_position.x = x;
+    input_mouse_position.y = y;
+}
+
+v2i get_mouse_position_from_system(void)
+{
+    return input_mouse_position;
 }

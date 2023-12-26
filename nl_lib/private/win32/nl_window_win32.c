@@ -77,6 +77,11 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 			add_mouse_scroll(mouse_delta);
 		} break;
 
+		case WM_MOUSEMOVE:
+		{
+			set_mouse_position_from_system(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		} break;
+
         default:
         {
             result = DefWindowProcW(window,msg, wParam, lParam);

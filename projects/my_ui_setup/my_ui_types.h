@@ -1,6 +1,7 @@
 #ifndef __NL_MY_UI_TYPES_H__
 #define __NL_MY_UI_TYPES_H__
 
+#include "nl_lib.h"
 
 /* Assumes 0,0 ----------- 1,0
             |               |
@@ -16,16 +17,12 @@ struct ui_camera
 void ui_camera_initialize_screen_size(ui_camera *const camera, v2i screen_size);
 
 
-
-typedef unsigned int ui_sprite_handle;
-
 typedef struct ui_element_data ui_element_data;
 struct ui_element_data
 {
     v2i anchor;
     v2f position;
     v2f size;
-    ui_sprite_handle sprite;
 };
 
 
