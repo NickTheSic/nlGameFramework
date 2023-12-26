@@ -110,17 +110,25 @@ void app_specific_update(double dt)
         cam.position.x += 10.f * dt;
     }
 
+void set_cull_front_face(int clockwise);
+
     if (was_key_pressed(key_c))
     {
-        set_face_culling(1, 0, 0);
+        static int enabled;
+        enabled = enabled ^ 0b1;
+        set_cull_face_enabled(enabled);
     }
     if (was_key_pressed(key_z))
     {
-        set_face_culling(1, 1, 0);
+        static int side;
+        side = side ^ 0b1;
+        set_cull_face_side(side);
     }
     if (was_key_pressed(key_x))
     {
-        set_face_culling(1, 0, 1);
+        static int clockwise;
+        clockwise = clockwise ^ 0b1; 
+        set_cull_front_face(clockwise);
     }
 
     if (was_mouse_button_pressed(NL_MOUSE_BUTTON_LEFT))

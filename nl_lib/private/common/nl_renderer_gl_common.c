@@ -109,14 +109,22 @@ void setup_vertex_atrributes(size_t data_size, vertex_atrribute_info* const attr
     }
 }
 
-void set_face_culling(int enabled, int side, int front)
+
+void set_cull_face_enabled(int enabled)
 {
-    if (enabled != 0)
+    if (enabled == 0)
+    {
+        glDisable(GL_CULL_FACE);
+    }
+    else 
     {
         glEnable(GL_CULL_FACE);
     }
+}
 
-    if (side == 0)
+void set_cull_face_side(int front)
+{
+    if (front == 0)
     {
         glCullFace(GL_BACK);
     }
@@ -124,8 +132,11 @@ void set_face_culling(int enabled, int side, int front)
     {
         glCullFace(GL_FRONT);
     }
+}
 
-    if (front == 0)
+void set_cull_front_face(int clockwise)
+{
+    if (clockwise)
     {
         glFrontFace(GL_CW);
     }  
@@ -134,3 +145,4 @@ void set_face_culling(int enabled, int side, int front)
         glFrontFace(GL_CCW);
     }
 }
+
