@@ -20,9 +20,10 @@ void ui_camera_initialize_screen_size(ui_camera *const camera, v2i screen_size);
 typedef struct ui_element_data ui_element_data;
 struct ui_element_data
 {
-    v2i anchor;
     v2f position;
     v2f size;
+    //v2i anchor;
+    //colorf colour;
 };
 
 
