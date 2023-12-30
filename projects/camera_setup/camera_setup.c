@@ -60,10 +60,6 @@ void app_specific_update(double dt)
         set_cull_front_face(clockwise);
     }
 
-    const int mouse_frame_scroll = get_mouse_scroll_this_frame();
-    cam.size.x += mouse_frame_scroll * 100 * dt;
-    cam.size.y += mouse_frame_scroll * 100 * dt;
-
     update_camera(&cam, dt);
 
     glUseProgram(shader_program);

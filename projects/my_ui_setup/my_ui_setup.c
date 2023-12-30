@@ -29,7 +29,7 @@ unsigned int shader_program;
 
 global_variable camera my_camera = {0};
 #define UI_ELEMENT_COUNT 10
-global_variable ui_element_data MAX_ELEMENTS[UI_ELEMENT_COUNT] = {0};
+global_variable ui_element_data MAX_ELEMENTS[UI_ELEMENT_COUNT] = {1.f};
 global_variable vertex_data vertices[UI_ELEMENT_COUNT*4];
 
 global_variable v2i mouse_click_pos;
@@ -58,17 +58,17 @@ void app_specific_init(void)
     unsigned int transformLoc = glGetUniformLocation(shader_program, "transform");
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &my_camera.matrix.m11);
 
-{
-    vertex_data mouse_verts[4] = {
-        {10.f,1.f,1.f,1.f,1.f,1.f,1.f},
-        {10.f,10.f,1.f,1.f,1.f,1.f,1.f},
-        {1.f,10.f,1.f,1.f,1.f,1.f,1.f},
-        {1.f,100.f,1.f,1.f,1.f,1.f,1.f}
-    };
+    {
+        vertex_data mouse_verts[4] = {
+            {10.f,1.f,1.f,1.f,1.f,1.f,1.f},
+            {10.f,10.f,1.f,1.f,1.f,1.f,1.f},
+            {1.f,10.f,1.f,1.f,1.f,1.f,1.f},
+            {1.f,100.f,1.f,1.f,1.f,1.f,1.f}
+        };
 
-    const unsigned int mouse_pos_indices[6] = {0,1,2,2,3,0};
-    generate_mesh_using_vertices_and_indices(&mouse_square, mouse_verts, 4, mouse_pos_indices, 6);
-}
+        const unsigned int mouse_pos_indices[6] = {0,1,2,2,3,0};
+        generate_mesh_using_vertices_and_indices(&mouse_square, mouse_verts, 4, mouse_pos_indices, 6);
+    }
 
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -113,6 +113,11 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
+    update_camera(&my_camera, dt);
+    glUseProgram(shader_program);
+    unsigned int transformLoc = glGetUniformLocation(shader_program, "transform");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &my_camera.matrix.m11);
+
     if (was_mouse_button_pressed(NL_MOUSE_BUTTON_LEFT))
     {
         editing = 1;

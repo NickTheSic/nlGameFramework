@@ -9,7 +9,7 @@ void initialize_camera(camera* const cam, const v3f pos, const v2f size)
     cam->size.x = size.x;
     cam->size.y = size.y;
 
-    cam->move_speed = 10.f;
+    cam->move_speed = size.y / 10.f;
 
     recalculate_camera(cam);
 }
@@ -56,12 +56,12 @@ void update_camera(camera* const cam, float dt)
     {
         if (is_key_held(key_a))
         {
-            cam->position.x += cam->move_speed * dt;
+            cam->position.x -= cam->move_speed * dt;
         }
         
         if (is_key_held(key_d))
         {
-            cam->position.x -= cam->move_speed * dt;
+            cam->position.x += cam->move_speed * dt;
         }
         
         if (is_key_held(key_w))
@@ -78,6 +78,10 @@ void update_camera(camera* const cam, float dt)
         {
             cam->assume_half_size = (cam->assume_half_size ^ 0b1);
         }
+
+        const int mouse_frame_scroll = get_mouse_scroll_this_frame();
+        cam->size.x += mouse_frame_scroll * 100 * dt;
+        cam->size.y += mouse_frame_scroll * 100 * dt;
 
         recalculate_camera(cam);
     }
