@@ -79,7 +79,7 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		case WM_MOUSEMOVE:
 		{
-			set_mouse_position_from_system(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			set_mouse_position_from_system(GET_X_LPARAM(lParam), get_screen_size().y - GET_Y_LPARAM(lParam));
 		} break;
 
         default:

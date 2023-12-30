@@ -1,0 +1,19 @@
+#ifndef __NL_CAMERA_H__
+#define __NL_CAMERA_H__
+#include "nl_math.h"
+
+typedef struct camera camera;
+struct camera
+{
+    mat4x4f matrix;
+    
+    v3f position;
+    v2f size;
+
+    int assume_half_size;
+};
+
+void recalculate_camera(camera* const cam);
+void initialize_camera(camera* const cam, const v3f pos, const v2f size);
+
+#endif //__NL_CAMERA_H__

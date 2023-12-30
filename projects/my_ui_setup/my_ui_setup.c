@@ -27,9 +27,9 @@ NL_SHADER_VERSION_HEADER
 unsigned int shader_program;
 
 
-global_variable ui_camera camera = {0};
+global_variable camera my_camera = {0};
 #define UI_ELEMENT_COUNT 10
-global_variable ui_element_data MAX_ELEMENTS[UI_ELEMENT_COUNT];
+global_variable ui_element_data MAX_ELEMENTS[UI_ELEMENT_COUNT] = {0};
 global_variable vertex_data vertices[UI_ELEMENT_COUNT*4];
 
 global_variable v2i mouse_click_pos;
@@ -43,23 +43,39 @@ global_variable unsigned int VAO;
 global_variable unsigned int VBO;
 global_variable unsigned int EBO;
 
+mesh mouse_square = {0};
 
 void app_specific_init(void)
 {
-    ui_camera_initialize_screen_size(&camera, get_screen_size());
+    v2i retrieved_screen_size = get_screen_size();
+    v2f screen_size;
+    screen_size.x = retrieved_screen_size.x;
+    screen_size.y = retrieved_screen_size.y;
+    initialize_camera(&my_camera, (v3f){0.0f,0.0f,0.0f}, screen_size);
 
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
     unsigned int transformLoc = glGetUniformLocation(shader_program, "transform");
-    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &camera.matrix.m11);
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &my_camera.matrix.m11);
 
+{
+    vertex_data mouse_verts[4] = {
+        {10.f,1.f,1.f,1.f,1.f,1.f,1.f},
+        {10.f,10.f,1.f,1.f,1.f,1.f,1.f},
+        {1.f,10.f,1.f,1.f,1.f,1.f,1.f},
+        {1.f,100.f,1.f,1.f,1.f,1.f,1.f}
+    };
+
+    const unsigned int mouse_pos_indices[6] = {0,1,2,2,3,0};
+    generate_mesh_using_vertices_and_indices(&mouse_square, mouse_verts, 4, mouse_pos_indices, 6);
+}
 
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_data) * UI_ELEMENT_COUNT * 4, 0, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_data) * (UI_ELEMENT_COUNT) * 4, 0, GL_DYNAMIC_DRAW);
     
     size_t indice_data_size = sizeof(unsigned int) * UI_ELEMENT_COUNT * 6;
     unsigned int* indices = (unsigned int*)memory_allocate(indice_data_size);
@@ -152,16 +168,7 @@ void app_specific_update(double dt)
     }
 
     glDrawElements(GL_TRIANGLES, active_element*6, GL_UNSIGNED_INT, 0);
-}
 
-void ui_camera_initialize_screen_size(ui_camera *const camera, v2i screen_size)
-{
-    create_orthographic_projection(
-        &camera->matrix, 
-        0, 
-        screen_size.x,
-        0, 
-        -screen_size.y,
-        -0.1, 100
-    );
+
+    render_single_mesh(&mouse_square);
 }

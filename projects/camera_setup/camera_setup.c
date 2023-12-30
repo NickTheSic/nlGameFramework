@@ -24,65 +24,7 @@ NL_SHADER_VERSION_HEADER
 unsigned int shader_program;
 mesh untitled = {0};
 
-typedef struct camera camera;
-struct camera
-{
-    mat4x4f matrix;
-    
-    v3f position;
-    v2f size;
-
-};
 global_variable camera cam = {0};
-int assume_half_size = 0;
-
-void recalculate_camera(camera* const cam);
-void initialize_camera(camera* const cam, const v3f pos, const v2f size)
-{
-    cam->position.x = pos.x;
-    cam->position.y = pos.y;
-    cam->position.z = pos.z;
-    cam->size.x = size.x;
-    cam->size.y = size.y;
-
-    recalculate_camera(cam);
-}
-
-void recalculate_camera_assuming_half_size(camera* const cam)
-{
-    create_orthographic_projection(
-        &cam->matrix, 
-        cam->position.x-cam->size.x, 
-        cam->position.x+cam->size.x, 
-        cam->position.y-cam->size.y, 
-        cam->position.y+cam->size.y, 
-        -0.1, 100
-    );
-}
-
-void recalculate_camera_assuming_zero_to_size(camera* const cam)
-{
-    create_orthographic_projection(
-        &cam->matrix, 
-        cam->position.x, 
-        cam->position.x + cam->size.x, 
-        cam->position.y, 
-        cam->position.y + cam->size.y, 
-        -0.1, 100
-        );
-}
-
-void recalculate_camera(camera* const cam)
-{
-    if (assume_half_size == 1)
-    {
-        recalculate_camera_assuming_half_size(cam);
-    }
-    else
-    {
-        recalculate_camera_assuming_zero_to_size(cam);
-    }
-}
 
 void load_mesh_from_file();
 void app_specific_init(void)
@@ -133,8 +75,8 @@ void set_cull_front_face(int clockwise);
 
     if (was_mouse_button_pressed(NL_MOUSE_BUTTON_LEFT))
     {
-        assume_half_size = (assume_half_size ^ 0b1);
-        NL_LOG("Pressed Value: %d", assume_half_size);
+        cam.assume_half_size = (cam.assume_half_size ^ 0b1);
+        NL_LOG("Pressed Value: %d", cam.assume_half_size);
     }
 
     const int mouse_frame_scroll = get_mouse_scroll_this_frame();
