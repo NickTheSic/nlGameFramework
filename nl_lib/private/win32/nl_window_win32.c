@@ -37,12 +37,14 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 			set_viewport_size(width, height);
 		} break;
 
+		case WM_SYSKEYDOWN:
 		case WM_KEYDOWN:
 		{
 			nl_key k = (nl_key)wParam;
 			set_key_state_down(k);
 		} break;
 
+		case WM_SYSKEYUP:
 		case WM_KEYUP:
 		{
 			nl_key k = (nl_key)wParam;

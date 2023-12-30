@@ -10,10 +10,12 @@ struct camera
     v3f position;
     v2f size;
 
+    float move_speed;
     int assume_half_size;
 };
 
 void recalculate_camera(camera* const cam);
 void initialize_camera(camera* const cam, const v3f pos, const v2f size);
+void update_camera(camera* const cam, float dt);
 
 #endif //__NL_CAMERA_H__

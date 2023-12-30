@@ -9,11 +9,11 @@ enum nl_key
     key_clear     = 0x0C,
     key_enter     = 0x0D,
 
-    key_shift     = 0x11,
-    key_control   = 0x12,
-    key_alt       = 0x13,
-    key_pause     = 0x14,
-    key_capslock  = 0x15,
+    key_shift     = 0x10,
+    key_control   = 0x11,
+    key_alt       = 0x12,
+    key_pause     = 0x13,
+    key_capslock  = 0x14,
 
     // japanese keys
 
@@ -90,6 +90,8 @@ enum nl_key
 
     // TODO: Continue below starting with VK_MULTIPLY
 
+    key_lcontrol = 0xA2,
+    key_rcontrol = 0xA3,
 
     NL_KEY_COUNT
 };
