@@ -38,14 +38,13 @@ void create_identity_matrix(mat4x4f* const mat);
 
 void create_orthographic_projection(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z);
 
-float vector_length_squared(const v3f vec);
-float vector_length(const v3f vec);
-
-v3f vector_subtract(const v3f lhs, const v3f rhs);
-v3f vector_add(const v3f lhs, const v3f rhs);
-
-v3f vector_normalize(const v3f vec);
-v3f vector_cross(const v3f lhs, const v3f rhs);
+float v3f_length_squared(const v3f vec);
+float v3f_length(const v3f vec);
+float v3f_cross(const v3f ref, const v3f other);
+v3f v3f_subtract(const v3f lhs, const v3f rhs);
+v3f v3f_add(const v3f lhs, const v3f rhs);
+v3f v3f_normalize(const v3f vec);
+v3f v3f_cross(const v3f lhs, const v3f rhs);
 
 #ifdef __cplusplus
 }
