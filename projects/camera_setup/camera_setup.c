@@ -33,7 +33,8 @@ global_variable camera cam = {0};
 
 internal_function void window_size_callback(int width, int height)
 {
-    update_camera_size(&cam, (float)width, (float)height);
+    cam.screen_size.x = width;
+    cam.screen_size.y = height;
 }
 
 void load_mesh_from_file();
@@ -74,9 +75,22 @@ void app_specific_update(double dt)
     update_camera(&cam, dt);
 
     glUseProgram(shader_program);
-    unsigned int transformLoc = glGetUniformLocation(shader_program, "uViewMat");
-    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &cam.matrix.m11);
-    
+    unsigned int viewMat = glGetUniformLocation(shader_program, "uViewMat");
+    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &cam.view_matrix.m11);
+
+    unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
+    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &cam.proj_matrix.m11);
+
+    v3f scale = {1,1,1};
+    v3f rot = {0};
+    v3f trans = {0};
+    mat4x4f mat = {0};
+    create_identity_matrix(&mat);
+    create_srt(&mat, scale, rot, trans);
+
+    unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
+    glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
+
     render_single_mesh(&untitled);
     set_wireframe_rendering(); 
     glClear(GL_DEPTH_BUFFER_BIT);

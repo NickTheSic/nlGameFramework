@@ -35,9 +35,11 @@ struct mat4x4f
 };
 
 
-
 void create_identity_matrix(mat4x4f* const mat);
 void create_orthographic_projection(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z);
+void create_fustrum(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z);
+
+void create_srt(mat4x4f* const mat, const v3f scale, const v3f rot, const v3f translation);
 
 float v3f_length_squared(const v3f vec);
 float v3f_length(const v3f vec);

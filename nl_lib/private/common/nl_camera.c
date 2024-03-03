@@ -11,6 +11,9 @@ void initialize_camera(camera* const cam, const v3f pos, const v2f size)
 
     cam->move_speed = size.y / 10.f;
 
+    create_identity_matrix(&cam->proj_matrix);
+    create_identity_matrix(&cam->view_matrix);
+
     recalculate_camera(cam);
 }
 
@@ -25,7 +28,7 @@ void update_camera_size(camera* const cam, float width, float height)
 internal_function void recalculate_camera_assuming_half_size(camera* const cam)
 {
     create_orthographic_projection(
-        &cam->matrix, 
+        &cam->view_matrix, 
         cam->position.x-cam->size.x, 
         cam->position.x+cam->size.x, 
         cam->position.y-cam->size.y, 
@@ -37,7 +40,7 @@ internal_function void recalculate_camera_assuming_half_size(camera* const cam)
 internal_function void recalculate_camera_assuming_zero_to_size(camera* const cam)
 {
     create_orthographic_projection(
-        &cam->matrix, 
+        &cam->view_matrix, 
         cam->position.x, 
         cam->position.x + cam->size.x, 
         cam->position.y, 
@@ -48,7 +51,7 @@ internal_function void recalculate_camera_assuming_zero_to_size(camera* const ca
 
 void recalculate_camera(camera* const cam)
 {
-    if (cam->assume_half_size == 1)
+    if (cam->assume_half_size == 0)
     {
         recalculate_camera_assuming_half_size(cam);
     }
@@ -56,6 +59,15 @@ void recalculate_camera(camera* const cam)
     {
         recalculate_camera_assuming_zero_to_size(cam);
     }
+
+    create_fustrum(
+        &cam->proj_matrix, 
+        -cam->screen_size.x,
+        cam->screen_size.x,
+        cam->screen_size.y,
+        -cam->screen_size.y,
+        -0.1f, 100.f
+    );
 }
 
 void update_camera(camera* const cam, float dt)
