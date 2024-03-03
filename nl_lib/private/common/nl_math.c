@@ -26,6 +26,11 @@ void create_identity_matrix(mat4x4f* const mat)
 
 void create_fustrum(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z)
 {
+    
+}
+
+void create_orthographic_projection(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z)
+{
     memset(mat, 0, sizeof(mat4x4f));
 
     float delta_x = right-left;
@@ -38,19 +43,14 @@ void create_fustrum(mat4x4f* const mat, float left, float right, float bottom, f
     mat->m22 = 2.0f/delta_y;
     //mat.m21 = mat.m23 = mat.m24 = 0.0f;
     
-    mat->m33 = -2.0f/delta_z;
+    //mat->m33 = -2.0f/delta_z; //Right Handed
+    mat->m33 = 2.0f/delta_z; //Left Handed
     //mat.m31 = mat.m32 = mat.m34 = 0.0f;
     
     mat->m41 = -(right + left) / delta_x;
     mat->m42 = -(top + bottom) / delta_y;
     mat->m43 = -(near_z) / delta_z;
     mat->m44 = 1;
-}
-
-void create_orthographic_projection(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z)
-{
-    NL_DEPRECATED_FUNC("create_fustrum");
-    create_fustrum(mat, left, right, bottom, top, near_z, far_z);
 }
 
 internal_function void scale_matrix_3f(mat4x4f* const mat, v3f scale)

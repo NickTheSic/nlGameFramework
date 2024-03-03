@@ -51,7 +51,7 @@ internal_function void recalculate_camera_assuming_zero_to_size(camera* const ca
 
 void recalculate_camera(camera* const cam)
 {
-    if (cam->assume_half_size == 0)
+    if (cam->assume_half_size == 1)
     {
         recalculate_camera_assuming_half_size(cam);
     }
@@ -60,14 +60,14 @@ void recalculate_camera(camera* const cam)
         recalculate_camera_assuming_zero_to_size(cam);
     }
 
-    create_fustrum(
-        &cam->proj_matrix, 
-        -cam->screen_size.x,
-        cam->screen_size.x,
-        cam->screen_size.y,
-        -cam->screen_size.y,
-        -0.1f, 100.f
-    );
+    //create_fustrum(
+    //    &cam->proj_matrix, 
+    //    -cam->screen_size.x,
+    //    cam->screen_size.x,
+    //    cam->screen_size.y,
+    //    -cam->screen_size.y,
+    //    -0.1f, 100.f
+    //);
 }
 
 void update_camera(camera* const cam, float dt)
