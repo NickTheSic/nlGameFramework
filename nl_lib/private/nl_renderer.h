@@ -55,8 +55,8 @@ void renderer_swap_buffers();
 /////////////////////////////////////////////////////////////////
 // Does not yet take into account batching
 void generate_mesh_using_vertices_and_indices(mesh* const mesh, const vertex_data* const vertice, int vertice_count, const unsigned int* const indices, unsigned int indice_count);
-void render_single_mesh(mesh* mesh);
-
+void render_single_mesh(mesh* const mesh);
+void move_mesh(mesh* const mesh, const v2f difference);
 
 /////////////////////////////////////////////////////////////////
 //              Wrappers around GL specific calls              //

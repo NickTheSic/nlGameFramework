@@ -38,7 +38,6 @@ global_variable int active_element;
 global_variable int editing;
 global_variable int change;
 
-
 global_variable unsigned int VAO;
 global_variable unsigned int VBO;
 global_variable unsigned int EBO;
@@ -146,7 +145,6 @@ void app_specific_update(double dt)
             change = 1;
         }
     }
-
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);

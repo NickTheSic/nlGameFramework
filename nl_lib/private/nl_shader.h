@@ -8,8 +8,6 @@
 #define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
 #endif
 
-// /*could*/ typedef unsigned int shader_program; // for verbosity
-
 unsigned int create_shader_program(const char* vertex_shader_code, const char* fragment_shader_code);
 void use_shader_program(unsigned int shader_program);
 

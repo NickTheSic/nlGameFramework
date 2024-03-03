@@ -10,7 +10,12 @@
 #include "private/common/nl_utility.c"
 #include "private/common/nl_renderer_gl_common.c"
 #include "private/common/nl_shader.c"
+#include "private/common/nl_spritesheet.c"
 #include "private/common/nl_input.c"
+
+
+/*--------Third Party-------------*/
+#include "third_party/stb_image.c"
 
 
 #if defined(_WIN32)

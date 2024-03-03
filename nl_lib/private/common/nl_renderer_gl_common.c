@@ -63,7 +63,7 @@ void generate_mesh_using_vertices_and_indices(mesh* const mesh, const vertex_dat
 
     glGenBuffers(1, &mesh->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, mesh->VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices_data_size, vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices_data_size, vertices, GL_DYNAMIC_DRAW);
 
     glGenBuffers(1, &mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->EBO);
@@ -90,6 +90,18 @@ void render_single_mesh(mesh* mesh)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
+
+// temporary? - will need to add position to the shader, that may work better 
+//void move_mesh(mesh* const mesh, const v2f difference)
+//{
+//    for (int i = 0; i < mesh->vertice_count; ++i)
+//    {
+//        mesh->vertices[i].position.x += difference.x;
+//        mesh->vertices[i].position.y += difference.xy
+//    }
+//
+//    glBufferSubData(GL_ARRAY_BUFFER, 0, mesh->vertice_count * sizeof(vertex_data), mesh->vertices);
+//}
 
 void setup_vertex_atrributes(size_t data_size, vertex_atrribute_info* const attrib_info, const int attrib_count)
 {
