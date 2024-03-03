@@ -42,6 +42,10 @@ void app_specific_init(void)
     pfn_window_size_callback = &window_size_callback;
     load_mesh_from_file();
 
+    v3f v1 = {0};
+    v3f v2 = {0};
+    v3f_cross(v1,v2);
+
     initialize_camera(&cam, (v3f){0.0f,0.0f,0.0f}, (v2f){2.f, 2.f});
 
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
