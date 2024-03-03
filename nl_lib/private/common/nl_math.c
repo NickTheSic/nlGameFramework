@@ -97,7 +97,7 @@ v3f v3f_normalize(const v3f vec)
 
 v3f v3f_cross(const v3f lhs, const v3f rhs)
 {
-    NL_LOG("Didn't Implement %s %s", __FILE__, __FUNCTION__);
+    NL_UNIMPLEMENTED_FUNC;
 
     v3f result = {0};
     return (result);

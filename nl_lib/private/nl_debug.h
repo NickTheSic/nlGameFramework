@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #define NL_LOG(m,...) fprintf(stdout, m,##__VA_ARGS__); fprintf(stdout, "\n");
+#define NL_UNIMPLEMENTED_FUNC NL_LOG("Unimplemented Function %s in %s", __FUNCTION__, __FILE__);
 
 #define internal_function static
 #define global_variable static
