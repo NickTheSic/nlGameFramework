@@ -16,6 +16,7 @@ struct camera
 
 void recalculate_camera(camera* const cam);
 void initialize_camera(camera* const cam, const v3f pos, const v2f size);
+void update_camera_size(camera* const cam, float width, float height);
 void update_camera(camera* const cam, float dt);
 
 #endif //__NL_CAMERA_H__

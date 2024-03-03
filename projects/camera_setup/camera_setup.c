@@ -2,15 +2,20 @@
 #include "private/nl_gl.h"
 #include "string.h" //memcpy
 
-
 const char* vert_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
 "layout (location = 1) in vec4 aColor;                 \n"
-"uniform mat4 transform;                               \n"
+"uniform mat4 uWorldMat;                               \n"
+"uniform mat4 uViewMat;                                \n"
+"uniform mat4 uProjMat;                                \n"
 "out vec4 oColor;                                      \n"
 "void main() {                                         \n"
-"   gl_Position = transform * vec4(aPos, 1.0);         \n"
+"   vec4 objectSpacePos = vec4( aPos, 1 );             \n"
+"   vec4 worldSpacePos  = uWorldMat * objectSpacePos;  \n"
+"   vec4 viewSpacePos   = uViewMat * worldSpacePos;    \n"
+"   vec4 clipSpacePos   = uProjMat * viewSpacePos;     \n"
+"   gl_Position = clipSpacePos;                        \n"
 "   oColor = aColor;                                   \n"
 "}                                                     \0";
 
@@ -26,9 +31,15 @@ mesh untitled = {0};
 
 global_variable camera cam = {0};
 
+internal_function void window_size_callback(int width, int height)
+{
+    update_camera_size(&cam, (float)width, (float)height);
+}
+
 void load_mesh_from_file();
 void app_specific_init(void)
 {
+    pfn_window_size_callback = &window_size_callback;
     load_mesh_from_file();
 
     initialize_camera(&cam, (v3f){0.0f,0.0f,0.0f}, (v2f){2.f, 2.f});

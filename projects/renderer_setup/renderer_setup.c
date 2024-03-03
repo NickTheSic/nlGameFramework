@@ -22,6 +22,8 @@ NL_SHADER_VERSION_HEADER
 mesh triangle;
 mesh square;
 
+camera main_camera;
+
 vertex_data vertices[] = 
 {
     {{-0.5f, -0.5f, 0.0f}, {1.0f, 0.5f, 0.8f, 1.0f}},

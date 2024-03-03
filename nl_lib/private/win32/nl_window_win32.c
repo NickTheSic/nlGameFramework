@@ -15,6 +15,8 @@ struct win32_window
 };
 global_variable win32_window g_window;
 
+PFNWINDOWSIZECALLBACK pfn_window_size_callback = {0};
+
 internal_function LRESULT CALLBACK 
 window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -35,6 +37,11 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 			int height = HIWORD(lParam);
 			NL_LOG("New Width: %i Height: %i", width, height);
 			set_viewport_size(width, height);
+			
+			if (pfn_window_size_callback != 0)
+			{
+				pfn_window_size_callback(width, height);
+			}
 		} break;
 
 		case WM_SYSKEYDOWN:

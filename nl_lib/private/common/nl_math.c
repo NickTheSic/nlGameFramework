@@ -1,4 +1,5 @@
 #include "../nl_math.h"
+#include "math.h"
 #include "string.h" // memset
 
 void create_identity_matrix(mat4x4f* const mat)
@@ -46,4 +47,52 @@ void create_orthographic_projection(mat4x4f* const mat, float left, float right,
     mat->m42 = -(top + bottom) / delta_y;
     mat->m43 = -(near_z) / delta_z;
     mat->m44 = 1;
+}
+
+float vector_length_squared(const v3f vec)
+{
+    return (vec.x * vec.x) + (vec.y * vec.y);
+}
+
+float vector_length(const v3f vec)
+{
+    return sqrtf((vec.x * vec.x) + (vec.y * vec.y));
+}
+
+v3f vector_subtract(const v3f lhs, const v3f rhs)
+{
+    v3f result = {0};
+    result.x = lhs.x - rhs.x;
+    result.y = lhs.y - rhs.y;
+    result.z = lhs.z - rhs.z;
+    return result;
+}
+
+v3f vector_add(const v3f lhs, const v3f rhs)
+{
+    v3f result = {0};
+    result.x = lhs.x + rhs.x;
+    result.y = lhs.y + rhs.y;
+    result.z = lhs.z + rhs.z;
+    return result;
+}
+
+v3f vector_normalize(const v3f vec)
+{
+    v3f result = {0};
+    float len = vector_length_squared(vec);
+    
+    if (len != 0)
+    {
+        result.x = vec.x/len;
+        result.y = vec.y/len;
+        result.z = vec.z/len;
+    }
+
+    return result;
+}
+
+v3f vector_cross(const v3f lhs, const v3f rhs)
+{
+
 }

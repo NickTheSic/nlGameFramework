@@ -14,6 +14,14 @@ void initialize_camera(camera* const cam, const v3f pos, const v2f size)
     recalculate_camera(cam);
 }
 
+void update_camera_size(camera* const cam, float width, float height)
+{
+    cam->size.x = width;
+    cam->size.y = height;
+
+    recalculate_camera(cam);
+}
+
 internal_function void recalculate_camera_assuming_half_size(camera* const cam)
 {
     create_orthographic_projection(

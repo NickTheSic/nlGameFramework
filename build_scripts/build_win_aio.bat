@@ -8,7 +8,7 @@ set includes=/I../../nl_lib
 
 echo on
 
-cl %flags% %includes% %1 %2 %3 ../../third_party/stb_image.c %libs%
+cl %flags% %includes% %1 %2 %3 %libs%
 
 @echo off
 popd
