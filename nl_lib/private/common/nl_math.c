@@ -102,3 +102,39 @@ v3f v3f_cross(const v3f lhs, const v3f rhs)
     v3f result = {0};
     return (result);
 }   
+
+float v2f_length_squared(const v2f vec)
+{   
+    return (vec.x*vec.x)+(vec.y*vec.y);
+}
+
+float v2f_length(const v2f vec)
+{
+    return sqrtf((vec.x*vec.x)+(vec.y*vec.y));
+}
+
+float v2f_dot(const v2f ref, const v2f other)
+{
+    return (ref.x * other.x) + (ref.y * other.y)
+}
+
+v2f   v2f_subtract(const v2f lhs, const v2f rhs)
+{
+    v2f result = {0};
+    NL_UNIMPLEMENTED_FUNC
+    return result;
+}
+
+v2f   v2f_add(const v2f lhs, const v2f rhs)
+{
+    v2f result = {0};
+    NL_UNIMPLEMENTED_FUNC
+    return result;
+}
+
+v2f   v2f_normalize(const v2f vec)
+{
+    v2f result = {0};
+    NL_UNIMPLEMENTED_FUNC
+    return result;
+}

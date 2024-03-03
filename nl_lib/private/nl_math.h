@@ -34,8 +34,9 @@ struct mat4x4f
           m41,m42,m43,m44;
 };
 
-void create_identity_matrix(mat4x4f* const mat);
 
+
+void create_identity_matrix(mat4x4f* const mat);
 void create_orthographic_projection(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z);
 
 float v3f_length_squared(const v3f vec);
@@ -46,13 +47,13 @@ v3f   v3f_add(const v3f lhs, const v3f rhs);
 v3f   v3f_normalize(const v3f vec);
 v3f   v3f_cross(const v3f lhs, const v3f rhs);
 
-// float v2f_length_squared(const v2f vec);
-// float v2f_length(const v2f vec);
-// float v2f_cross(const v2f ref, const v2f other);
-// v2f   v2f_subtract(const v2f lhs, const v2f rhs);
-// v2f   v2f_add(const v2f lhs, const v2f rhs);
-// v2f   v2f_normalize(const v2f vec);
-// v2f   v2f_cross(const v2f lhs, const v2f rhs);
+float v2f_length_squared(const v2f vec);
+float v2f_length(const v2f vec);
+float v2f_dot(const v2f ref, const v2f other);
+v2f   v2f_subtract(const v2f lhs, const v2f rhs);
+v2f   v2f_add(const v2f lhs, const v2f rhs);
+v2f   v2f_normalize(const v2f vec);
+v2f   v2f_cross(const v2f lhs, const v2f rhs);
 
 #ifdef __cplusplus
 }
