@@ -17,6 +17,12 @@ void initialize_camera(camera* const cam, const v3f pos, const v2f size)
     recalculate_camera(cam);
 }
 
+void create_screen_aspect(camera* const cam, int width, int height)
+{
+    float aspect = (float)width/(float)height;
+    create_orthographic_projection(&cam->proj_matrix, 0, aspect, 0, 1, -0.1f, 100.f);
+}
+
 void update_camera_size(camera* const cam, float width, float height)
 {
     cam->size.x = width;
@@ -59,15 +65,6 @@ void recalculate_camera(camera* const cam)
     {
         recalculate_camera_assuming_zero_to_size(cam);
     }
-
-    //create_fustrum(
-    //    &cam->proj_matrix, 
-    //    -cam->screen_size.x,
-    //    cam->screen_size.x,
-    //    cam->screen_size.y,
-    //    -cam->screen_size.y,
-    //    -0.1f, 100.f
-    //);
 }
 
 void update_camera(camera* const cam, float dt)

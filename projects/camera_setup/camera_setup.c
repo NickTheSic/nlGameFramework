@@ -33,8 +33,10 @@ global_variable camera cam = {0};
 
 internal_function void window_size_callback(int width, int height)
 {
-    cam.screen_size.x = width;
-    cam.screen_size.y = height;
+    create_screen_aspect(&cam, width, height);
+    
+    unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
+    glUniformMatrix4fv(projMat, 1, GL_FALSE, &cam.proj_matrix.m11);
 }
 
 void load_mesh_from_file();
@@ -78,9 +80,6 @@ void app_specific_update(double dt)
     unsigned int viewMat = glGetUniformLocation(shader_program, "uViewMat");
     glUniformMatrix4fv(viewMat, 1, GL_FALSE, &cam.view_matrix.m11);
 
-    unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
-    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &cam.proj_matrix.m11);
-
     v3f scale = {1,1,1};
     v3f rot = {0};
     v3f trans = {0};
@@ -108,6 +107,7 @@ char* strtok_s(char* buffer, char* delim, char** ptr)
 void sscanf_s(char* line, const char* str, __va_list__ args)
 {
     // TODO: Implement proper?
+    NL_UNIMPLEMENTED_FUNC;
 }
 
 #endif

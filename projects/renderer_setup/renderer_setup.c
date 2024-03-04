@@ -10,7 +10,7 @@ NL_SHADER_VERSION_HEADER
 "uniform mat4 uProjMat;                                \n"
 "out vec4 oColor;                                      \n"
 "void main() {                                         \n"
-"   vec4 worldPos = uWorldMat * vec4(aPos.x, aPos.y, aPos.z, 1.0);   \n"
+"   vec4 worldPos = uWorldMat * vec4(aPos 1.0);        \n"
 "   vec4 viewPos = uViewMat * worldPos;                \n"
 "   gl_Position = uProjMat * viewPos;                  \n"
 "   oColor = aColor;                                   \n"

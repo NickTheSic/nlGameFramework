@@ -16,6 +16,8 @@ struct camera
     int assume_half_size;
 };
 
+void create_screen_aspect(camera* const cam, int width, int height);
+
 void recalculate_camera(camera* const cam);
 void initialize_camera(camera* const cam, const v3f pos, const v2f size);
 void update_camera_size(camera* const cam, float width, float height);
