@@ -35,11 +35,10 @@ void winsizecbk(int width, int height)
     float aspect = 0;
     if (width < height){
         aspect = (float)width/(float)height;  
-        create_orthographic_projection(&main_camera.proj_matrix, -1, 1, -aspect, aspect, -0.1f, 100.f);
     } else {
         aspect = (float)height/(float)width;
-        create_orthographic_projection(&main_camera.proj_matrix, -aspect, aspect, -1, 1, -0.1f, 100.f);
     }
+    create_orthographic_projection(&main_camera.proj_matrix, -aspect, aspect, -1, 1, -0.1f, 100.f);
 
     unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
     glUniformMatrix4fv(projMat, 1, GL_FALSE, &main_camera.proj_matrix.m11);
@@ -92,19 +91,15 @@ void app_specific_update(double dt)
 
     v3f scale = {1,1,1};
     v3f rot = {0};
-    v3f trans = {screen_pos.x, screen_pos.y, 0};
+    static float slow;
+    slow+=dt;
+    v3f trans = {slow, 0, 0};
     mat4x4f mat = {0};
     create_identity_matrix(&mat);
     create_srt(&mat, scale, rot, trans);
 
     unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
     glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
-
     render_single_mesh(&square);
-
-    create_srt(&mat, scale, rot, trans);
-
-    glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
-
     render_single_mesh(&triangle);
 }
