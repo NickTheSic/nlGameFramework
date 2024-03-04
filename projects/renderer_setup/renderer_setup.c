@@ -7,10 +7,12 @@ NL_SHADER_VERSION_HEADER
 "layout (location = 1) in vec4 aColor;                 \n"
 "uniform mat4 uWorldMat;                               \n"
 "uniform mat4 uViewMat;                                \n"
+"uniform mat4 uProjMat;                                \n"
 "out vec4 oColor;                                      \n"
 "void main() {                                         \n"
 "   vec4 worldPos = uWorldMat * vec4(aPos.x, aPos.y, aPos.z, 1.0);   \n"
-"   gl_Position = uViewMat * worldPos;                 \n"
+"   vec4 viewPos = uViewMat * worldPos;                \n"
+"   gl_Position = uProjMat * viewPos;                  \n"
 "   oColor = aColor;                                   \n"
 "}                                                     \0";
 
@@ -36,9 +38,9 @@ vertex_data vertices[] =
 
 vertex_data square_verts[] =
 {
-    {{-0.5f, -0.5f, 2.0f}, {1.0f, 0.5f, 0.8f, 1.0f}},
+    {{-0.5f, -0.5f, 5.0f}, {1.0f, 0.5f, 0.8f, 1.0f}},
     {{ 0.5f, -0.5f, 0.0f}, {0.8f, 1.0f, 0.5f, 1.0f}},
-    {{ 0.5f,  0.5f, -2.0f}, {0.5f, 0.8f, 1.0f, 1.0f}},
+    {{ 0.5f,  0.5f, -5.0f}, {0.5f, 0.8f, 1.0f, 1.0f}},
     {{-0.5f,  0.5f, 0.0f}, {0.7f, 0.2f, 0.0f, 1.0f}}
 };
 
@@ -51,13 +53,32 @@ unsigned int square_indices[] =
 // Required - Could be renderer or material
 unsigned int shader_program;
 
+void winsizecbk(int width, int height)
+{
+    mat4x4f proj = {0};
+    float aspect = (float)width/(float)height;
+    create_orthographic_projection(&proj, -aspect, aspect, -1, 1, -0.1f, 100.f);
+
+    unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
+    glUniformMatrix4fv(projMat, 1, GL_FALSE, &proj.m11);
+}
+
 void app_specific_init(void)
 {
+    pfn_window_size_callback = & winsizecbk;
     generate_mesh_using_vertices_and_indices(&triangle, vertices, 3, square_indices, 3);
     generate_mesh_using_vertices_and_indices(&square, square_verts, 4, square_indices, 6);
     
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     use_shader_program(shader_program);
+    
+    mat4x4f view = {0};
+    create_orthographic_projection(&view,-2.f,2.f,-2.f,2.f, -0.1f, 100.f);
+    unsigned int viewMat = glGetUniformLocation(shader_program, "uViewMat");
+    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &view.m11);
+
+    v2i screen_size = get_screen_size();
+    winsizecbk(screen_size.x, screen_size.y);
 }
 
 void app_specific_update(double dt)
@@ -65,10 +86,6 @@ void app_specific_update(double dt)
     (void)dt;
     
     use_shader_program(shader_program);
-
-    mat4x4f view = {0};
-    create_identity_matrix(&view);
-    create_orthographic_projection(&view,-2.f,2.f,-2.f,2.f, -0.1f, 100.f);
 
     v3f scale = {1,1,1};
     v3f rot = {0};
@@ -81,14 +98,12 @@ void app_specific_update(double dt)
     unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
     glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
 
-    unsigned int viewMat = glGetUniformLocation(shader_program, "uViewMat");
-    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &view.m11);
-
     render_single_mesh(&square);
 
     scale.y += 0.1f;
     scale.x -= 0.1f;
-    trans.x  = 0.5f;
+    trans.y = 0.5f;
+    trans.x  = 1.5f;
     create_srt(&mat, scale, rot, trans);
 
     glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
