@@ -9,10 +9,11 @@ const char* vert_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
 "layout (location = 1) in vec4 aColor;                 \n"
-"uniform mat4 transform;                               \n"
+"uniform mat4 uViewMat;                                \n"
+"uniform mat4 uProjMat;                                \n"
 "out vec4 oColor;                                      \n"
 "void main() {                                         \n"
-"   gl_Position = transform * vec4(aPos, 1.0);         \n"
+"   gl_Position = uProjMat * uViewMat * vec4(aPos, 1.0);\n"
 "   oColor = aColor;                                   \n"
 "}                                                     \0";
 
@@ -44,18 +45,29 @@ global_variable unsigned int EBO;
 
 mesh mouse_square = {0};
 
+internal_function void window_size_callback(int width, int height)
+{
+    create_screen_aspect(&my_camera, width, height);
+    
+    unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
+    glUniformMatrix4fv(projMat, 1, GL_FALSE, &my_camera.proj_matrix.m11);
+}
+
 void app_specific_init(void)
 {
+    pfn_window_size_callback = &window_size_callback;
+    
     v2i retrieved_screen_size = get_screen_size();
     v2f screen_size;
     screen_size.x = retrieved_screen_size.x;
     screen_size.y = retrieved_screen_size.y;
-    initialize_camera(&my_camera, (v3f){0.0f,0.0f,0.0f}, screen_size);
+    initialize_camera(&my_camera, (v3f){0.0f,0.0f,0.0f}, (v2f){2.f,2.f});
+    window_size_callback(screen_size.x, screen_size.y);
 
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
-    unsigned int transformLoc = glGetUniformLocation(shader_program, "transform");
-    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &my_camera.matrix.m11);
+    unsigned int transformLoc = glGetUniformLocation(shader_program, "uViewMat");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &my_camera.view_matrix.m11);
 
     {
         vertex_data mouse_verts[4] = {
@@ -114,8 +126,8 @@ void app_specific_update(double dt)
 {
     update_camera(&my_camera, dt);
     glUseProgram(shader_program);
-    unsigned int transformLoc = glGetUniformLocation(shader_program, "transform");
-    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &my_camera.matrix.m11);
+    unsigned int transformLoc = glGetUniformLocation(shader_program, "uViewMat");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &my_camera.view_matrix.m11);
 
     if (was_mouse_button_pressed(NL_MOUSE_BUTTON_LEFT))
     {
