@@ -1,29 +1,6 @@
 #include "nl_lib.h"
 #include "private/nl_gl.h"
 
-// const char* vert_shader_code =
-// NL_SHADER_VERSION_HEADER
-// "layout (location = 0) in vec3 aPos;                   \n"
-// "layout (location = 1) in vec4 aColor;                 \n"
-// "uniform mat4 uWorldMat;                               \n"
-// "uniform mat4 uViewMat;                                \n"
-// "uniform mat4 uProjMat;                                \n"
-// "out vec4 oColor;                                      \n"
-// "void main() {                                         \n"
-// "   vec4 worldPos = uWorldMat * vec4(aPos, 1.0);        \n"
-// "   vec4 viewPos = uViewMat * worldPos;                \n"
-// "   gl_Position = uProjMat * viewPos;                  \n"
-// "   oColor = aColor;                                   \n"
-// "}                                                     \0";
-
-// const char* fragment_shader_code =
-// NL_SHADER_VERSION_HEADER
-// "out vec4 FragColor;                                   \n"
-// "in vec4 oColor;                                       \n"
-// "void main() {                                         \n"
-// "    FragColor = oColor;                               \n"
-// "}                                                     \0";
-
 mesh triangle;
 mesh square;
 
@@ -55,8 +32,14 @@ unsigned int shader_program;
 
 void winsizecbk(int width, int height)
 {
-    float aspect = (float)width/(float)height;
-    create_orthographic_projection(&main_camera.proj_matrix, -aspect, aspect, -1, 1, -0.1f, 100.f);
+    float aspect = 0;
+    if (width < height){
+        aspect = (float)width/(float)height;  
+        create_orthographic_projection(&main_camera.proj_matrix, -1, 1, -aspect, aspect, -0.1f, 100.f);
+    } else {
+        aspect = (float)height/(float)width;
+        create_orthographic_projection(&main_camera.proj_matrix, -aspect, aspect, -1, 1, -0.1f, 100.f);
+    }
 
     unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
     glUniformMatrix4fv(projMat, 1, GL_FALSE, &main_camera.proj_matrix.m11);

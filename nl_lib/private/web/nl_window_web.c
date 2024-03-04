@@ -32,28 +32,31 @@ internal_function EM_BOOL mouse_callback(int event_type, const EmscriptenMouseEv
 {
     NL_UNUSED(user_data);
 
-	if (e->button == 0) // left click
+	switch(e->button)
 	{
-		if (event_type == EMSCRIPTEN_EVENT_MOUSEDOWN)
+		case 0:
 		{
-			set_mouse_button_down(NL_MOUSE_BUTTON_LEFT);
-		}
-		else if (event_type == EMSCRIPTEN_EVENT_MOUSEUP)
-		{
-			set_mouse_button_up(NL_MOUSE_BUTTON_LEFT);
-		}
-	}
+			if (event_type == EMSCRIPTEN_EVENT_MOUSEDOWN)
+			{
+				set_mouse_button_down(NL_MOUSE_BUTTON_LEFT);
+			}
+			else if (event_type == EMSCRIPTEN_EVENT_MOUSEUP)
+			{
+				set_mouse_button_up(NL_MOUSE_BUTTON_LEFT);
+			}
+		} break;
 
-	if (e->button == 2) // right click
-	{
-		if (event_type == EMSCRIPTEN_EVENT_MOUSEDOWN)
+		case 2:
 		{
-			set_mouse_button_down(NL_MOUSE_BUTTON_RIGHT);
-		}
-		else if (event_type == EMSCRIPTEN_EVENT_MOUSEUP)
-		{
-			set_mouse_button_up(NL_MOUSE_BUTTON_RIGHT);
-		}
+			if (event_type == EMSCRIPTEN_EVENT_MOUSEDOWN)
+			{
+				set_mouse_button_down(NL_MOUSE_BUTTON_RIGHT);
+			}
+			else if (event_type == EMSCRIPTEN_EVENT_MOUSEUP)
+			{
+				set_mouse_button_up(NL_MOUSE_BUTTON_RIGHT);
+			}
+		} break;
 	}
 
 	return EM_FALSE;
