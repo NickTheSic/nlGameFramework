@@ -87,6 +87,7 @@ enum nl_key
     key_numpad0 =             0x0052, /* "Numpad0"            */
     key_numpaddecimal =       0x0053, /* "NumpadDecimal"      */
 
+    key_alt =                 0x0056, /* Alt */
 
     NL_KEY_COUNT
 };

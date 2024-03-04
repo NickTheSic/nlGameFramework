@@ -7,6 +7,8 @@
 #include <emscripten/dom_pk_codes.h>
 #include <emscripten/html5.h>
 
+PFNWINDOWSIZECALLBACK pfn_window_size_callback = {0};
+
 internal_function EM_BOOL keyboard_callback(int eventType, const EmscriptenKeyboardEvent* e, void* user_data)
 {
     NL_UNUSED(user_data);
@@ -20,6 +22,8 @@ internal_function EM_BOOL keyboard_callback(int eventType, const EmscriptenKeybo
 	{
         set_key_state_up((nl_key)emscripten_compute_dom_pk_code(e->code));
 	}
+
+	NL_LOG("Key Code: %s, domPk code: %d", e->code, emscripten_compute_dom_pk_code(e->code));
 
 	return EM_TRUE;
 }
@@ -53,6 +57,13 @@ internal_function EM_BOOL mouse_callback(int event_type, const EmscriptenMouseEv
 	}
 
 	return EM_FALSE;
+}
+
+v2i get_screen_size()
+{
+	v2i result = {0};
+	emscripten_get_canvas_element_size("#canvas", &result.x, &result.y);
+	return (result);
 }
 
 int initialize_window(int width, int height, const char* title)

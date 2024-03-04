@@ -26,7 +26,13 @@ void create_identity_matrix(mat4x4f* const mat)
 
 void create_fustrum(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z)
 {
-    
+    (void)mat;
+    (void)left;
+    (void)right;
+    (void)bottom;
+    (void)top;
+    (void)near_z;
+    (void)far_z;
 }
 
 void create_orthographic_projection(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z)
@@ -69,6 +75,7 @@ internal_function void scale_matrix_1f(mat4x4f* const mat, float scale)
 
 internal_function void rotate_matrix(mat4x4f* const mat, float angle, float x, float y, float z)
 {
+    (void)mat;(void)angle;(void)x;(void)y;(void)z;
     NL_UNIMPLEMENTED_FUNC
 }
 
@@ -139,7 +146,7 @@ v3f v3f_normalize(const v3f vec)
 v3f v3f_cross(const v3f lhs, const v3f rhs)
 {
     NL_UNIMPLEMENTED_FUNC;
-
+    (void)lhs; (void)rhs;
     v3f result = {0};
     return (result);
 }   
@@ -161,6 +168,7 @@ float v2f_dot(const v2f ref, const v2f other)
 
 v2f v2f_subtract(const v2f lhs, const v2f rhs)
 {
+    (void)lhs; (void)rhs;
     v2f result = {0};
     NL_UNIMPLEMENTED_FUNC
     return result;
@@ -168,6 +176,7 @@ v2f v2f_subtract(const v2f lhs, const v2f rhs)
 
 v2f v2f_add(const v2f lhs, const v2f rhs)
 {
+    (void)lhs; (void)rhs;
     v2f result = {0};
     NL_UNIMPLEMENTED_FUNC
     return result;
@@ -175,6 +184,7 @@ v2f v2f_add(const v2f lhs, const v2f rhs)
 
 v2f v2f_normalize(const v2f vec)
 {
+    (void)vec;
     v2f result = {0};
     NL_UNIMPLEMENTED_FUNC
     return result;

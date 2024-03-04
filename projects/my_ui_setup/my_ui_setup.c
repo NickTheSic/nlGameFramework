@@ -5,26 +5,6 @@
 #include "my_ui_types.h"
 
 
-const char* vert_shader_code =
-NL_SHADER_VERSION_HEADER
-"layout (location = 0) in vec3 aPos;                   \n"
-"layout (location = 1) in vec4 aColor;                 \n"
-"uniform mat4 uViewMat;                                \n"
-"uniform mat4 uProjMat;                                \n"
-"out vec4 oColor;                                      \n"
-"void main() {                                         \n"
-"   gl_Position = uProjMat * uViewMat * vec4(aPos, 1.0);\n"
-"   oColor = aColor;                                   \n"
-"}                                                     \0";
-
-const char* fragment_shader_code =
-NL_SHADER_VERSION_HEADER
-"out vec4 FragColor;                                   \n"
-"in vec4 oColor;                                       \n"
-"void main() {                                         \n"
-"    FragColor = oColor;                               \n"
-"}                                                     \0";
-
 unsigned int shader_program;
 
 
@@ -61,10 +41,10 @@ void app_specific_init(void)
     v2f screen_size;
     screen_size.x = retrieved_screen_size.x;
     screen_size.y = retrieved_screen_size.y;
-    initialize_camera(&my_camera, (v3f){0.0f,0.0f,0.0f}, (v2f){2.f,2.f});
+    initialize_camera(&my_camera, (v3f){0.0f,0.0f,0.0f}, (v2f){(float)screen_size.x, (float)screen_size.y});
     window_size_callback(screen_size.x, screen_size.y);
 
-    shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
+    shader_program = create_shader_program(common_vert_shader_code, common_fragment_shader_code);
     glUseProgram(shader_program);
     unsigned int transformLoc = glGetUniformLocation(shader_program, "uViewMat");
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &my_camera.view_matrix.m11);
