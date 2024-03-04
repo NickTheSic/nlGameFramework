@@ -66,6 +66,13 @@ internal_function void scale_matrix_3f(mat4x4f* const mat, v3f scale)
     mat->m13 *= scale.z; mat->m23 *= scale.z; mat->m33 *= scale.z; mat->m43 *= scale.z;
 }
 
+internal_function void scale_matrix_2f(mat4x4f* const mat, v2f scale)
+{
+    mat->m11 *= scale.x; mat->m21 *= scale.x; mat->m31 *= scale.x; mat->m41 *= scale.x;
+    mat->m12 *= scale.y; mat->m22 *= scale.y; mat->m32 *= scale.y; mat->m42 *= scale.y;
+    mat->m13 *= 1.0f;    mat->m23 *= 1.0f;    mat->m33 *= 1.0f;    mat->m43 *= 1.0f;
+}
+
 internal_function void scale_matrix_1f(mat4x4f* const mat, float scale)
 {
     mat->m11 *= scale; mat->m21 *= scale; mat->m31 *= scale; mat->m41 *= scale;
@@ -86,13 +93,20 @@ internal_function void translate_matrix(mat4x4f* const mat, v3f pos)
     mat->m43 += pos.z;
 }
 
-void create_srt(mat4x4f* const mat, const v3f scale, const v3f rot, const v3f translation)
+void create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const v3f translation)
 {
     scale_matrix_3f(mat, scale);
     rotate_matrix(mat, rot.z, 0,0,1);//roll
     rotate_matrix(mat, rot.x, 1,0,0);//pitch
     rotate_matrix(mat, rot.y, 0,1,0);//yaw
     translate_matrix(mat, translation);
+}
+
+void create_srt_matrix_from_transform2d(mat4x4f* const mat, transform2d transform)
+{
+    scale_matrix_2f(mat, transform.size);
+    rotate_matrix(mat, transform.rotation, 0,0,1);//roll
+    translate_matrix(mat, transform.position);
 }
 
 float v3f_length_squared(const v3f vec)

@@ -25,17 +25,18 @@ enum nl_key
     key_end       = 0x23,
     key_home      = 0x24,
 
-    key_left = 0x25,
-    key_up        = 0x26,
-    key_right = 0x27,
+    key_left        = 0x25,
+    key_up          = 0x26,
+    key_right       = 0x27,
     key_down        = 0x28,
+    
     key_select      = 0x29,//	SELECT key
     key_print       = 0x2A,//PRINT key
     key_execute     = 0x2B,//EXECUTE key
     key_printscreen = 0x2C,//PRINT SCREEN key
-    key_insert = 0x2D,//	INS key
-    key_delete = 0x2E,//	DEL key
-    key_help    = 0x2F,//	HELP key
+    key_insert      = 0x2D,//	INS key
+    key_delete      = 0x2E,//	DEL key
+    key_help        = 0x2F,//	HELP key
 
     key_zero = 0x30,
 	key_one = 0x31,
