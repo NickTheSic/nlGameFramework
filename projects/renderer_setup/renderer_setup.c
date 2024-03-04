@@ -1,28 +1,28 @@
 #include "nl_lib.h"
 #include "private/nl_gl.h"
 
-const char* vert_shader_code =
-NL_SHADER_VERSION_HEADER
-"layout (location = 0) in vec3 aPos;                   \n"
-"layout (location = 1) in vec4 aColor;                 \n"
-"uniform mat4 uWorldMat;                               \n"
-"uniform mat4 uViewMat;                                \n"
-"uniform mat4 uProjMat;                                \n"
-"out vec4 oColor;                                      \n"
-"void main() {                                         \n"
-"   vec4 worldPos = uWorldMat * vec4(aPos, 1.0);        \n"
-"   vec4 viewPos = uViewMat * worldPos;                \n"
-"   gl_Position = uProjMat * viewPos;                  \n"
-"   oColor = aColor;                                   \n"
-"}                                                     \0";
+// const char* vert_shader_code =
+// NL_SHADER_VERSION_HEADER
+// "layout (location = 0) in vec3 aPos;                   \n"
+// "layout (location = 1) in vec4 aColor;                 \n"
+// "uniform mat4 uWorldMat;                               \n"
+// "uniform mat4 uViewMat;                                \n"
+// "uniform mat4 uProjMat;                                \n"
+// "out vec4 oColor;                                      \n"
+// "void main() {                                         \n"
+// "   vec4 worldPos = uWorldMat * vec4(aPos, 1.0);        \n"
+// "   vec4 viewPos = uViewMat * worldPos;                \n"
+// "   gl_Position = uProjMat * viewPos;                  \n"
+// "   oColor = aColor;                                   \n"
+// "}                                                     \0";
 
-const char* fragment_shader_code =
-NL_SHADER_VERSION_HEADER
-"out vec4 FragColor;                                   \n"
-"in vec4 oColor;                                       \n"
-"void main() {                                         \n"
-"    FragColor = oColor;                               \n"
-"}                                                     \0";
+// const char* fragment_shader_code =
+// NL_SHADER_VERSION_HEADER
+// "out vec4 FragColor;                                   \n"
+// "in vec4 oColor;                                       \n"
+// "void main() {                                         \n"
+// "    FragColor = oColor;                               \n"
+// "}                                                     \0";
 
 mesh triangle;
 mesh square;
@@ -59,11 +59,11 @@ void winsizecbk(int width, int height)
     create_orthographic_projection(&main_camera.proj_matrix, -aspect, aspect, -1, 1, -0.1f, 100.f);
 
     unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
-    glUniformMatrix4fv(projMat, 1, GL_FALSE, &main_camera.proj_matrix);
+    glUniformMatrix4fv(projMat, 1, GL_FALSE, &main_camera.proj_matrix.m11);
 
     create_orthographic_projection(&main_camera.view_matrix, 0, width, 0, height, -0.1f, 100.f);
     unsigned int viewMat = glGetUniformLocation(shader_program, "uViewMat");
-    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &main_camera.view_matrix);
+    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &main_camera.view_matrix.m11);
 }
 
 void app_specific_init(void)
@@ -72,12 +72,12 @@ void app_specific_init(void)
     generate_mesh_using_vertices_and_indices(&triangle, vertices, 3, square_indices, 3);
     generate_mesh_using_vertices_and_indices(&square, square_verts, 4, square_indices, 6);
     
-    shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
+    shader_program = create_shader_program(common_vert_shader_code, common_fragment_shader_code);
     use_shader_program(shader_program);
     
     create_orthographic_projection(&main_camera.view_matrix,-2.f,2.f,-2.f,2.f, -0.1f, 100.f);
     unsigned int viewMat = glGetUniformLocation(shader_program, "uViewMat");
-    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &main_camera.view_matrix);
+    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &main_camera.view_matrix.m11);
 
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);

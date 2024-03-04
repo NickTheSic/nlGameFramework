@@ -71,8 +71,8 @@ void app_specific_init(void)
 
     {
         vertex_data mouse_verts[4] = {
-            {10.f,1.f,1.f,1.f,1.f,1.f,1.f},
-            {10.f,10.f,1.f,1.f,1.f,1.f,1.f},
+            {100.f,1.f,1.f,1.f,1.f,1.f,1.f},
+            {100.f,10.f,1.f,1.f,1.f,1.f,1.f},
             {1.f,10.f,1.f,1.f,1.f,1.f,1.f},
             {1.f,100.f,1.f,1.f,1.f,1.f,1.f}
         };
