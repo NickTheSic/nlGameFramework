@@ -38,10 +38,10 @@ vertex_data vertices[] =
 
 vertex_data square_verts[] =
 {
-    {{-0.5f, -0.5f, 5.0f}, {1.0f, 0.5f, 0.8f, 1.0f}},
-    {{ 0.5f, -0.5f, 0.0f}, {0.8f, 1.0f, 0.5f, 1.0f}},
-    {{ 0.5f,  0.5f, -5.0f}, {0.5f, 0.8f, 1.0f, 1.0f}},
-    {{-0.5f,  0.5f, 0.0f}, {0.7f, 0.2f, 0.0f, 1.0f}}
+    {{-100.5f, -100.5f, 5.0f}, {1.0f, 0.5f, 0.8f, 1.0f}},
+    {{ 100.5f, -100.5f, 0.0f}, {0.8f, 1.0f, 0.5f, 1.0f}},
+    {{ 100.5f,  100.5f, -5.0f}, {0.5f, 0.8f, 1.0f, 1.0f}},
+    {{-100.5f,  100.5f, 0.0f}, {0.7f, 0.2f, 0.0f, 1.0f}}
 };
 
 unsigned int square_indices[] =
@@ -55,12 +55,15 @@ unsigned int shader_program;
 
 void winsizecbk(int width, int height)
 {
-    mat4x4f proj = {0};
     float aspect = (float)width/(float)height;
-    create_orthographic_projection(&proj, -aspect, aspect, -1, 1, -0.1f, 100.f);
+    create_orthographic_projection(&main_camera.proj_matrix, -aspect, aspect, -1, 1, -0.1f, 100.f);
 
     unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
-    glUniformMatrix4fv(projMat, 1, GL_FALSE, &proj.m11);
+    glUniformMatrix4fv(projMat, 1, GL_FALSE, &main_camera.proj_matrix);
+
+    create_orthographic_projection(&main_camera.view_matrix, 0, width, 0, height, -0.1f, 100.f);
+    unsigned int viewMat = glGetUniformLocation(shader_program, "uViewMat");
+    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &main_camera.view_matrix);
 }
 
 void app_specific_init(void)
@@ -72,35 +75,39 @@ void app_specific_init(void)
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     use_shader_program(shader_program);
     
-    mat4x4f view = {0};
-    create_orthographic_projection(&view,-2.f,2.f,-2.f,2.f, -0.1f, 100.f);
+    create_orthographic_projection(&main_camera.view_matrix,-2.f,2.f,-2.f,2.f, -0.1f, 100.f);
     unsigned int viewMat = glGetUniformLocation(shader_program, "uViewMat");
-    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &view.m11);
+    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &main_camera.view_matrix);
 
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
 }
 
-static v2i mouse_pos = {0};
+static v2f mouse_pos = {0};
+static v2i cur_mouse_pos = {0};
+static v2f screen_pos = {0};
 
 void app_specific_update(double dt)
 {
     (void)dt;
 
-   v2i cur_mouse_pos = get_mouse_position_from_system();
-   if (mouse_pos.x != cur_mouse_pos.x || mouse_pos.y != cur_mouse_pos.y)
-   {
-       mouse_pos.x = cur_mouse_pos.x;
-       mouse_pos.y = cur_mouse_pos.y;
-       NL_LOG("New Mouse Pos X: %d, Y: %d", mouse_pos.x, mouse_pos.y);
-   }
+    cur_mouse_pos = get_mouse_position_from_system();
+    if (mouse_pos.x != cur_mouse_pos.x || mouse_pos.y != cur_mouse_pos.y)
+    {
+        mouse_pos.x = (float)cur_mouse_pos.x;
+        mouse_pos.y = (float)cur_mouse_pos.y;
+ 
+        screen_pos.x = (float)mouse_pos.x;
+        screen_pos.y = (float)mouse_pos.y;
+
+        NL_LOG("New Mouse Pos X: %f, Y: %f", screen_pos.x, screen_pos.y);
+    }
     
     use_shader_program(shader_program);
 
     v3f scale = {1,1,1};
     v3f rot = {0};
-    v3f trans = {0};
-    trans.x = -0.3f;
+    v3f trans = {screen_pos.x, screen_pos.y, 0};
     mat4x4f mat = {0};
     create_identity_matrix(&mat);
     create_srt(&mat, scale, rot, trans);
@@ -110,10 +117,6 @@ void app_specific_update(double dt)
 
     render_single_mesh(&square);
 
-    scale.y += 0.1f;
-    scale.x -= 0.1f;
-    trans.y = 0.5f;
-    trans.x  = 1.5f;
     create_srt(&mat, scale, rot, trans);
 
     glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
