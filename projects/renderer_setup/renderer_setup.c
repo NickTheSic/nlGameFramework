@@ -10,7 +10,7 @@ NL_SHADER_VERSION_HEADER
 "uniform mat4 uProjMat;                                \n"
 "out vec4 oColor;                                      \n"
 "void main() {                                         \n"
-"   vec4 worldPos = uWorldMat * vec4(aPos 1.0);        \n"
+"   vec4 worldPos = uWorldMat * vec4(aPos, 1.0);        \n"
 "   vec4 viewPos = uViewMat * worldPos;                \n"
 "   gl_Position = uProjMat * viewPos;                  \n"
 "   oColor = aColor;                                   \n"
@@ -81,9 +81,19 @@ void app_specific_init(void)
     winsizecbk(screen_size.x, screen_size.y);
 }
 
+static v2i mouse_pos = {0};
+
 void app_specific_update(double dt)
 {
     (void)dt;
+
+   v2i cur_mouse_pos = get_mouse_position_from_system();
+   if (mouse_pos.x != cur_mouse_pos.x || mouse_pos.y != cur_mouse_pos.y)
+   {
+       mouse_pos.x = cur_mouse_pos.x;
+       mouse_pos.y = cur_mouse_pos.y;
+       NL_LOG("New Mouse Pos X: %d, Y: %d", mouse_pos.x, mouse_pos.y);
+   }
     
     use_shader_program(shader_program);
 
