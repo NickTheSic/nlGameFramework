@@ -47,5 +47,6 @@ void app_specific_update(double dt)
 {
     update_player_controller(&player_controller, dt);
 
-    
+    mat4x4f mat = {0};
+    create_srt_matrix_from_transform2d(&mat, player.transform);
 }

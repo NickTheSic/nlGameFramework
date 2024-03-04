@@ -37,7 +37,7 @@ void create_fustrum(mat4x4f* const mat, float left, float right, float bottom, f
 
 void create_orthographic_projection(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z)
 {
-    memset(mat, 0, sizeof(mat4x4f));
+    memset(mat, 1, sizeof(mat4x4f));
 
     float delta_x = right-left;
     float delta_y = top-bottom;
@@ -105,7 +105,7 @@ void create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const
 void create_srt_matrix_from_transform2d(mat4x4f* const mat, transform2d transform)
 {
     scale_matrix_2f(mat, transform.size);
-    rotate_matrix(mat, transform.rotation, 0,0,1);//roll
+    rotate_matrix(mat, transform.rotation, 0,0,1); //roll
     translate_matrix(mat, transform.position);
 }
 

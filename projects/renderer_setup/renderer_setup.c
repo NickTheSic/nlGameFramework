@@ -96,7 +96,7 @@ void app_specific_update(double dt)
     v3f trans = {slow, 0, 0};
     mat4x4f mat = {0};
     create_identity_matrix(&mat);
-    create_srt(&mat, scale, rot, trans);
+    create_srt_matrix(&mat, scale, rot, trans);
 
     unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
     glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
