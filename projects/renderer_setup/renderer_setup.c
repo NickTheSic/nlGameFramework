@@ -68,6 +68,8 @@ void winsizecbk(int width, int height)
 
 void app_specific_init(void)
 {
+    NL_LOG("Startup!");
+    
     pfn_window_size_callback = & winsizecbk;
     generate_mesh_using_vertices_and_indices(&triangle, vertices, 3, square_indices, 3);
     generate_mesh_using_vertices_and_indices(&square, square_verts, 4, square_indices, 6);

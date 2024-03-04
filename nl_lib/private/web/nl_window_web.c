@@ -59,6 +59,12 @@ internal_function EM_BOOL mouse_callback(int event_type, const EmscriptenMouseEv
 	return EM_FALSE;
 }
 
+internal_function EM_BOOL mouse_move_callback(int event_type, const EmscriptenMouseEvent* e, void* user_data)
+{
+	set_mouse_position_from_system(e->targetX, get_screen_size().y - e->targetY);
+	return EM_FALSE;
+}
+
 v2i get_screen_size()
 {
 	v2i result = {0};
@@ -76,6 +82,8 @@ int initialize_window(int width, int height, const char* title)
 	
 	emscripten_set_mouseup_callback("#canvas", 0, 1, mouse_callback);
 	emscripten_set_mousedown_callback("#canvas", 0, 1, mouse_callback);
+
+	emscripten_set_mousemove_callback("#canvas", 0, 1, mouse_move_callback);
 
     return 1;
 }
