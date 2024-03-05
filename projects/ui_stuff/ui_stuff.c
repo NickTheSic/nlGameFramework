@@ -3,7 +3,7 @@
 
 #define SQUARE_HALF_SIZE 100.0f
 
-vertex_data square_verts[] =
+static vertex_data square_verts[] =
 {
     {{-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, {1.0f, 0.5f, 0.8f, 1.0f}},
     {{ SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, {0.8f, 1.0f, 0.5f, 1.0f}},
@@ -11,7 +11,7 @@ vertex_data square_verts[] =
     {{-SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}, {0.7f, 0.2f, 0.0f, 1.0f}}
 };
 
-unsigned int square_indices[] =
+static unsigned int square_indices[] =
 {
     0,1,2,
     2,3,0
