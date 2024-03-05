@@ -203,3 +203,10 @@ v2f v2f_normalize(const v2f vec)
     NL_UNIMPLEMENTED_FUNC
     return result;
 }
+
+void initialize_transform2d(transform2d* const t)
+{
+    t->position = (v3f){0,0,0};
+    t->size = (v2f){1,1};
+    t->rotation = 0.0f;
+}

@@ -32,18 +32,10 @@ unsigned int shader_program;
 
 void winsizecbk(int width, int height)
 {
-    float aspect = 0;
-    if (width < height){
-        aspect = (float)width/(float)height;  
-    } else {
-        aspect = (float)height/(float)width;
-    }
-    create_orthographic_projection(&main_camera.proj_matrix, -aspect, aspect, -1, 1, -0.1f, 100.f);
+    //float aspect = (float)width/(float)height;  
+    //create_orthographic_projection(&main_camera.proj_matrix, -1 * aspect, aspect, -1, 1, -0.1f, 100.f);
 
-    unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
-    glUniformMatrix4fv(projMat, 1, GL_FALSE, &main_camera.proj_matrix.m11);
-
-    create_orthographic_projection(&main_camera.view_matrix, 0, width, 0, height, -0.1f, 100.f);
+    create_orthographic_projection(&main_camera.view_matrix, -width, width, -height, height, -0.1f, 100.f);
     unsigned int viewMat = glGetUniformLocation(shader_program, "uViewMat");
     glUniformMatrix4fv(viewMat, 1, GL_FALSE, &main_camera.view_matrix.m11);
 }
@@ -59,9 +51,7 @@ void app_specific_init(void)
     shader_program = create_shader_program(common_vert_shader_code, common_fragment_shader_code);
     use_shader_program(shader_program);
     
-    create_orthographic_projection(&main_camera.view_matrix,-2.f,2.f,-2.f,2.f, -0.1f, 100.f);
-    unsigned int viewMat = glGetUniformLocation(shader_program, "uViewMat");
-    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &main_camera.view_matrix.m11);
+    initialize_camera_to_zero(&main_camera);
 
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
@@ -91,9 +81,7 @@ void app_specific_update(double dt)
 
     v3f scale = {1,1,1};
     v3f rot = {0};
-    static float slow;
-    slow+=dt;
-    v3f trans = {slow, 0, 0};
+    v3f trans = {screen_pos.x, screen_pos.y, 0};
     mat4x4f mat = {0};
     create_identity_matrix(&mat);
     create_srt_matrix(&mat, scale, rot, trans);

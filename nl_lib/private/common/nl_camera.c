@@ -1,6 +1,22 @@
 #include "../nl_camera.h"
 #include "../nl_math.h"
 
+void initialize_camera_to_zero(camera* const cam)
+{
+    cam->position.x = 0.0f;
+    cam->position.y = 0.0f;
+    cam->position.z = 0.0f;
+    cam->size.x = 0.0f;
+    cam->size.y = 0.0f;
+
+    cam->move_speed = 10.f;
+
+    create_identity_matrix(&cam->proj_matrix);
+    create_identity_matrix(&cam->view_matrix);
+
+    recalculate_camera(cam);
+}
+
 void initialize_camera(camera* const cam, const v3f pos, const v2f size)
 {
     cam->position.x = pos.x;
@@ -19,8 +35,11 @@ void initialize_camera(camera* const cam, const v3f pos, const v2f size)
 
 void create_screen_aspect(camera* const cam, int width, int height)
 {
+    cam->screen_size.x = (float)width;
+    cam->screen_size.y = (float)height;
+    
     float aspect = (float)width/(float)height;
-    create_orthographic_projection(&cam->proj_matrix, 0, aspect, 0, 1, -0.1f, 100.f);
+    create_orthographic_projection(&cam->proj_matrix, -1 * aspect, aspect, -1, 1, -0.1f, 100.f);
 }
 
 void update_camera_size(camera* const cam, float width, float height)
@@ -59,11 +78,11 @@ void recalculate_camera(camera* const cam)
 {
     if (cam->assume_half_size == 1)
     {
-        recalculate_camera_assuming_half_size(cam);
+    //    recalculate_camera_assuming_half_size(cam);
     }
     else
     {
-        recalculate_camera_assuming_zero_to_size(cam);
+    //    recalculate_camera_assuming_zero_to_size(cam);
     }
 }
 

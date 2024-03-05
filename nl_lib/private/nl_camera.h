@@ -18,10 +18,12 @@ struct camera
 
 void create_screen_aspect(camera* const cam, int width, int height);
 
-void recalculate_camera(camera* const cam);
+void initialize_camera_to_zero(camera* const cam);
 void initialize_camera(camera* const cam, const v3f pos, const v2f size);
 void update_camera_size(camera* const cam, float width, float height);
 void update_camera(camera* const cam, float dt);
+
+void recalculate_camera(camera* const cam);
 
 void create_perspective_vfov(float angle, float aspect, float near, float far);
 void create_perspective_hfov(float angle, float aspect, float near, float far);
