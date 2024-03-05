@@ -52,7 +52,11 @@ void initialize_object(object* o, v2f anchor)
 void app_specific_init(void)
 {
     initialize_object(&square_ur, (v2f){-1.0f,1.0f});
+    square_ur.trans.position.x = SQUARE_HALF_SIZE;
+    square_ur.trans.position.y = -SQUARE_HALF_SIZE;
     initialize_object(&square_bl, (v2f){1.0f,-1.0f});
+    square_bl.trans.position.x = -SQUARE_HALF_SIZE;
+    square_bl.trans.position.y = SQUARE_HALF_SIZE;
     initialize_object(&square_center, (v2f){0.0f,0.0f});
     initialize_object(&mouse, (v2f){0.0f,0.0f});
 
@@ -75,8 +79,8 @@ void matrix_for_ui(object* o)
     transform2d trans = o->trans;
     float half_w = screen_size.x/2.0f;
     float half_h = screen_size.y/2.0f;
-    trans.position.x = (half_w) + (o->anchor.x * half_w);
-    trans.position.y = (half_h) + (o->anchor.y * half_h);
+    trans.position.x += (half_w) + (o->anchor.x * half_w);
+    trans.position.y += (half_h) + (o->anchor.y * half_h);
     create_srt_matrix_from_transform2d(&mat, trans);
 
     unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
