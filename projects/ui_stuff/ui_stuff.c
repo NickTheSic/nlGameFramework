@@ -70,10 +70,9 @@ void app_specific_init(void)
     winsizecbk(screen_size.x, screen_size.y);
 }
 
-void matrix_for_ui(object* o)
+void ui_anchored_matrix(mat4x4f* const mat, object* const o)
 {
-    mat4x4f mat = {0};
-    create_identity_matrix(&mat);
+    create_identity_matrix(mat);
 
     v2i screen_size = get_screen_size();
     transform2d trans = o->trans;
@@ -81,7 +80,13 @@ void matrix_for_ui(object* o)
     float half_h = screen_size.y/2.0f;
     trans.position.x += (half_w) + (o->anchor.x * half_w);
     trans.position.y += (half_h) + (o->anchor.y * half_h);
-    create_srt_matrix_from_transform2d(&mat, trans);
+    create_srt_matrix_from_transform2d(mat, trans);
+}
+
+void matrix_for_ui(object* const o)
+{
+    mat4x4f mat = {0};
+    ui_anchored_matrix(&mat, o);
 
     unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
     glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
