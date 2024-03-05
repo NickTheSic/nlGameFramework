@@ -28,6 +28,7 @@ struct ui_object
 static object square_ur = {0};
 static object square_bl = {0};
 static object square_center = {0};
+static object mouse = {0};
 static camera ui_camera = {0};
 static unsigned int shader_program = {0};
 
@@ -53,6 +54,7 @@ void app_specific_init(void)
     initialize_object(&square_ur, (v2f){-1.0f,1.0f});
     initialize_object(&square_bl, (v2f){1.0f,-1.0f});
     initialize_object(&square_center, (v2f){0.0f,0.0f});
+    initialize_object(&mouse, (v2f){0.0f,0.0f});
 
     shader_program = create_shader_program(common_vert_shader_code, common_fragment_shader_code);
     use_shader_program(shader_program);
@@ -88,4 +90,18 @@ void app_specific_update(double dt)
     matrix_for_ui(&square_ur);
     matrix_for_ui(&square_bl);
     matrix_for_ui(&square_center);
+
+
+    v2i cur_mouse_pos = get_mouse_position_from_system();
+    v3f scale = {0.1,0.1,0.1};
+    v3f rot = {0};
+    v3f trans = {cur_mouse_pos.x, cur_mouse_pos.y, 0};
+    mat4x4f mat = {0};
+    create_identity_matrix(&mat);
+    create_srt_matrix(&mat, scale, rot, trans);
+
+    unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
+    glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
+
+    render_single_mesh(&mouse.m);
 }
