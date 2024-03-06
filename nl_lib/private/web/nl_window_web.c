@@ -64,6 +64,7 @@ internal_function EM_BOOL mouse_callback(int event_type, const EmscriptenMouseEv
 
 internal_function EM_BOOL mouse_move_callback(int event_type, const EmscriptenMouseEvent* e, void* user_data)
 {
+	NL_UNUSED(user_data); NL_UNUSED(event_type);
 	set_mouse_position_from_system(e->targetX, get_screen_size().y - e->targetY);
 	return EM_FALSE;
 }

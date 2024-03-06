@@ -96,6 +96,8 @@ void matrix_for_ui(ui_element* const o)
 
 void app_specific_update(double dt)
 {
+    NL_UNUSED(dt);
+    
     matrix_for_ui(&square_ur);
     matrix_for_ui(&square_bl);
     matrix_for_ui(&square_center);
