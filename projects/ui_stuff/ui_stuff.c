@@ -140,3 +140,11 @@ void app_specific_update(double dt)
 
     render_single_mesh(&mouse.m);
 }
+
+void app_specific_cleanup(void)
+{
+    free_mesh(&square_ur.m);
+    free_mesh(&square_bl.m);
+    free_mesh(&square_center.m);
+    free_mesh(&mouse.m);
+}

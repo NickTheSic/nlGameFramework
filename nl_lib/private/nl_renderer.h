@@ -61,6 +61,8 @@ void generate_mesh_using_vertices_and_indices(mesh* const mesh, const vertex_dat
 void render_single_mesh(mesh* const mesh);
 void move_mesh(mesh* const mesh, const v2f difference);
 
+void free_mesh(mesh* const mesh);
+
 /////////////////////////////////////////////////////////////////
 //              Wrappers around GL specific calls              //
 /////////////////////////////////////////////////////////////////

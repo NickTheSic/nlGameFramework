@@ -6,6 +6,7 @@
 
 extern void app_specific_init(void);
 extern void app_specific_update(double dt);
+extern void app_specific_cleanup(void);
 
 void run()
 {
@@ -49,6 +50,8 @@ int main(int count, char** args)
 #elif defined(__EMSCRIPTEN__)
     emscripten_set_main_loop(run, 0, 1);
 #endif
+
+    app_specific_cleanup();
 
     basic_memory_leak_check();
 

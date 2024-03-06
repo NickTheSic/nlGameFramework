@@ -91,6 +91,14 @@ void render_single_mesh(mesh* mesh)
     glBindVertexArray(0);
 }
 
+void free_mesh(mesh* const mesh)
+{
+    memory_free(mesh->vertices);
+    memory_free(mesh->indices);
+
+    // gl free buffers here
+}
+
 // temporary? - will need to add position to the shader, that may work better 
 //void move_mesh(mesh* const mesh, const v2f difference)
 //{

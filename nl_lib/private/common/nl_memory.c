@@ -5,7 +5,7 @@
 
 global_variable int _BASIC_MEMORY_COUNTER = {0};
 
-void *memory_allocate(size_t size)
+void *_memory_allocate(size_t size)
 {
     void* memory = (void*)malloc(size);
     if (memory == 0)
