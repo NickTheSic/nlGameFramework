@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <memory.h>
 
-local_variable int _BASIC_MEMORY_COUNTER = {0}
+global_variable int _BASIC_MEMORY_COUNTER = {0};
 
 void *memory_allocate(size_t size)
 {
