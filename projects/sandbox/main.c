@@ -50,5 +50,7 @@ int main(int count, char** args)
     emscripten_set_main_loop(run, 0, 1);
 #endif
 
+    basic_memory_leak_check();
+
     return 0;
 }

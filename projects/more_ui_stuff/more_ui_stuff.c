@@ -2,6 +2,9 @@
 #include "private/nl_gl.h"
 
 
+#include "ui_batch_renderer.c"
+
+
 static const char* ui_vert_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
@@ -27,12 +30,13 @@ NL_SHADER_VERSION_HEADER
 
 #define SQUARE_HALF_SIZE 100.0f
 
-static vertex_data square_verts[] =
+
+static v3f square_verts[] =
 {
-    {{-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, {1.0f, 0.5f, 0.8f, 1.0f}},
-    {{ SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, {0.8f, 1.0f, 0.5f, 1.0f}},
-    {{ SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}, {0.5f, 0.8f, 1.0f, 1.0f}},
-    {{-SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}, {0.7f, 0.2f, 0.0f, 1.0f}}
+    {{-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}},
+    {{ SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}},
+    {{ SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}},
+    {{-SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}}
 };
 
 static unsigned int square_indices[] =
@@ -40,21 +44,14 @@ static unsigned int square_indices[] =
     0,1,2,
     2,3,0
 };
-
-typedef struct ui_element ui_element;
-struct ui_element
-{
-    transform2d trans;
-    v2f anchor;
-    mesh m;
-};
-
+ 
 static ui_element square_ur = {0};
 static ui_element square_bl = {0};
 static ui_element square_center = {0};
 static ui_element mouse = {0};
 static camera ui_camera = {0};
 static unsigned int shader_program = {0};
+
 
 void winsizecbk(int width, int height)
 {
@@ -65,7 +62,7 @@ void winsizecbk(int width, int height)
 
 void initialize_object(ui_element* o, v2f anchor)
 {
-    generate_mesh_using_vertices_and_indices(&o->m, square_verts, 4, square_indices, 6);
+    o->color = (colourf){1.0f,1.0f,1.0f,1.0f};
 
     o->anchor.x = anchor.x;
     o->anchor.y = anchor.y;

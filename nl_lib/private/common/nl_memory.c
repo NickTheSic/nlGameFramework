@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <memory.h>
 
+local_variable int _BASIC_MEMORY_COUNTER = {0}
+
 void *memory_allocate(size_t size)
 {
     void* memory = (void*)malloc(size);
@@ -12,6 +14,8 @@ void *memory_allocate(size_t size)
         return 0;
     }
 
+    ++_BASIC_MEMORY_COUNTER;
+
     memset(memory, 0, size);
     return memory;
 }
@@ -20,4 +24,22 @@ void *memory_allocate(size_t size)
 void memory_free(void* memory)
 {
     free(memory);
+
+    --_BASIC_MEMORY_COUNTER;
+}
+
+void basic_memory_leak_check()
+{
+    if (_BASIC_MEMORY_COUNTER > 0)
+    {
+        NL_LOG("More memory allocations than frees: %d", _BASIC_MEMORY_COUNTER);
+    }
+    else if (_BASIC_MEMORY_COUNTER < 0)
+    {
+        NL_LOG("More memory frees than allocations: %d", _BASIC_MEMORY_COUNTER);
+    }
+    else
+    {
+        NL_LOG("No leaks detected");
+    }
 }
