@@ -25,7 +25,7 @@ struct ui_batch_renderer
 
 void add_element_to_ui_renderer(ui_batch_renderer* const ui_renderers)
 {
-
+    NL_UNIMPLEMENTED_FUNC;
 }
 
 void initialize_ui_renderer(ui_batch_renderer* const ui_renderer, unsigned int batch_count)

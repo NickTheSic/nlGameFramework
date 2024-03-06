@@ -76,6 +76,7 @@ void set_cull_face_enabled(int enabled);
 void set_cull_face_side(int front);
 void set_cull_front_face(int clockwise);
 
+
 /////////////////////////////////////////////////////////////////
 //                To keep Atrrib Ptr calls generic             //
 /////////////////////////////////////////////////////////////////

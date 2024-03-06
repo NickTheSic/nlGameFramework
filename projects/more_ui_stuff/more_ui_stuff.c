@@ -8,7 +8,7 @@
 static const char* ui_vert_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
-"layout (location = 1) in vec4 aColor;                 \n"
+"layout (location = 0) in vec4 aColor;                 \n"
 "uniform mat4 uWorldMat;                               \n"
 "uniform mat4 uViewMat;                                \n"
 "uniform mat4 uProjMat;                                \n"
@@ -33,10 +33,10 @@ NL_SHADER_VERSION_HEADER
 
 static v3f square_verts[] =
 {
-    {{-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}},
-    {{ SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}},
-    {{ SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}},
-    {{-SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}}
+    {-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f},
+    { SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f},
+    { SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f},
+    {-SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}
 };
 
 static unsigned int square_indices[] =
@@ -48,7 +48,7 @@ static unsigned int square_indices[] =
 static ui_element square_ur = {0};
 static ui_element square_bl = {0};
 static ui_element square_center = {0};
-static ui_element mouse = {0};
+static mesh mouse = {0};
 static camera ui_camera = {0};
 static unsigned int shader_program = {0};
 
@@ -79,10 +79,12 @@ void app_specific_init(void)
     square_bl.trans.position.x = -SQUARE_HALF_SIZE;
     square_bl.trans.position.y = SQUARE_HALF_SIZE;
     initialize_object(&square_center, (v2f){0.0f,0.0f});
-    initialize_object(&mouse, (v2f){0.0f,0.0f});
 
     shader_program = create_shader_program(ui_vert_shader_code, ui_fragment_shader_code);
     use_shader_program(shader_program);
+
+    vertex_atrribute_info attribs[] = {{3, GL_FLOAT, GL_FALSE, 0},{4, GL_FLOAT, GL_FALSE, 9}};
+    setup_vertex_atrributes(sizeof(colourf) + sizeof(v3f), attribs, 2);
 
     initialize_camera_to_zero(&ui_camera);
     pfn_window_size_callback = &winsizecbk;
@@ -112,7 +114,7 @@ void matrix_for_ui(ui_element* const o)
     unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
     glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
 
-    render_single_mesh(&o->m);
+    add_element_to_ui_renderer(0);
 }
 
 void app_specific_update(double dt)
@@ -135,5 +137,10 @@ void app_specific_update(double dt)
     unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
     glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
 
-    render_single_mesh(&mouse.m);
+    render_single_mesh(&mouse);
+}
+
+void app_specific_cleanup()
+{
+    NL_UNIMPLEMENTED_FUNC;
 }

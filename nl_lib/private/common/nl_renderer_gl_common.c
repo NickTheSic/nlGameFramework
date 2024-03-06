@@ -70,8 +70,8 @@ void generate_mesh_using_vertices_and_indices(mesh* const mesh, const vertex_dat
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indice_data_size, indices, GL_STATIC_DRAW); 
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)offsetof(vertex_data, pos));
-    glEnableVertexAttribArray(0);  
-
+    glEnableVertexAttribArray(0);
+    
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex_data), (void*)offsetof(vertex_data, color));
     glEnableVertexAttribArray(1);  
 
