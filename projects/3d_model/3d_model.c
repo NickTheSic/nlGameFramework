@@ -30,7 +30,7 @@ float camera_bounds = 1.f;
 unsigned int shader_program;
 
 void load_mesh_from_file();
-void recalculate_camera()
+void _recalculate_camera()
 {
     create_orthographic_projection(&matrix, -camera_bounds, camera_bounds, -camera_bounds, camera_bounds, -0.1, 100);
 }
@@ -39,7 +39,7 @@ void app_specific_init(void)
 {
     load_mesh_from_file();
 
-    recalculate_camera();
+    _recalculate_camera();
 
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
     glUseProgram(shader_program);
@@ -74,7 +74,7 @@ void app_specific_update(double dt)
     camera_bounds += get_mouse_scroll_this_frame() * dt;
     if (get_mouse_scroll_this_frame() != 0)
     {
-        recalculate_camera();
+        _recalculate_camera();
     }
 
     glUseProgram(shader_program);
