@@ -1,6 +1,30 @@
 #include "nl_lib.h"
 #include "private/nl_gl.h"
 
+
+static const char* ui_vert_shader_code =
+NL_SHADER_VERSION_HEADER
+"layout (location = 0) in vec3 aPos;                   \n"
+"layout (location = 1) in vec4 aColor;                 \n"
+"uniform mat4 uWorldMat;                               \n"
+"uniform mat4 uViewMat;                                \n"
+"uniform mat4 uProjMat;                                \n"
+"out vec4 oColor;                                      \n"
+"void main() {                                         \n"
+"   vec4 worldPos = uWorldMat * vec4(aPos, 1.0);       \n"
+"   gl_Position = uViewMat * worldPos;                 \n"
+"   oColor = aColor;                                   \n"
+"}                                                     \0";
+
+static const char* ui_fragment_shader_code =
+NL_SHADER_VERSION_HEADER
+"out vec4 FragColor;                                   \n"
+"in vec4 oColor;                                       \n"
+"void main() {                                         \n"
+"    FragColor = oColor;                               \n"
+"}                                                     \0";
+
+
 #define SQUARE_HALF_SIZE 100.0f
 
 static vertex_data square_verts[] =
@@ -60,7 +84,7 @@ void app_specific_init(void)
     initialize_object(&square_center, (v2f){0.0f,0.0f});
     initialize_object(&mouse, (v2f){0.0f,0.0f});
 
-    shader_program = create_shader_program(common_vert_shader_code, common_fragment_shader_code);
+    shader_program = create_shader_program(ui_vert_shader_code, ui_fragment_shader_code);
     use_shader_program(shader_program);
 
     initialize_camera_to_zero(&ui_camera);
@@ -97,7 +121,7 @@ void matrix_for_ui(ui_element* const o)
 void app_specific_update(double dt)
 {
     NL_UNUSED(dt);
-    
+
     matrix_for_ui(&square_ur);
     matrix_for_ui(&square_bl);
     matrix_for_ui(&square_center);
