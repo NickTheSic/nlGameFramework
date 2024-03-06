@@ -1,42 +1,8 @@
 #include "nl_lib.h"
 #include "private/nl_gl.h"
 
-
 #include "ui_batch_renderer.c"
 
-
-static const char* ui_vert_shader_code =
-NL_SHADER_VERSION_HEADER
-"layout (location = 0) in vec3 aPos;                   \n"
-"layout (location = 1) in vec4 aColor;                 \n"
-"uniform mat4 uWorldMat;                               \n"
-"uniform mat4 uViewMat;                                \n"
-"out vec4 oColor;                                      \n"
-"void main() {                                         \n"
-"   vec4 worldPos = uWorldMat * vec4(aPos, 1.0);       \n"
-"   gl_Position = uViewMat * worldPos;                 \n"
-"   oColor = aColor;                                   \n"
-"}                                                     \0";
-
-static const char* ui_fragment_shader_code =
-NL_SHADER_VERSION_HEADER
-"out vec4 FragColor;                                   \n"
-"in vec4 oColor;                                       \n"
-"void main() {                                         \n"
-"    FragColor = oColor;                               \n"
-"}                                                     \0";
-
-
-#define SQUARE_HALF_SIZE 100.0f
-
-
-static v3f square_verts[] =
-{
-    {-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f},
-    { SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f},
-    { SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f},
-    {-SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}
-};
 
 static unsigned int square_indices[] =
 {
@@ -50,6 +16,7 @@ static ui_element square_center = {0};
 static mesh mouse = {0};
 static camera ui_camera = {0};
 static unsigned int shader_program = {0};
+static ui_batch_renderer _ui_renderer = {0};
 
 void init_mouse_mesh()
 {
@@ -99,11 +66,10 @@ void app_specific_init(void)
     square_bl.trans.position.y = SQUARE_HALF_SIZE;
     initialize_object(&square_center, (v2f){0.0f,0.0f});
 
+    initialize_ui_renderer(&_ui_renderer, (unsigned int)4);
+
     shader_program = create_shader_program(ui_vert_shader_code, ui_fragment_shader_code);
     use_shader_program(shader_program);
-
-    //vertex_atrribute_info attribs[] = {{3, GL_FLOAT, GL_FALSE, 0},{4, GL_FLOAT, GL_FALSE, 12}};
-    //setup_vertex_atrributes(sizeof(vertex_data), attribs, 2);
 
     initialize_camera_to_zero(&ui_camera);
     pfn_window_size_callback = &winsizecbk;
@@ -133,7 +99,7 @@ void matrix_for_ui(ui_element* const o)
     unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
     glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
 
-    add_element_to_ui_renderer(0);
+    add_element_to_ui_renderer(&_ui_renderer, o);
 }
 
 void app_specific_update(double dt)
@@ -143,6 +109,8 @@ void app_specific_update(double dt)
     matrix_for_ui(&square_ur);
     matrix_for_ui(&square_bl);
     matrix_for_ui(&square_center);
+
+    draw_ui_batch(&_ui_renderer);
 
     v2i cur_mouse_pos = get_mouse_position_from_system();
     v3f scale = {0.1,0.1,0.1};
@@ -161,4 +129,5 @@ void app_specific_update(double dt)
 void app_specific_cleanup()
 {
     free_mesh(&mouse);
+    free_ui_batch_renderer(&_ui_renderer);
 }
