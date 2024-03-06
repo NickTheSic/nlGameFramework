@@ -8,10 +8,9 @@
 static const char* ui_vert_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
-"layout (location = 0) in vec4 aColor;                 \n"
+"layout (location = 1) in vec4 aColor;                 \n"
 "uniform mat4 uWorldMat;                               \n"
 "uniform mat4 uViewMat;                                \n"
-"uniform mat4 uProjMat;                                \n"
 "out vec4 oColor;                                      \n"
 "void main() {                                         \n"
 "   vec4 worldPos = uWorldMat * vec4(aPos, 1.0);       \n"
@@ -52,6 +51,24 @@ static mesh mouse = {0};
 static camera ui_camera = {0};
 static unsigned int shader_program = {0};
 
+void init_mouse_mesh()
+{
+    const vertex_data _mouse_square[] =
+    {
+        {{-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},
+        {{ SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},
+        {{ SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},
+        {{-SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f}}
+    };
+
+    const unsigned int _indices[] =
+    {
+        0,1,2,
+        2,3,0
+    };
+
+    generate_mesh_using_vertices_and_indices(&mouse, _mouse_square, 4, _indices, 6);
+}
 
 void winsizecbk(int width, int height)
 {
@@ -72,6 +89,8 @@ void initialize_object(ui_element* o, v2f anchor)
 
 void app_specific_init(void)
 {
+    init_mouse_mesh();
+
     initialize_object(&square_ur, (v2f){-1.0f,1.0f});
     square_ur.trans.position.x = SQUARE_HALF_SIZE;
     square_ur.trans.position.y = -SQUARE_HALF_SIZE;
@@ -83,8 +102,8 @@ void app_specific_init(void)
     shader_program = create_shader_program(ui_vert_shader_code, ui_fragment_shader_code);
     use_shader_program(shader_program);
 
-    vertex_atrribute_info attribs[] = {{3, GL_FLOAT, GL_FALSE, 0},{4, GL_FLOAT, GL_FALSE, 9}};
-    setup_vertex_atrributes(sizeof(colourf) + sizeof(v3f), attribs, 2);
+    //vertex_atrribute_info attribs[] = {{3, GL_FLOAT, GL_FALSE, 0},{4, GL_FLOAT, GL_FALSE, 12}};
+    //setup_vertex_atrributes(sizeof(vertex_data), attribs, 2);
 
     initialize_camera_to_zero(&ui_camera);
     pfn_window_size_callback = &winsizecbk;
@@ -125,7 +144,6 @@ void app_specific_update(double dt)
     matrix_for_ui(&square_bl);
     matrix_for_ui(&square_center);
 
-
     v2i cur_mouse_pos = get_mouse_position_from_system();
     v3f scale = {0.1,0.1,0.1};
     v3f rot = {0};
@@ -142,5 +160,5 @@ void app_specific_update(double dt)
 
 void app_specific_cleanup()
 {
-    NL_UNIMPLEMENTED_FUNC;
+    free_mesh(&mouse);
 }

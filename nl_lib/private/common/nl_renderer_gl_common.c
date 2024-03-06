@@ -113,9 +113,8 @@ void free_mesh(mesh* const mesh)
 
 void setup_vertex_atrributes(size_t data_size, vertex_atrribute_info* const attrib_info, const int attrib_count)
 {
-    for (int i = 0; i < attrib_count - 1; ++i)
+    for (int i = 0; i < attrib_count; ++i)
     {
-
         glVertexAttribPointer(
             i, 
             attrib_info[i].value_count, 
