@@ -3,11 +3,12 @@
 
 #include "nl_lib.h"
 
-/* Assumes 0,0 ----------- 1,0
+/* 
+   Assumes 0,0 ----------- 1,0
             |               |
             |               |
             |               |
-           0,1 ----------- 1,1
+           0,1 ----------- 1,1     
 */
 
 typedef struct ui_element_data ui_element_data;

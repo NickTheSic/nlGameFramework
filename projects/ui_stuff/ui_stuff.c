@@ -17,18 +17,18 @@ static unsigned int square_indices[] =
     2,3,0
 };
 
-typedef struct ui_object object;
-struct ui_object
+typedef struct ui_element ui_element;
+struct ui_element
 {
     transform2d trans;
     v2f anchor;
     mesh m;
 };
 
-static object square_ur = {0};
-static object square_bl = {0};
-static object square_center = {0};
-static object mouse = {0};
+static ui_element square_ur = {0};
+static ui_element square_bl = {0};
+static ui_element square_center = {0};
+static ui_element mouse = {0};
 static camera ui_camera = {0};
 static unsigned int shader_program = {0};
 
@@ -39,7 +39,7 @@ void winsizecbk(int width, int height)
     glUniformMatrix4fv(viewMat, 1, GL_FALSE, &ui_camera.view_matrix.m11);
 }
 
-void initialize_object(object* o, v2f anchor)
+void initialize_object(ui_element* o, v2f anchor)
 {
     generate_mesh_using_vertices_and_indices(&o->m, square_verts, 4, square_indices, 6);
 
@@ -70,7 +70,7 @@ void app_specific_init(void)
     winsizecbk(screen_size.x, screen_size.y);
 }
 
-void ui_anchored_matrix(mat4x4f* const mat, object* const o)
+void ui_anchored_matrix(mat4x4f* const mat, ui_element* const o)
 {
     create_identity_matrix(mat);
 
@@ -83,7 +83,7 @@ void ui_anchored_matrix(mat4x4f* const mat, object* const o)
     create_srt_matrix_from_transform2d(mat, trans);
 }
 
-void matrix_for_ui(object* const o)
+void matrix_for_ui(ui_element* const o)
 {
     mat4x4f mat = {0};
     ui_anchored_matrix(&mat, o);
