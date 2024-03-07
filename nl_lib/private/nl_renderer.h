@@ -24,9 +24,6 @@ struct vertex_data
     colourf color;
 };
 
-// if I keep everything a float, then I could keep the data generic.  Could be a neat idea in the future
-typedef float generic_vertex_data;
-
 // not batch able?
 // creates own VAO, VBO, EBO which could be avoided in some cases
 typedef struct mesh mesh;

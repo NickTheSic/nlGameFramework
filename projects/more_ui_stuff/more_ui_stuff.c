@@ -89,7 +89,7 @@ void draw_ui_batch(ui_batch_renderer* const ui_renderer)
         {4,  GL_FLOAT, GL_FALSE, 12},
         //{16, GL_FLOAT, GL_FALSE, 28},
     };
-    setup_vertex_atrributes(sizeof(ui_vertex_data), attribs, 3);
+    setup_vertex_atrributes(sizeof(ui_vertex_data), attribs, 2);
 
     const size_t ui_data_size = ui_renderer->current_count*4*sizeof(ui_vertex_data);
     glBindBuffer(GL_ARRAY_BUFFER, ui_renderer->VBO);
@@ -121,7 +121,6 @@ void add_element_to_ui_renderer(ui_batch_renderer* const ui_renderer, ui_element
     if (ui_renderer->batch_count == ui_renderer->current_count)
     {
         draw_ui_batch(ui_renderer);
-        ui_renderer->current_count = 0;
     }
 
     const unsigned int idx = ui_renderer->current_count * 4;
