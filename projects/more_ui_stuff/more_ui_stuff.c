@@ -1,49 +1,202 @@
 #include "nl_lib.h"
 #include "private/nl_gl.h"
 
-#include "ui_batch_renderer.c"
+
+#include <string.h> // memcpy
+
+#define SQUARE_HALF_SIZE 100.0f
+
+static unsigned int shader_program = {0};
+
+static const char* ui_vert_shader_code =
+NL_SHADER_VERSION_HEADER
+"layout (location = 0) in vec2 aVertexPos;                  \n"
+"layout (location = 1) in vec4 aColor;                      \n"
+"layout (location = 2) in mat4 aWorldMat;                   \n"
+"uniform mat4 uViewMat;                                     \n"
+"out vec4 oColor;                                           \n"
+"void main() {                                              \n"
+"   vec4 worldPos = aWorldMat * vec4(aVertexPos, 0.0, 1.0); \n"
+"   gl_Position = uViewMat * worldPos;                      \n"
+"   oColor = aColor;                                        \n"
+"}                                                          \0";
+
+static const char* ui_fragment_shader_code =
+NL_SHADER_VERSION_HEADER
+"out vec4 FragColor;                                   \n"
+"in vec4 oColor;                                       \n"
+"void main() {                                         \n"
+"    FragColor = oColor;                               \n"
+"}                                                     \0";
 
 
-static unsigned int square_indices[] =
+typedef struct ui_element ui_element;
+struct ui_element
 {
-    0,1,2,
-    2,3,0
+    transform2d trans;
+    colourf color;
+    v2f anchor;
 };
- 
-static ui_element square_ur = {0};
-static ui_element square_bl = {0};
-static ui_element square_center = {0};
-static mesh mouse = {0};
-static camera ui_camera = {0};
-static ui_batch_renderer _ui_renderer = {0};
 
-void init_mouse_mesh()
+typedef struct ui_vertex_data ui_vertex_data;
+struct ui_vertex_data
 {
-    const vertex_data _mouse_square[] =
-    {
-        {{-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},
-        {{ SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},
-        {{ SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},
-        {{-SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f}}
-    };
+    v3f pos;
+    colourf color;
+    mat4x4f world_mat;
+};
 
-    const unsigned int _indices[] =
-    {
-        0,1,2,
-        2,3,0
-    };
+typedef struct ui_batch_renderer ui_batch_renderer;
+struct ui_batch_renderer
+{
+    unsigned int VAO;
+    unsigned int VBO;
+    unsigned int EBO;
+    
+    unsigned int batch_count;
+    unsigned int current_count;
 
-    generate_mesh_using_vertices_and_indices(&mouse, _mouse_square, 4, _indices, 6);
+    ui_vertex_data* vertices;
+};
+
+void ui_anchored_matrix(mat4x4f* const mat, ui_element* const o)
+{
+    create_identity_matrix(mat);
+
+    const v2i screen_size = get_screen_size();
+    transform2d trans = o->trans;
+    float half_w = screen_size.x/2.0f;
+    float half_h = screen_size.y/2.0f;
+    trans.position.x += (half_w) + (o->anchor.x * half_w);
+    trans.position.y += (half_h) + (o->anchor.y * half_h);
+    create_srt_matrix_from_transform2d(mat, trans);
 }
 
+void free_ui_batch_renderer(ui_batch_renderer* const ui_renderer)
+{
+    memory_free(ui_renderer->vertices);
+    ui_renderer->batch_count = 0;
+}
+
+void draw_ui_batch(ui_batch_renderer* const ui_renderer)
+{
+    use_shader_program(shader_program);
+    glBindVertexArray(ui_renderer->VAO);
+
+    const vertex_atrribute_info attribs[] = 
+    {
+        {3,  GL_FLOAT, GL_FALSE,  0},
+        {4,  GL_FLOAT, GL_FALSE, 12},
+        //{16, GL_FLOAT, GL_FALSE, 28},
+    };
+    setup_vertex_atrributes(sizeof(ui_vertex_data), attribs, 3);
+
+    const size_t ui_data_size = ui_renderer->current_count*4*sizeof(ui_vertex_data);
+    glBindBuffer(GL_ARRAY_BUFFER, ui_renderer->VBO);
+    glBufferSubData(GL_ARRAY_BUFFER,
+                    0,
+                    ui_data_size,
+                    ui_renderer->vertices);
+
+    ui_vertex_data* uivd = (ui_vertex_data*)memory_allocate(ui_data_size);
+    glGetBufferSubData(GL_ARRAY_BUFFER, 0, ui_data_size, uivd);
+    memory_free(uivd);
+
+    unsigned int* iid = (unsigned int*)memory_allocate(sizeof(unsigned int)*6*ui_renderer->current_count);
+    glGetBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(unsigned int)*6*ui_renderer->current_count, iid);
+    memory_free(iid);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ui_renderer->EBO);
+    glDrawElements(GL_TRIANGLES, ui_renderer->current_count*6, GL_UNSIGNED_INT, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    ui_renderer->current_count = 0;
+}
+
+void add_element_to_ui_renderer(ui_batch_renderer* const ui_renderer, ui_element* const elem, mat4x4f* const mat)
+{
+    if (ui_renderer->batch_count == ui_renderer->current_count)
+    {
+        draw_ui_batch(ui_renderer);
+        ui_renderer->current_count = 0;
+    }
+
+    const unsigned int idx = ui_renderer->current_count * 4;
+    ++ui_renderer->current_count;
+    const colourf col = elem->color;
+
+    const ui_vertex_data square_verts[] =
+    {
+        {{-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, col, *mat},
+        {{ SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, col, *mat},
+        {{ SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}, col, *mat},
+        {{-SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}, col, *mat}
+    };
+
+    ui_vertex_data* const dest = &ui_renderer->vertices[idx];
+    memcpy(dest, &square_verts, sizeof(ui_vertex_data)*4);
+}
+
+void initialize_ui_renderer(ui_batch_renderer* const ui_renderer, unsigned int batch_count)
+{
+    shader_program = create_shader_program(ui_vert_shader_code, ui_fragment_shader_code);
+    use_shader_program(shader_program);
+    
+    const unsigned int max_vertices = batch_count * 4;
+    const unsigned int max_indices  = batch_count * 6;
+
+    const size_t vertex_data_size = sizeof(ui_vertex_data) * max_vertices;
+    const size_t indice_data_size = sizeof(unsigned int) * max_indices;
+
+    ui_renderer->batch_count = batch_count;
+    ui_renderer->vertices = (ui_vertex_data*)memory_allocate(vertex_data_size);
+
+    glGenVertexArrays(1, &ui_renderer->VAO);
+    glBindVertexArray(ui_renderer->VAO);
+    glGenBuffers(1, &ui_renderer->VBO);
+    glGenBuffers(1, &ui_renderer->EBO);
+
+    // const vertex_atrribute_info attribs[] = 
+    // {
+    //     {3,  GL_FLOAT, GL_FALSE,  0},
+    //     {4,  GL_FLOAT, GL_FALSE, 12},
+    //     {16, GL_FLOAT, GL_FALSE, 28},
+    // };
+    // setup_vertex_atrributes(sizeof(ui_vertex_data), attribs, 3);
+
+    glBindBuffer(GL_ARRAY_BUFFER, ui_renderer->VBO);
+    glBufferData(GL_ARRAY_BUFFER, vertex_data_size, NULL, GL_DYNAMIC_DRAW);
+
+    unsigned int *indices = (unsigned int*)memory_allocate(indice_data_size);
+    unsigned int offset = 0;
+    for (unsigned int i = 0; i < max_indices; i+=6)
+    {
+        indices[i + 0] = offset + 0;
+        indices[i + 1] = offset + 1;
+        indices[i + 2] = offset + 2;
+        indices[i + 3] = offset + 2;
+        indices[i + 4] = offset + 3;
+        indices[i + 5] = offset + 0;
+        offset += 4;
+    }
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ui_renderer->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indice_data_size, indices, GL_STATIC_DRAW);
+
+    memory_free(indices);
+}
+
+static ui_element square_center = {0};
+static camera ui_camera = {0};
+static ui_batch_renderer _ui_renderer = {0};
 
 void matrix_for_ui(ui_element* const o)
 {
     mat4x4f mat = {0};
     ui_anchored_matrix(&mat, o);
-
-    unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
-    glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
 
     add_element_to_ui_renderer(&_ui_renderer, o, &mat);
 }
@@ -67,17 +220,9 @@ void initialize_object(ui_element* o, v2f anchor)
 
 void app_specific_init(void)
 {
-    init_mouse_mesh();
-
-    initialize_object(&square_ur, (v2f){-1.0f,1.0f});
-    square_ur.trans.position.x = SQUARE_HALF_SIZE;
-    square_ur.trans.position.y = -SQUARE_HALF_SIZE;
-    initialize_object(&square_bl, (v2f){1.0f,-1.0f});
-    square_bl.trans.position.x = -SQUARE_HALF_SIZE;
-    square_bl.trans.position.y = SQUARE_HALF_SIZE;
     initialize_object(&square_center, (v2f){0.0f,0.0f});
 
-    initialize_ui_renderer(&_ui_renderer, (unsigned int)4);
+    initialize_ui_renderer(&_ui_renderer, 5);
 
     initialize_camera_to_zero(&ui_camera);
     pfn_window_size_callback = &winsizecbk;
@@ -89,29 +234,12 @@ void app_specific_init(void)
 void app_specific_update(double dt)
 {
     NL_UNUSED(dt);
-
-    matrix_for_ui(&square_ur);
-    matrix_for_ui(&square_bl);
     matrix_for_ui(&square_center);
 
     draw_ui_batch(&_ui_renderer);
-
-    v2i cur_mouse_pos = get_mouse_position_from_system();
-    v3f scale = {0.1,0.1,0.1};
-    v3f rot = {0};
-    v3f trans = {cur_mouse_pos.x, cur_mouse_pos.y, 0};
-    mat4x4f mat = {0};
-    create_identity_matrix(&mat);
-    create_srt_matrix(&mat, scale, rot, trans);
-
-    unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
-    glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
-
-    render_single_mesh(&mouse);
 }
 
 void app_specific_cleanup()
 {
-    free_mesh(&mouse);
     free_ui_batch_renderer(&_ui_renderer);
 }

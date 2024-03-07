@@ -10,3 +10,8 @@ void app_specific_update(double dt)
 {
     (void)dt;
 }
+
+void app_specific_cleanup()
+{
+    
+}
