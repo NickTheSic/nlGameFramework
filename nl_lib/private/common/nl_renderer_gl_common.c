@@ -111,10 +111,12 @@ void free_mesh(mesh* const mesh)
 //    glBufferSubData(GL_ARRAY_BUFFER, 0, mesh->vertice_count * sizeof(vertex_data), mesh->vertices);
 //}
 
-void setup_vertex_atrributes(size_t data_size, vertex_atrribute_info* const attrib_info, const int attrib_count)
+void setup_vertex_atrributes(size_t data_size, const vertex_atrribute_info* const attrib_info, const int attrib_count)
 {
     for (int i = 0; i < attrib_count; ++i)
     {
+        glEnableVertexAttribArray(i);  
+
         glVertexAttribPointer(
             i, 
             attrib_info[i].value_count, 
@@ -123,8 +125,6 @@ void setup_vertex_atrributes(size_t data_size, vertex_atrribute_info* const attr
             data_size, 
             (const void*)attrib_info[i].offset // hate this but might be needed and hopefully doesn't cause problems
         );
-        
-        glEnableVertexAttribArray(i);  
     }
 }
 

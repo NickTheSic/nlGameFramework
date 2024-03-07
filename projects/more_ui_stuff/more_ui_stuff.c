@@ -15,7 +15,6 @@ static ui_element square_bl = {0};
 static ui_element square_center = {0};
 static mesh mouse = {0};
 static camera ui_camera = {0};
-static unsigned int shader_program = {0};
 static ui_batch_renderer _ui_renderer = {0};
 
 void init_mouse_mesh()
@@ -35,6 +34,18 @@ void init_mouse_mesh()
     };
 
     generate_mesh_using_vertices_and_indices(&mouse, _mouse_square, 4, _indices, 6);
+}
+
+
+void matrix_for_ui(ui_element* const o)
+{
+    mat4x4f mat = {0};
+    ui_anchored_matrix(&mat, o);
+
+    unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
+    glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
+
+    add_element_to_ui_renderer(&_ui_renderer, o, &mat);
 }
 
 void winsizecbk(int width, int height)
@@ -68,38 +79,11 @@ void app_specific_init(void)
 
     initialize_ui_renderer(&_ui_renderer, (unsigned int)4);
 
-    shader_program = create_shader_program(ui_vert_shader_code, ui_fragment_shader_code);
-    use_shader_program(shader_program);
-
     initialize_camera_to_zero(&ui_camera);
     pfn_window_size_callback = &winsizecbk;
 
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
-}
-
-void ui_anchored_matrix(mat4x4f* const mat, ui_element* const o)
-{
-    create_identity_matrix(mat);
-
-    v2i screen_size = get_screen_size();
-    transform2d trans = o->trans;
-    float half_w = screen_size.x/2.0f;
-    float half_h = screen_size.y/2.0f;
-    trans.position.x += (half_w) + (o->anchor.x * half_w);
-    trans.position.y += (half_h) + (o->anchor.y * half_h);
-    create_srt_matrix_from_transform2d(mat, trans);
-}
-
-void matrix_for_ui(ui_element* const o)
-{
-    mat4x4f mat = {0};
-    ui_anchored_matrix(&mat, o);
-
-    unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
-    glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
-
-    add_element_to_ui_renderer(&_ui_renderer, o);
 }
 
 void app_specific_update(double dt)

@@ -234,11 +234,11 @@ int initialize_window(int width, int height, const char* title)
 	}
 
 	// Displays the graphics card used
-	//{
-	//	char* rendererString;
-	//	rendererString = (char*)glGetString(GL_RENDERER);
-	//	if (rendererString) fprintf(stderr, "%s\n", rendererString);
-	//}
+	{
+		char* rendererString;
+		rendererString = (char*)glGetString(GL_RENDERER);
+		if (rendererString) fprintf(stderr, "%s\n", rendererString);
+	}
 
 	// calculate DPI for scaling
 	{

@@ -91,7 +91,7 @@ struct vertex_atrribute_info
     size_t offset; // not sure to use size_t for offset of or const void* for actual function
 };
 
-void setup_vertex_atrributes(size_t data_size, vertex_atrribute_info* const attrib_info, const int attrib_count);
+void setup_vertex_atrributes(size_t data_size, const vertex_atrribute_info* const attrib_info, const int attrib_count);
 
 
 #endif

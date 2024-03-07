@@ -136,4 +136,8 @@ extern PFNGLGENFRAMEBUFFERPROC glGenFramebuffers;
 typedef void   (APIENTRY* PFNGLBINDFRAMEBUFFERPROC) (GLenum target, GLuint buffer);
 extern PFNGLBINDFRAMEBUFFERPROC glBindFramebuffer;
 
+// TODO:  These are the incorrect types to be using
+typedef void   (APIENTRY* PFNGLGETBUFFERSUBDATA) (GLenum target, ptrdiff_t offset, ptrdiff_t size, void* data);
+extern PFNGLGETBUFFERSUBDATA glGetBufferSubData;
+
 #endif //__NL_GL_WIN32_H__
