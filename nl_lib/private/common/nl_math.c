@@ -37,21 +37,21 @@ void create_fustrum(mat4x4f* const mat, float left, float right, float bottom, f
 
 void create_orthographic_projection(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z)
 {
-    memset(mat, 1, sizeof(mat4x4f));
+    //memset(mat, 0, sizeof(mat4x4f));
 
     float delta_x = right-left;
     float delta_y = top-bottom;
     float delta_z = far_z-near_z;
     
     mat->m11 = 2.0f/delta_x;
-    //mat.m12 = mat.m13 = mat.m14 = 0.0f;
+    mat->m12 = mat->m13 = mat->m14 = 0.0f;
     
     mat->m22 = 2.0f/delta_y;
-    //mat.m21 = mat.m23 = mat.m24 = 0.0f;
+    mat->m21 = mat->m23 = mat->m24 = 0.0f;
     
     //mat->m33 = -2.0f/delta_z; //Right Handed
     mat->m33 = 2.0f/delta_z; //Left Handed
-    //mat.m31 = mat.m32 = mat.m34 = 0.0f;
+    mat->m31 = mat->m32 = mat->m34 = 0.0f;
     
     mat->m41 = -(right + left) / delta_x;
     mat->m42 = -(top + bottom) / delta_y;

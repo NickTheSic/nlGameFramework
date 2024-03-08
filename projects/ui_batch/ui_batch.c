@@ -3,12 +3,13 @@
 
 static const char* ui_vert_shader_code =
 NL_SHADER_VERSION_HEADER
-"layout (location = 0) in vec3 aPos;                   \n"
+"layout (location = 0) in vec2 aPos;                   \n"
 "layout (location = 1) in vec4 aColor;                 \n"
-"uniform vec4 uViewMat;                                \n"
+"uniform mat4 uViewMat;                                \n"
 "out vec4 oColor;                                      \n"
 "void main() {                                         \n"
-"   vec4 viewPos = uViewMat * vec4(aPos, 1.0);         \n"
+"   vec4 viewPos = uViewMat * vec4(aPos, 0.0, 1.0);    \n"
+//"   vec4 viewPos = vec4(aPos, 0.0, 1.0);               \n"
 "   gl_Position = viewPos;                             \n"
 "   oColor = aColor;                                   \n"
 "}                                                     \0";
@@ -33,7 +34,7 @@ struct ui_element
 typedef struct myvd myvd;
 struct myvd 
 {
-    v3f pos;
+    v2f pos;
     colourf color;
 };
 
@@ -95,8 +96,8 @@ void begin_render_batch(my_batch* const batch)
     glBindVertexArray(batch->vao);
     glBindBuffer(GL_ARRAY_BUFFER, batch->vbo);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(myvd), (void*)offsetof(myvd, pos));
-    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(myvd), (void*)offsetof(myvd, pos));
+    glEnableVertexAttribArray(0); 
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(myvd), (void*)offsetof(myvd, color));
     glEnableVertexAttribArray(1);
 }
@@ -121,14 +122,14 @@ void add_to_render_batch(my_batch* const batch, v2f pos)
 
     const unsigned int current_idx = batch->current_count * 4;
 
-    const float SQUARE_HALF_SIZE = 130.f;
+    const float SQUARE_HALF_SIZE = 100.0f;
     colourf col = (colourf){0.8f, 0.0f, 0.1f, 1.0f};
     const myvd square_verts[] =
     {
-        {{pos.x + -SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, col},
-        {{pos.x +  SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, col},
-        {{pos.x +  SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, col},
-        {{pos.x + -SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, col}
+        {{-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE}, col},
+        {{ SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE}, col},
+        {{ SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE}, col},
+        {{-SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE}, col}
     };
 
     myvd* dest = &batch->vertices[current_idx];
@@ -155,13 +156,12 @@ static my_batch batch = {0};
 
 void winsizecbk(int width, int height)
 {
-    const float hwidth = (float)width * 0.5f;
-    const float hheight = (float)height * 0.5f;
-
     mat4x4f mat = {0};
     create_identity_matrix(&mat);
 
-    create_orthographic_projection(&mat, -hwidth, hwidth, -hheight, hheight, -0.1f, 100.f);
+    use_shader_program(sp);
+
+    create_orthographic_projection(&mat, 0, width, 0, height, -0.1f, 100.f);
     unsigned int viewMat = glGetUniformLocation(sp, "uViewMat");
     glUniformMatrix4fv(viewMat, 1, GL_FALSE, &mat.m11);
 }
@@ -185,7 +185,7 @@ void app_specific_update(double dt)
     use_shader_program(sp);
     begin_render_batch(&batch);
 
-    add_to_render_batch(&batch, (v2f){500.0f, 300.0f});
+    add_to_render_batch(&batch, (v2f){0.0f, 00.0f});
 
     end_render_batch(&batch);
 }

@@ -8,7 +8,6 @@ NL_SHADER_VERSION_HEADER
 "layout (location = 1) in vec4 aColor;                 \n"
 "uniform mat4 uWorldMat;                               \n"
 "uniform mat4 uViewMat;                                \n"
-"uniform mat4 uProjMat;                                \n"
 "out vec4 oColor;                                      \n"
 "void main() {                                         \n"
 "   vec4 worldPos = uWorldMat * vec4(aPos, 1.0);       \n"
