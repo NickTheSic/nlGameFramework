@@ -99,18 +99,6 @@ void free_mesh(mesh* const mesh)
     // gl free buffers here
 }
 
-// temporary? - will need to add position to the shader, that may work better 
-//void move_mesh(mesh* const mesh, const v2f difference)
-//{
-//    for (int i = 0; i < mesh->vertice_count; ++i)
-//    {
-//        mesh->vertices[i].position.x += difference.x;
-//        mesh->vertices[i].position.y += difference.xy
-//    }
-//
-//    glBufferSubData(GL_ARRAY_BUFFER, 0, mesh->vertice_count * sizeof(vertex_data), mesh->vertices);
-//}
-
 void setup_vertex_atrributes(size_t data_size, const vertex_atrribute_info* const attrib_info, const int attrib_count)
 {
     for (int i = 0; i < attrib_count; ++i)

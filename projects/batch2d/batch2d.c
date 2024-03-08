@@ -46,13 +46,25 @@ void init_batch(my_batch* const batch, unsigned int count)
     batch->vertices = (myvd*)memory_allocate(vertice_data);
 
     glGenVertexArrays(1, &batch->vao);
-    glGenBuffers(1, &batch->vbo);
-    glGenBuffers(1, &batch->ebo);
-
     glBindVertexArray(batch->vao);
 
+    glGenBuffers(1, &batch->vbo);
     glBindBuffer(GL_ARRAY_BUFFER, batch->vbo);
-    glBufferData(GL_ARRAY_BUFFER, vertice_data, NULL, GL_DYNAMIC_DRAW);
+    const float SQUARE_HALF_SIZE = 1.f;
+    colourf col = (colourf){0.8f, 0.0f, 0.1f, 1.0f};
+    const myvd square_verts[] =
+    {
+        {{-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, col},
+        {{ SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, col},
+        {{ SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}, col},
+        {{-SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE, 0.0f}, col}
+    };
+    glBufferData(GL_ARRAY_BUFFER, vertice_data, square_verts, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(myvd), (void*)offsetof(myvd, pos));
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(myvd), (void*)offsetof(myvd, color));
+    glEnableVertexAttribArray(1);  
 
     unsigned int *indices = (unsigned int*)memory_allocate(indice_data);
     unsigned int offset = 0;
@@ -67,6 +79,7 @@ void init_batch(my_batch* const batch, unsigned int count)
         offset += 4;
     }
 
+    glGenBuffers(1, &batch->ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, batch->ebo);
     glBufferData(GL_ARRAY_BUFFER, indice_data, indices, GL_STATIC_DRAW);
 
@@ -77,14 +90,22 @@ void begin_render_batch(my_batch* const batch)
 {
     glBindVertexArray(batch->vao);
     glBindBuffer(GL_ARRAY_BUFFER, batch->vbo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, batch->ebo);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(myvd), (void*)offsetof(myvd, pos));
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(myvd), (void*)offsetof(myvd, color));
+    glEnableVertexAttribArray(1);
 }
 
 void render_batch(my_batch* const batch)
 {
-    glBufferSubData(GL_ARRAY_BUFFER, 0, batch->current_count*4*sizeof(myvd), batch->vertices);
+    //glBindBuffer(GL_ARRAY_BUFFER, batch->vbo);
+    //glBufferSubData(GL_ARRAY_BUFFER, 0, batch->current_count*4*sizeof(myvd), batch->vertices);
 
-    glDrawElements(GL_TRIANGLES, batch->current_count*6, GL_UNSIGNED_INT, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, batch->ebo);
+    //glDrawElements(GL_TRIANGLES, batch->current_count*6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
     batch->current_count = 0;
 }
 
@@ -97,7 +118,7 @@ void add_to_render_batch(my_batch* const batch)
 
     const unsigned int current_idx = batch->current_count * 4;
 
-    const float SQUARE_HALF_SIZE = 0.1f;
+    const float SQUARE_HALF_SIZE = 0.4f;
     colourf col = (colourf){0.8f, 0.0f, 0.1f, 1.0f};
     const myvd square_verts[] =
     {
@@ -117,9 +138,9 @@ void end_render_batch(my_batch* const batch)
 {
     render_batch(batch);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    //glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glBindVertexArray(0);
 }
 
 void free_batch(my_batch* const batch)
@@ -131,16 +152,9 @@ static my_batch batch = {0};
 
 void app_specific_init(void)
 {
-    init_batch(&batch, 3);
     sp = create_shader_program(batch_vert_shader_code, common_fragment_shader_code);
-    
     use_shader_program(sp);
-    const vertex_atrribute_info attribs[] = 
-    {
-        {3,  GL_FLOAT, GL_FALSE,  0},
-        {4,  GL_FLOAT, GL_FALSE, 12},
-    };
-    setup_vertex_atrributes(sizeof(myvd), attribs, 2);
+    init_batch(&batch, 3);
 }
 
 void app_specific_update(double dt)
@@ -149,9 +163,7 @@ void app_specific_update(double dt)
 
     use_shader_program(sp);
     begin_render_batch(&batch);
-
     add_to_render_batch(&batch);
-
     end_render_batch(&batch);
 }
 
