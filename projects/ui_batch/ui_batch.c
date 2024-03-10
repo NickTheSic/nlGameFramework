@@ -9,7 +9,6 @@ NL_SHADER_VERSION_HEADER
 "out vec4 oColor;                                      \n"
 "void main() {                                         \n"
 "   vec4 viewPos = uViewMat * vec4(aPos, 0.0, 1.0);    \n"
-//"   vec4 viewPos = vec4(aPos, 0.0, 1.0);               \n"
 "   gl_Position = viewPos;                             \n"
 "   oColor = aColor;                                   \n"
 "}                                                     \0";
@@ -126,10 +125,10 @@ void add_to_render_batch(my_batch* const batch, v2f pos)
     colourf col = (colourf){0.8f, 0.0f, 0.1f, 1.0f};
     const myvd square_verts[] =
     {
-        {{-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE}, col},
-        {{ SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE}, col},
-        {{ SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE}, col},
-        {{-SQUARE_HALF_SIZE,  SQUARE_HALF_SIZE}, col}
+        {{pos.x + -SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE}, col},
+        {{pos.x +  SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE}, col},
+        {{pos.x +  SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE}, col},
+        {{pos.x + -SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE}, col}
     };
 
     myvd* dest = &batch->vertices[current_idx];
@@ -186,6 +185,7 @@ void app_specific_update(double dt)
     begin_render_batch(&batch);
 
     add_to_render_batch(&batch, (v2f){0.0f, 00.0f});
+    add_to_render_batch(&batch, (v2f){400.0f, 100.0f});
 
     end_render_batch(&batch);
 }
