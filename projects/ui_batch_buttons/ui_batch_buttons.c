@@ -29,6 +29,9 @@ struct ui_element
     v2f size;
     v2f anchor;
     float rot;
+
+    int hot;
+    int active;
 };
 
 typedef struct myvd myvd;
@@ -205,6 +208,39 @@ void app_specific_init(void)
     init_batch(&batch, 3);
 }
 
+int ui_element_contains_point(const ui_element* const elem, v2f point)
+{
+    const v2f pos  = elem->pos;
+    const v2f size = elem->size;
+
+    return point.x < pos.x + size.x 
+        && point.x > pos.x - size.x 
+        && point.y < pos.y + size.y
+        && point.y > pos.y - size.y;
+}
+
+int is_element_highlighted(ui_element* const elem)
+{
+    const v2i mouse_pos = get_mouse_position_from_system();
+
+    if (ui_element_contains_point(elem, (v2f){(float)mouse_pos.x, (float)mouse_pos.y}))
+    {
+        elem->color = (colourf){0.0f, 0.0f, 0.0f,1.0f};
+        return 1;
+    }
+
+    elem->color = (colourf){0.4f, 0.0f, 0.3f,1.0f};
+    return 0;
+}
+
+static ui_element elem1 = {
+        {1.0f,0.5f,0.2f, 1.0f},
+        {20.0f,80.0f},
+        {30.0f, 20.0f},
+        {0.0f,0.0f},
+        {0.0f} 
+    };
+
 void app_specific_update(double dt)
 {
     (void)dt;
@@ -212,13 +248,11 @@ void app_specific_update(double dt)
     use_shader_program(sp);
     begin_render_batch(&batch);
 
-    const ui_element elem1 = {
-        {1.0f,0.5f,0.2f, 1.0f},
-        {20.0f,80.0f},
-        {30.0f, 20.0f},
-        {0.0f,0.0f},
-        {0.0f} 
-    };
+    if (is_element_highlighted(&elem1) && is_mouse_button_held(NL_MOUSE_BUTTON_LEFT))
+    {
+        const v2i mouse_pos = get_mouse_position_from_system();
+        elem1.pos = (v2f){(float)mouse_pos.x, (float)mouse_pos.y};
+    }
 
     v2i mouse_pos = get_mouse_position_from_system();
 
