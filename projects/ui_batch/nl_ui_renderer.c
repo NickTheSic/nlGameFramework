@@ -1,6 +1,7 @@
 #include "nl_ui_renderer.h"
 #include "private/nl_gl.h"
 
+
 static const char* ui_vert_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec2 aPos;                   \n"
@@ -133,5 +134,5 @@ void end_ui_render(ui_renderer* const ui_renderer)
 
 void cleanup_ui_renderer(ui_renderer* const ui_renderer)
 {
-    
+
 }
