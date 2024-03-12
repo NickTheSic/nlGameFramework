@@ -11,11 +11,11 @@ void winsizecbk(int width, int height)
 
 void app_specific_init(void)
 {
+    init_ui_renderer(&ui_batch);
+    
     pfn_window_size_callback = &winsizecbk;
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
-    
-    init_ui_renderer(&ui_batch);
 }
 
 void app_specific_update(double dt)
