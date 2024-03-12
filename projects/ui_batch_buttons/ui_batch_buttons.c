@@ -1,6 +1,9 @@
 #include "nl_lib.h"
 #include "private/nl_gl.h"
 
+// Opting out of classic 'button' for just selectable UI using an arrow or highlight effect
+// May be easier to mix controller and mouse input this way and just use text instead of a rectangle
+
 static const char* ui_vert_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec2 aPos;                   \n"
@@ -116,32 +119,6 @@ void render_batch(my_batch* const batch)
     batch->current_count = 0;
 }
 
-void add_to_render_batch_default(my_batch* const batch, v2f pos)
-{
-    if (batch->current_count == batch->max_count)
-    {
-        render_batch(batch);
-    }
-
-    const unsigned int current_idx = batch->current_count * 4;
-
-    const float SQUARE_HALF_SIZE = 100.0f;
-    const colourf col = (colourf){0.8f, 0.0f, 0.1f, 1.0f};
-    const myvd square_verts[] =
-    {
-        {{pos.x + -SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE}, col},
-        {{pos.x +  SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE}, col},
-        {{pos.x +  SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE}, col},
-        {{pos.x + -SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE}, col}
-    };
-
-    myvd* dest = &batch->vertices[current_idx];
-    memcpy(dest, &square_verts, sizeof(myvd)*4);
-
-    batch->current_count++;
-}
-
-
 void add_element_to_render_batch(my_batch* const batch, const ui_element *const elem)
 {
     if (batch->current_count == batch->max_count)
@@ -151,9 +128,17 @@ void add_element_to_render_batch(my_batch* const batch, const ui_element *const 
 
     const unsigned int current_idx = batch->current_count * 4;
 
-    const v2f pos = elem->pos;
+    const v2i screen_size = get_screen_size();
     const colourf col = elem->color;
     const v2f size = elem->size;
+    const v2f anchor = elem->anchor;
+    v2f pos = elem->pos;
+
+    const float half_w = (float)screen_size.x/2.0f;
+    const float half_h = (float)screen_size.y/2.0f;
+    pos.x += half_w - (anchor.x * half_w);
+    pos.y += half_h - (anchor.y * half_h);
+
     const myvd square_verts[] =
     {
         {{pos.x + -size.x, pos.y + -size.y}, col},
@@ -191,7 +176,10 @@ void winsizecbk(int width, int height)
 
     use_shader_program(sp);
 
-    create_orthographic_projection(&mat, 0, width, 0, height, -0.1f, 100.f);
+    int hwidth = width;
+    int hheight= height;
+
+    create_orthographic_projection(&mat, -hwidth, hwidth, -hheight, hheight, -0.1f, 100.f);
     unsigned int viewMat = glGetUniformLocation(sp, "uViewMat");
     glUniformMatrix4fv(viewMat, 1, GL_FALSE, &mat.m11);
 }
