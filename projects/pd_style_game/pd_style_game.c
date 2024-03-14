@@ -1,6 +1,8 @@
 #include "nl_lib.h"
 #include "private/nl_gl.h"
 
+#include "grid.c"
+
 typedef struct GameObject GameObject;
 struct GameObject
 {
@@ -29,7 +31,6 @@ GameData *TheGame = {0};
 
 internal_function v2f get_movement_input(const GameControls controls, const float dt)
 {
-    // TODO: Controller Input Also
     v2f speed = {0};
 
     speed.x = dt * (controls.MovementSpeed * is_key_held(controls.Right)) - (controls.MovementSpeed * is_key_held(controls.Left));
@@ -42,7 +43,7 @@ internal_function v2f get_movement_input(const GameControls controls, const floa
 internal_function void move_player(GameObject* player, v2f movement)
 {
     player->transform.position.x += movement.x;
-    
+
     player->transform.position.y += movement.y;
 
     if (movement.x != 0.0f)
