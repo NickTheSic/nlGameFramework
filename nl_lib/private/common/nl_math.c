@@ -93,6 +93,12 @@ internal_function void translate_matrix(mat4x4f* const mat, v3f pos)
     mat->m43 += pos.z;
 }
 
+internal_function void translate_matrix2f(mat4x4f* const mat, v2f pos)
+{
+    mat->m41 += pos.x;
+    mat->m42 += pos.y;
+}
+
 void create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const v3f translation)
 {
     scale_matrix_3f(mat, scale);
@@ -106,7 +112,7 @@ void create_srt_matrix_from_transform2d(mat4x4f* const mat, transform2d transfor
 {
     scale_matrix_2f(mat, transform.size);
     rotate_matrix(mat, transform.rotation, 0,0,1); //roll
-    translate_matrix(mat, transform.position);
+    translate_matrix2f(mat, transform.position);
 }
 
 float v3f_length_squared(const v3f vec)
@@ -182,31 +188,37 @@ float v2f_dot(const v2f ref, const v2f other)
 
 v2f v2f_subtract(const v2f lhs, const v2f rhs)
 {
-    (void)lhs; (void)rhs;
     v2f result = {0};
-    NL_UNIMPLEMENTED_FUNC
+    result.x = lhs.x - rhs.x;
+    result.y = lhs.y - rhs.y;
     return result;
 }
 
 v2f v2f_add(const v2f lhs, const v2f rhs)
 {
-    (void)lhs; (void)rhs;
     v2f result = {0};
-    NL_UNIMPLEMENTED_FUNC
+    result.x = lhs.x + rhs.x;
+    result.y = lhs.y + rhs.y;
     return result;
 }
 
 v2f v2f_normalize(const v2f vec)
 {
-    (void)vec;
     v2f result = {0};
-    NL_UNIMPLEMENTED_FUNC
+    const float length = v2f_length(vec);
+
+    if (length != 0.0f)
+    {
+        result.x = vec.x/length;
+        result.y = vec.y/length;
+    }
+    
     return result;
 }
 
 void initialize_transform2d(transform2d* const t)
 {
-    t->position = (v3f){0,0,0};
+    t->position = (v2f){0,0};
     t->size = (v2f){1,1};
     t->rotation = 0.0f;
 }

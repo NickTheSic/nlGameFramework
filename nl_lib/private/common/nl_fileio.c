@@ -46,3 +46,8 @@ void clear_file_read(file_contents* const content)
     content->size = 0;
     content->content = 0;
 }
+
+void save_to_binary_file(const char* const filename, unsigned int size, char* const contents)
+{
+    // Create file and write char* bytes of size to it
+}

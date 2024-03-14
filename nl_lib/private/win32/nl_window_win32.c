@@ -270,6 +270,11 @@ void window_swap_buffers()
 	SwapBuffers(g_window.device);
 }
 
+void window_request_close()
+{
+	PostQuitMessage(0);
+}
+
 v2i get_screen_size()
 {	
 	RECT rect = {0};

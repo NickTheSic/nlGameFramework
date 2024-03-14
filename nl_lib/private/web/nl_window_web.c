@@ -92,10 +92,10 @@ int initialize_window(int width, int height, const char* title)
     return 1;
 }
 
-void poll_events(){/*intentionally empty*/}
-
 // Web window is always active.  Can't use this in while loop and must run our update using callback
 int window_active(){return 1;} 
+void window_request_close(){/*intentionally empty*/}
+void poll_events(){/*intentionally empty*/}
 
 void window_swap_buffers()
 {

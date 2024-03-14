@@ -28,7 +28,7 @@ struct v3f
 typedef struct transform2d transform2d;
 struct transform2d
 {
-    v3f position;
+    v2f position;
     v2f size;
     float rotation;
 };

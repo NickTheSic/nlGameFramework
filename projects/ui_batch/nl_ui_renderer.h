@@ -32,6 +32,8 @@ struct ui_renderer
     unsigned int current_count;
 
     ui_vertex_data vertices[UI_MAX_BATCH_COUNT];
+    // If I want indices for font rendering I need to add it
+    // I'll decide when the time comes though 
 };
 
 void init_ui_renderer(ui_renderer* const ui_renderer);
