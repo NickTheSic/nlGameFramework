@@ -40,26 +40,13 @@ internal_function v2f get_movement_input(const GameControls controls, const floa
     speed.y = dt * ((controls.MovementSpeed * is_key_held(controls.Up)) - (controls.MovementSpeed * is_key_held(controls.Down)));
 
     const v2f normalized_speed = v2f_normalize(speed);
-    
-    NL_LOG("sX: %f, sY: %f", speed.x, speed.y);
-    NL_LOG("nsX: %f, nsY: %f", normalized_speed.x, normalized_speed.y);
     return (normalized_speed);
 }
 
 internal_function void move_player(GameObject* player, v2f movement)
 {
     player->transform.position.x += movement.x;
-
     player->transform.position.y += movement.y;
-
-    //if (movement.x != 0.0f)
-    //{
-    //    NL_LOG("X: %f", player->transform.position.x)
-    //}
-    //if (movement.y != 0.0f)
-    //{
-    //    NL_LOG("Y: %f", player->transform.position.y)
-    //}
 }
 
 void winsizecbk(int width, int height)
