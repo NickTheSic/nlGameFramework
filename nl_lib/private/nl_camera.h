@@ -8,12 +8,11 @@ struct camera
     mat4x4f view_matrix;
     mat4x4f proj_matrix;
     
-    v3f position;
-    v2f size;
-    v2f screen_size;
-
-    float move_speed;
-    int assume_half_size;
+    //v3f position;
+    //v2f size;
+    //v2f screen_size;
+    //float move_speed;
+    //int assume_half_size;
 };
 
 void create_screen_aspect(camera* const cam, int width, int height);

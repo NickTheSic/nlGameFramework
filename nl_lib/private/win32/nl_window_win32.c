@@ -25,9 +25,14 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
     switch (msg)
     {
         case WM_DESTROY:
+		{
+			NL_LOG("Destroy Message");
+            PostQuitMessage(0);
+			//fallthrough
+		}
         case WM_QUIT:
         {
-            PostQuitMessage(0);
+			NL_LOG("Quit Message");
             g_window.running = 0;
         } break;
 
@@ -272,6 +277,7 @@ void window_swap_buffers()
 
 void window_request_close()
 {
+	NL_LOG("Requesting window Close");
 	PostQuitMessage(0);
 }
 

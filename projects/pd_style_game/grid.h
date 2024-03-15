@@ -28,4 +28,6 @@ const colourf GridColours[] =
     {0.2f,0.7f,0.3f,1.0f}
 };
 
+int get_value_at_coords(const Grid* const grid, int x, int y);
+
 #endif//__GRID_H__
