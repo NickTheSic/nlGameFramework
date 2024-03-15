@@ -51,11 +51,11 @@ internal_function void move_player(GameObject* player, v2f movement)
 
     if (movement.x != 0.0f)
     {
-        NL_LOG("%f", player->transform.position.x)
+        NL_LOG("X: %f", player->transform.position.x)
     }
     if (movement.y != 0.0f)
     {
-        NL_LOG("%f", player->transform.position.y)
+        NL_LOG("Y: %f", player->transform.position.y)
     }
 }
 
@@ -89,6 +89,7 @@ void app_specific_init(void)
 
     // Player Mesh which I plan to change to a sprite
     {
+        TheGame->Player.transform.size = (v2f){1.0f,1.0f};
         const int SQUARE_HALF_SIZE = 30;
         vertex_data square_verts[] =
         {
@@ -113,6 +114,7 @@ internal_function game_draw()
     unsigned int worldMat = glGetUniformLocation(TheGame->shader_program, "uWorldMat");
     mat4x4f mat = {0};
 
+    create_identity_matrix(&mat);
     create_srt_matrix_from_transform2d(&mat, TheGame->Player.transform);
     glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
 
