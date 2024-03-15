@@ -36,8 +36,8 @@ internal_function v2f get_movement_input(const GameControls controls, const floa
 {
     v2f speed = {0};
 
-    speed.x = dt * (controls.MovementSpeed * is_key_held(controls.Right)) - (controls.MovementSpeed * is_key_held(controls.Left));
-    speed.y = dt * (controls.MovementSpeed * is_key_held(controls.Up)) - (controls.MovementSpeed * is_key_held(controls.Down));
+    speed.x = dt * ((controls.MovementSpeed * is_key_held(controls.Right)) - (controls.MovementSpeed * is_key_held(controls.Left)));
+    speed.y = dt * ((controls.MovementSpeed * is_key_held(controls.Up)) - (controls.MovementSpeed * is_key_held(controls.Down)));
 
     const v2f normalized_speed = v2f_normalize(speed);
     
