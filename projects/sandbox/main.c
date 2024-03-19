@@ -6,7 +6,6 @@
 
 extern void app_specific_init(void);
 extern void app_specific_update(double dt);
-extern void app_specific_draw();
 extern void app_specific_cleanup(void);
 
 void run()
@@ -14,11 +13,12 @@ void run()
     poll_events();
     update_input_frame_state();
     
+    begin_render_frame();
+    
     double dt = get_frame_delta_time();
+    NL_LOG("DT: %f", dt);
     app_specific_update(dt);
 
-    begin_render_frame();
-    app_specific_draw();
     end_render_frame();
 }
 
@@ -26,7 +26,7 @@ int main(int count, char** args)
 {
     (void)count;(void)args;
     
-    if (!initialize_window(800,800, "Sandbox Mode"))
+    if (!initialize_window(800,600, "Sandbox Mode"))
     {
         return -1;
     }

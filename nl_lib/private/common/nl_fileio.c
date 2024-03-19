@@ -50,4 +50,6 @@ void clear_file_read(file_contents* const content)
 void save_to_binary_file(const char* const filename, unsigned int size, char* const contents)
 {
     // Create file and write char* bytes of size to it
+    NL_UNUSED(filename); NL_UNUSED(size); NL_UNUSED(contents);
+    NL_UNIMPLEMENTED_FUNC;
 }
