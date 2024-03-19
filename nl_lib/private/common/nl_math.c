@@ -212,9 +212,7 @@ v2f v2f_normalize(const v2f vec)
         result.x = vec.x/length;
         result.y = vec.y/length;
     }
-
-    NL_LOG("%f,%f, %f,%f", vec.x,vec.y,result.x,result.y);
-    
+        
     return result;
 }
 

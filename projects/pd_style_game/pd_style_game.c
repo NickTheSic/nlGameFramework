@@ -70,16 +70,18 @@ void app_specific_init(void)
     // Controls Setup
     {
         TheGame->Controls.MovementSpeed = 10.0f;
-        TheGame->Controls.Left = key_a;
+        TheGame->Controls.Left  = key_a;
         TheGame->Controls.Right = key_d;
-        TheGame->Controls.Up = key_w;
-        TheGame->Controls.Down = key_s;
+        TheGame->Controls.Up    = key_w;
+        TheGame->Controls.Down  = key_s;
         TheGame->Controls.Pause = key_escape;
     }
 
     // Player Mesh which I plan to change to a sprite
     {
         TheGame->Player.transform.size = (v2f){1.0f,1.0f};
+        TheGame->Player.transform.position  = (v2f){100.0f,100.0f};
+
         const int SQUARE_HALF_SIZE = 30;
         vertex_data square_verts[] =
         {
@@ -93,13 +95,13 @@ void app_specific_init(void)
     }
 }
 
-internal_function game_update(double dt)
+internal_function void game_update(double dt)
 {
     const v2f movement_vector = get_movement_input(TheGame->Controls, dt);
     move_player(&TheGame->Player, movement_vector);
 }
 
-internal_function game_draw()
+internal_function void game_draw()
 {
     unsigned int worldMat = glGetUniformLocation(TheGame->shader_program, "uWorldMat");
     mat4x4f mat = {0};
