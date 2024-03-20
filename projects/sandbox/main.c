@@ -16,7 +16,6 @@ void run()
     begin_render_frame();
     
     double dt = get_frame_delta_time();
-    NL_LOG("DT: %f", dt);
     app_specific_update(dt);
 
     end_render_frame();
