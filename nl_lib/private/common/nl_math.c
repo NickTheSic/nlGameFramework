@@ -2,6 +2,8 @@
 #include "math.h"
 #include "string.h" // memset
 
+#define PI 3.14159f
+
 void create_identity_matrix(mat4x4f* const mat)
 {
     memset(mat, 0, sizeof(mat4x4f));
@@ -82,8 +84,27 @@ internal_function void scale_matrix_1f(mat4x4f* const mat, float scale)
 
 internal_function void rotate_matrix(mat4x4f* const mat, float angle, float x, float y, float z)
 {
-    (void)mat;(void)angle;(void)x;(void)y;(void)z;
-    NL_UNIMPLEMENTED_FUNC
+    float magnitude = sqrtf((x*x)+(y*y)+(z*z));
+
+    if (mag > 0.0f)
+    {
+        x/=mag;
+        y/=mag;
+        z/=mag;
+
+        float xx = x*x;
+        float yy = y*y;
+        float zz = z*z;
+        float xy = x*y;
+        float yz = y*z;
+        float zx = z*x;
+        float sin_angle = sinf(angle * PI/180.0f);
+        float xs = x * sin_angle;
+        float ys = y * sin_angle;
+        float zs = z * sin_angle;
+        float cos_angle = cosf(angle * PI/180.0f);
+        float one_sub_cos = 1.0f - cos_angle;
+    }
 }
 
 internal_function void translate_matrix(mat4x4f* const mat, v3f pos)
@@ -102,11 +123,24 @@ internal_function void translate_matrix2f(mat4x4f* const mat, v2f pos)
 void create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const v3f translation)
 {
     scale_matrix_3f(mat, scale);
-    rotate_matrix(mat, rot.z, 0,0,1);//roll
-    rotate_matrix(mat, rot.x, 1,0,0);//pitch
-    rotate_matrix(mat, rot.y, 0,1,0);//yaw
+    rotate_matrix(mat, rot.z, 0.0f,0.0f,1.0f);//roll
+    rotate_matrix(mat, rot.x, 1.0f,0.0f,0.0f);//pitch
+    rotate_matrix(mat, rot.y, 0.0f,1.0f,0.0f);//yaw
     translate_matrix(mat, translation);
 }
+
+
+internal_function void rotate2d_roll(mat4x4f* const mat, float angle)
+{
+    float sin_angle = sinf(angle * PI/180.0f);
+    float cos_angle = cosf(angle * PI/180.0f);
+    float one_sub_cos = 1.0f - cos_angle;
+    
+    mat->m12 *= -sin_angle;
+    mat->m21 *= sin_angle;
+    mat->m33 *= (oneMinusCos) + cosAngle;
+}
+
 
 void create_srt_matrix_from_transform2d(mat4x4f* const mat, transform2d transform)
 {
