@@ -8,12 +8,12 @@ struct GameObject
 {
     transform2d transform;
     mesh m;
+    float movement_speed;
 };
 
 typedef struct GameControls GameControls ;
 struct GameControls 
 {
-    float MovementSpeed;
     nl_key Left;
     nl_key Right;
     nl_key Up;
@@ -32,21 +32,22 @@ struct GameData
 };
 GameData *TheGame = {0}; 
 
-internal_function v2f get_movement_input(const GameControls controls, const float dt)
+internal_function v2f get_movement_input(const GameControls controls)
 {
     v2f speed = {0};
 
-    speed.x = dt * ((controls.MovementSpeed * is_key_held(controls.Right)) - (controls.MovementSpeed * is_key_held(controls.Left)));
-    speed.y = dt * ((controls.MovementSpeed * is_key_held(controls.Up)) - (controls.MovementSpeed * is_key_held(controls.Down)));
+    speed.x = is_key_held(controls.Right) - is_key_held(controls.Left);
+    speed.y = is_key_held(controls.Up) - is_key_held(controls.Down);
 
     const v2f normalized_speed = v2f_normalize(speed);
+
     return (normalized_speed);
 }
 
-internal_function void move_player(GameObject* player, v2f movement)
+internal_function void move_player(GameObject* player, v2f movement, double dt)
 {
-    player->transform.position.x += movement.x;
-    player->transform.position.y += movement.y;
+    player->transform.position.x += player->movement_speed * movement.x * dt;
+    player->transform.position.y += player->movement_speed * movement.y * dt;
 }
 
 void winsizecbk(int width, int height)
@@ -69,7 +70,6 @@ void app_specific_init(void)
     
     // Controls Setup
     {
-        TheGame->Controls.MovementSpeed = 10.0f;
         TheGame->Controls.Left  = key_a;
         TheGame->Controls.Right = key_d;
         TheGame->Controls.Up    = key_w;
@@ -93,13 +93,15 @@ void app_specific_init(void)
         };
         unsigned int indices[]={0,1,2,2,3,0};
         generate_mesh_using_vertices_and_indices(&TheGame->Player.m, square_verts, 4, indices,6);
+        
+        TheGame->Player.movement_speed = 300.0f;
     }
 }
 
 internal_function void game_update(double dt)
 {
-    const v2f movement_vector = get_movement_input(TheGame->Controls, dt);
-    move_player(&TheGame->Player, movement_vector);
+    const v2f movement_vector = get_movement_input(TheGame->Controls);
+    move_player(&TheGame->Player, movement_vector, dt);
 
     TheGame->Player.transform.rotation += 10*dt;
 }

@@ -14,5 +14,5 @@ int get_value_at_coords(const Grid* const grid, int x, int y)
 
 void render_grid(const Grid* const grid)
 {
-    
+    NL_UNUSED(grid);
 }

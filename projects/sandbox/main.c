@@ -16,6 +16,7 @@ void run()
     begin_render_frame();
     
     double dt = get_frame_delta_time();
+    //double dt = 0.007;
     // debug FPS
     {
         static float TimedLoop;
@@ -63,7 +64,7 @@ int main(int count, char** args)
 #ifdef _WIN32
     while (window_active())
     {
-        run();
+        run();   
     }
 #elif defined(__EMSCRIPTEN__)
     emscripten_set_main_loop(run, 0, 1);

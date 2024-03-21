@@ -23,7 +23,7 @@ internal_function EM_BOOL keyboard_callback(int eventType, const EmscriptenKeybo
         set_key_state_up((nl_key)emscripten_compute_dom_pk_code(e->code));
 	}
 
-	NL_LOG("Key Code: %s, domPk code: %d", e->code, emscripten_compute_dom_pk_code(e->code));
+	//NL_LOG("Key Code: %s, domPk code: %d", e->code, emscripten_compute_dom_pk_code(e->code));
 
 	return EM_TRUE;
 }
