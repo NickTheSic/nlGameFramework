@@ -81,6 +81,7 @@ void app_specific_init(void)
     {
         TheGame->Player.transform.size = (v2f){1.0f,1.0f};
         TheGame->Player.transform.position  = (v2f){100.0f,100.0f};
+        TheGame->Player.transform.rotation = 0.5f;
 
         const int SQUARE_HALF_SIZE = 30;
         vertex_data square_verts[] =
@@ -99,6 +100,8 @@ internal_function void game_update(double dt)
 {
     const v2f movement_vector = get_movement_input(TheGame->Controls, dt);
     move_player(&TheGame->Player, movement_vector);
+
+    TheGame->Player.transform.rotation += 10*dt;
 }
 
 internal_function void game_draw()

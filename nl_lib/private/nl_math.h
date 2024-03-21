@@ -51,6 +51,8 @@ void create_fustrum(mat4x4f* const mat, float left, float right, float bottom, f
 void create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const v3f translation);
 void create_srt_matrix_from_transform2d(mat4x4f* const mat, transform2d transform);
 
+void matrix_to_matrix_multiplication(mat4x4f* const result, mat4x4f* const o);
+
 float v3f_length_squared(const v3f vec);
 float v3f_length(const v3f vec);
 float v3f_dot(const v3f ref, const v3f other);

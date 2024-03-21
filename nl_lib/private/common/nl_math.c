@@ -16,7 +16,7 @@ void create_identity_matrix(mat4x4f* const mat)
     //mat->m13 = 0;
     //mat->m14 = 0;
     //mat->m21 = 0;
-    //mat->m23 = 0;
+    //mat->m23 = 0;matrix_to_matrix_multiplication
     //mat->m24 = 0;
     //mat->m31 = 0;
     //mat->m32 = 0;
@@ -86,11 +86,11 @@ internal_function void rotate_matrix(mat4x4f* const mat, float angle, float x, f
 {
     float magnitude = sqrtf((x*x)+(y*y)+(z*z));
 
-    if (mag > 0.0f)
+    if (magnitude > 0.0f)
     {
-        x/=mag;
-        y/=mag;
-        z/=mag;
+        x/=magnitude;
+        y/=magnitude;
+        z/=magnitude;
 
         float xx = x*x;
         float yy = y*y;
@@ -104,6 +104,20 @@ internal_function void rotate_matrix(mat4x4f* const mat, float angle, float x, f
         float zs = z * sin_angle;
         float cos_angle = cosf(angle * PI/180.0f);
         float one_sub_cos = 1.0f - cos_angle;
+
+        mat4x4f rot = {};
+        create_identity_matrix(&rot);
+        rot.m11 = (one_sub_cos * xx) + cos_angle;
+        rot.m12 = (one_sub_cos * xy) - zs;
+        rot.m13 = (one_sub_cos * zx) + ys;
+        rot.m21 = (one_sub_cos * xy) + zs;
+        rot.m22 = (one_sub_cos * yy) + cos_angle;
+        rot.m23 = (one_sub_cos * yz) - xs;
+        rot.m31 = (one_sub_cos * zx) - ys;
+        rot.m32 = (one_sub_cos * yz) + xs;
+        rot.m33 = (one_sub_cos * zz) + cos_angle;
+
+        matrix_to_matrix_multiplication(mat, &rot);
     }
 }
 
@@ -129,23 +143,50 @@ void create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const
     translate_matrix(mat, translation);
 }
 
+void matrix_to_matrix_multiplication(mat4x4f* const result, mat4x4f* const o)
+{
+    mat4x4f temp = {0};
+
+    temp.m11 = result->m11 * o->m11 + result->m21 * o->m12 + result->m31 * o->m13 + result->m41 * o->m14;
+    temp.m12 = result->m12 * o->m11 + result->m22 * o->m12 + result->m32 * o->m13 + result->m42 * o->m14;
+    temp.m13 = result->m13 * o->m11 + result->m23 * o->m12 + result->m33 * o->m13 + result->m43 * o->m14;
+    temp.m14 = result->m14 * o->m11 + result->m24 * o->m12 + result->m34 * o->m13 + result->m44 * o->m14;
+    temp.m21 = result->m11 * o->m21 + result->m21 * o->m22 + result->m31 * o->m23 + result->m41 * o->m24;
+    temp.m22 = result->m12 * o->m21 + result->m22 * o->m22 + result->m32 * o->m23 + result->m42 * o->m24;
+    temp.m23 = result->m13 * o->m21 + result->m23 * o->m22 + result->m33 * o->m23 + result->m43 * o->m24;
+    temp.m24 = result->m14 * o->m21 + result->m24 * o->m22 + result->m34 * o->m23 + result->m44 * o->m24;
+    temp.m31 = result->m11 * o->m31 + result->m21 * o->m32 + result->m31 * o->m33 + result->m41 * o->m34;
+    temp.m32 = result->m12 * o->m31 + result->m22 * o->m32 + result->m32 * o->m33 + result->m42 * o->m34;
+    temp.m33 = result->m13 * o->m31 + result->m23 * o->m32 + result->m33 * o->m33 + result->m43 * o->m34;
+    temp.m34 = result->m14 * o->m31 + result->m24 * o->m32 + result->m34 * o->m33 + result->m44 * o->m34;
+    temp.m41 = result->m11 * o->m41 + result->m21 * o->m42 + result->m31 * o->m43 + result->m41 * o->m44;
+    temp.m42 = result->m12 * o->m41 + result->m22 * o->m42 + result->m32 * o->m43 + result->m42 * o->m44;
+    temp.m43 = result->m13 * o->m41 + result->m23 * o->m42 + result->m33 * o->m43 + result->m43 * o->m44;
+    temp.m44 = result->m14 * o->m41 + result->m24 * o->m42 + result->m34 * o->m43 + result->m44 * o->m44;
+
+    *result = temp;
+}
 
 internal_function void rotate2d_roll(mat4x4f* const mat, float angle)
 {
     float sin_angle = sinf(angle * PI/180.0f);
     float cos_angle = cosf(angle * PI/180.0f);
-    float one_sub_cos = 1.0f - cos_angle;
-    
-    mat->m12 *= -sin_angle;
-    mat->m21 *= sin_angle;
-    mat->m33 *= (oneMinusCos) + cosAngle;
+    mat4x4f rot = {0};
+    rot.m11 = cos_angle;
+    rot.m12 = -sin_angle;
+    rot.m21 = sin_angle;
+    rot.m22 = cos_angle;
+    rot.m33 = 1.0;
+    rot.m44 = 1.0;
+    matrix_to_matrix_multiplication(mat, &rot);
 }
 
 
 void create_srt_matrix_from_transform2d(mat4x4f* const mat, transform2d transform)
 {
     scale_matrix_2f(mat, transform.size);
-    rotate_matrix(mat, transform.rotation, 0,0,1); //roll
+    rotate2d_roll(mat, transform.rotation);
+    //rotate_matrix(mat, transform.rotation, 0,0,1); //roll
     translate_matrix2f(mat, transform.position);
 }
 
