@@ -288,3 +288,8 @@ v2i get_screen_size()
 
 	return (v2i){rect.right - rect.left, rect.bottom - rect.top};
 }
+
+void set_window_title(const char* title)
+{
+	SetWindowTextA(g_window.window, title);
+}

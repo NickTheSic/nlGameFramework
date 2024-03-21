@@ -16,6 +16,27 @@ void run()
     begin_render_frame();
     
     double dt = get_frame_delta_time();
+    // debug FPS
+    {
+        static float TimedLoop;
+    	static int frameCount;
+    	static float fps;
+
+    	TimedLoop += dt;
+    	if (TimedLoop > 1.f)
+    	{
+    		fps = (double)frameCount / TimedLoop;
+    		TimedLoop -= 1.f;
+    		frameCount = 0;
+            
+            char c[50];
+            sprintf(c, "FPS: %f\n", fps);
+            NL_LOG("FPS: %f", fps);
+            set_window_title(c);
+    	}
+    	frameCount++;
+    }
+
     app_specific_update(dt);
 
     end_render_frame();

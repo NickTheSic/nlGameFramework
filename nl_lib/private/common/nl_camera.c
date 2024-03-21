@@ -3,6 +3,7 @@
 
 void initialize_camera_to_zero(camera* const cam)
 {
+    NL_UNUSED(cam);
     //cam->position.x = 0.0f;
     //cam->position.y = 0.0f;
     //cam->position.z = 0.0f;
@@ -19,6 +20,7 @@ void initialize_camera_to_zero(camera* const cam)
 
 void initialize_camera(camera* const cam, const v3f pos, const v2f size)
 {
+    NL_UNUSED(cam);NL_UNUSED(pos);NL_UNUSED(size);
     //cam->position.x = pos.x;
     //cam->position.y = pos.y;
     //cam->position.z = pos.z;
@@ -35,6 +37,7 @@ void initialize_camera(camera* const cam, const v3f pos, const v2f size)
 
 void create_screen_aspect(camera* const cam, int width, int height)
 {
+    NL_UNUSED(cam);NL_UNUSED(width);NL_UNUSED(height);
     //cam->screen_size.x = (float)width;
     //cam->screen_size.y = (float)height;
     //
@@ -44,6 +47,7 @@ void create_screen_aspect(camera* const cam, int width, int height)
 
 void update_camera_size(camera* const cam, float width, float height)
 {
+    NL_UNUSED(cam);NL_UNUSED(width);NL_UNUSED(height);
     //cam->size.x = width;
     //cam->size.y = height;
 
@@ -52,6 +56,7 @@ void update_camera_size(camera* const cam, float width, float height)
 
 internal_function void recalculate_camera_assuming_half_size(camera* const cam)
 {
+    NL_UNUSED(cam);
     //create_orthographic_projection(
     //    &cam->view_matrix, 
     //    cam->position.x-cam->size.x, 
@@ -64,6 +69,7 @@ internal_function void recalculate_camera_assuming_half_size(camera* const cam)
 
 internal_function void recalculate_camera_assuming_zero_to_size(camera* const cam)
 {
+    NL_UNUSED(cam);
     //create_orthographic_projection(
     //    &cam->view_matrix, 
     //    cam->position.x, 
@@ -76,6 +82,7 @@ internal_function void recalculate_camera_assuming_zero_to_size(camera* const ca
 
 void recalculate_camera(camera* const cam)
 {
+    NL_UNUSED(cam);
     //if (cam->assume_half_size == 1)
     {
     //    recalculate_camera_assuming_half_size(cam);
@@ -88,6 +95,7 @@ void recalculate_camera(camera* const cam)
 
 void update_camera(camera* const cam, float dt)
 {
+    NL_UNUSED(cam);NL_UNUSED(dt);
     //if (is_key_held(key_alt))
     //{
     //    if (is_key_held(key_a))

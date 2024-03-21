@@ -10,3 +10,9 @@ int get_value_at_coords(const Grid* const grid, int x, int y)
 
     return grid->Data[y*grid->Width+x];
 }
+
+
+void render_grid(const Grid* const grid)
+{
+    
+}

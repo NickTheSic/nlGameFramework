@@ -102,3 +102,8 @@ void window_swap_buffers()
     // Unfortunately part of the window but the egl renderer I use will be the real swap.
     renderer_swap_buffers();
 }
+
+void set_window_title(const char* title)
+{
+	emscripten_set_window_title(title);
+}

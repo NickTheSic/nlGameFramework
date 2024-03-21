@@ -15,7 +15,7 @@ double get_frame_delta_time()
 {
     dt2 = emscripten_performance_now();
 
-    double time = (dt2 - dt1) * 0.0001; 
+    double time = (dt2 - dt1) * 0.001; 
     dt1 = dt2;
 
     return time;

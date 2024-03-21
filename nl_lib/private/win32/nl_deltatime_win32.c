@@ -12,7 +12,7 @@ internal_function double get_system_time()
     QueryPerformanceFrequency( (LARGE_INTEGER*)&freq);
     QueryPerformanceCounter( (LARGE_INTEGER*)&time);
 
-    double time_seconds = (double)time / (double)freq;
+    double time_seconds = (double)time / freq;
 
     return time_seconds;
 }

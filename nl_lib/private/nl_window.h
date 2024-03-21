@@ -12,4 +12,6 @@ void window_swap_buffers();
 
 v2i get_screen_size();
 
+void set_window_title(const char* title);
+
 #endif // __NL_WINDOW_H__
