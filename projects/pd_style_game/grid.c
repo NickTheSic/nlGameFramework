@@ -58,11 +58,13 @@ internal_function void make_grid_meshes(Grid* const grid)
 
 void init_grid(Grid* const grid)
 {
+    NL_UNUSED(grid);
     make_grid_meshes(grid);
 }
 
 void free_grid(Grid* const grid)
 {
+    NL_UNUSED(grid);
     free_mesh(&grid_meshes[0]);
     free_mesh(&grid_meshes[1]);
     free_mesh(&grid_meshes[2]);
@@ -70,6 +72,8 @@ void free_grid(Grid* const grid)
 
 void render_grid(const Grid* const grid)
 {
+    NL_UNUSED(grid);
+    
     mat4x4f mat = {0};
     transform2d transform = {0};
     transform.size = (v2f){1.0f,1.0f};
