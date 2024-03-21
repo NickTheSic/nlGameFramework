@@ -16,7 +16,6 @@ void run()
     begin_render_frame();
     
     double dt = get_frame_delta_time();
-    //double dt = 0.007;
     // debug FPS
     {
         static float TimedLoop;

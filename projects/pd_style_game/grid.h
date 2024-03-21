@@ -21,13 +21,8 @@ enum GridBlockTypes
     Block_Stairs = 2
 };
 
-const colourf GridColours[] = 
-{
-    {0.0f,0.0f,0.0f,0.0f},
-    {0.8f,0.8f,0.8f,1.0f},
-    {0.2f,0.7f,0.3f,1.0f}
-};
-
+void init_grid(Grid* const grid);
+void free_grid(Grid* const grid);
 int get_value_at_coords(const Grid* const grid, int x, int y);
 void render_grid(const Grid* const grid);
 

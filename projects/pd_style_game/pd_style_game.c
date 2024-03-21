@@ -28,6 +28,7 @@ struct GameData
     unsigned int shader_program;
     GameControls Controls;
     GameObject Player;
+    Grid grid;
     camera game_camera;
 };
 GameData *TheGame = {0}; 
@@ -96,6 +97,10 @@ void app_specific_init(void)
         
         TheGame->Player.movement_speed = 300.0f;
     }
+
+    {
+        make_grid_meshes(&TheGame->grid);
+    }
 }
 
 internal_function void game_update(double dt)
@@ -110,6 +115,33 @@ internal_function void game_draw()
 {
     unsigned int worldMat = glGetUniformLocation(TheGame->shader_program, "uWorldMat");
     mat4x4f mat = {0};
+
+    transform2d transform = {0};
+    transform.size = (v2f){1.0f,1.0f};
+    transform.rotation = 0.f;
+    {
+        create_identity_matrix(&mat);
+        transform.position  = (v2f){400.0f,100.0f};
+        create_srt_matrix_from_transform2d(&mat, transform);
+        glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
+        render_single_mesh(&grid_meshes[0]);
+    }
+
+    {
+        create_identity_matrix(&mat);
+        transform.position  = (v2f){200.0f,400.0f};
+        create_srt_matrix_from_transform2d(&mat, transform);
+        glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
+        render_single_mesh(&grid_meshes[1]);
+    }
+
+    {
+        create_identity_matrix(&mat);
+        transform.position  = (v2f){280.0f,500.0f};
+        create_srt_matrix_from_transform2d(&mat, transform);
+        glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
+        render_single_mesh(&grid_meshes[2]);
+    }
 
     create_identity_matrix(&mat);
     create_srt_matrix_from_transform2d(&mat, TheGame->Player.transform);
@@ -143,6 +175,7 @@ void app_specific_update(double dt)
 
 void app_specific_cleanup()
 {
+    free_grid(&TheGame->grid);
     free_mesh(&TheGame->Player.m);
     memory_free(TheGame);
 }
