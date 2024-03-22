@@ -30,4 +30,6 @@ int get_value_at_index(const Grid* const grid, int idx);
 void render_grid(const Grid* const grid);
 v2f grid_to_world_position(const Grid* const grid, int cel_idx);
 
+v2i world_to_grid_coords(const Grid* const grid, v2f world_pos);
+
 #endif//__GRID_H__

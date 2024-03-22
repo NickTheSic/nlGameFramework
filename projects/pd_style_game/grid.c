@@ -1,5 +1,8 @@
 #include "grid.h"
 
+#define GRID_CELL_SIZE 64
+#define GRID_CELL_HALF_SIZE GRID_CELL_SIZE/2.0f
+
 int get_value_at_coords(const Grid* const grid, int x, int y)
 {
     if (x < 0 || y < 0)
@@ -22,7 +25,7 @@ internal_function void make_grid_meshes(Grid* const grid)
         {0.2f,0.7f,0.3f,1.0f}
     };
 
-    const int SQUARE_HALF_SIZE = 30;
+    const int SQUARE_HALF_SIZE = GRID_CELL_HALF_SIZE;
     unsigned int indices[]={0,1,2,2,3,0};
     {
         vertex_data square_verts[] =
@@ -66,6 +69,14 @@ v2f grid_to_world_position(const Grid* const grid, int cell_idx)
     return (result);
 }
 
+v2i world_to_grid_coords(const Grid* const grid, v2f world_pos)
+{
+    v2i result = {0};
+    result.x = (world_pos.x) / grid->cell_size;
+    result.y = (world_pos.y) / grid->cell_size;
+    return (result);
+}
+
 int get_value_at_index(const Grid* const grid, int idx)
 {
     return grid->Data[idx];
@@ -75,9 +86,10 @@ void init_grid(Grid* const grid, int width, int height, int* data)
 {
     grid->Width = width;
     grid->Height = height;
-    grid->cell_size = 60.0f;
+    grid->cell_size = GRID_CELL_SIZE;
     grid->cell_half_size = grid->cell_size*0.5f;
     memcpy(grid->Data, data, width*height*sizeof(int));
+
     make_grid_meshes(grid);
 }
 

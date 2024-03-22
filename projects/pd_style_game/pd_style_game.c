@@ -47,8 +47,20 @@ internal_function v2f get_movement_input(const GameControls controls)
 
 internal_function void move_player(GameObject* player, v2f movement, double dt)
 {
-    player->transform.position.x += player->movement_speed * movement.x * dt;
-    player->transform.position.y += player->movement_speed * movement.y * dt;
+    v2f world_pos = TheGame->Player.transform.position;
+    v2f x_check = world_pos;
+    v2f y_check = world_pos;
+    x_check.x += 16*movement.x;
+    y_check.y += 16*movement.y;
+
+    v2i x_coords = world_to_grid_coords(&TheGame->grid, x_check);
+    v2i y_coords = world_to_grid_coords(&TheGame->grid, y_check);
+
+    if (get_value_at_coords(&TheGame->grid, x_coords.x, x_coords.y) != 0)
+        player->transform.position.x += player->movement_speed * movement.x * dt;
+    
+    if (get_value_at_coords(&TheGame->grid, y_coords.x, y_coords.y) != 0)
+        player->transform.position.y += player->movement_speed * movement.y * dt;
 }
 
 void winsizecbk(int width, int height)
@@ -82,9 +94,9 @@ void app_specific_init(void)
     {
         TheGame->Player.transform.size = (v2f){1.0f,1.0f};
         TheGame->Player.transform.position  = (v2f){100.0f,100.0f};
-        TheGame->Player.transform.rotation = 0.5f;
+        TheGame->Player.transform.rotation = 0.0f;
 
-        const int SQUARE_HALF_SIZE = 30;
+        const int SQUARE_HALF_SIZE = 16;
         vertex_data square_verts[] =
         {
             {{-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},
@@ -101,8 +113,8 @@ void app_specific_init(void)
     {
         int g[] = {
             0,0,0,0,0,
+            0,2,1,1,0,
             0,1,1,1,0,
-            0,1,2,1,0,
             0,1,1,1,0,
             0,0,0,0,0
         };
@@ -114,8 +126,6 @@ internal_function void game_update(double dt)
 {
     const v2f movement_vector = get_movement_input(TheGame->Controls);
     move_player(&TheGame->Player, movement_vector, dt);
-
-    //TheGame->Player.transform.rotation += 10*dt;
 }
 
 internal_function void game_draw()
