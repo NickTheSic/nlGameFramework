@@ -31,7 +31,6 @@ void run()
             
             char c[50];
             sprintf(c, "FPS: %f\n", fps);
-            NL_LOG("FPS: %f", fps);
             set_window_title(c);
     	}
     	frameCount++;

@@ -5,7 +5,7 @@
 
 int get_value_at_coords(const Grid* const grid, int x, int y)
 {
-    if (x < 0 || y < 0)
+    if (x < 0 || y < 0 || x > grid->Width || y>grid->Height)
     {
         NL_LOG("Invalid values were passed into %s", __FUNCTION__);
         return 0;
@@ -64,7 +64,7 @@ v2f grid_to_world_position(const Grid* const grid, int cell_idx)
     v2f result = {0};
 
     result.x = grid->cell_half_size + grid->cell_size*(cell_idx%grid->Width);
-    result.y = grid->cell_half_size + grid->cell_size*(cell_idx/grid->Height);
+    result.y = grid->cell_half_size + grid->cell_size*(cell_idx/grid->Width);
 
     return (result);
 }
@@ -102,13 +102,5 @@ void free_grid(Grid* const grid)
 
 void render_grid(const Grid* const grid)
 {
-    mat4x4f mat = {0};
-    transform2d transform = {0};
-    transform.size = (v2f){1.0f,1.0f};
-    transform.position  = (v2f){400.0f,100.0f};
-    transform.rotation = 1.f;
-    create_identity_matrix(&mat);
-    create_srt_matrix_from_transform2d(&mat, transform);
-    //glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
-    render_single_mesh(&grid_meshes[0]);
+    NL_UNUSED(grid);
 }
