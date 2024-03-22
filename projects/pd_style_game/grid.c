@@ -1,5 +1,4 @@
 #include "grid.h"
-
 #include "string.h" //memcpy
 
 #define GRID_CELL_SIZE 64
