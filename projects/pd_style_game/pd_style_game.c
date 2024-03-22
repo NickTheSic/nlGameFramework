@@ -99,7 +99,14 @@ void app_specific_init(void)
     }
 
     {
-        make_grid_meshes(&TheGame->grid);
+        int g[] = {
+            0,0,0,0,0,
+            0,1,1,1,0,
+            0,1,2,1,0,
+            0,1,1,1,0,
+            0,0,0,0,0
+        };
+        init_grid(&TheGame->grid, 5,5, g);
     }
 }
 
@@ -108,7 +115,7 @@ internal_function void game_update(double dt)
     const v2f movement_vector = get_movement_input(TheGame->Controls);
     move_player(&TheGame->Player, movement_vector, dt);
 
-    TheGame->Player.transform.rotation += 10*dt;
+    //TheGame->Player.transform.rotation += 10*dt;
 }
 
 internal_function void game_draw()
@@ -119,28 +126,13 @@ internal_function void game_draw()
     transform2d transform = {0};
     transform.size = (v2f){1.0f,1.0f};
     transform.rotation = 0.f;
+    for (int i = 0; i < TheGame->grid.Width *TheGame->grid.Height; ++i)
     {
         create_identity_matrix(&mat);
-        transform.position  = (v2f){400.0f,100.0f};
+        transform.position  = grid_to_world_position(&TheGame->grid, i);
         create_srt_matrix_from_transform2d(&mat, transform);
         glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
-        render_single_mesh(&grid_meshes[0]);
-    }
-
-    {
-        create_identity_matrix(&mat);
-        transform.position  = (v2f){200.0f,400.0f};
-        create_srt_matrix_from_transform2d(&mat, transform);
-        glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
-        render_single_mesh(&grid_meshes[1]);
-    }
-
-    {
-        create_identity_matrix(&mat);
-        transform.position  = (v2f){280.0f,500.0f};
-        create_srt_matrix_from_transform2d(&mat, transform);
-        glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
-        render_single_mesh(&grid_meshes[2]);
+        render_single_mesh(&grid_meshes[TheGame->grid.Data[i]]);
     }
 
     create_identity_matrix(&mat);

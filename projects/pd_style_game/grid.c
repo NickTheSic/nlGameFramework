@@ -56,8 +56,28 @@ internal_function void make_grid_meshes(Grid* const grid)
     }
 }
 
-void init_grid(Grid* const grid)
+v2f grid_to_world_position(const Grid* const grid, int cell_idx)
 {
+    v2f result = {0};
+
+    result.x = grid->cell_half_size + grid->cell_size*(cell_idx%grid->Width);
+    result.y = grid->cell_half_size + grid->cell_size*(cell_idx/grid->Height);
+
+    return (result);
+}
+
+int get_value_at_index(const Grid* const grid, int idx)
+{
+    return grid->Data[idx];
+}
+
+void init_grid(Grid* const grid, int width, int height, int* data)
+{
+    grid->Width = width;
+    grid->Height = height;
+    grid->cell_size = 60.0f;
+    grid->cell_half_size = grid->cell_size*0.5f;
+    memcpy(grid->Data, data, width*height*sizeof(int));
     make_grid_meshes(grid);
 }
 
