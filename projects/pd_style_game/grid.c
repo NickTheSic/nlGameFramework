@@ -1,5 +1,7 @@
 #include "grid.h"
 
+#include "string.h" //memcpy
+
 #define GRID_CELL_SIZE 64
 #define GRID_CELL_HALF_SIZE GRID_CELL_SIZE/2.0f
 
@@ -88,6 +90,7 @@ void init_grid(Grid* const grid, int width, int height, int* data)
     grid->Height = height;
     grid->cell_size = GRID_CELL_SIZE;
     grid->cell_half_size = grid->cell_size*0.5f;
+
     memcpy(grid->Data, data, width*height*sizeof(int));
 
     make_grid_meshes(grid);

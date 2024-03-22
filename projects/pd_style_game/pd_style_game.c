@@ -118,10 +118,10 @@ void app_specific_init(void)
             0,1,1,1,1,0,
             0,1,1,1,1,0
         };
-        //init_grid(&TheGame->grid, 6,5, g);
+        init_grid(&TheGame->grid, 6,5, g);
         //save_to_binary_file("TEST_GRID", sizeof(Grid), (char*)&TheGame->grid);
-        load_from_binary_file("TEST_GRID", sizeof(Grid), (char*)&TheGame->grid);
-        make_grid_meshes(&TheGame->grid);
+        //load_from_binary_file("TEST_GRID", sizeof(Grid), (char*)&TheGame->grid);
+        //make_grid_meshes(&TheGame->grid);
     }
 }
 
