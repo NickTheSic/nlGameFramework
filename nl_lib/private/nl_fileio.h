@@ -18,6 +18,7 @@ void clear_file_read(file_contents* const content);
 
 
 void save_to_binary_file(const char* const filename, unsigned int size, char* const content);
+void load_from_binary_file(const char* const filename, unsigned int size, char* const dest);
 
 
 #ifdef __cplusplus

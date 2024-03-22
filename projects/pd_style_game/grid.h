@@ -18,9 +18,13 @@ struct Grid
 
 enum GridBlockTypes
 {
-    Block_Empty = 0,
-    Block_Wall = 1,
-    Block_Stairs = 2
+    Block_Wall = 0,
+
+    Block_Floor,
+
+    Block_Stairs,
+
+    BLOCK_COUNT
 };
 
 void init_grid(Grid* const grid, int width, int height, int* data);
