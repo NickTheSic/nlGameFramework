@@ -140,4 +140,5 @@ extern PFNGLBINDFRAMEBUFFERPROC glBindFramebuffer;
 typedef void   (APIENTRY* PFNGLGETBUFFERSUBDATA) (GLenum target, ptrdiff_t offset, ptrdiff_t size, void* data);
 extern PFNGLGETBUFFERSUBDATA glGetBufferSubData;
 
+
 #endif //__NL_GL_WIN32_H__
