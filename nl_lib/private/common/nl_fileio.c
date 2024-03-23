@@ -49,7 +49,22 @@ void clear_file_read(file_contents* const content)
 
 void save_to_binary_file(const char* const filename, unsigned int size, char* const contents)
 {
-    // Create file and write char* bytes of size to it
-    NL_UNUSED(filename); NL_UNUSED(size); NL_UNUSED(contents);
-    NL_UNIMPLEMENTED_FUNC;
+    FILE* fp = {0};
+    fopen_s(&fp, filename, "wb");
+    if (fp)
+    {
+        fwrite(contents, 1, size, fp);
+        fclose(fp);
+    }
+}
+
+void load_from_binary_file(const char* const filename, unsigned int size, char* const dest)
+{
+    FILE* fp = {0};
+    fopen_s(&fp, filename, "rb");
+    if (fp)
+    {
+        fread(dest, 1, size, fp);
+        fclose(fp);
+    }
 }

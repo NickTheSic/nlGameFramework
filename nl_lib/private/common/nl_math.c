@@ -105,7 +105,7 @@ internal_function void rotate_matrix(mat4x4f* const mat, float angle, float x, f
         float cos_angle = cosf(angle * PI/180.0f);
         float one_sub_cos = 1.0f - cos_angle;
 
-        mat4x4f rot = {};
+        mat4x4f rot = {0};
         create_identity_matrix(&rot);
         rot.m11 = (one_sub_cos * xx) + cos_angle;
         rot.m12 = (one_sub_cos * xy) - zs;

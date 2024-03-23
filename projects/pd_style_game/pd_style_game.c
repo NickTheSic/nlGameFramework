@@ -47,8 +47,20 @@ internal_function v2f get_movement_input(const GameControls controls)
 
 internal_function void move_player(GameObject* player, v2f movement, double dt)
 {
-    player->transform.position.x += player->movement_speed * movement.x * dt;
-    player->transform.position.y += player->movement_speed * movement.y * dt;
+    v2f world_pos = TheGame->Player.transform.position;
+    v2f x_check = world_pos;
+    v2f y_check = world_pos;
+    x_check.x += 16*movement.x;
+    y_check.y += 16*movement.y;
+
+    v2i x_coords = world_to_grid_coords(&TheGame->grid, x_check);
+    v2i y_coords = world_to_grid_coords(&TheGame->grid, y_check);
+
+    if (get_value_at_coords(&TheGame->grid, x_coords.x, x_coords.y) != 0)
+        player->transform.position.x += player->movement_speed * movement.x * dt;
+    
+    if (get_value_at_coords(&TheGame->grid, y_coords.x, y_coords.y) != 0)
+        player->transform.position.y += player->movement_speed * movement.y * dt;
 }
 
 void winsizecbk(int width, int height)
@@ -82,9 +94,9 @@ void app_specific_init(void)
     {
         TheGame->Player.transform.size = (v2f){1.0f,1.0f};
         TheGame->Player.transform.position  = (v2f){100.0f,100.0f};
-        TheGame->Player.transform.rotation = 0.5f;
+        TheGame->Player.transform.rotation = 0.0f;
 
-        const int SQUARE_HALF_SIZE = 30;
+        const int SQUARE_HALF_SIZE = 16;
         vertex_data square_verts[] =
         {
             {{-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},
@@ -99,7 +111,17 @@ void app_specific_init(void)
     }
 
     {
-        make_grid_meshes(&TheGame->grid);
+        int g[] = {
+            0,0,0,0,0,0,
+            0,2,1,1,1,0,
+            0,1,0,1,1,0,
+            0,1,1,1,1,0,
+            0,1,1,1,1,0
+        };
+        init_grid(&TheGame->grid, 6,5, g);
+        //save_to_binary_file("TEST_GRID", sizeof(Grid), (char*)&TheGame->grid);
+        //load_from_binary_file("TEST_GRID", sizeof(Grid), (char*)&TheGame->grid);
+        //make_grid_meshes(&TheGame->grid);
     }
 }
 
@@ -107,8 +129,6 @@ internal_function void game_update(double dt)
 {
     const v2f movement_vector = get_movement_input(TheGame->Controls);
     move_player(&TheGame->Player, movement_vector, dt);
-
-    TheGame->Player.transform.rotation += 10*dt;
 }
 
 internal_function void game_draw()
@@ -119,28 +139,13 @@ internal_function void game_draw()
     transform2d transform = {0};
     transform.size = (v2f){1.0f,1.0f};
     transform.rotation = 0.f;
+    for (int i = 0; i < TheGame->grid.Width *TheGame->grid.Height; ++i)
     {
         create_identity_matrix(&mat);
-        transform.position  = (v2f){400.0f,100.0f};
+        transform.position  = grid_to_world_position(&TheGame->grid, i);
         create_srt_matrix_from_transform2d(&mat, transform);
         glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
-        render_single_mesh(&grid_meshes[0]);
-    }
-
-    {
-        create_identity_matrix(&mat);
-        transform.position  = (v2f){200.0f,400.0f};
-        create_srt_matrix_from_transform2d(&mat, transform);
-        glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
-        render_single_mesh(&grid_meshes[1]);
-    }
-
-    {
-        create_identity_matrix(&mat);
-        transform.position  = (v2f){280.0f,500.0f};
-        create_srt_matrix_from_transform2d(&mat, transform);
-        glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
-        render_single_mesh(&grid_meshes[2]);
+        render_single_mesh(&grid_meshes[TheGame->grid.Data[i]]);
     }
 
     create_identity_matrix(&mat);
