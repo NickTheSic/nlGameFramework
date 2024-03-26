@@ -7,7 +7,7 @@ unsigned int rbo = 0;
 void setup_fbo()
 {
     glGenFramebuffers(1, &fbo);
-    //glGenTexture(1, &fbo_texture);
+    glGenTexture(1, &fbo_texture);
 }
 
 void bind_fbo()

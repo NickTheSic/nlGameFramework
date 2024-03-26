@@ -140,5 +140,11 @@ extern PFNGLBINDFRAMEBUFFERPROC glBindFramebuffer;
 typedef void   (APIENTRY* PFNGLGETBUFFERSUBDATA) (GLenum target, ptrdiff_t offset, ptrdiff_t size, void* data);
 extern PFNGLGETBUFFERSUBDATA glGetBufferSubData;
 
+typedef void   (APIENTRY* PFNGLDELETEFRAMEBUFFERS) (GLsizei n, const GLuint* buffer);
+extern PFNGLDELETEFRAMEBUFFERS glDeleteFramebuffers;
+
+typedef void   (APIENTRY* PFNGLGENTEXTURE) (GLsizei n, const GLuint* buffer);
+extern PFNGLGENTEXTURE glGenTexture;
+
 
 #endif //__NL_GL_WIN32_H__
