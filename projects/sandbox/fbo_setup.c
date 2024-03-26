@@ -6,16 +6,16 @@ unsigned int rbo = 0;
 
 void setup_fbo()
 {
-    glGenFramebuffers(1, &fbo);
-    glGenTexture(1, &fbo_texture);
+    //glGenFramebuffers(1, &fbo);
+    //glGenTexture(1, &fbo_texture);
 }
 
 void bind_fbo()
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+    ///glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 }
 
 void clean_fbo()
 {
-    glDeleteFramebuffers(1, &fbo);  
+    //glDeleteFramebuffers(1, &fbo);  
 }

@@ -15,7 +15,6 @@ void run()
     poll_events();
     update_input_frame_state();
     
-    //bind_fbo();
     begin_render_frame();
     
     double dt = get_frame_delta_time();
@@ -59,8 +58,6 @@ int main(int count, char** args)
     }
     set_background_colour_4f(0.5f,0.5f,0.85f,1.0f);
     init_delta_time();
-
-    //setup_fbo();
 
     app_specific_init();
 
