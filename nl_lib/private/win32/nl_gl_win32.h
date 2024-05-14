@@ -20,7 +20,13 @@
 #define GL_CLAMP_TO_EDGE         0x812F
 #define GL_CLAMP_TO_BORDER       0x812D
 #define GL_FRAMEBUFFER           0x8D40
-
+#define GL_RENDERBUFFER          0x8D41
+#define GL_DEPTH24_STENCIL8      0x88F0
+#define GL_COLOR_ATTACHMENT0     0x8CE0
+// that all the way to
+#define GL_COLOR_ATTACHMENT31    0x8CFF
+#define GL_DEPTH_STENCIL_ATTACHMENT 0x821A
+#define GL_FRAMEBUFFER_COMPLETE 0x8CD5
 
 typedef void   (APIENTRY* PFNGLATTACHSHADERPROC) (GLuint program, GLuint shader);
 extern  PFNGLATTACHSHADERPROC glAttachShader;
