@@ -23,7 +23,7 @@ void app_specific_init(void)
 
 
     glGenRenderbuffers(1, &rbo);
-    glBindRenderBuffer(GL_RENDERBUFFER, rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 800, 600); 
 
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);  
@@ -42,5 +42,6 @@ void app_specific_update(double dt)
 
 void app_specific_cleanup(void)
 {
-    glDeleteFrameBuffers(1, &FBO);
+    glDeleteRenderbuffers(1, &rbo);
+    glDeleteFramebuffers(1, &FBO);
 }

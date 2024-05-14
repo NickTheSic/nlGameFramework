@@ -146,5 +146,31 @@ extern PFNGLBINDFRAMEBUFFERPROC glBindFramebuffer;
 typedef void   (APIENTRY* PFNGLGETBUFFERSUBDATA) (GLenum target, ptrdiff_t offset, ptrdiff_t size, void* data);
 extern PFNGLGETBUFFERSUBDATA glGetBufferSubData;
 
+typedef void (APIENTRY* PFNGLFRAMEBUFFERTEXTURE2DPROC)(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
+extern PFNGLFRAMEBUFFERTEXTURE2DPROC glFramebufferTexture2D;
+
+typedef void (APIENTRY* PFNGLDELETEFRAMEBUFFERSPROC)(GLsizei n, const GLuint *framebuffers);
+extern PFNGLDELETEFRAMEBUFFERSPROC glDeleteFramebuffers;
+
+typedef void (APIENTRY* PFNGLGENRENDERBUFFERSPROC)(GLsizei n, GLuint *renderbuffers);
+extern PFNGLGENRENDERBUFFERSPROC glGenRenderbuffers;
+
+typedef void (APIENTRY* PFNGLDELETERENDERBUFFERSPROC)(GLsizei n, const GLuint *renderbuffers);
+extern PFNGLDELETERENDERBUFFERSPROC glDeleteRenderbuffers;
+
+typedef void (APIENTRY* PFNGLBINDRENDERBUFFERPROC)(GLenum target, GLuint renderbuffer);
+extern PFNGLBINDRENDERBUFFERPROC glBindRenderbuffer;
+
+typedef void (APIENTRY* PFNGLRENDERBUFFERSTORAGEPROC)(GLenum target, GLenum internalformat, GLsizei width, GLsizei height);
+extern PFNGLRENDERBUFFERSTORAGEPROC glRenderbufferStorage;
+
+typedef GLenum (APIENTRY* PFNGLCHECKFRAMEBUFFERSTATUSPROC)(GLenum target);
+extern PFNGLCHECKFRAMEBUFFERSTATUSPROC glCheckFramebufferStatus;
+
+typedef void (APIENTRY* PFNGLBINDRENDERBUFFERPROC)(GLenum target, GLuint renderbuffer);
+extern PFNGLBINDRENDERBUFFERPROC glBindRenderbuffer;
+
+typedef void (APIENTRY* PFNGLFRAMEBUFFERRENDERBUFFERPROC)(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer);
+extern PFNGLFRAMEBUFFERRENDERBUFFERPROC glFramebufferRenderbuffer;
 
 #endif //__NL_GL_WIN32_H__
