@@ -53,3 +53,8 @@ void app_specific_update(double dt)
 {
     
 }
+
+void app_specific_cleanup(void)
+{
+    
+}
