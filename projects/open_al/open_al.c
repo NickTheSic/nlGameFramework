@@ -13,6 +13,7 @@ ALuint sound_buffers[MAX_SOUND_BUFFERS] = {0};
 int _next_free_sound_in_buffer = 0;
 
 ALuint song_sound = 0;
+ALuint sfx_sound = 0;
 
 static void print_audio_device_name(void)
 {
@@ -87,8 +88,6 @@ static ALuint load_sound(const char* filename)
 
     ++_next_free_sound_in_buffer;
 
-    alSourcePlay(source);
-
     //ALint state = AL_PLAYING;
     //while(state == AL_PLAYING)
     //{
@@ -122,13 +121,16 @@ void app_specific_init(void)
     alGenBuffers(MAX_SOUND_BUFFERS, sound_buffers);
 
     song_sound = load_sound("data/StS_Funeral.wav");
+    sfx_sound = load_sound("data/retrogamesfx.wav");
+
+    alSourcePlay(song_sound);
 }
 
 void app_specific_update(double dt)
 {
     if (was_key_pressed(key_space))
     {
-        alSourcePlay(song_sound);
+        alSourcePlay(sfx_sound);
     }
 }
 
