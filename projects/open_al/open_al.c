@@ -12,7 +12,7 @@ ALCcontext *audio_context = {0};
 ALuint sound_buffers[MAX_SOUND_BUFFERS] = {0};
 int _next_free_sound_in_buffer = 0;
 
-int song_sound = 0;
+ALuint song_sound = 0;
 
 static void print_audio_device_name(void)
 {
@@ -51,24 +51,19 @@ static ALuint load_sound(const char* filename)
     const int sample_rate = wav_header->sample_rate;
 
     ALenum format = {0};
-    if (channels == 1 &&  bits_per_sample == 8)
-    {
+    if (channels == 1 &&  bits_per_sample == 8){
         format = AL_FORMAT_MONO8;
     }
-    else if(channels == 1 && bits_per_sample == 16)
-    {   
+    else if(channels == 1 && bits_per_sample == 16){   
         format = AL_FORMAT_MONO16;
     }
-    else if(channels == 2 && bits_per_sample == 8)
-    {
+    else if(channels == 2 && bits_per_sample == 8){
         format = AL_FORMAT_STEREO8;
     }
-    else if(channels == 2 && bits_per_sample == 16)
-    {
+    else if(channels == 2 && bits_per_sample == 16){
         format = AL_FORMAT_STEREO16;
     }   
-    else
-    {
+    else{
         NL_LOG("Unable to deduce the format of the audio file");
     }
 
