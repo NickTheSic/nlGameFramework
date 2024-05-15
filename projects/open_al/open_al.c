@@ -88,13 +88,6 @@ static ALuint load_sound(const char* filename)
 
     ++_next_free_sound_in_buffer;
 
-    //ALint state = AL_PLAYING;
-    //while(state == AL_PLAYING)
-    //{
-    //    alGetSourcei(source, AL_SOURCE_STATE, &state);
-    //}
-    //alDeleteSources(1, &source);
-
     return source;
 }
 
