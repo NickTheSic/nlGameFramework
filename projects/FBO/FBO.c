@@ -37,7 +37,20 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
-    
+    //glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+    //glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // we're not using the stencil buffer now
+    //glEnable(GL_DEPTH_TEST);	
+  //
+    //// second pass
+    //glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default
+    //glClearColor(1.0f, 1.0f, 1.0f, 1.0f); 
+    //glClear(GL_COLOR_BUFFER_BIT);
+  //
+    //glBindVertexArray(quadVAO);
+    //glDisable(GL_DEPTH_TEST);
+    //glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
+    //glDrawArrays(GL_TRIANGLES, 0, 6);  
 }
 
 void app_specific_cleanup(void)

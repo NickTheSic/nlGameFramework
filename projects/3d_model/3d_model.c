@@ -251,3 +251,8 @@ void load_mesh_from_file()
     memory_free(vd);
     clear_file_read(&loaded_mesh);
 }
+
+void app_specific_cleanup(void)
+{
+    
+}
