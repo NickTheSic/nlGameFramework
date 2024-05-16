@@ -4,8 +4,10 @@
 
 #if defined __EMSCRIPTEN__
 #define NL_SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"
-#else
+#elif defined _WIN32
 #define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
+#else
+#error Double Check the platform being compiled!
 #endif
 
 
@@ -36,6 +38,8 @@ NL_SHADER_VERSION_HEADER
 //create_shader_program(common_vert_shader_code , common_fragment_shader_code);
 unsigned int create_shader_program(const char* vertex_shader_code, const char* fragment_shader_code);
 void use_shader_program(unsigned int shader_program);
+void free_shader_program(unsigned int shader_program);
 
+unsigned int create_common_shader_program(void);
 
 #endif //__NL_SHADER_H__
