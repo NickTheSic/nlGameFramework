@@ -5,6 +5,8 @@
 #include "private/nl_memory.h"
 #include "private/nl_utility.h"
 
+#include "string.h" // for strcmp
+
 #include "include/al.h"
 #include "include/alc.h"
 
