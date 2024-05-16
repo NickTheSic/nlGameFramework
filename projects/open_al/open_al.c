@@ -9,6 +9,7 @@ void app_specific_init(void)
     sfx_sound = load_sound_file("data/retrogamesfx.wav");
 
     play_sound(song_sound);
+    set_sound_to_loop(song_sound);
 }
 
 void app_specific_update(double dt)

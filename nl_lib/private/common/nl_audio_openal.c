@@ -215,3 +215,8 @@ void play_sound(unsigned int sound)
 {
     alSourcePlay(sound);
 }
+
+void set_sound_to_loop(unsigned int sound)
+{
+    alSourcei(sound, AL_LOOPING, AL_TRUE);
+}
