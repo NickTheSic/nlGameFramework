@@ -99,6 +99,21 @@ void free_mesh(mesh* const mesh)
     // gl free buffers here
 }
 
+void generate_square_mesh(mesh* const mesh, float width)
+{
+    vertex_data square_vertices[] =
+    {
+        {0.0f,  0.0f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f},
+        {width, 0.0f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f},
+        {width, width, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f},
+        {0.0f,  width, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f},
+    };
+
+    static const int indices[] = {0,1,2,0,2,3};
+
+    generate_mesh_using_vertices_and_indices(mesh, square_vertices, 4, indices, 6);
+}
+
 void setup_vertex_atrributes(size_t data_size, const vertex_atrribute_info* const attrib_info, const int attrib_count)
 {
     for (int i = 0; i < attrib_count; ++i)
