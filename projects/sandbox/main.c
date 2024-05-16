@@ -8,14 +8,13 @@
 
 extern void app_specific_init(void);
 extern void app_specific_update(double dt);
+extern void app_specific_render(void);
 extern void app_specific_cleanup(void);
 
 void run()
 {
     poll_events();
     update_input_frame_state();
-    
-    begin_render_frame();
     
     double dt = get_frame_delta_time();
     // debug FPS
@@ -40,6 +39,8 @@ void run()
 
     app_specific_update(dt);
 
+    begin_render_frame();
+    app_specific_render();
     end_render_frame();
 }
 
