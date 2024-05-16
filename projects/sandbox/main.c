@@ -67,9 +67,6 @@ int main(int count, char** args)
     set_background_colour_4f(0.5f,0.5f,0.85f,1.0f);
     init_delta_time();
 
-    unsigned int common_shader_program = create_common_shader_program();
-    use_shader_program(common_shader_program);
-
     app_specific_init();
 
 #ifdef _WIN32
@@ -83,7 +80,6 @@ int main(int count, char** args)
 
     app_specific_cleanup();
     cleanup_audio_system();
-    free_shader_program(common_shader_program);
     basic_memory_leak_check();
 
     return 0;
