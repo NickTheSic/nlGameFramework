@@ -9,6 +9,7 @@
 #include "private/nl_input.h"
 #include "private/nl_math.h"
 #include "private/nl_memory.h"
+#include "private/nl_random.h"
 #include "private/nl_renderer.h"
 #include "private/nl_shader.h"
 #include "private/nl_spritesheet.h"

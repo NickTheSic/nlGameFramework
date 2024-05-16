@@ -19,7 +19,10 @@ void app_specific_update(double dt)
     if (was_key_pressed(key_space))
     {
         play_sound(sfx_sound);
+
+        NL_LOG("%d", random_int_in_range(14, 179));
     }
+
 }
 
 void app_specific_cleanup(void)
