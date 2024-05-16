@@ -52,6 +52,11 @@ int main(int count, char** args)
         return -1;
     }
 
+    if (init_audio_system() == 0)
+    {
+        return -1;
+    }
+
     if (!initialize_renderer_subsystem())
     {
         return -1;
@@ -71,7 +76,7 @@ int main(int count, char** args)
 #endif
 
     app_specific_cleanup();
-
+    cleanup_audio_system();
     basic_memory_leak_check();
 
     return 0;

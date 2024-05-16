@@ -196,7 +196,7 @@ void cleanup_audio_system(void)
         alcMakeContextCurrent(0);
         alcDestroyContext(local_audio_system->context);
 
-        ALCboolean closed = alcCloseDevice(local_audio_system->device);
+        alcCloseDevice(local_audio_system->device);
 
         if (local_audio_system->buffers != 0)
         {
