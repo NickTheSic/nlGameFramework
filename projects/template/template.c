@@ -11,7 +11,12 @@ void app_specific_update(double dt)
     (void)dt;
 }
 
-void app_specific_cleanup()
+void app_specific_render(void)
+{
+
+}
+
+void app_specific_cleanup(void)
 {
     
 }

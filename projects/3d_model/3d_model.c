@@ -76,7 +76,9 @@ void app_specific_update(double dt)
     {
         _recalculate_camera();
     }
-
+}
+void app_specific_render(void)
+{
     glUseProgram(shader_program);
     unsigned int transformLoc = glGetUniformLocation(shader_program, "transform");
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &matrix.m11);

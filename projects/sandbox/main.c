@@ -4,8 +4,6 @@
 #include <emscripten.h>
 #endif
 
-#include "fbo_setup.c"
-
 extern void app_specific_init(void);
 extern void app_specific_update(double dt);
 extern void app_specific_render(void);
