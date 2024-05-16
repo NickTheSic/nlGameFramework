@@ -1,14 +1,14 @@
-#include "nl_audio.h"
+#include "../nl_audio.h"
 
-#include "private/nl_debug.h"
-#include "private/nl_fileio.h"
-#include "private/nl_memory.h"
-#include "private/nl_utility.h"
+#include "../nl_debug.h"
+#include "../nl_fileio.h"
+#include "../nl_memory.h"
+#include "../nl_utility.h"
 
 #include "string.h" // for strcmp
 
-#include "include/al.h"
-#include "include/alc.h"
+#include "../../third_party/al.h"
+#include "../../third_party/alc.h"
 
 // a helper struct to get the information by casting the file ptr to this
 #pragma pack(push, 1)
@@ -209,4 +209,9 @@ void cleanup_audio_system(void)
         }
         memory_free(local_audio_system);
     }
+}
+
+void play_sound(unsigned int sound)
+{
+    alSourcePlay(sound);
 }

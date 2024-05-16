@@ -2,6 +2,7 @@
 
 
 /*-------Common Files--------------*/
+#include "private/common/nl_audio_openal.c"
 #include "private/common/nl_fileio.c"
 #include "private/common/nl_memory.c"
 #include "private/common/nl_math.c"
