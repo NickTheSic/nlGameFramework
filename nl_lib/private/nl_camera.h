@@ -15,6 +15,9 @@ struct camera
     //int assume_half_size;
 };
 
+// A Globally accessible main camera.  Initialized and used on start up I guess
+extern camera main_camera;
+
 void create_screen_aspect(camera* const cam, int width, int height);
 
 void initialize_camera_to_zero(camera* const cam);
