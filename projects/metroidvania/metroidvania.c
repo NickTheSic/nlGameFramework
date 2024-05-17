@@ -5,7 +5,15 @@
 #include "metroidvania.h"
 #include "physics.h"
 
+typedef struct player_controller player_controller; 
+struct player_controller
+{
+    nl_key left;
+    nl_key right;
+    nl_key jump;
+};
 
+global_variable player_controller controller = {key_a, key_d, key_space};
 global_variable game_object player = {0};
 
 unsigned int shader_program = 0;
@@ -35,45 +43,62 @@ void app_specific_init(void)
     winsizecbk(screen_size.x, screen_size.y);
 }
 
-void app_specific_update(double dt)
+void player_update(double dt)
 {
-    (void)dt;
-    
     if (player.is_grounded == 0)
     {
-        if (player.movement_speed.y >= 0.0f)
-            player.movement_speed.y -= GRAVITY_RAISE * dt;
+        if (player.vertical_speed <= 0.0f)
+        {
+            player.vertical_speed -= (GRAVITY_FALL + 100) * dt;
+        }
         else
-            player.movement_speed.y -= GRAVITY_FALL * dt;
+        {
+            player.vertical_speed -= GRAVITY_RAISE * dt;
+        }
     }
 
     if (player.is_grounded == 1)
     {
-        if (key_was_pressed(key_space))
+        if (key_was_pressed(controller.jump))
         {
-            player.movement_speed.y = GRAVITY_RAISE;
+            player.vertical_speed = GRAVITY_RAISE;
             player.is_grounded = 0;
         }
     }
 
-    if (player.pos.y < 0.0f && player.movement_speed.y < 0.0f)
+    if (player.pos.y < 0.0f)
     {
         player.pos.y = 0.0f;
-        player.movement_speed.y = 0;
+        player.vertical_speed = 0;
         player.is_grounded = 1;
     }
+    player.pos.y += player.vertical_speed * dt;
 
-    player.pos.x += player.movement_speed.x * dt;
-    player.pos.y += player.movement_speed.y * dt;
+    float horizontal_speed = {0};
+    if (key_is_held(controller.right))
+    {
+        horizontal_speed += GRAVITY_FALL;
+    }
+    if (key_is_held(controller.left))
+    {
+        horizontal_speed -= GRAVITY_FALL;
+    }
+
+    player.pos.x += horizontal_speed * dt;
+}
+
+void app_specific_update(double dt)
+{
+    player_update(dt);
 }
 
 void app_specific_render(void)
 {
+    mat4x4f model = {0};
+    create_identity_matrix(&model);
     {
-        mat4x4f model = {0};
-        create_identity_matrix(&model);
-        model.m41 += player.pos.x;
-        model.m42 += player.pos.y;
+        model.m41 = player.pos.x;
+        model.m42 = player.pos.y;
         glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
         render_single_mesh(&player.mesh);
     }

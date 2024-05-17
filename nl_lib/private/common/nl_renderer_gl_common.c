@@ -99,19 +99,24 @@ void free_mesh(mesh* const mesh)
     // gl free buffers here
 }
 
-void generate_square_mesh(mesh* const mesh, float width, colourf col)
+void generate_rectangle_mesh(mesh* const mesh, float width, float height, colourf col)
 {
     vertex_data square_vertices[] =
     {
         {0.0f,  0.0f,  0.0f, col},
         {width, 0.0f,  0.0f, col},
-        {width, width, 0.0f, col},
-        {0.0f,  width, 0.0f, col},
+        {width, height, 0.0f, col},
+        {0.0f,  height, 0.0f, col},
     };
 
     static const int indices[] = {0,1,2,0,2,3};
 
     generate_mesh_using_vertices_and_indices(mesh, square_vertices, 4, indices, 6);
+}
+
+void generate_square_mesh(mesh* const mesh, float width, colourf col)
+{
+    generate_rectangle_mesh(mesh, width, width, col);
 }
 
 void setup_vertex_atrributes(size_t data_size, const vertex_atrribute_info* const attrib_info, const int attrib_count)

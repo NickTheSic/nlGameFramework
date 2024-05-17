@@ -58,6 +58,7 @@ void generate_mesh_using_vertices_and_indices(mesh* const mesh, const vertex_dat
 void render_single_mesh(mesh* const mesh);
 void move_mesh(mesh* const mesh, const v2f difference);
 
+void generate_rectangle_mesh(mesh* const mesh, float width, float height, colourf col);
 void generate_square_mesh(mesh* const mesh, float width, colourf col);
 
 void free_mesh(mesh* const mesh);
