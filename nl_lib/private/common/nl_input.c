@@ -90,17 +90,17 @@ void set_key_state_up(nl_key k)
     set_key_state(k,0);
 }
 
-int is_key_held(nl_key k)
+int key_is_held(nl_key k)
 {
     return (key_states[k].held == 1);
 }
 
-int was_key_pressed(nl_key k)
+int key_was_pressed(nl_key k)
 {
     return (key_states[k].pressed == 1);
 }
 
-int was_key_released(nl_key k)
+int key_was_released(nl_key k)
 {
     return (key_states[k].released == 1);
 }
@@ -126,17 +126,17 @@ void set_mouse_button_up(int mb)
     set_mouse_button_state(mb, 0);
 }
 
-int is_mouse_button_held(int mb)
+int mouse_button_is_held(int mb)
 {
     return (mouse_button_states[mb].held == 1);
 }
 
-int was_mouse_button_pressed(int mb)
+int mouse_button_was_pressed(int mb)
 {
     return (mouse_button_states[mb].pressed == 1);
 }
 
-int was_mouse_button_released(int mb)
+int mouse_button_was_released(int mb)
 {
     return (mouse_button_states[mb].released == 1);
 }

@@ -21,7 +21,7 @@ internal_function void winsizecbk(int width, int height)
 
 void app_specific_init(void)
 {
-    player.width = 100.f;
+    player.width = PLAYER_WIDTH;
     player.pos = (v2f){100.0f,100.0f};
     generate_square_mesh(&player.mesh, player.width, (colourf){1.0f,0.5f,0.2f,1.0f});
 
@@ -38,7 +38,33 @@ void app_specific_init(void)
 void app_specific_update(double dt)
 {
     (void)dt;
-    player.pos.x += dt * 10;
+    
+    if (player.is_grounded == 0)
+    {
+        if (player.movement_speed.y >= 0.0f)
+            player.movement_speed.y -= GRAVITY_RAISE * dt;
+        else
+            player.movement_speed.y -= GRAVITY_FALL * dt;
+    }
+
+    if (player.is_grounded == 1)
+    {
+        if (key_was_pressed(key_space))
+        {
+            player.movement_speed.y = GRAVITY_RAISE;
+            player.is_grounded = 0;
+        }
+    }
+
+    if (player.pos.y < 0.0f && player.movement_speed.y < 0.0f)
+    {
+        player.pos.y = 0.0f;
+        player.movement_speed.y = 0;
+        player.is_grounded = 1;
+    }
+
+    player.pos.x += player.movement_speed.x * dt;
+    player.pos.y += player.movement_speed.y * dt;
 }
 
 void app_specific_render(void)
