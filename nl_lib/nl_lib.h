@@ -12,7 +12,6 @@
 #include "private/nl_random.h"
 #include "private/nl_renderer.h"
 #include "private/nl_shader.h"
-#include "private/nl_spritesheet.h"
 #include "private/nl_window.h"
 
 #endif //__NL_LIB_H__

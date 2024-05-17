@@ -1,6 +1,10 @@
 #include "nl_lib.h"
 #include "private/nl_gl.h"
 
+//
+#include "sprite_renderer.h"
+#include "sprite_renderer.c"
+
 
 static const char* vertex_shader_code =
 NL_SHADER_VERSION_HEADER
