@@ -7,12 +7,6 @@ struct camera
 {
     mat4x4f view_matrix;
     mat4x4f proj_matrix;
-    
-    //v3f position;
-    //v2f size;
-    //v2f screen_size;
-    //float move_speed;
-    //int assume_half_size;
 };
 
 // A Globally accessible main camera.  Initialized and used on start up I guess

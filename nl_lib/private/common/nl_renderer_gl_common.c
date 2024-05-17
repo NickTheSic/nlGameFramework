@@ -99,14 +99,14 @@ void free_mesh(mesh* const mesh)
     // gl free buffers here
 }
 
-void generate_square_mesh(mesh* const mesh, float width)
+void generate_square_mesh(mesh* const mesh, float width, colourf col)
 {
     vertex_data square_vertices[] =
     {
-        {0.0f,  0.0f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f},
-        {width, 0.0f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f},
-        {width, width, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f},
-        {0.0f,  width, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f},
+        {0.0f,  0.0f,  0.0f, col},
+        {width, 0.0f,  0.0f, col},
+        {width, width, 0.0f, col},
+        {0.0f,  width, 0.0f, col},
     };
 
     static const int indices[] = {0,1,2,0,2,3};

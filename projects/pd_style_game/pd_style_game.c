@@ -174,7 +174,10 @@ void app_specific_update(double dt)
             window_request_close();
         }
     }
+}
 
+void app_specific_render()
+{
     game_draw();
 }
 
