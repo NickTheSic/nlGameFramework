@@ -16,7 +16,7 @@ void create_identity_matrix(mat4x4f* const mat)
     //mat->m13 = 0;
     //mat->m14 = 0;
     //mat->m21 = 0;
-    //mat->m23 = 0;matrix_to_matrix_multiplication
+    //mat->m23 = 0;
     //mat->m24 = 0;
     //mat->m31 = 0;
     //mat->m32 = 0;
@@ -28,13 +28,13 @@ void create_identity_matrix(mat4x4f* const mat)
 
 void create_fustrum(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z)
 {
-    (void)mat;
-    (void)left;
-    (void)right;
-    (void)bottom;
-    (void)top;
-    (void)near_z;
-    (void)far_z;
+    NL_UNUSED(mat);
+    NL_UNUSED(left);
+    NL_UNUSED(right);
+    NL_UNUSED(bottom);
+    NL_UNUSED(top);
+    NL_UNUSED(near_z);
+    NL_UNUSED(far_z);
 }
 
 void create_orthographic_projection(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z)
