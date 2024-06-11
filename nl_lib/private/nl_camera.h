@@ -5,23 +5,12 @@
 typedef struct camera camera;
 struct camera
 {
-    mat4x4f view_matrix;
-    mat4x4f proj_matrix;
+    mat4x4f view_matrix; // Camera Psotion, Orientation and Target
+    mat4x4f proj_matrix; // Defines Orthographic or Projection
 };
 
-// A Globally accessible main camera.  Initialized and used on start up I guess
-extern camera main_camera;
-
-void create_screen_aspect(camera* const cam, int width, int height);
-
 void initialize_camera_to_zero(camera* const cam);
-void initialize_camera(camera* const cam, const v3f pos, const v2f size);
-void update_camera_size(camera* const cam, float width, float height);
-void update_camera(camera* const cam, float dt);
 
-void recalculate_camera(camera* const cam);
-
-void create_perspective_vfov(float angle, float aspect, float near, float far);
-void create_perspective_hfov(float angle, float aspect, float near, float far);
+void project_mouse_to_camera(camera* const cam, v2i mouse_pos_on_screen);
 
 #endif //__NL_CAMERA_H__

@@ -15,6 +15,7 @@ struct player_controller
 
 global_variable player_controller controller = {key_a, key_d, key_space};
 global_variable game_object player = {0};
+global_variable game_object mouse_follow = {0};
 
 unsigned int shader_program = 0;
 unsigned int u_model_loc = 0;
@@ -33,6 +34,8 @@ void app_specific_init(void)
     player.pos = (v2f){100.0f,100.0f};
     generate_square_mesh(&player.mesh, player.width, (colourf){1.0f,0.5f,0.2f,1.0f});
 
+    generate_square_mesh(&mouse_follow.mesh, PLAYER_HALF_WIDTH, (colourf){0.5f,0.1f,1.0f,1.0f});
+
     shader_program = create_shader_program(vertex_shader_code, fragment_shader_code);
     use_shader_program(shader_program);
 
@@ -49,7 +52,7 @@ void player_update(double dt)
     {
         if (player.vertical_speed <= 0.0f)
         {
-            player.vertical_speed -= (GRAVITY_FALL + 100) * dt;
+            player.vertical_speed -= (GRAVITY_FALL + 150) * dt;
         }
         else
         {
@@ -102,9 +105,19 @@ void app_specific_render(void)
         glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
         render_single_mesh(&player.mesh);
     }
+
+    create_identity_matrix(&model);
+    {
+        v2i pos = get_mouse_position_from_system();
+        model.m41 = pos.x-PLAYER_QUARTER_WIDTH;
+        model.m42 = pos.y-PLAYER_QUARTER_WIDTH;
+        glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
+        render_single_mesh(&mouse_follow.mesh);
+    }
 }
 
 void app_specific_cleanup(void)
 {
     free_mesh(&player.mesh);
+    free_mesh(&mouse_follow.mesh);
 }
