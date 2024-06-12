@@ -30,6 +30,20 @@ internal_function void winsizecbk(int width, int height)
 
 void app_specific_init(void)
 {
+    {
+        mat4x4f test = {
+            1.f, 0.f, 1.f, 0.f, 
+            2.f, 3.f, 0.f, 1.f, 
+            5.f, 1.f, 2.f, 1.f, 
+            0.f, 0.f, 1.f, 1.f
+            };
+        mat4x4f res = {0};
+        if (invert_matrix_4x4(&test, &res) == 0)
+        {
+            NL_LOG("Unable to invert");
+        }
+    }
+
     player.width = PLAYER_WIDTH;
     player.pos = (v2f){100.0f,100.0f};
     generate_square_mesh(&player.mesh, player.width, (colourf){1.0f,0.5f,0.2f,1.0f});
