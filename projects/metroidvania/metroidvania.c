@@ -17,13 +17,15 @@ global_variable player_controller controller = {key_a, key_d, key_space};
 global_variable game_object player = {0};
 global_variable game_object mouse_follow = {0};
 
+global_variable float camera_pos = {0};
+
 unsigned int shader_program = 0;
 unsigned int u_model_loc = 0;
 camera main_cam = {0};
 
 internal_function void winsizecbk(int width, int height)
 {
-    create_orthographic_projection(&main_cam.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
+    create_orthographic_projection(&main_cam.proj_matrix, 0 + camera_pos, width + camera_pos, 0 + camera_pos, height + camera_pos, -0.1f, 100.f);
     unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
     glUniformMatrix4fv(projMat, 1, GL_FALSE, &main_cam.proj_matrix.m11);
 }
@@ -38,7 +40,7 @@ void app_specific_init(void)
             0.f, 0.f, 1.f, 1.f
             };
 
-        NL_LOG("%d", matrix_determinant(&test));
+        NL_LOG("%f", matrix_determinant(&test));
 
         mat4x4f res = {0};
         if (invert_matrix_4x4(&test, &res) == 0)
@@ -104,6 +106,13 @@ void player_update(double dt)
         horizontal_speed -= GRAVITY_FALL;
     }
 
+    if (key_is_held(key_right))
+    {
+        camera_pos += GRAVITY_FALL * dt;
+        v2i screen_size = get_screen_size();
+        winsizecbk(screen_size.x, screen_size.y);
+    }
+
     player.pos.x += horizontal_speed * dt;
 }
 
@@ -126,8 +135,15 @@ void app_specific_render(void)
     create_identity_matrix(&model);
     {
         v2i pos = get_mouse_position_from_system();
-        model.m41 = pos.x-PLAYER_QUARTER_WIDTH;
-        model.m42 = pos.y-PLAYER_QUARTER_WIDTH;
+
+        mat4x4f inverse = model;
+        invert_matrix_4x4(&main_cam.proj_matrix, &inverse);
+        
+        model.m41 = (pos.x-PLAYER_QUARTER_WIDTH) + camera_pos;
+        model.m42 = (pos.y-PLAYER_QUARTER_WIDTH) + camera_pos;
+
+        matrix_to_matrix_multiplication(&model, &inverse);
+
         glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
         render_single_mesh(&mouse_follow.mesh);
     }

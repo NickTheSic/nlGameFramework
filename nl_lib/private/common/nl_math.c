@@ -195,11 +195,11 @@ int invert_matrix_4x4(const mat4x4f* const original, mat4x4f* const inverse)
 {
     int determinant = matrix_determinant(original);
 
-    if (determinant == 0.0f) return 0;
+    if (determinant == 0) return 0;
 
     mat4x4f temp = *original;
 
-    const float inverse_det = 1.0f / determinant;
+    const float inverse_det = 1.0f / (float)determinant;
     for (int i = 0; i < 16; i += 4)
     {
         (&temp.m11)[i+0] *= inverse_det;
