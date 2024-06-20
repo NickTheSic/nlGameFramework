@@ -37,6 +37,9 @@ void app_specific_init(void)
             5.f, 1.f, 2.f, 1.f, 
             0.f, 0.f, 1.f, 1.f
             };
+
+        NL_LOG("%d", matrix_determinant(&test));
+
         mat4x4f res = {0};
         if (invert_matrix_4x4(&test, &res) == 0)
         {

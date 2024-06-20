@@ -25,6 +25,12 @@ struct v3f
     float x, y, z;
 };
 
+typedef struct v4f v4f;
+struct v4f
+{
+    float x,y,z,w;
+};
+
 typedef struct transform2d transform2d;
 struct transform2d
 {
@@ -53,6 +59,7 @@ void create_srt_matrix_from_transform2d(mat4x4f* const mat, transform2d transfor
 
 void matrix_to_matrix_multiplication(mat4x4f* const result, mat4x4f* const o);
 int invert_matrix_4x4(const mat4x4f* const original, mat4x4f* const inverse);
+float matrix_determinant(const mat4x4f* const matrix);
 
 float v3f_length_squared(const v3f vec);
 float v3f_length(const v3f vec);
