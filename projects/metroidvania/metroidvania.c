@@ -97,8 +97,8 @@ void player_update(double dt)
 
     if (key_is_held(key_right))
     {
-        camera_pos += GRAVITY_FALL * dt;
-        create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,0.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){camera_pos,camera_pos,0.0f});
+        camera_pos -= GRAVITY_FALL * dt;
+        create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){camera_pos,camera_pos,0.0f});
         u_view_mat = glGetUniformLocation(shader_program, "uViewMat");
         glUniformMatrix4fv(u_view_mat, 1, GL_FALSE, &main_cam.view_matrix.m11);
     }
