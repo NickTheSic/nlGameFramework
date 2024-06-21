@@ -212,6 +212,66 @@ int invert_matrix_4x4(const mat4x4f* const original, mat4x4f* const inverse)
     return 1;
 }
 
+int invert_matrix_4x4_glm(const mat4x4f* const og, mat4x4f* const inverse)
+{
+    mat4x4f temp = {0};
+    mat4x4f original = *og;
+
+    const float factor1  = (original.m33 * original.m44) - (original.m43 * original.m34);
+    const float factor2  = (original.m32 * original.m44) - (original.m42 * original.m34);
+    const float factor3  = (original.m32 * original.m43) - (original.m42 * original.m33);
+    const float factor4  = (original.m31 * original.m44) - (original.m41 * original.m34);
+    const float factor5  = (original.m31 * original.m43) - (original.m41 * original.m33);
+	const float factor6  = (original.m31 * original.m42) - (original.m41 * original.m32);
+	const float factor7  = (original.m23 * original.m44) - (original.m43 * original.m24);
+	const float factor8  = (original.m22 * original.m44) - (original.m42 * original.m24);
+	const float factor9  = (original.m22 * original.m43) - (original.m42 * original.m23);
+	const float factor10 = (original.m21 * original.m44) - (original.m41 * original.m24);
+	const float factor11 = (original.m21 * original.m43) - (original.m41 * original.m23);
+	const float factor12 = (original.m21 * original.m42) - (original.m41 * original.m22);
+	const float factor13 = (original.m23 * original.m34) - (original.m33 * original.m24);
+	const float factor14 = (original.m22 * original.m34) - (original.m32 * original.m24);
+	const float factor15 = (original.m22 * original.m33) - (original.m32 * original.m23);
+	const float factor16 = (original.m21 * original.m34) - (original.m31 * original.m24);
+	const float factor17 = (original.m21 * original.m33) - (original.m31 * original.m23);
+	const float factor18 = (original.m21 * original.m32) - (original.m31 * original.m22);
+
+    temp.m11 =  (original.m22 * factor1 - original.m23 * factor1 + original.m24 * factor3);
+    temp.m12 = -(original.m21 * factor1 - original.m23 * factor3 + original.m24 * factor5);
+    temp.m13 =  (original.m21 * factor2 - original.m22 * factor3 + original.m24 * factor6);
+    temp.m14 = -(original.m21 * factor3 - original.m22 * factor5 + original.m23 * factor6);
+
+    temp.m21 = -(original.m12 * factor1 - original.m13 * factor2 + original.m14 * factor3);
+    temp.m22 =  (original.m11 * factor1 - original.m13 * factor4 + original.m14 * factor5);
+    temp.m23 = -(original.m11 * factor2 - original.m12 * factor4 + original.m14 * factor6);
+    temp.m24 =  (original.m11 * factor3 - original.m12 * factor5 + original.m13 * factor6);
+
+    temp.m31 =  (original.m12 * factor7 - original.m13 * factor8 + original.m14 * factor9);
+    temp.m32 = -(original.m11 * factor7 - original.m13 * factor10 + original.m14 * factor11);
+    temp.m33 =  (original.m11 * factor8 - original.m12 * factor10 + original.m14 * factor12);
+    temp.m34 = -(original.m11 * factor9 - original.m12 * factor11 + original.m13 * factor12);
+
+    temp.m41 = -(original.m12 * factor13 - original.m13 * factor14 + original.m14 * factor15);
+    temp.m42 =  (original.m11 * factor13 - original.m13 * factor16 + original.m14 * factor17);
+    temp.m43 = -(original.m11 * factor14 - original.m12 * factor16 + original.m14 * factor18);
+    temp.m44 =  (original.m11 * factor15 - original.m12 * factor17 + original.m13 * factor18);
+
+    const float det = original.m11 * temp.m11 + original.m12 * temp.m12	+ original.m13 * temp.m13 + original.m14 * temp.m14;
+    if (det == 0.0f) return 0;
+
+    const float inverse_det = 1.0f / det;
+    for (int i = 0; i < 16; i += 4)
+    {
+        (&temp.m11)[i+0] /= det;//inverse_det;
+        (&temp.m11)[i+1] /= det;//inverse_det;
+        (&temp.m11)[i+2] /= det;//inverse_det;
+        (&temp.m11)[i+3] /= det;//inverse_det;
+    }
+
+    *inverse = temp;
+    return 1;
+}
+
 internal_function void rotate2d_roll(mat4x4f* const mat, float angle)
 {
     float sin_angle = sinf(angle * PI/180.0f);
@@ -334,6 +394,19 @@ v2f v2f_normalize(const v2f vec)
     }
         
     return result;
+}
+
+void v2i_mat4_transfrom(v2i* const lhs, const mat4x4f* const mat)
+{
+    v2i temp = {0};
+
+    const float w = 1.0f / (mat->m41 * lhs->x + mat->m42 * lhs->y + mat->m44);
+
+    temp.x = ((mat->m11 * lhs->x) + (mat->m12 * lhs->y) + mat->m14) * w;
+    temp.y = ((mat->m21 * lhs->x) + (mat->m22 * lhs->y) + mat->m24) * w;
+
+
+    *lhs = temp;
 }
 
 void initialize_transform2d(transform2d* const t)

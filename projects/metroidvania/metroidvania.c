@@ -137,12 +137,12 @@ void app_specific_render(void)
         v2i pos = get_mouse_position_from_system();
 
         mat4x4f inverse = model;
-        invert_matrix_4x4(&main_cam.proj_matrix, &inverse);
-        
-        model.m41 = (pos.x-PLAYER_QUARTER_WIDTH) + camera_pos;
-        model.m42 = (pos.y-PLAYER_QUARTER_WIDTH) + camera_pos;
+        invert_matrix_4x4_glm(&main_cam.proj_matrix, &inverse);
 
-        matrix_to_matrix_multiplication(&model, &inverse);
+        v2i_mat4_transfrom(&pos, &inverse);
+
+        model.m41 += (pos.x-PLAYER_QUARTER_WIDTH);
+        model.m42 += (pos.y-PLAYER_QUARTER_WIDTH);
 
         glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
         render_single_mesh(&mouse_follow.mesh);

@@ -59,7 +59,9 @@ void create_srt_matrix_from_transform2d(mat4x4f* const mat, transform2d transfor
 
 void matrix_to_matrix_multiplication(mat4x4f* const result, mat4x4f* const o);
 int invert_matrix_4x4(const mat4x4f* const original, mat4x4f* const inverse);
+int invert_matrix_4x4_glm(const mat4x4f * original, mat4x4f* const inverse);
 float matrix_determinant(const mat4x4f* const matrix);
+
 
 float v3f_length_squared(const v3f vec);
 float v3f_length(const v3f vec);
@@ -76,6 +78,9 @@ v2f   v2f_subtract(const v2f lhs, const v2f rhs);
 v2f   v2f_add(const v2f lhs, const v2f rhs);
 v2f   v2f_normalize(const v2f vec);
 v2f   v2f_cross(const v2f lhs, const v2f rhs);
+
+
+void  v2i_mat4_transfrom(v2i* const lhs, const mat4x4f* const mat);
 
 #ifdef __cplusplus
 }
