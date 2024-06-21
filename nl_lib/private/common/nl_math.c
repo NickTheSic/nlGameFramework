@@ -136,6 +136,8 @@ internal_function void translate_matrix2f(mat4x4f* const mat, v2f pos)
 
 void create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const v3f translation)
 {
+    create_identity_matrix(mat);
+    
     scale_matrix_3f(mat, scale);
     rotate_matrix(mat, rot.z, 0.0f,0.0f,1.0f);//roll
     rotate_matrix(mat, rot.x, 1.0f,0.0f,0.0f);//pitch

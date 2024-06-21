@@ -21,6 +21,7 @@ global_variable float camera_pos = {0};
 
 unsigned int shader_program = 0;
 unsigned int u_model_loc = 0;
+unsigned int u_view_mat = 0;
 camera main_cam = {0};
 
 internal_function void winsizecbk(int width, int height)
@@ -32,23 +33,6 @@ internal_function void winsizecbk(int width, int height)
 
 void app_specific_init(void)
 {
-    {
-        mat4x4f test = {
-            1.f, 0.f, 1.f, 0.f, 
-            2.f, 3.f, 0.f, 1.f, 
-            5.f, 1.f, 2.f, 1.f, 
-            0.f, 0.f, 1.f, 1.f
-            };
-
-        NL_LOG("%f", matrix_determinant(&test));
-
-        mat4x4f res = {0};
-        if (invert_matrix_4x4(&test, &res) == 0)
-        {
-            NL_LOG("Unable to invert");
-        }
-    }
-
     player.width = PLAYER_WIDTH;
     player.pos = (v2f){100.0f,100.0f};
     generate_square_mesh(&player.mesh, player.width, (colourf){1.0f,0.5f,0.2f,1.0f});
@@ -65,8 +49,9 @@ void app_specific_init(void)
     winsizecbk(screen_size.x, screen_size.y);
 
     //create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const v3f translation);
-    create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,0.0f});
-
+    create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,0.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,0.0f});
+    u_view_mat = glGetUniformLocation(shader_program, "uViewMat");
+    glUniformMatrix4fv(u_view_mat, 1, GL_FALSE, &main_cam.view_matrix.m11);
 }
 
 void player_update(double dt)
@@ -113,8 +98,9 @@ void player_update(double dt)
     if (key_is_held(key_right))
     {
         camera_pos += GRAVITY_FALL * dt;
-        v2i screen_size = get_screen_size();
-        winsizecbk(screen_size.x, screen_size.y);
+        create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,0.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){camera_pos,camera_pos,0.0f});
+        u_view_mat = glGetUniformLocation(shader_program, "uViewMat");
+        glUniformMatrix4fv(u_view_mat, 1, GL_FALSE, &main_cam.view_matrix.m11);
     }
 
     player.pos.x += horizontal_speed * dt;
@@ -141,7 +127,7 @@ void app_specific_render(void)
         v2i pos = get_mouse_position_from_system();
 
         mat4x4f inverse = model;
-        invert_matrix_4x4_glm(&main_cam.proj_matrix, &inverse);
+        invert_matrix_4x4_glm(&main_cam.view_matrix, &inverse);
 
         v2i_mat4_transfrom(&pos, &inverse);
 
