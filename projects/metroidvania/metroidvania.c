@@ -25,7 +25,7 @@ camera main_cam = {0};
 
 internal_function void winsizecbk(int width, int height)
 {
-    create_orthographic_projection(&main_cam.proj_matrix, 0 + camera_pos, width + camera_pos, 0 + camera_pos, height + camera_pos, -0.1f, 100.f);
+    create_orthographic_projection(&main_cam.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
     unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
     glUniformMatrix4fv(projMat, 1, GL_FALSE, &main_cam.proj_matrix.m11);
 }
@@ -63,6 +63,10 @@ void app_specific_init(void)
     pfn_window_size_callback = &winsizecbk;
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
+
+    //create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const v3f translation);
+    create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,0.0f});
+
 }
 
 void player_update(double dt)
