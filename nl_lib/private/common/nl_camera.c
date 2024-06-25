@@ -10,7 +10,11 @@ void initialize_camera_to_zero(camera* const cam)
     //create_identity_matrix(&cam->view_matrix);
 }
 
-void project_mouse_to_camera(camera* const cam, v2i mouse_pos_on_screen)
+void project_mouse_to_camera(camera* const cam, v2f* mouse_pos_on_screen)
 {
-    
+    mat4x4f inverse = {0};
+    create_identity_matrix(&inverse);
+    invert_matrix_4x4_glm(&cam->view_matrix, &inverse);
+
+    v2f_mat4_transform(mouse_pos_on_screen, &inverse);
 }

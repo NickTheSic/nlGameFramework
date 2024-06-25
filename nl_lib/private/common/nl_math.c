@@ -410,6 +410,18 @@ void v2i_mat4_transfrom(v2i* const lhs, const mat4x4f* const mat)
     *lhs = temp;
 }
 
+void v2f_mat4_transform(v2f* const lhs, const mat4x4f* const mat)
+{
+    v2f temp = {0};
+
+    const float w = 1.0f / (mat->m41 * lhs->x + mat->m42 * lhs->y + mat->m44);
+
+    temp.x = ((mat->m11 * lhs->x) + (mat->m12 * lhs->y) + mat->m14) * w;
+    temp.y = ((mat->m21 * lhs->x) + (mat->m22 * lhs->y) + mat->m24) * w;
+
+    *lhs = temp;
+}
+
 void initialize_transform2d(transform2d* const t)
 {
     t->position = (v2f){0,0};

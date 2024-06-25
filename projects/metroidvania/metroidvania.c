@@ -124,15 +124,12 @@ void app_specific_render(void)
 
     create_identity_matrix(&model);
     {
-        v2i pos = get_mouse_position_from_system();
+        const v2i mouse_posi = get_mouse_position_from_system();
+        v2f mouse_pos = {mouse_posi.x, mouse_posi.y};
+        project_mouse_to_camera(&main_cam, &mouse_pos);
 
-        mat4x4f inverse = model;
-        invert_matrix_4x4_glm(&main_cam.view_matrix, &inverse);
-
-        v2i_mat4_transfrom(&pos, &inverse);
-
-        model.m41 += (pos.x-PLAYER_QUARTER_WIDTH);
-        model.m42 += (pos.y-PLAYER_QUARTER_WIDTH);
+        model.m41 += (mouse_pos.x-PLAYER_QUARTER_WIDTH);
+        model.m42 += (mouse_pos.y-PLAYER_QUARTER_WIDTH);
 
         glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
         render_single_mesh(&mouse_follow.mesh);

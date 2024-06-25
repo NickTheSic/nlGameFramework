@@ -11,6 +11,6 @@ struct camera
 
 void initialize_camera_to_zero(camera* const cam);
 
-void project_mouse_to_camera(camera* const cam, v2i mouse_pos_on_screen);
+void project_mouse_to_camera(camera* const cam, v2f* mouse_pos_on_screen);
 
 #endif //__NL_CAMERA_H__
