@@ -9,7 +9,7 @@ struct camera
     mat4x4f proj_matrix; // Defines Orthographic or Projection
 };
 
-void initialize_camera_to_zero(camera* const cam);
+void initialize_camera_to_identity(camera* const cam);
 
 void project_mouse_to_camera(camera* const cam, v2f* mouse_pos_on_screen);
 
