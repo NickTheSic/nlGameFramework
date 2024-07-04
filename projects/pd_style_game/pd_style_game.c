@@ -37,8 +37,8 @@ internal_function v2f get_movement_input(const GameControls controls)
 {
     v2f speed = {0};
 
-    speed.x = is_key_held(controls.Right) - is_key_held(controls.Left);
-    speed.y = is_key_held(controls.Up) - is_key_held(controls.Down);
+    speed.x = key_is_held(controls.Right) - key_is_held(controls.Left);
+    speed.y = key_is_held(controls.Up) - key_is_held(controls.Down);
 
     const v2f normalized_speed = v2f_normalize(speed);
 
@@ -157,7 +157,7 @@ internal_function void game_draw()
 
 void app_specific_update(double dt)
 {
-    if (was_key_pressed(TheGame->Controls.Pause))
+    if (key_was_pressed(TheGame->Controls.Pause))
     {
         TheGame->IsPaused = !TheGame->IsPaused; 
     }
@@ -168,7 +168,7 @@ void app_specific_update(double dt)
     }
     else
     {
-        if (was_key_pressed(key_space))
+        if (key_was_pressed(key_space))
         {
             NL_LOG("Space Pressed");
             window_request_close();
