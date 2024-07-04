@@ -65,14 +65,16 @@ internal_function void move_player(GameObject* player, v2f movement, double dt)
 
 void winsizecbk(int width, int height)
 {
-    create_orthographic_projection(&TheGame->game_camera.view_matrix, 0, width, 0, height, -0.1f, 100.f);
-    unsigned int viewMat = glGetUniformLocation(TheGame->shader_program, "uViewMat");
-    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &TheGame->game_camera.view_matrix.m11);
+    create_orthographic_projection(&TheGame->game_camera.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
+    unsigned int projMat = glGetUniformLocation(TheGame->shader_program, "uProjMat");
+    glUniformMatrix4fv(projMat, 1, GL_FALSE, &TheGame->game_camera.proj_matrix.m11);
 }
 
 void app_specific_init(void)
 {
     TheGame = (GameData*)memory_allocate(sizeof(GameData));
+    
+    initialize_camera_to_identity(&TheGame->game_camera);
 
     TheGame->shader_program = create_shader_program(common_vert_shader_code , common_fragment_shader_code);
     use_shader_program(TheGame->shader_program);
@@ -80,6 +82,10 @@ void app_specific_init(void)
     pfn_window_size_callback = &winsizecbk;
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
+
+    create_srt_matrix(&TheGame->game_camera.view_matrix, (v3f){1.0f,1.f,1.f},  (v3f){0.0f,0.f,0.f}, (v3f){0.0f,0.f,0.f});
+    unsigned int viewMat = glGetUniformLocation(TheGame->shader_program, "uViewMat");
+    glUniformMatrix4fv(viewMat, 1, GL_FALSE, &TheGame->game_camera.view_matrix.m11);
     
     // Controls Setup
     {
