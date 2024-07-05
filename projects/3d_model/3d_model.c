@@ -49,24 +49,24 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
-    if (was_key_pressed(key_a) || was_key_released(key_a))
+    if (key_was_pressed(key_a) || key_was_released(key_a))
     {
         matrix.m11 = -matrix.m11;
     }
-    if (was_key_pressed(key_s) || was_key_released(key_s))
+    if (key_was_pressed(key_s) || key_was_released(key_s))
     {
         matrix.m22 = -matrix.m22;
     }
-    if (is_mouse_button_held(NL_MOUSE_BUTTON_LEFT))
+    if (mouse_button_is_held(NL_MOUSE_BUTTON_LEFT))
     {
         matrix.m33 = -matrix.m33;
     }
 
-    if (was_key_pressed(key_d))
+    if (key_was_pressed(key_d))
     {
         set_depth_test_enabled(0);
     }
-    else if (was_key_released(key_d))
+    else if (key_was_released(key_d))
     {
         set_depth_test_enabled(1);
     }
@@ -256,5 +256,5 @@ void load_mesh_from_file()
 
 void app_specific_cleanup(void)
 {
-    
+    free_mesh(&untitled);
 }

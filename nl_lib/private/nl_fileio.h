@@ -21,6 +21,11 @@ void save_to_binary_file(const char* const filename, unsigned int size, char* co
 void load_from_binary_file(const char* const filename, unsigned int size, char* const dest);
 
 
+
+// returns a pointer to the first '.' found 
+const char* find_file_type_from_name(const char* const filename);
+
+
 #ifdef __cplusplus
 }
 #endif

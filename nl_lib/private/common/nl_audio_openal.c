@@ -3,7 +3,6 @@
 #include "../nl_debug.h"
 #include "../nl_fileio.h"
 #include "../nl_memory.h"
-#include "../nl_utility.h"
 
 #include "string.h" // for strcmp
 
