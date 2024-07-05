@@ -90,20 +90,6 @@ void app_specific_render(void)
     set_fill_rendering();
 }
 
-#ifdef __EMSCRIPTEN__
-char* strtok_s(char* buffer, char* delim, char** ptr)
-{
-    (void)(ptr);
-    return strtok(buffer, delim);
-}
- 
-void sscanf_s(char* line, const char* str, __va_list__ args)
-{
-    // TODO: Implement proper?
-}
-
-#endif
-
 void parse_vertices_indices(const file_contents *const content, int*const vertices, int*const indices, int*const face_value_count)
 {
     int vertice_count = 0;

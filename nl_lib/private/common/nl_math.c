@@ -264,10 +264,10 @@ int invert_matrix_4x4_glm(const mat4x4f* const og, mat4x4f* const inverse)
     const float inverse_det = 1.0f / det;
     for (int i = 0; i < 16; i += 4)
     {
-        (&temp.m11)[i+0] /= det;//inverse_det;
-        (&temp.m11)[i+1] /= det;//inverse_det;
-        (&temp.m11)[i+2] /= det;//inverse_det;
-        (&temp.m11)[i+3] /= det;//inverse_det;
+        (&temp.m11)[i+0] *= inverse_det;
+        (&temp.m11)[i+1] *= inverse_det;
+        (&temp.m11)[i+2] *= inverse_det;
+        (&temp.m11)[i+3] *= inverse_det;
     }
 
     *inverse = temp;

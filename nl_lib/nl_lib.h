@@ -14,4 +14,10 @@
 #include "private/nl_shader.h"
 #include "private/nl_window.h"
 
+
+#ifdef  __EMSCRIPTEN__
+#include "private/web/nl_web_glue.h"
+#endif//__EMSCRIPTEN__
+
+
 #endif //__NL_LIB_H__

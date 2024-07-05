@@ -30,7 +30,6 @@
 #include "private/web/nl_gl_web.c"
 #include "private/web/nl_deltatime_web.c"
 
-
 #elif 
 #error Incomplete Library for this platform
 
