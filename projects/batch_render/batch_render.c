@@ -168,10 +168,19 @@ void app_specific_init(void)
 void app_specific_update(double dt)
 {
     (void)dt;
-    
+}
+
+void app_specific_render()
+{
     use_shader_program(shader_program);
 
     add_mesh_to_batch(&batch, &triangle);
     add_mesh_to_batch(&batch, &square);
     end_render_batch(&batch);
+}
+
+void app_specific_cleanup()
+{
+    free_mesh(&triangle);
+    free_mesh(&square);
 }

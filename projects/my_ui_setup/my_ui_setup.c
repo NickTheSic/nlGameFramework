@@ -27,7 +27,8 @@ mesh mouse_square = {0};
 
 internal_function void window_size_callback(int width, int height)
 {
-    create_screen_aspect(&my_camera, width, height);
+    //TODO: Replace with the matrix call.
+    //create_screen_aspect(&my_camera, width, height);
     
     unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
     glUniformMatrix4fv(projMat, 1, GL_FALSE, &my_camera.proj_matrix.m11);
@@ -41,7 +42,7 @@ void app_specific_init(void)
     v2f screen_size;
     screen_size.x = retrieved_screen_size.x;
     screen_size.y = retrieved_screen_size.y;
-    initialize_camera(&my_camera, (v3f){0.0f,0.0f,0.0f}, (v2f){(float)screen_size.x, (float)screen_size.y});
+    initialize_camera_to_identity(&my_camera);
     window_size_callback(screen_size.x, screen_size.y);
 
     shader_program = create_shader_program(common_vert_shader_code, common_fragment_shader_code);
@@ -104,12 +105,7 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
-    update_camera(&my_camera, dt);
-    glUseProgram(shader_program);
-    unsigned int transformLoc = glGetUniformLocation(shader_program, "uViewMat");
-    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &my_camera.view_matrix.m11);
-
-    if (was_mouse_button_pressed(NL_MOUSE_BUTTON_LEFT))
+    if (mouse_button_was_pressed(NL_MOUSE_BUTTON_LEFT))
     {
         editing = 1;
         mouse_click_pos = get_mouse_position_from_system();
@@ -126,7 +122,7 @@ void app_specific_update(double dt)
             last_mouse_pos = current_mouse_pos;
         }
 
-        if (was_mouse_button_released(NL_MOUSE_BUTTON_LEFT))
+        if (mouse_button_was_released(NL_MOUSE_BUTTON_LEFT))
         {
             ui_element_data* const curr_elem = &MAX_ELEMENTS[active_element++];
             curr_elem->position.x = mouse_click_pos.x;
@@ -137,6 +133,14 @@ void app_specific_update(double dt)
             change = 1;
         }
     }
+}
+
+void app_specific_render()
+{
+    glUseProgram(shader_program);
+    unsigned int transformLoc = glGetUniformLocation(shader_program, "uViewMat");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &my_camera.view_matrix.m11);
+    
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -164,6 +168,10 @@ void app_specific_update(double dt)
 
     glDrawElements(GL_TRIANGLES, active_element*6, GL_UNSIGNED_INT, 0);
 
-
     render_single_mesh(&mouse_square);
+}
+
+void app_specific_cleanup()
+{
+    free_mesh(&mouse_square);
 }

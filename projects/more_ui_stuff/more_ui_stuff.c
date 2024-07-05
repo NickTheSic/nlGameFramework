@@ -223,7 +223,7 @@ void app_specific_init(void)
 
     initialize_ui_renderer(&_ui_renderer, 5);
 
-    initialize_camera_to_zero(&ui_camera);
+    initialize_camera_to_identity(&ui_camera);
     pfn_window_size_callback = &winsizecbk;
 
     v2i screen_size = get_screen_size();
@@ -233,6 +233,10 @@ void app_specific_init(void)
 void app_specific_update(double dt)
 {
     NL_UNUSED(dt);
+}
+
+void app_specific_render()
+{
     matrix_for_ui(&square_center);
 
     draw_ui_batch(&_ui_renderer);

@@ -35,7 +35,13 @@ void app_specific_init(void)
 
 }
 
+
 void app_specific_update(double dt)
+{
+  NL_UNUSED(dt);
+}
+
+void app_specific_render()
 {
     //glBindFramebuffer(GL_FRAMEBUFFER, FBO);
     //glClearColor(0.1f, 0.1f, 0.1f, 1.0f);

@@ -145,7 +145,10 @@ void app_specific_init(void)
 void app_specific_update(double dt)
 {
     (void)dt;
+}
 
+void app_specific_render()
+{
     use_shader_program(sp);
     begin_render_batch(&batch);
     add_to_render_batch(&batch, (v2f){0.5f,0.3f});
