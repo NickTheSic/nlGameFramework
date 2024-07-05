@@ -86,7 +86,7 @@ void app_specific_init(void)
     shader_program = create_shader_program(ui_vert_shader_code, ui_fragment_shader_code);
     use_shader_program(shader_program);
 
-    initialize_camera_to_zero(&ui_camera);
+    initialize_camera_to_identity(&ui_camera);
     pfn_window_size_callback = &winsizecbk;
 
     v2i screen_size = get_screen_size();
@@ -120,11 +120,13 @@ void matrix_for_ui(ui_element* const o)
 void app_specific_update(double dt)
 {
     NL_UNUSED(dt);
+}
 
+void app_specific_render()
+{
     matrix_for_ui(&square_ur);
     matrix_for_ui(&square_bl);
     matrix_for_ui(&square_center);
-
 
     v2i cur_mouse_pos = get_mouse_position_from_system();
     v3f scale = {0.1,0.1,0.1};
