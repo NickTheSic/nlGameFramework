@@ -1,7 +1,7 @@
 #include "nl_lib.h"
 
 // Using VS2022 seems like the right play here with C so I can use intellisense
-#include <windows.h> // required without WIN32_LEAN_AND_MEAN for _Out_(?) and 
+#include <windows.h> // required without WIN32_LEAN_AND_MEAN for _Out_(?) 
 #include <initguid.h> // Required for __uuid it seems
 
 #include <xaudio2.h>

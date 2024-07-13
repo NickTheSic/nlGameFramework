@@ -232,11 +232,14 @@ static ui_element elem1 = {
 void app_specific_update(double dt)
 {
     (void)dt;
+}
 
+void app_specific_render()
+{
     use_shader_program(sp);
     begin_render_batch(&batch);
 
-    if (is_element_highlighted(&elem1) && is_mouse_button_held(NL_MOUSE_BUTTON_LEFT))
+    if (is_element_highlighted(&elem1) && mouse_button_is_held(NL_MOUSE_BUTTON_LEFT))
     {
         const v2i mouse_pos = get_mouse_position_from_system();
         elem1.pos = (v2f){(float)mouse_pos.x, (float)mouse_pos.y};
