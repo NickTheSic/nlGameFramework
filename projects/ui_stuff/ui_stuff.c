@@ -54,6 +54,7 @@ static ui_element square_center = {0};
 static ui_element mouse = {0};
 static camera ui_camera = {0};
 static unsigned int shader_program = {0};
+static unsigned int worldMat = {0};
 
 void winsizecbk(int width, int height)
 {
@@ -86,6 +87,8 @@ void app_specific_init(void)
     shader_program = create_shader_program(ui_vert_shader_code, ui_fragment_shader_code);
     use_shader_program(shader_program);
 
+    worldMat = glGetUniformLocation(shader_program, "uWorldMat");
+
     initialize_camera_to_identity(&ui_camera);
     pfn_window_size_callback = &winsizecbk;
 
@@ -111,7 +114,6 @@ void matrix_for_ui(ui_element* const o)
     mat4x4f mat = {0};
     ui_anchored_matrix(&mat, o);
 
-    unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
     glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
 
     render_single_mesh(&o->m);
