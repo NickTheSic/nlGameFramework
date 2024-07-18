@@ -21,7 +21,10 @@ void app_specific_init(void)
 void app_specific_update(double dt)
 {
     (void)dt;
+}
 
+void app_specific_render()
+{
     begin_ui_render_batch(&ui_batch);
 
     const ui_element elem1 = {
