@@ -17,5 +17,5 @@ fi
 
 if [ "$1" == "tux" ]
 then
-    echo err not implemented
+    ./build_scripts/build_tux.sh $2
 fi

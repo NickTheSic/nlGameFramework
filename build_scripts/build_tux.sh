@@ -2,6 +2,6 @@
 
 libs=
 flags=
-includes=
+includes=-Inl_lib
 
-clang $flags $includes 
+gcc $flags $includes projects/$1/$1.c nl_lib/build_nl_lib.c
