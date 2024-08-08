@@ -1,12 +1,17 @@
 #ifndef __NL_GL_H__
 #define __NL_GL_H__
 
-#ifdef _WIN32
+#if defined (_WIN32)
 #include "win32/nl_gl_win32.h"
-#endif
 
-#ifdef __EMSCRIPTEN__
+#elif defined (__EMSCRIPTEN__)
 #include "web/nl_gl_web.h"
+
+#elif defined (__linux__)
+#include "linux/nl_gl_linux.h"
+
+#elif 
+#error Incomplete opengl platform
 #endif
 
 #ifdef __cplusplus

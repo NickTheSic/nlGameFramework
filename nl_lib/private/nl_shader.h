@@ -7,9 +7,8 @@
 #elif defined _WIN32
 #define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
 #else
-#error Double Check the platform being compiled!
+#warning Double Check the platform being compiled!
 #endif
-
 
 static const char* common_vert_shader_code =
 NL_SHADER_VERSION_HEADER

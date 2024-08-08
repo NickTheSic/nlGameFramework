@@ -30,6 +30,12 @@
 #include "private/web/nl_gl_web.c"
 #include "private/web/nl_deltatime_web.c"
 
+#elif defined(__linux__)
+#include "private/linux/nl_window_linux.c"
+#include "private/linux/nl_renderer_gl_linux.c"
+#include "private/linux/nl_gl_linux.c"
+#include "private/linux/nl_deltatime_linux.c"
+
 #elif 
 #error Incomplete Library for this platform
 

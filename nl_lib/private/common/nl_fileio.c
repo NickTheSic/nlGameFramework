@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#ifdef __EMSCRIPTEN__
+#ifdef __EMSCRIPTEN__ || __linux__
 void fopen_s(FILE** file, const char* filename, const char* descript)
 {
     *file = fopen(filename, descript);
