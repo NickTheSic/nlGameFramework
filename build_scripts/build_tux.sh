@@ -1,6 +1,6 @@
 #! /bin/bash
 
-libs=
+libs=""
 flags="-Wall -Wextra -std=c11"
 includes="-Inl_lib"
 
