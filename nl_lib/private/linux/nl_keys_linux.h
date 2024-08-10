@@ -35,3 +35,6 @@ enum nl_key
 
     NL_KEY_COUNT
 };
+
+
+#endif//__NL_KEYS_LINUX_H__

@@ -6,6 +6,8 @@
 #define NL_SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"
 #elif defined _WIN32
 #define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
+#elif defined (__linux__)
+#define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
 #else
 #warning Double Check the platform being compiled!
 #endif

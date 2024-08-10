@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 libs=
 flags="-Wall -Wextra -std=c11"
