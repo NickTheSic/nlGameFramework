@@ -70,7 +70,7 @@ void app_specific_init(void)
 {
     init_world_grid(&grid, 10, 10, 32);
 
-    generate_square_mesh(&tile_0, grid.tile_size, (colourf){1.0f,0.0f,0.0f,1.0f});
+    generate_square_mesh(&tile_0, grid.tile_size, col_white);
 
     shader_program = create_shader_program(vertex_shader_code, fragment_shader_code);
     use_shader_program(shader_program);
@@ -84,6 +84,9 @@ void app_specific_init(void)
     create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,0.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,0.0f});
     u_view_mat = glGetUniformLocation(shader_program, "uViewMat");
     glUniformMatrix4fv(u_view_mat, 1, GL_FALSE, &main_cam.view_matrix.m11);
+
+    u_object_colour = glGetUniformLocation(shader_program, "uObjCol");
+    glUniform4fv(u_object_colour, 1, &col_white.r);
 }
 
 void app_specific_update(double dt)
@@ -96,6 +99,10 @@ void app_specific_render(void)
     use_shader_program(shader_program);
 
     mat4x4f model = {0};
+
+    const v2i mouse_posi = get_mouse_position_from_system();
+    v2f mouse_pos = {mouse_posi.x, mouse_posi.y};
+    project_mouse_to_camera(&main_cam, &mouse_pos);
     
     for (int i = 0; i < grid.width*grid.height; ++i)
     {
@@ -106,6 +113,17 @@ void app_specific_render(void)
     
         model.m41 = coords.x * grid.tile_size;
         model.m42 = coords.y * grid.tile_size;
+
+        if (model.m41 < mouse_pos.x && mouse_pos.x < model.m41+grid.tile_size 
+         && model.m42 < mouse_pos.y && mouse_pos.y < model.m42+grid.tile_size)
+        {
+            glUniform4fv(u_object_colour, 1, &(colourf){1.f,0.f,0.2f,1.f}.r);
+        }
+        else
+        {
+            glUniform4fv(u_object_colour, 1, &col_white.r);
+        }
+
         glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
 
         render_single_mesh(&tile_0);
