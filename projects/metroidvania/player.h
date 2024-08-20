@@ -9,6 +9,25 @@
 #define GRAVITY_RAISE (PLAYER_DOUBLE_WIDTH + PLAYER_HALF_WIDTH)
 #define GRAVITY_FALL  (GRAVITY_RAISE + PLAYER_DOUBLE_WIDTH + PLAYER_HALF_WIDTH)
 
-void player_update(double dt, struct game_object* const player, struct player_controller* const controller);
+typedef struct game_object game_object;
+struct game_object
+{
+    mesh mesh;
+    v2f pos;
+    float vertical_speed;
+    float width;
+
+    char is_grounded;
+};
+
+typedef struct player_controller player_controller; 
+struct player_controller
+{
+    nl_key left;
+    nl_key right;
+    nl_key jump;
+};
+
+void player_update(double dt, game_object* const player, player_controller* const controller);
 
 #endif//__PLAYER_H__

@@ -13,25 +13,6 @@ TODO:
         - Abilities
 */
 
-typedef struct game_object game_object;
-struct game_object
-{
-    mesh mesh;
-    v2f pos;
-    float vertical_speed;
-    float width;
-
-    char is_grounded;
-};
-
-typedef struct player_controller player_controller; 
-struct player_controller
-{
-    nl_key left;
-    nl_key right;
-    nl_key jump;
-};
-
 static const char* vertex_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                                   \n"

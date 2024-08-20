@@ -1,5 +1,4 @@
 #include "player.h"
-#include "metroidvania.h"
 
 void player_update(double dt, game_object* const player, player_controller* const controller)
 {
