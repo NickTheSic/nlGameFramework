@@ -2,8 +2,6 @@
 #include "private/nl_gl.h"
 #include "string.h" //memcpy
 
-#include "external_check.c"
-
 const char* vert_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
@@ -13,14 +11,6 @@ NL_SHADER_VERSION_HEADER
 "void main() {                                         \n"
 "   gl_Position = transform * vec4(aPos, 1.0);         \n"
 "   oColor = aColor;                                   \n"
-"}                                                     \0";
-
-const char* fragment_shader_code =
-NL_SHADER_VERSION_HEADER
-"out vec4 FragColor;                                   \n"
-"in vec4 oColor;                                       \n"
-"void main() {                                         \n"
-"    FragColor = oColor;                               \n"
 "}                                                     \0";
 
 mesh untitled = {0};
@@ -42,7 +32,7 @@ void app_specific_init(void)
 
     _recalculate_camera();
 
-    shader_program = create_shader_program(vert_shader_code, fragment_shader_code);
+    shader_program = create_shader_program(vert_shader_code, common_fragment_shader_code);
     glUseProgram(shader_program);
 
     set_depth_test_enabled(1);
