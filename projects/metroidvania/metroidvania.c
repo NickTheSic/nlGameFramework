@@ -7,6 +7,9 @@
 #include "physics.h"
 
 
+#include "player.c"
+
+
 global_variable player_controller controller = {key_a, key_d, key_space};
 global_variable game_object player = {0};
 global_variable game_object mouse_follow = {0};
@@ -18,8 +21,6 @@ unsigned int u_model_loc = 0;
 unsigned int u_view_mat = 0;
 camera main_cam = {0};
 
-// Bad to include here - but I will need to pass main_cam into player update to be sure
-#include "player.c"
 
 internal_function void winsizecbk(int width, int height)
 {
@@ -54,6 +55,14 @@ void app_specific_init(void)
 void app_specific_update(double dt)
 {
     player_update(dt, &player, &controller);
+
+    if (key_is_held(key_right))
+    {
+        camera_pos -= GRAVITY_FALL * dt;
+        create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){camera_pos,camera_pos,0.0f});
+        u_view_mat = glGetUniformLocation(shader_program, "uViewMat");
+        glUniformMatrix4fv(u_view_mat, 1, GL_FALSE, &main_cam.view_matrix.m11);
+    }
 }
 
 void app_specific_render(void)
