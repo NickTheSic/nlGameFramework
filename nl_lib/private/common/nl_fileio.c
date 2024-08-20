@@ -51,6 +51,7 @@ void save_to_binary_file(const char* const filename, unsigned int size, char* co
 {
     FILE* fp = {0};
     fopen_s(&fp, filename, "wb");
+
     if (fp)
     {
         fwrite(contents, 1, size, fp);
@@ -62,6 +63,7 @@ void load_from_binary_file(const char* const filename, unsigned int size, char* 
 {
     FILE* fp = {0};
     fopen_s(&fp, filename, "rb");
+    
     if (fp)
     {
         fread(dest, 1, size, fp);

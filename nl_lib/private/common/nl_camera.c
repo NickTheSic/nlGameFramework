@@ -1,8 +1,6 @@
 #include "../nl_camera.h"
 #include "../nl_math.h"
 
-//camera main_camera = {0};
-
 void initialize_camera_to_identity(camera* const cam)
 {
     create_identity_matrix(&cam->proj_matrix);
@@ -12,6 +10,7 @@ void initialize_camera_to_identity(camera* const cam)
 void project_mouse_to_camera(camera* const cam, v2f* mouse_pos_on_screen)
 {
     mat4x4f inverse = {0};
+    
     create_identity_matrix(&inverse);
     invert_matrix_4x4_glm(&cam->view_matrix, &inverse);
 
