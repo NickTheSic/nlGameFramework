@@ -32,7 +32,8 @@ struct my_batch
     myvd*  vertices;
 };
 
-static unsigned int sp = {0};
+global_variable unsigned int sp = {0};
+global_variable my_batch batch = {0};
 
 void init_batch(my_batch* const batch, unsigned int count)
 {   
@@ -132,8 +133,6 @@ void free_batch(my_batch* const batch)
 {
     memory_free(batch->vertices);
 }
-
-static my_batch batch = {0};
 
 void app_specific_init(void)
 {

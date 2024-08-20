@@ -60,11 +60,6 @@ void free_shader_program(unsigned int shader_program)
     glDeleteProgram(shader_program);
 }
 
-void use_shader(unsigned int shader_program)
-{
-    glUseProgram(shader_program);
-}
-
 unsigned int create_common_shader_program()
 {
     return create_shader_program(common_vert_shader_code, common_fragment_shader_code);
