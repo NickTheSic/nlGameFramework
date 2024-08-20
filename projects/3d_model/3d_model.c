@@ -19,7 +19,8 @@ mat4x4f matrix = {0};
 float camera_bounds = 1.f;
 
 // Required - Could be renderer or material
-unsigned int shader_program;
+unsigned int shader_program = 0;
+unsigned int transformLoc = 0;
 
 void _recalculate_camera()
 {
@@ -33,7 +34,9 @@ void app_specific_init(void)
     _recalculate_camera();
 
     shader_program = create_shader_program(vert_shader_code, common_fragment_shader_code);
-    glUseProgram(shader_program);
+    use_shader(shader_program);
+
+    transformLoc = glGetUniformLocation(shader_program, "transform");
 
     set_depth_test_enabled(1);
 }
@@ -70,15 +73,11 @@ void app_specific_update(double dt)
 }
 void app_specific_render(void)
 {
-    glUseProgram(shader_program);
-    unsigned int transformLoc = glGetUniformLocation(shader_program, "transform");
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &matrix.m11);
     
     render_single_mesh(&untitled);
     set_wireframe_rendering(); 
-    
     glClear(GL_DEPTH_BUFFER_BIT);
-
     render_single_mesh(&untitled);
     set_fill_rendering();
 }

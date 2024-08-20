@@ -40,6 +40,8 @@ unsigned int create_shader_program(const char* vertex_shader_code, const char* f
 void use_shader_program(unsigned int shader_program);
 void free_shader_program(unsigned int shader_program);
 
+void use_shader(unsigned int shader_program);
+
 unsigned int create_common_shader_program(void);
 
 #endif //__NL_SHADER_H__
