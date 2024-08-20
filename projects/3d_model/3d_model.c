@@ -73,6 +73,7 @@ void app_specific_update(double dt)
 }
 void app_specific_render(void)
 {
+    // Once the shader has been defined this can be a specific call to set the 'transform' (whatever that ends up being)
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &matrix.m11);
     
     render_single_mesh(&untitled);
