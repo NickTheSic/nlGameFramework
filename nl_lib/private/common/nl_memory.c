@@ -10,7 +10,8 @@ void *_memory_allocate(size_t size)
     void* memory = (void*)malloc(size);
     if (memory == 0)
     {
-        // Some sort of error handling
+        // Could make better
+        NL_LOG("Unable to allocate memory of size %zi", size);
         return 0;
     }
 
