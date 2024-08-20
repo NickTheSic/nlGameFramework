@@ -53,14 +53,17 @@ global_variable audio_system *local_audio_system = {0};
 static void print_audio_device_name(void)
 {
     const ALCchar* name = 0;
+
     if (alcIsExtensionPresent(local_audio_system->device, "ALC_ENUMERATE_ALL_EXT"))
     {
         name = alcGetString(local_audio_system->device, ALC_ALL_DEVICES_SPECIFIER);
     }
+
     if (!name || alcGetError(local_audio_system->device) != ALC_NO_ERROR)
     {
         name = alcGetString(local_audio_system->device, ALC_DEVICE_SPECIFIER);
     }
+
     NL_LOG("Opened %s for sound", name);
 }
 
@@ -93,19 +96,24 @@ static ALuint load_wav_sound(const char* filename)
     const int sample_rate = wav_header->sample_rate;
 
     ALenum format = {0};
-    if (channels == 1 &&  bits_per_sample == 8){
+    if (channels == 1 &&  bits_per_sample == 8)
+    {
         format = AL_FORMAT_MONO8;
     }
-    else if(channels == 1 && bits_per_sample == 16){   
+    else if(channels == 1 && bits_per_sample == 16)
+    {   
         format = AL_FORMAT_MONO16;
     }
-    else if(channels == 2 && bits_per_sample == 8){
+    else if(channels == 2 && bits_per_sample == 8)
+    {
         format = AL_FORMAT_STEREO8;
     }
-    else if(channels == 2 && bits_per_sample == 16){
+    else if(channels == 2 && bits_per_sample == 16)
+    {
         format = AL_FORMAT_STEREO16;
     }   
-    else{
+    else
+    {
         NL_LOG("Unable to deduce the format of the audio file");
     }
 
@@ -149,6 +157,7 @@ unsigned int load_sound_file(const char* filename)
 int init_audio_system(void)
 {
     local_audio_system = (audio_system*)memory_allocate(sizeof(audio_system));
+    
     if (local_audio_system == 0)
     {
         NL_LOG("Unable to allocate memory for the audio system");
