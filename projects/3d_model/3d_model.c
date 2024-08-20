@@ -48,7 +48,7 @@ void app_specific_update(double dt)
     {
         matrix.m22 = -matrix.m22;
     }
-    if (mouse_button_is_held(NL_MOUSE_BUTTON_LEFT))
+    if (mouse_button_was_pressed(NL_MOUSE_BUTTON_LEFT))
     {
         matrix.m33 = -matrix.m33;
     }
@@ -76,7 +76,9 @@ void app_specific_render(void)
     
     render_single_mesh(&untitled);
     set_wireframe_rendering(); 
+    
     glClear(GL_DEPTH_BUFFER_BIT);
+
     render_single_mesh(&untitled);
     set_fill_rendering();
 }
