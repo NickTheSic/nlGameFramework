@@ -10,7 +10,6 @@ struct aabb
     v2f max;
 };
 
-
 static inline int box_in_box_with_size_pos(aabb left, aabb right)
 {
     if (left.max.x < right.min.x || left.min.x > right.min.x) return 0;
