@@ -31,9 +31,7 @@ internal_function void winsizecbk(int width, int height)
 
 void app_specific_init(void)
 {
-    player.width = PLAYER_WIDTH;
-    player.pos = (v2f){100.0f,100.0f};
-    generate_square_mesh(&player.mesh, player.width, (colourf){1.0f,0.5f,0.2f,1.0f});
+    player_init(&player);
 
     generate_square_mesh(&mouse_follow.mesh, PLAYER_HALF_WIDTH, (colourf){0.5f,0.1f,1.0f,1.0f});
 

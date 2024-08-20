@@ -28,6 +28,7 @@ struct player_controller
     nl_key jump;
 };
 
+void player_init(game_object* const player);
 void player_update(double dt, game_object* const player, player_controller* const controller);
 
 #endif//__PLAYER_H__
