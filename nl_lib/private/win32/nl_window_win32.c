@@ -27,6 +27,7 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 		case WM_CLOSE:
 		{
 			NL_LOG("Close Message");
+			g_window.running = 0;
 			DestroyWindow(window);
 		}break;
 
@@ -282,7 +283,7 @@ void window_request_close()
 {
 	NL_LOG("Requesting window Close");
 	//PostQuitMessage(WM_QUIT);
-	g_window.running = SendMessage(g_window.window, WM_CLOSE, 0, 0);
+	SendMessage(g_window.window, WM_CLOSE, 0, 0);
 }
 
 v2i get_screen_size()

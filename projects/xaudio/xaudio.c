@@ -21,7 +21,7 @@ void app_specific_init(void)
         return;
     }
 
-    if ( FAILED(hr = XAudio2Create( &pXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR ) ) )
+    if (FAILED(hr = XAudio2Create(&pXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR)))
     {
         NL_LOG("XAudio2Create failed");
         return;
