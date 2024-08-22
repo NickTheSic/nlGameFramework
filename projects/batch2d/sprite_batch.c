@@ -39,7 +39,6 @@ void init_batch(sprite_batch* const batch, unsigned int count)
     memory_free(indices);
 }
 
-
 void begin_render_batch(sprite_batch* const batch)
 {
     glBindVertexArray(batch->vao);
