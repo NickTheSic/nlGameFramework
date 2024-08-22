@@ -1,6 +1,4 @@
 #include "nl_lib.h"
-#include "private/nl_gl.h"
-
 #include "sprite_batch.h"
 
 global_variable unsigned int sp = {0};
