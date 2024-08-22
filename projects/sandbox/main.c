@@ -15,6 +15,7 @@ void run()
     update_input_frame_state();
     
     double dt = get_frame_delta_time();
+
     // debug FPS
     {
         static float TimedLoop;
@@ -40,6 +41,12 @@ void run()
     begin_render_frame();
     app_specific_render();
     end_render_frame();
+
+
+    if (key_is_held(key_control) && key_was_pressed(key_c))
+    {
+        window_request_close();
+    }
 }
 
 int main(int count, char** args)

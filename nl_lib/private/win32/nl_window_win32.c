@@ -24,17 +24,19 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 
     switch (msg)
     {
+		case WM_CLOSE:
+		{
+			NL_LOG("Close Message");
+			DestroyWindow(window);
+
+			g_window.running = 0;
+		}break;
+
         case WM_DESTROY:
 		{
 			NL_LOG("Destroy Message");
             PostQuitMessage(0);
-			//fallthrough
-		}
-        case WM_QUIT:
-        {
-			NL_LOG("Quit Message");
-            g_window.running = 0;
-        } break;
+		}break;
 
 		case WM_SIZE:
 		{
@@ -54,6 +56,8 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 			nl_key k = (nl_key)wParam;
 			set_key_state_down(k);
+
+			NL_LOG("Key down %d", k);
 		} break;
 
 		case WM_SYSKEYUP:
@@ -108,7 +112,8 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 void poll_events()
 {
     MSG msg = {0};
-    while (PeekMessage(&msg, g_window.window, 0, 0, PM_REMOVE))
+    //while (PeekMessage(&msg, g_window.window, 0, 0, PM_REMOVE) != 0)
+    while (PeekMessage(&msg, 0, 0, 0, PM_REMOVE) != 0)
     {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
@@ -278,7 +283,8 @@ void window_swap_buffers()
 void window_request_close()
 {
 	NL_LOG("Requesting window Close");
-	PostQuitMessage(0);
+	//PostQuitMessage(WM_QUIT);
+	LRESULT result = SendMessage(g_window.window, WM_CLOSE, 0, 0);
 }
 
 v2i get_screen_size()
