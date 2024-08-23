@@ -24,7 +24,7 @@ void app_specific_render()
     add_to_render_batch(&batch, (v2f){0.1f,-0.2f});
 
     const v2i mouse_posi = get_mouse_position_from_system();
-    const v2f mouse_pos = (v2f){(float)(mouse_posi.x/800.f - 0.5f), (float)(mouse_posi.y/600.f) - 0.5f};
+    const v2f mouse_pos = (v2f){(float)(mouse_posi.x/800.f) - 0.5f, (float)(mouse_posi.y/600.f) - 0.5f};
     add_to_render_batch(&batch, mouse_pos);
 
     end_render_batch(&batch);
