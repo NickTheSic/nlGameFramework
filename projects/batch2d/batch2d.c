@@ -1,14 +1,18 @@
 #include "nl_lib.h"
 #include "sprite_batch.h"
+#include "sprite_sheet.h"
 
-global_variable unsigned int sp = {0};
+global_variable unsigned int sp    = {0};
 global_variable sprite_batch batch = {0};
+global_variable unsigned int img   = {0};
 
 void app_specific_init(void)
 {
     sp = create_shader_program(batch_vert_shader_code, common_fragment_shader_code);
     use_shader_program(sp);
     init_batch(&batch, 3);
+
+    img = load_image("data/test_sprite.png");
 }
 
 void app_specific_update(double dt)
@@ -36,3 +40,4 @@ void app_specific_cleanup()
 }
 
 #include "sprite_batch.c"
+#include "sprite_sheet.c"
