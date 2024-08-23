@@ -9,7 +9,7 @@ void init_sprite_sheet()
 {
     stbi_set_flip_vertically_on_load(1);
 
-    sheet.sprites = memory_allocate(sizeof(sprite) * 1);
+    sheet.sprites = (sprite*)memory_allocate(sizeof(sprite) * 1);
 
     glActiveTexture(GL_TEXTURE0);
     glGenTextures(1, &sheet.texture_id);

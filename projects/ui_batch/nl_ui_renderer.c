@@ -45,7 +45,7 @@ void init_ui_renderer(ui_renderer* const ui_renderer)
 
     glGenVertexArrays(1, &ui_renderer->vao);
     glBindVertexArray(ui_renderer->vao);
-
+ 
     glGenBuffers(1, &ui_renderer->vbo);
     glBindBuffer(GL_ARRAY_BUFFER, ui_renderer->vbo);
     glBufferData(GL_ARRAY_BUFFER, vertice_data, (void*)0, GL_DYNAMIC_DRAW);
