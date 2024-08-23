@@ -16,7 +16,11 @@ void app_specific_update(double dt)
 
 void app_specific_render(void)
 {
+    begin_sprite_batch(&sheet);
 
+    add_sprite_to_batch(0, (v2f){100.f,100.f}, (colourf){1.0f,1.0f,1.0f,1.0f});
+
+    end_sprite_batch(&sheet);
 }
 
 void app_specific_cleanup(void)

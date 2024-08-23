@@ -36,4 +36,10 @@ struct spritesheet
 void init_sprite_sheet(spritesheet* const sheet, unsigned int batch_count, unsigned int sprite_count, v2i atlas_size);
 void free_sprite_sheet(spritesheet* sheet);
 
+int load_sprite(const char* const filename);
+
+void begin_sprite_batch(spritesheet* const sheet);
+void add_sprite_to_batch(int sprite_idx, v2f pos, colourf colour);
+void end_sprite_batch(spritesheet* const sheet);
+
 #endif//__NL_SPRITE_SHEET_H__
