@@ -165,7 +165,7 @@ int init_audio_system(void)
     }
 
     local_audio_system->buffers = (ALuint*)memory_allocate(sizeof(ALuint)*MAX_SOUND_BUFFERS);
-    local_audio_system->sounds = (ALuint*)memory_allocate(sizeof(ALuint)*MAX_SOUND_BUFFERS);
+    local_audio_system->sounds  = (ALuint*)memory_allocate(sizeof(ALuint)*MAX_SOUND_BUFFERS);
 
     local_audio_system->device = alcOpenDevice(0);
     if (local_audio_system->device == 0)

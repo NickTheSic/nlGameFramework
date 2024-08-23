@@ -55,8 +55,6 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 			nl_key k = (nl_key)wParam;
 			set_key_state_down(k);
-
-			NL_LOG("Key down %d", k);
 		} break;
 
 		case WM_SYSKEYUP:
