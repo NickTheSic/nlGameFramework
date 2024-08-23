@@ -100,16 +100,19 @@ void free_sprite_sheet(spritesheet* sheet)
 
 void begin_sprite_batch(spritesheet* const sheet)
 {
+    NL_UNUSED(sheet);
     NL_UNIMPLEMENTED_FUNC;
 }
 
 void add_sprite_to_batch(int sprite_idx, v2f pos, colourf colour)
 {
+    NL_UNUSED(sprite_idx); NL_UNUSED(pos); NL_UNUSED(colour);
     NL_UNIMPLEMENTED_FUNC;
 }
 
 void end_sprite_batch(spritesheet* const sheet)
 {
+    NL_UNUSED(sheet);
     NL_UNIMPLEMENTED_FUNC;
 }
 

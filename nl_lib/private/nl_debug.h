@@ -13,6 +13,6 @@
 #define global_variable static
 #define local_persist static
 
-#define NL_UNUSED(x) (void)(x)
+#define NL_UNUSED(x) (void)(x); DO_ONCE(NL_LOG("variable %s is not being used in %s", #x, __FUNCTION__););
 
 #endif //__NL_DEBUG_H__
