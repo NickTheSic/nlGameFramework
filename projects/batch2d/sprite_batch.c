@@ -71,7 +71,7 @@ void add_to_render_batch(sprite_batch* const batch, v2f pos)
     const unsigned int current_idx = batch->current_count * 4;
 
     const float SQUARE_HALF_SIZE = 0.1f;
-    colourf col = (colourf){0.8f, 0.0f, 0.1f, 1.0f};
+    const colourf col = (colourf){0.8f, 0.0f, 0.1f, 1.0f};
     const sprite_batch_vertex_data square_verts[] =
     {
         {{pos.x + -SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, col},
@@ -80,7 +80,7 @@ void add_to_render_batch(sprite_batch* const batch, v2f pos)
         {{pos.x + -SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, col}
     };
 
-    sprite_batch_vertex_data* dest = &batch->vertices[current_idx];
+    sprite_batch_vertex_data* const dest = &batch->vertices[current_idx];
     memcpy(dest, &square_verts, sizeof(sprite_batch_vertex_data)*4);
 
     batch->current_count++;

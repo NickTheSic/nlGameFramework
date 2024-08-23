@@ -4,8 +4,7 @@
 #include "stddef.h"
 
 #define STBI_ONLY_PNG
-#include "stb_image.h"
-
+#include "third_party/stb_image.h"
 
 // void add_mesh_to_batch(batch_render* const batch, const mesh* const mesh)
 // {
