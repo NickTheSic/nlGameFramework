@@ -5,11 +5,11 @@
 
 global_variable sprite_sheet sheet = {0};
 
-unsigned int load_image(const char* const filename)
+void init_sprite_sheet()
 {
-    // only needs to be set once on init
-    {
     stbi_set_flip_vertically_on_load(1);
+
+    sheet.sprites = memory_allocate(sizeof(sprite) * 1);
 
     glActiveTexture(GL_TEXTURE0);
     glGenTextures(1, &sheet.texture_id);
@@ -23,35 +23,50 @@ unsigned int load_image(const char* const filename)
     glTexImage2D(GL_TEXTURE_2D,
                  0,
                  GL_RGBA,
-                 128, 128,
+                 16, 16,
                  0,
                  GL_RGBA,
                  GL_UNSIGNED_BYTE,
-#if !defined __EMSCRIPTEN__ || !defined PLATFORM_WEB
-                0
-#else
-                memory_allocate(sizeof(unsigned char)*sheet->atlas_size.x*sheet->atlas_size.y);
-#endif
+                 0
                  );
-    }
+}
+
+void free_sprite_sheet()
+{
+    memory_free(sheet.sprites);
+}
+
+unsigned int load_image(const char* const filename)
+{
+    sprite sprite = {0};
     
     int x, y, channel;
     unsigned char* png_data = stbi_load(filename, &x, &y, &channel, 4);
 
-    glTexSubImage2D(GL_TEXTURE_2D, 0,
-                0, 0,
-                x, y, 
-                GL_RGBA,
-                GL_UNSIGNED_BYTE,
-                png_data);
+    sprite.bl_coord.x = 0.f;
+    sprite.bl_coord.y = 0.f;
+    sprite.tr_coord.x = 1.f;
+    sprite.tr_coord.y = 1.f;
+
+    glTexSubImage2D(GL_TEXTURE_2D, 
+                    0,
+                    0, 
+                    0,
+                    x, 
+                    y, 
+                    GL_RGBA,
+                    GL_UNSIGNED_BYTE,
+                    png_data);
 
     stbi_image_free(png_data);
 
-//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(SpriteVertexData), (void*)(offsetof(SpriteVertexData, position)));
-//    glEnableVertexAttribArray(0);
-//    
-//    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(SpriteVertexData), (void*)(offsetof(SpriteVertexData, uv)));
-//    glEnableVertexAttribArray(1);
+    unsigned int handle = sheet.active_handle++;
+    sheet.sprites[handle] = sprite;
 
-    return 1;
+    return handle;
+}
+
+sprite* const get_sprite(unsigned int sprite)
+{
+    return &sheet.sprites[0];
 }

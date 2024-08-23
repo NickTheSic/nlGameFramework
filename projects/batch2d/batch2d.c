@@ -8,9 +8,10 @@ global_variable unsigned int img   = {0};
 
 void app_specific_init(void)
 {
-    sp = create_shader_program(batch_vert_shader_code, common_fragment_shader_code);
+    sp = create_shader_program(batch_vert_shader_code, sprite_frag_shader_code);
     use_shader_program(sp);
     init_batch(&batch, 3);
+    init_sprite_sheet();
 
     img = load_image("data/test_sprite.png");
 }
@@ -37,6 +38,7 @@ void app_specific_render()
 void app_specific_cleanup()
 {
     free_batch(&batch);
+    free_sprite_sheet();
 }
 
 #include "sprite_batch.c"

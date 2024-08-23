@@ -4,19 +4,28 @@
 static const char* batch_vert_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
-"layout (location = 1) in vec4 aColor;                 \n"
-"out vec4 oColor;                                      \n"
+"layout (location = 1) in vec2 aCoords;                \n"
+"out vec2 oCoords;                                     \n"
 "void main() {                                         \n"
 "   vec4 viewPos = vec4(aPos, 1.0);                    \n"
 "   gl_Position = viewPos;                             \n"
-"   oColor = aColor;                                   \n"
+"   oCoords = aCoords;                                 \n"
 "}                                                     \0";
+
+static const char* sprite_frag_shader_code = 
+NL_SHADER_VERSION_HEADER
+"out vec4 FragColor;                     \n"
+"in vec2 TexCoords;                      \n"
+"uniform sampler2D text;                 \n"
+"void main(){                            \n"
+"FragColor = texture(text, TexCoords);   \n"
+"}                                       \0";
 
 typedef struct sprite_batch_vertex_data sprite_batch_vertex_data;
 struct sprite_batch_vertex_data
 {
     v3f pos;
-    colourf color;
+    v2f uv_coord;
 };
 
 typedef struct sprite_batch sprite_batch;

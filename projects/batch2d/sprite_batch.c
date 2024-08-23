@@ -46,7 +46,7 @@ void begin_render_batch(sprite_batch* const batch)
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(sprite_batch_vertex_data), (void*)offsetof(sprite_batch_vertex_data, pos));
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(sprite_batch_vertex_data), (void*)offsetof(sprite_batch_vertex_data, color));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(sprite_batch_vertex_data), (void*)offsetof(sprite_batch_vertex_data, uv_coord));
     glEnableVertexAttribArray(1);
 }
 
@@ -71,13 +71,14 @@ void add_to_render_batch(sprite_batch* const batch, v2f pos)
     const unsigned int current_idx = batch->current_count * 4;
 
     const float SQUARE_HALF_SIZE = 0.1f;
-    const colourf col = (colourf){0.8f, 0.0f, 0.1f, 1.0f};
+    const sprite* const sp = get_sprite(0);
+
     const sprite_batch_vertex_data square_verts[] =
     {
-        {{pos.x + -SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, col},
-        {{pos.x +  SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, col},
-        {{pos.x +  SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, col},
-        {{pos.x + -SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, col}
+        {{pos.x + -SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->bl_coord.x, sp->bl_coord.y}},
+        {{pos.x +  SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->tr_coord.x, sp->bl_coord.y}},
+        {{pos.x +  SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->tr_coord.x, sp->tr_coord.y}},
+        {{pos.x + -SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->bl_coord.x, sp->tr_coord.y}}
     };
 
     sprite_batch_vertex_data* const dest = &batch->vertices[current_idx];
