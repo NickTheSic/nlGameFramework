@@ -1,11 +1,11 @@
 @echo off
 
 IF "%1"=="" (
-    echo missing first parameter
+    echo missing first parameter, should be the platform
 )
 
 IF "%2"=="" (
-    echo missing second parameter
+    echo missing second parameter. should be the project to build. If you specified the project you may be missing the platform
 )
 
 IF /I %1==win_x (
