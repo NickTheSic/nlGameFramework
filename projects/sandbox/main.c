@@ -42,11 +42,12 @@ void run()
     app_specific_render();
     end_render_frame();
 
-
+#ifndef __EMSCRIPTEN__
     if (key_is_held(key_control) && key_was_pressed(key_c))
     {
         window_request_close();
     }
+#endif
 }
 
 int main(int count, char** args)

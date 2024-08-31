@@ -4,12 +4,15 @@
 #include "../nl_renderer.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #if defined (__EMSCRIPTEN__) || defined (__linux__) 
 void fopen_s(FILE** file, const char* filename, const char* descript)
 {
     *file = fopen(filename, descript);
 }
+
+#define strtok_s strtok_r
 #endif
 
 void read_entire_file(const char* filename, file_contents* const contents)
@@ -155,7 +158,7 @@ internal_function void parse_vertices_indices(const file_contents *const content
     memory_free(buffer);
 }
 
-void load_mesh_from_file(const char* file, struct mesh* const mesh)
+void load_mesh_from_file(const char* const file, mesh* const mesh)
 {
     NL_LOG("Loading Mesh %s", file);
 

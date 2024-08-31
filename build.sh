@@ -5,7 +5,7 @@ then
     echo please specify the platform
 fi
 
-if [ "$1" == "wintux" ]
+if [ "$1" == "win" ]
 then
     echo err not setup
 fi
