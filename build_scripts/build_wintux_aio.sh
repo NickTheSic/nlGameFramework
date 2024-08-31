@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cd _build/win
-
-libs="-lUser32 -lopenGL -lgdi32 -lole32 -L/usr/i686-w64-mingw32/lib/"
+libs="-lUser32 -lopenGL -lgdi32 -lole32 -L/usr/x86_64-w64-mingw32/lib/"
 flags=
-includes="-I../../nl_lib -I/usr/i686-w64-mingw32/include/"
+includes="-I../../nl_lib -I/usr/x86_64-w64-mingw32/include/"
 
-mingw-w64
+output="_build/win/"
+
+./usr/bin/x86_64-w64-mingw32-gcc-win32 $flags $includes $1 $2 $3 $libs -o $output"build_nl_lib.exe"
