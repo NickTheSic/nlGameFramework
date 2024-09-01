@@ -3,7 +3,7 @@
 
 
 #include "nl_win32_include.h"
-#include "gl/GL.h"
+#include "GL/gl.h"
 
 
 #define GL_ARRAY_BUFFER          0x8892		

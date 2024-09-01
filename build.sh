@@ -7,7 +7,7 @@ fi
 
 if [ "$1" == "win" ]
 then
-    ./build_scripts/build_wintux_aio.sh nl_lib/build_nl_lib.c projects/sandbox/main.c projects/$2/$2.c
+    build_scripts/build_wintux_aio.sh nl_lib/build_nl_lib.c projects/sandbox/main.c projects/$2/$2.c
 fi
 
 if [ "$1" == "web" ]
