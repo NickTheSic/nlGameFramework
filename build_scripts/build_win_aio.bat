@@ -12,4 +12,3 @@ cl %flags% %includes% %1 %2 %3 %libs%
 
 @echo off
 popd
-echo on

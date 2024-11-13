@@ -22,4 +22,8 @@ IF /I %1==web (
 call "build_scripts/build_web" %2
 )
 
+IF /I %1==gc (
+    call "build_scripts/build_gc" %2
+)
+
 @echo on

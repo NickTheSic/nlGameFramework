@@ -13,3 +13,5 @@ set output=_build/web/
 @echo on
 
 emcc %flags% %shell_file% %includes% nl_lib/build_nl_lib.c projects/sandbox/main.c projects/%1/%1.c %data% -o%output%index.html
+
+@echo off
