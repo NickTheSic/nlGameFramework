@@ -1,29 +1,7 @@
 #include "nl_lib.h"
 #include "private/nl_gl.h"
 
-#ifndef GEKKO
-void app_specific_init(void)
-{
-    NL_LOG("Hello, World!");
-}
-
-void app_specific_update(double dt)
-{
-    NL_UNUSED(dt);
-}
-
-void app_specific_render(void)
-{
-
-}
-
-void app_specific_cleanup(void)
-{
-    
-}
-
-#else
-
+#if defined GEKKO
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,19 +11,14 @@ void app_specific_cleanup(void)
 
 static void *xfb = NULL;
 static GXRModeObj *rmode = NULL;
-
 void *Initialise();
-
 void app_specific_init(void)
 {
     xfb = Initialise();
     NL_LOG("Hello, World!");
 }
-
 void app_specific_update(double dt)
 {
-    //NL_UNUSED(dt);
-
     VIDEO_WaitVSync();
 	PAD_ScanPads();
 
@@ -55,23 +28,7 @@ void app_specific_update(double dt)
     {
 		NL_LOG("Button A pressed.");
 	}
-
-	if (buttonsDown & PAD_BUTTON_START) 
-    {
-		exit(0);
-	}
 }
-
-void app_specific_render(void)
-{
-
-}
-
-void app_specific_cleanup(void)
-{
-    
-}
-
 void * Initialise() 
 {
 	void *framebuffer;
@@ -93,4 +50,20 @@ void * Initialise()
 
 	return framebuffer;
 }
+void app_specific_render(void){}
+void app_specific_cleanup(void){}
+
+#else
+
+void app_specific_init(void)
+{
+    NL_LOG("Hello, World!");
+}
+void app_specific_update(double dt)
+{
+    NL_UNUSED(dt);
+}
+void app_specific_render(void){}
+void app_specific_cleanup(void){}
+
 #endif

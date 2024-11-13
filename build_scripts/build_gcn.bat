@@ -6,7 +6,7 @@ set GCN_INCLUDES= -I%DKP%libogc\include
 set GCN_LIBS= -L%DKP%libogc\lib\cube -lm  -logc
 set GCN_FLAGS= -mogc -mcpu=750 -meabi -mhard-float
 
-set DEFINES=-DGEKKO
+set DEFINES=-DGEKKO -DGCN_GEKKO
 
 set includes=-Inl_lib
 set flags=-Wall -Wextra -g -O2
