@@ -11,7 +11,9 @@
 #include "private/nl_memory.h"
 #include "private/nl_random.h"
 #include "private/nl_renderer.h"
+#ifndef GEKKO
 #include "private/nl_shader.h"
+#endif
 #include "private/nl_window.h"
 
 
@@ -19,5 +21,6 @@
 #include "private/web/nl_web_glue.h"
 #endif//__EMSCRIPTEN__
 
+#define CANNOT_EXIT_MAIN_LOOP (__EMSCRIPTEN__ || GEKKO)
 
 #endif //__NL_LIB_H__

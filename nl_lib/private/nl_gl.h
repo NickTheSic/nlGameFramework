@@ -10,8 +10,8 @@
 #elif defined (__linux__)
 #include "linux/nl_gl_linux.h"
 
-#elif 
-#error Incomplete opengl platform
+#else
+#warning Incomplete opengl platform
 #endif
 
 #ifdef __cplusplus

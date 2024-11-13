@@ -16,14 +16,12 @@ IF /I %1==win (
 call "build_scripts/build_win_aio.bat" ../../nl_lib/build_nl_lib.c ../../projects/sandbox/main.c ../../projects/%2/%2.c
 )
 
-@echo off
-
 IF /I %1==web (
 call "build_scripts/build_web" %2
 )
 
-IF /I %1==gc (
-    call "build_scripts/build_gc" %2
+IF /I %1==gcn (
+    call "build_scripts/build_gcn" %2
 )
 
 @echo on

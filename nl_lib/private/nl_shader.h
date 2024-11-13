@@ -10,6 +10,7 @@
 #define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
 #else
 #warning Double Check the platform being compiled!
+#define NL_SHADER_VERSION_HEADER //define it as nothing to compile
 #endif
 
 static const char* common_vert_shader_code =
