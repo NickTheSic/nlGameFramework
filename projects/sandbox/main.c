@@ -59,16 +59,15 @@ int main(int count, char** args)
     NL_UNUSED(count);NL_UNUSED(args);
 
     // Consistent seed for testing
-#ifndef GEKKO
     init_random_number_generator(80);
     //init_random_number_generator(time(NULL));
-    
-    
+
     if (!initialize_window(800,600, "Sandbox Mode"))
     {
         return -1;
     }
 
+#ifndef GEKKO
     if (init_audio_system() == 0)
     {
         return -1;
