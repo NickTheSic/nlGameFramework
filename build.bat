@@ -20,6 +20,10 @@ IF /I %1==web (
 call "build_scripts/build_web" %2
 )
 
+IF /I %1==exgcn (
+    call "build_scripts/build_gcn_example" %2
+)
+
 IF /I %1==gcn (
     call "build_scripts/build_gcn" %2
 )
