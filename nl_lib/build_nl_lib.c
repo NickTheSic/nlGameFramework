@@ -9,7 +9,10 @@
 #include "private/common/nl_camera.c"
 #include "private/common/nl_random.c"
 
+
 #if !defined(GEKKO)
+#include "private/common/nl_gamepad_null.c"
+
 #include "private/common/nl_renderer_gl_common.c"
 #include "private/common/nl_shader.c"
 #endif
@@ -40,8 +43,10 @@
 #include "private/linux/nl_gl_linux.c"
 #include "private/linux/nl_deltatime_linux.c"
 
-#elif defined(GEKKO)
+#elif defined(GCN_GEKKO)
+#include "private/gcn/nl_gamepad_gcn.c"
 #include "private/gcn/nl_window_gcn.c"
+
 
 #else
 #warning Incomplete Library for this platform

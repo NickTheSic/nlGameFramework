@@ -1,7 +1,8 @@
 #include "../nl_window.h"
 
-#include <ogcsys.h>
-#include <gccore.h>
+#include <ogc/consol.h>
+#include <ogc/system.h>
+#include <ogc/video.h>
 
 global_variable void *xfb = 0;
 global_variable GXRModeObj *rmode = NULL;

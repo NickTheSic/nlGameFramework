@@ -13,6 +13,7 @@ void run()
 {
     poll_events();
     update_input_frame_state();
+    udpate_gamepad();
     
     double dt = 0.0;
 #ifndef GEKKO
@@ -64,6 +65,13 @@ int main(int count, char** args)
 
     if (!initialize_window(800,600, "Sandbox Mode"))
     {
+        NL_LOG("Failed to initialize window");
+        return -1;
+    }
+
+    if (!init_gamepad_system())
+    {
+        NL_LOG("Failed to initialize gamepad system");
         return -1;
     }
 

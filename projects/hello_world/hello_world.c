@@ -2,28 +2,17 @@
 #include "private/nl_gl.h"
 
 #if defined GEKKO
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <malloc.h>
 #include <ogcsys.h>
-#include <gccore.h>
 
-void *Initialise();
 void app_specific_init(void)
 {
-    NL_LOG("Library Version");
-	PAD_Init();
+    NL_LOG("nl gamepad");
 }
 void app_specific_update(double dt)
 {
 	NL_UNUSED(dt);
-	
-	PAD_ScanPads();
-
-	int buttonsDown = PAD_ButtonsDown(0);
 		
-	if( buttonsDown & PAD_BUTTON_A ) 
+	if(is_button_pressed(0x0100)) // A button but hidden 
     {
 		NL_LOG("Button A pressed.");
 	}
