@@ -34,7 +34,7 @@ int initialize_window(int width, int height, const char* title)
 
 void poll_events()
 {
-    
+    VIDEO_WaitVSync();
 }
 
 int window_active()
