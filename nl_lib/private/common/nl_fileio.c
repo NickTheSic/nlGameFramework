@@ -165,7 +165,11 @@ internal_function void parse_vertices_indices(const file_contents *const content
 
 void load_mesh_from_file(const char* const file, mesh* const mesh)
 {
+#ifdef GEKKO
     NL_UNUSED(file); NL_UNUSED(mesh);
+    NL_UNIMPLEMENTED_FUNC;
+#endif
+
 #if !defined GEKKO
     NL_LOG("Loading Mesh %s", file);
 

@@ -54,10 +54,11 @@ void window_swap_buffers()
 
 v2i get_screen_size()
 {
-
+    NL_UNIMPLEMENTED_FUNC
+    return (v2i){0,0};
 }
 
 void set_window_title(const char* title)
 {
-
+    NL_UNUSED(title);
 }
