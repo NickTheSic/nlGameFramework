@@ -1,4 +1,5 @@
 #include "../nl_window.h"
+#include "nl_window_helpers_gcn.h"
 
 #include <ogc/consol.h>
 #include <ogc/system.h>
@@ -64,4 +65,14 @@ v2i get_screen_size()
 void set_window_title(const char* title)
 {
     NL_UNUSED(title);
+}
+
+GXRModeObj* const get_gxr_object(void)
+{
+    return screenmode;
+}
+
+void *const get_gcn_framebuffer(void)
+{
+    return framebuffer;
 }

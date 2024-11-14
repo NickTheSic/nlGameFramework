@@ -10,12 +10,12 @@ static void	*frameBuffer;
 static vu8	readyForCopy;
 #define	FIFO_SIZE (256*1024)
 
-s16	vertices[] ATTRIBUTE_ALIGN(32) = {
+short	vertices[] ATTRIBUTE_ALIGN(32) = {
 	0, 15, 0,
 	-15, -15, 0,
 	15,	-15, 0};
 
-u8 colors[]	ATTRIBUTE_ALIGN(32)	= {
+unsigned char colors[]	ATTRIBUTE_ALIGN(32)	= {
 	255, 0,	0, 255,		// red
 	0, 255,	0, 255,		// green
 	0, 0, 255, 255};	// blue
