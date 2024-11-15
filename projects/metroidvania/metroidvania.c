@@ -122,13 +122,6 @@ void app_specific_update(double dt)
         {
             local_persist int count;
             NL_LOG("Overlap! %d", ++count);
-
-            //float greater_x = (player.width - ((mouse_follow.pos.x) - (player.pos.x))) + mouse_follow_h_width;
-            //float greater_y = (player.width - ((mouse_follow.pos.y) - (player.pos.y))) + mouse_follow_h_width;
-            //float lesser_x  = (player.width - ((mouse_follow.pos.x) - (player.pos.x)));
-            //float lesser_y  = (player.width - ((mouse_follow.pos.y) - (player.pos.y)));
-            //mouse_follow.pos.y += greater_y;
-            //mouse_follow.pos.x += greater_x;
         }
     }
 }
