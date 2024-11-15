@@ -17,7 +17,7 @@ void player_update(double dt, game_object* const player, player_controller* cons
         }
         else
         {
-            player->vertical_speed -= GRAVITY_RAISE * dt;
+            player->vertical_speed -= GRAVITY_RAISE * dt * 1.5f;
         }
     }
 
