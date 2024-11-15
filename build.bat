@@ -28,6 +28,10 @@ IF /I %1==gcn (
     call "build_scripts/build_gcn" %2
 )
 
+IF /I %1==nds (
+    call "build_scripts/build_nds" %2
+)
+
 IF /I %1==wii (
     call "build_scripts/build_wii" %2
 )
