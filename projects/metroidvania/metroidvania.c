@@ -15,6 +15,8 @@ global_variable game_object player = {0};
 
 global_variable game_object mouse_follow = {0};
 
+global_variable mesh debug_points[4] = {0};
+
 global_variable float camera_pos_x = {0};
 global_variable float camera_pos_y = {0};
 
@@ -71,6 +73,11 @@ void app_specific_init(void)
     player_init(&player);
 
     generate_square_mesh(&mouse_follow.mesh, PLAYER_HALF_WIDTH, (colourf){0.5f,0.1f,1.0f,1.0f});
+    
+    generate_square_mesh(&debug_points[0], PLAYER_QUARTER_WIDTH, (colourf){1.f,1.f,1.0f,1.0f});
+    generate_square_mesh(&debug_points[1], PLAYER_QUARTER_WIDTH, (colourf){1.f,0.f,0.0f,1.0f});
+    generate_square_mesh(&debug_points[2], PLAYER_QUARTER_WIDTH, (colourf){0.f,1.f,0.0f,1.0f});
+    generate_square_mesh(&debug_points[3], PLAYER_QUARTER_WIDTH, (colourf){0.f,0.f,1.0f,1.0f});
 
     shader_program = create_shader_program(vertex_shader_code, fragment_shader_code);
     use_shader_program(shader_program);
@@ -93,24 +100,36 @@ void app_specific_update(double dt)
 
     camera_controls(dt);
 
-    aabb player_box = {0};
-    player_box.min.x = player.pos.x;
-    player_box.min.y = player.pos.y;
-    player_box.max.x = player.pos.x + player.width;
-    player_box.max.y = player.pos.y + player.width;
-
     const v2i mouse_posi = get_mouse_position_from_system();
     mouse_follow.pos = (v2f){(float)mouse_posi.x, (float)mouse_posi.y};
     project_mouse_to_camera(&main_cam, &mouse_follow.pos);
 
-    aabb mouse_box  = {0};
-    mouse_box.min   = mouse_follow.pos;
-    mouse_box.max.x = mouse_follow.pos.x + mouse_follow.width;
-    mouse_box.max.y = mouse_follow.pos.y + mouse_follow.width;
-
-    if (box_in_box_with_size_pos(player_box, mouse_box))
+    // Overlap Code
     {
-        NL_LOG("Overlap!");
+        aabb player_box = {0};
+        player_box.min.x = player.pos.x;
+        player_box.min.y = player.pos.y;
+        player_box.max.x = player.pos.x + player.width;
+        player_box.max.y = player.pos.y + player.width;
+
+        aabb mouse_box  = {0};
+        mouse_box.min.x = mouse_follow.pos.x - PLAYER_QUARTER_WIDTH;
+        mouse_box.min.y = mouse_follow.pos.y - PLAYER_QUARTER_WIDTH;
+        mouse_box.max.x = mouse_follow.pos.x + PLAYER_QUARTER_WIDTH;
+        mouse_box.max.y = mouse_follow.pos.y + PLAYER_QUARTER_WIDTH;
+
+        if (aabb_box_overlap(player_box, mouse_box))
+        {
+            local_persist int count;
+            NL_LOG("Overlap! %d", ++count);
+
+            //float greater_x = (player.width - ((mouse_follow.pos.x) - (player.pos.x))) + mouse_follow_h_width;
+            //float greater_y = (player.width - ((mouse_follow.pos.y) - (player.pos.y))) + mouse_follow_h_width;
+            //float lesser_x  = (player.width - ((mouse_follow.pos.x) - (player.pos.x)));
+            //float lesser_y  = (player.width - ((mouse_follow.pos.y) - (player.pos.y)));
+            //mouse_follow.pos.y += greater_y;
+            //mouse_follow.pos.x += greater_x;
+        }
     }
 }
 
@@ -125,10 +144,38 @@ void app_specific_render(void)
         render_single_mesh(&player.mesh);
     }
 
-    create_identity_matrix(&model);
     {
-        model.m41 += (mouse_follow.pos.x-PLAYER_QUARTER_WIDTH);
-        model.m42 += (mouse_follow.pos.y-PLAYER_QUARTER_WIDTH);
+        model.m41 = player.pos.x;
+        model.m42 = player.pos.y;
+
+        glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
+        render_single_mesh(&debug_points[0]);
+    }
+    {
+        model.m41 = player.pos.x + player.width - PLAYER_QUARTER_WIDTH;
+        model.m42 = player.pos.y;
+
+        glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
+        render_single_mesh(&debug_points[1]);
+    }
+    {
+        model.m41 = player.pos.x + player.width - PLAYER_QUARTER_WIDTH;
+        model.m42 = player.pos.y + player.width - PLAYER_QUARTER_WIDTH;
+
+        glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
+        render_single_mesh(&debug_points[2]);
+    }
+    {
+        model.m41 = player.pos.x;
+        model.m42 = player.pos.y + player.width - PLAYER_QUARTER_WIDTH;
+
+        glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
+        render_single_mesh(&debug_points[3]);
+    }
+
+    {
+        model.m41 = (mouse_follow.pos.x-PLAYER_QUARTER_WIDTH);
+        model.m42 = (mouse_follow.pos.y-PLAYER_QUARTER_WIDTH);
 
         glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
         render_single_mesh(&mouse_follow.mesh);
@@ -139,4 +186,9 @@ void app_specific_cleanup(void)
 {
     free_mesh(&player.mesh);
     free_mesh(&mouse_follow.mesh);
+
+    for (int i = 0; i < 4; ++i)
+    {
+        free_mesh(&debug_points[i]);
+    }
 }
