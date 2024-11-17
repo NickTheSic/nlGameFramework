@@ -89,10 +89,10 @@ enum nl_key
 
     key_alt =                  0x0056, /* Alt */
 
+    key_up =                   0xE048,
+    key_left =                 0xE04B,
     key_right =                0xE04D, 
-    key_left,
-    key_up,
-    key_down,
+    key_down =                 0xE050,
 
     NL_KEY_COUNT
 };
