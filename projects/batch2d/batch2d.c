@@ -47,11 +47,13 @@ void app_specific_render()
 {
     use_shader_program(sp);
     begin_render_batch(&batch);
-    add_to_render_batch(&batch, (v2f){0.5f,0.3f});
-    add_to_render_batch(&batch, (v2f){0.1f,-0.2f});
+    add_to_render_batch(&batch, (v2f){200.f, 30.f});
+    add_to_render_batch(&batch, (v2f){600.f, 120.f});
 
     const v2i mouse_posi = get_mouse_position_from_system();
-    const v2f mouse_pos = (v2f){(float)(mouse_posi.x/800.f) - 0.5f, (float)(mouse_posi.y/600.f) - 0.5f};
+    v2f mouse_pos = (v2f){(float)mouse_posi.x, (float)mouse_posi.y};
+    project_mouse_to_camera(&main_cam, &mouse_pos);
+
     add_to_render_batch(&batch, mouse_pos);
 
     end_render_batch(&batch);
