@@ -43,4 +43,8 @@ void free_shader_program(unsigned int shader_program);
 
 unsigned int create_common_shader_program(void);
 
+unsigned int get_uniform_loc(unsigned int program, const char* name);
+void set_uniform_mat4x4f(unsigned int loc, const float* mat);
+
+
 #endif //__NL_SHADER_H__

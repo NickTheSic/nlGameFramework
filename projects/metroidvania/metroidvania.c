@@ -63,8 +63,8 @@ void camera_controls(float dt)
     if (bIsDirty > 0)
     {
         create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){camera_pos_x,camera_pos_y,0.0f});
-        u_view_mat = glGetUniformLocation(shader_program, "uViewMat");
-        glUniformMatrix4fv(u_view_mat, 1, GL_FALSE, &main_cam.view_matrix.m11);
+        u_view_mat = get_uniform_loc(shader_program, "uViewMat");
+        set_uniform_mat4x4f(u_view_mat, &main_cam.view_matrix.m11);
     }
 }
 
@@ -82,7 +82,7 @@ void app_specific_init(void)
     shader_program = create_shader_program(vertex_shader_code, fragment_shader_code);
     use_shader_program(shader_program);
 
-    u_model_loc = glGetUniformLocation(shader_program, "uModelMat");
+    u_model_loc = get_uniform_loc(shader_program, "uModelMat");
 
     pfn_window_size_callback = &winsizecbk;
     v2i screen_size = get_screen_size();
@@ -90,8 +90,8 @@ void app_specific_init(void)
 
     //create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const v3f translation);
     create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,0.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,0.0f});
-    u_view_mat = glGetUniformLocation(shader_program, "uViewMat");
-    glUniformMatrix4fv(u_view_mat, 1, GL_FALSE, &main_cam.view_matrix.m11);
+    u_view_mat = get_uniform_loc(shader_program, "uViewMat");
+    set_uniform_mat4x4f(u_view_mat, &main_cam.view_matrix.m11);
 }
 
 void app_specific_update(double dt)
@@ -133,7 +133,7 @@ void app_specific_render(void)
     {
         model.m41 = player.pos.x;
         model.m42 = player.pos.y;
-        glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
+        set_uniform_mat4x4f(u_model_loc, &model.m11);
         render_single_mesh(&player.mesh);
     }
 
@@ -141,28 +141,28 @@ void app_specific_render(void)
         model.m41 = player.pos.x;
         model.m42 = player.pos.y;
 
-        glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
+        set_uniform_mat4x4f(u_model_loc, &model.m11);
         render_single_mesh(&debug_points[0]);
     }
     {
         model.m41 = player.pos.x + player.width - PLAYER_QUARTER_WIDTH;
         model.m42 = player.pos.y;
 
-        glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
+        set_uniform_mat4x4f(u_model_loc, &model.m11);
         render_single_mesh(&debug_points[1]);
     }
     {
         model.m41 = player.pos.x + player.width - PLAYER_QUARTER_WIDTH;
         model.m42 = player.pos.y + player.width - PLAYER_QUARTER_WIDTH;
 
-        glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
+        set_uniform_mat4x4f(u_model_loc, &model.m11);
         render_single_mesh(&debug_points[2]);
     }
     {
         model.m41 = player.pos.x;
         model.m42 = player.pos.y + player.width - PLAYER_QUARTER_WIDTH;
 
-        glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
+        set_uniform_mat4x4f(u_model_loc, &model.m11);
         render_single_mesh(&debug_points[3]);
     }
 
@@ -170,7 +170,7 @@ void app_specific_render(void)
         model.m41 = (mouse_follow.pos.x-PLAYER_QUARTER_WIDTH);
         model.m42 = (mouse_follow.pos.y-PLAYER_QUARTER_WIDTH);
 
-        glUniformMatrix4fv(u_model_loc, 1, GL_FALSE, &model.m11);
+        set_uniform_mat4x4f(u_model_loc, &model.m11);
         render_single_mesh(&mouse_follow.mesh);
     }
 }

@@ -64,3 +64,14 @@ unsigned int create_common_shader_program()
 {
     return create_shader_program(common_vert_shader_code, common_fragment_shader_code);
 }
+
+
+unsigned int get_uniform_loc(unsigned int program, const char* name)
+{
+    return glGetUniformLocation(program, name);
+}
+
+void set_uniform_mat4x4f(unsigned int loc, const float* mat)
+{
+    glUniformMatrix4fv(loc, 1, GL_FALSE, mat);
+}

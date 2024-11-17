@@ -5,10 +5,12 @@ static const char* batch_vert_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"
 "layout (location = 1) in vec2 aCoords;                \n"
+"uniform mat4 uViewMat;                                \n"
+"uniform mat4 uProjMat;                                \n"
 "out vec2 oCoords;                                     \n"
 "void main() {                                         \n"
 "   vec4 viewPos = vec4(aPos, 1.0);                    \n"
-"   gl_Position = viewPos;                             \n"
+"   gl_Position = uProjMat * uViewMat * viewPos;       \n"
 "   oCoords = aCoords;                                 \n"
 "}                                                     \0";
 

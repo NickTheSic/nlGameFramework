@@ -6,6 +6,11 @@ global_variable unsigned int sp    = {0};
 global_variable sprite_batch batch = {0};
 global_variable unsigned int img   = {0};
 
+global_variable unsigned int loc_view_mat = {0};
+global_variable unsigned int loc_proc_mat = {0};
+
+global_variable camera main_cam = {0};
+
 void app_specific_init(void)
 {
     sp = create_shader_program(batch_vert_shader_code, sprite_frag_shader_code);
