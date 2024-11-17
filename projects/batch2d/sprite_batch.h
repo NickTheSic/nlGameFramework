@@ -20,7 +20,8 @@ NL_SHADER_VERSION_HEADER
 "in vec2 TexCoords;                      \n"
 "uniform sampler2D text;                 \n"
 "void main(){                            \n"
-"FragColor = texture(text, TexCoords);   \n"
+"FragColor = vec4(1.0, 0.0, 0.0, 1.0);   \n"
+//"FragColor = texture(text, TexCoords);   \n"
 "}                                       \0";
 
 typedef struct sprite_batch_vertex_data sprite_batch_vertex_data;

@@ -20,6 +20,7 @@ int get_pressed_buttons(int controller)
 
 int is_button_pressed(int button)
 {
+    NL_UNUSED(button);
     NL_UNIMPLEMENTED_FUNC
     return 0;
 }

@@ -18,6 +18,7 @@ call "build_scripts/build_win_aio.bat" ../../nl_lib/build_nl_lib.c ../../project
 
 IF /I %1==web (
 call "build_scripts/build_web" %2
+@echo off
 )
 
 IF /I %1==exgcn (

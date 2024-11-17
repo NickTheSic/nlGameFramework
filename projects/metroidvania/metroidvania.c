@@ -1,5 +1,4 @@
 #include "nl_lib.h"
-#include "private/nl_gl.h"
 
 //
 #include "metroidvania.h"
@@ -30,8 +29,8 @@ camera main_cam = {0};
 internal_function void winsizecbk(int width, int height)
 {
     create_orthographic_projection(&main_cam.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
-    unsigned int projMat = glGetUniformLocation(shader_program, "uProjMat");
-    glUniformMatrix4fv(projMat, 1, GL_FALSE, &main_cam.proj_matrix.m11);
+    unsigned int projMat = get_uniform_loc(shader_program, "uProjMat");
+    set_uniform_mat4x4f(projMat, &main_cam.proj_matrix.m11);
 }
 
 void camera_controls(float dt)
