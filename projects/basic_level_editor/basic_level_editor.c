@@ -24,7 +24,6 @@ internal_function void winsizecbk(int width, int height)
     set_uniform_mat4x4f(loc_proj_mat, &main_cam.proj_matrix.m11);
 }
 
-
 void camera_controls(float dt)
 {
     char bIsDirty = 0;
