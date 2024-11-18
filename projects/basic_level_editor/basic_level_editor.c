@@ -91,6 +91,13 @@ void app_specific_update(double dt)
     project_mouse_to_camera(&main_cam, &mouse_pos);
 
     grid_coords = world_to_grid_coords(&grid_, mouse_pos);
+
+    if (mouse_button_was_pressed(NL_MOUSE_BUTTON_LEFT))
+    {
+        GRID_DATA_TYPE value = get_value_at_coords(&grid_, grid_coords.x, grid_coords.y);
+        value = ++value%4;
+        set_value_at_coord(&grid_, grid_coords.x, grid_coords.y, value);
+    }
 }
 
 void app_specific_render()
