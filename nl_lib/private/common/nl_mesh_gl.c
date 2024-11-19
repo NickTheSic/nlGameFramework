@@ -55,6 +55,9 @@ void free_mesh(mesh* const mesh)
     memory_free(mesh->indices);
 
     // gl free buffers here
+    glDeleteBuffers(1, &mesh->VAO);
+    glDeleteBuffers(1, &mesh->VBO);
+    glDeleteBuffers(1, &mesh->EBO);
 }
 
 void generate_rectangle_mesh(mesh* const mesh, float width, float height, colourf col)
@@ -75,5 +78,53 @@ void generate_rectangle_mesh(mesh* const mesh, float width, float height, colour
 void generate_square_mesh(mesh* const mesh, float width, colourf col)
 {
     generate_rectangle_mesh(mesh, width, width, col);
+}
+
+void generate_circle_mesh(mesh* const mesh, float radius, int segments)
+{
+    colourf col = COLOURF_RED;
+    unsigned int vertice_count = segments + 1;
+    unsigned int indice_count = segments * 3 - 3;
+
+    vertex_data* data = memory_allocate(sizeof(vertex_data) * vertice_count);
+    unsigned int* indices = memory_allocate(sizeof(unsigned int) * indice_count);
+
+    if (data == 0 || indices == 0)
+    {
+        NL_LOG("Unable to allocate memory for a circle mesh. Mesh not being created");
+        return;
+    }
+
+    data[0].pos = (v3f){0.0f,0.0f,0.0f};
+    data[0].color = col;
+    float angle_diff = 2 * 3.1415f / (float)segments;
+    for (int i = 0; i < vertice_count-1; ++i)
+    {
+        const float x = cosf( angle_diff * i ) * radius;
+        const float y = sinf( angle_diff * i ) * radius;
+        const int idx = i+1;
+        data[idx].pos.x = x;
+        data[idx].pos.y = y;
+        data[idx].pos.z = 0.0f;
+        data[idx].color = col;
+    }
+    
+    indices[0] = 0;
+    indices[1] = 1;
+    indices[2] = 2;
+    unsigned int start = 3;
+    for (int i = 3; i < indice_count; i+=3)
+    {
+        indices[i] = 0;
+        indices[i+1] = start-1;
+        indices[i+2] = start;
+        ++start;
+    }
+    indices[indice_count-1] = 1;
+
+    generate_mesh_using_vertices_and_indices(mesh, data, segments, indices, indice_count);
+
+    memory_free(indices);
+    memory_free(data);
 }
 

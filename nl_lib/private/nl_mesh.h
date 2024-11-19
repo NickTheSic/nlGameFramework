@@ -30,6 +30,7 @@ void move_mesh(mesh* const mesh, const v2f difference);
 
 void generate_rectangle_mesh(mesh* const mesh, float width, float height, colourf col);
 void generate_square_mesh(mesh* const mesh, float width, colourf col);
+void generate_circle_mesh(mesh* const mesh, float radius, int segments);
 
 void free_mesh(mesh* const mesh);
 
