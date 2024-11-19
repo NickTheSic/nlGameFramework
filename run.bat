@@ -11,4 +11,8 @@ IF %1==web (
     emrun _build\web\index.html
 )
 
+IF %1==gcn (
+    D:\Downloads\Dolphin-x64\Dolphin.exe _build\gcn\game.dol
+)
+
 @echo on

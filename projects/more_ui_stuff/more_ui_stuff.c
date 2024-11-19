@@ -1,7 +1,6 @@
 #include "nl_lib.h"
 #include "private/nl_gl.h"
 
-
 #include <string.h> // memcpy
 
 #define SQUARE_HALF_SIZE 100.0f

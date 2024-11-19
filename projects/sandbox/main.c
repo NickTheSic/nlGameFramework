@@ -13,9 +13,11 @@ void run()
 {
     poll_events();
     update_input_frame_state();
+    udpate_gamepad();
     
-    double dt = get_frame_delta_time();
-
+    double dt = 0.0;
+#ifndef GEKKO
+    dt = get_frame_delta_time();
     // debug FPS
     {
         static float TimedLoop;
@@ -35,14 +37,17 @@ void run()
     	}
     	frameCount++;
     }
+#endif
 
     app_specific_update(dt);
 
+#ifndef GEKKO
     begin_render_frame();
     app_specific_render();
     end_render_frame();
+#endif
 
-#ifndef __EMSCRIPTEN__
+#if !defined CANNOT_EXIT_MAIN_LOOP
     if (key_is_held(key_control) && key_was_pressed(key_c))
     {
         window_request_close();
@@ -52,17 +57,25 @@ void run()
 
 int main(int count, char** args)
 {
-    (void)count;(void)args;
+    NL_UNUSED(count);NL_UNUSED(args);
 
     // Consistent seed for testing
     init_random_number_generator(80);
     //init_random_number_generator(time(NULL));
-    
+
     if (!initialize_window(800,600, "Sandbox Mode"))
     {
+        NL_LOG("Failed to initialize window");
         return -1;
     }
 
+    if (!init_gamepad_system())
+    {
+        NL_LOG("Failed to initialize gamepad system");
+        return -1;
+    }
+
+#ifndef GEKKO
     if (init_audio_system() == 0)
     {
         return -1;
@@ -74,20 +87,23 @@ int main(int count, char** args)
     }
     set_background_colour_4f(0.5f,0.5f,0.85f,1.0f);
     init_delta_time();
+#endif
 
     app_specific_init();
 
-#ifdef _WIN32
+#if defined(__EMSCRIPTEN__)
+    emscripten_set_main_loop(run, 0, 1);
+#else
     while (window_active())
     {
         run();   
     }
-#elif defined(__EMSCRIPTEN__)
-    emscripten_set_main_loop(run, 0, 1);
 #endif
 
     app_specific_cleanup();
+#ifndef GEKKO
     cleanup_audio_system();
+#endif
     basic_memory_leak_check();
 
     return 0;

@@ -13,4 +13,3 @@ cl %flags% ../../nl_lib/build_nl_lib.c && lib.exe /OUT:nl_lib.lib build_nl_lib.o
 
 @echo off
 popd
-echo on

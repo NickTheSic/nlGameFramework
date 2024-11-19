@@ -10,6 +10,7 @@
 #define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
 #else
 #warning Double Check the platform being compiled!
+#define NL_SHADER_VERSION_HEADER //define it as nothing to compile
 #endif
 
 static const char* common_vert_shader_code =
@@ -41,5 +42,9 @@ void use_shader_program(unsigned int shader_program);
 void free_shader_program(unsigned int shader_program);
 
 unsigned int create_common_shader_program(void);
+
+unsigned int get_uniform_loc(unsigned int program, const char* name);
+void set_uniform_mat4x4f(unsigned int loc, const float* mat);
+
 
 #endif //__NL_SHADER_H__

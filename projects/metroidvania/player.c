@@ -5,6 +5,7 @@ void player_init(game_object* const player)
     player->width = PLAYER_WIDTH;
     player->pos = (v2f){100.0f,100.0f};
     generate_square_mesh(&player->mesh, player->width, (colourf){1.0f,0.5f,0.2f,1.0f});
+    //generate_circle_mesh(&player->mesh, player->width, 16);
 }
 
 void player_update(double dt, game_object* const player, player_controller* const controller)
@@ -17,7 +18,7 @@ void player_update(double dt, game_object* const player, player_controller* cons
         }
         else
         {
-            player->vertical_speed -= GRAVITY_RAISE * dt;
+            player->vertical_speed -= GRAVITY_RAISE * dt * 1.5f;
         }
     }
 

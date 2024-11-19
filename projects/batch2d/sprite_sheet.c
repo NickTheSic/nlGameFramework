@@ -68,5 +68,5 @@ unsigned int load_image(const char* const filename)
 
 sprite* const get_sprite(unsigned int sprite)
 {
-    return &sheet.sprites[0];
+    return &sheet.sprites[sprite];
 }

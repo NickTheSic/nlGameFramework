@@ -70,16 +70,24 @@ void add_to_render_batch(sprite_batch* const batch, v2f pos)
 
     const unsigned int current_idx = batch->current_count * 4;
 
-    const float SQUARE_HALF_SIZE = 0.1f;
+    const float SQUARE_HALF_SIZE = 50.f;
     const sprite* const sp = get_sprite(0);
+    sprite_batch_vertex_data square_verts[4];
 
-    const sprite_batch_vertex_data square_verts[] =
+    if (sp != 0)
     {
-        {{pos.x + -SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->bl_coord.x, sp->bl_coord.y}},
-        {{pos.x +  SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->tr_coord.x, sp->bl_coord.y}},
-        {{pos.x +  SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->tr_coord.x, sp->tr_coord.y}},
-        {{pos.x + -SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->bl_coord.x, sp->tr_coord.y}}
-    };
+        square_verts[0] = (sprite_batch_vertex_data){{pos.x + -SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->bl_coord.x, sp->bl_coord.y}};
+        square_verts[1] = (sprite_batch_vertex_data){{pos.x +  SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->tr_coord.x, sp->bl_coord.y}};
+        square_verts[2] = (sprite_batch_vertex_data){{pos.x +  SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->tr_coord.x, sp->tr_coord.y}};
+        square_verts[3] = (sprite_batch_vertex_data){{pos.x + -SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->bl_coord.x, sp->tr_coord.y}};
+    }
+    else
+    {
+        square_verts[0] = (sprite_batch_vertex_data){{pos.x + -SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, (v2f){0.f,0.f}};
+        square_verts[1] = (sprite_batch_vertex_data){{pos.x +  SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, (v2f){0.f,1.f}};
+        square_verts[2] = (sprite_batch_vertex_data){{pos.x +  SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, (v2f){1.f,1.f}};
+        square_verts[3] = (sprite_batch_vertex_data){{pos.x + -SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, (v2f){1.f,0.f}};
+    }
 
     sprite_batch_vertex_data* const dest = &batch->vertices[current_idx];
     memcpy(dest, &square_verts, sizeof(sprite_batch_vertex_data)*4);
