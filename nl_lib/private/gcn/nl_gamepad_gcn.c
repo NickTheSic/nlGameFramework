@@ -1,7 +1,7 @@
 #include "../nl_gamepad.h"
 #include <ogc/pad.h>
 
-global_variable int buttons_down_this_frame = 0;
+global_variable int buttons_down_this_frame[MAX_PLAYERS] = 0;
 
 int init_gamepad_system(void)
 {
@@ -12,8 +12,11 @@ int init_gamepad_system(void)
 void udpate_gamepad(void)
 {
     PAD_ScanPads();
-    // TODO: Do stuff involving was button pressed this frame or up this frame
-    buttons_down_this_frame = PAD_ButtonsDown(0);
+    
+    for (unsigned char i = 0; i < MAX_PLAYERS; ++i)
+    {
+        buttons_down_this_frame = PAD_ButtonsDown(i);
+    }
 }
 
 int get_pressed_buttons(int controller)
@@ -21,7 +24,7 @@ int get_pressed_buttons(int controller)
     return PAD_ButtonsDown(controller);
 }
 
-int is_button_pressed(int button)
+int is_button_pressed(unsigned char controller_index, int button)
 {
-    return buttons_down_this_frame & button;
+    return buttons_down_this_frame[controller_index] & button;
 }

@@ -9,25 +9,31 @@ struct win_gamepad
     float left_x_axis, left_y_axis;
     float right_x_axis, right_y_axis;
 
-    unsigned short dpad_up        : 1;
-    unsigned short dpad_down      : 1;
-    unsigned short dpad_left      : 1;
-    unsigned short dpad_right     : 1;
-    unsigned short start          : 1;
-    unsigned short select         : 1;
-    unsigned short left_stick     : 1;
-    unsigned short right_stick    : 1; 
-    unsigned short left_shoulder  : 1;
-    unsigned short right_shoulder : 1;
-    unsigned short a              : 1;
-    unsigned short b              : 1;
-    unsigned short x              : 1;
-    unsigned short y              : 1;
-
-    unsigned short pad : 2; //explicit padding
+    union
+    {
+        struct 
+        {
+            unsigned short dpad_up        : 1;
+            unsigned short dpad_down      : 1;
+            unsigned short dpad_left      : 1;
+            unsigned short dpad_right     : 1;
+            unsigned short start          : 1;
+            unsigned short select         : 1;
+            unsigned short left_stick     : 1;
+            unsigned short right_stick    : 1; 
+            unsigned short left_shoulder  : 1;
+            unsigned short right_shoulder : 1;
+            unsigned short a              : 1;
+            unsigned short b              : 1;
+            unsigned short x              : 1;
+            unsigned short y              : 1;
+            unsigned short pad : 2; //explicit padding
+        };
+        unsigned short buttons;
+    };
 };
 
-global_variable win_gamepad controllers[4] = {0}; 
+global_variable win_gamepad controllers[MAX_PLAYERS] = {0}; 
 
 #define X_INPUT_GET_STATE(name) DWORD name(DWORD ControllerNumber, XINPUT_STATE* State)
 typedef X_INPUT_GET_STATE(x_input_get_state);
@@ -87,7 +93,7 @@ void cleanup_gamepad_system(void)
 
 void udpate_gamepad(void)
 {
-    for (int i=0; i<4; i++)
+    for (int i=0; i<MAX_PLAYERS; i++)
     {
         XINPUT_STATE state = {0};
         if (XInputGetState(i, &state) == 0)
@@ -153,18 +159,10 @@ void udpate_gamepad(void)
 
 int get_pressed_buttons(int controller_index)
 {
-    XINPUT_STATE state = {0};
-    if (XInputGetState(controller_index, &state) == 0)
-    {   
-        XINPUT_GAMEPAD* pad = &state.Gamepad;
-        return (int)pad->wButtons;
-    }
-
-    return 0;
+    return controllers[controller_index].buttons;
 }
 
-int is_button_pressed(int button)
+int is_button_pressed(unsigned char controller_index, int button)
 {
-    NL_UNIMPLEMENTED_FUNC;
-    return 0;
+    return get_pressed_buttons(controller_index) & button;
 }
