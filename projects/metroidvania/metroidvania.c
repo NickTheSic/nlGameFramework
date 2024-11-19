@@ -16,7 +16,8 @@ void app_specific_init(void)
 {
     player_init(&player);
 
-    generate_circle_mesh(&mouse_follow.mesh, PLAYER_HALF_WIDTH, 10);//(colourf){0.5f,0.1f,1.0f,1.0f});
+    //generate_square_mesh(&mouse_follow.mesh, PLAYER_HALF_WIDTH, (colourf){0.5f,0.1f,1.0f,1.0f});
+    generate_circle_mesh(&mouse_follow.mesh, PLAYER_HALF_WIDTH, 10);
     
     generate_square_mesh(&debug_points[0], PLAYER_QUARTER_WIDTH, (colourf){1.f,1.f,1.0f,1.0f});
     generate_square_mesh(&debug_points[1], PLAYER_QUARTER_WIDTH, (colourf){1.f,0.f,0.0f,1.0f});
@@ -110,8 +111,10 @@ void app_specific_render(void)
     }
 
     {
-        model.m41 = (mouse_follow.pos.x-PLAYER_QUARTER_WIDTH);
-        model.m42 = (mouse_follow.pos.y-PLAYER_QUARTER_WIDTH);
+       // model.m41 = (mouse_follow.pos.x-PLAYER_QUARTER_WIDTH);
+       // model.m42 = (mouse_follow.pos.y-PLAYER_QUARTER_WIDTH);
+        model.m41 = (mouse_follow.pos.x);
+        model.m42 = (mouse_follow.pos.y);
 
         set_uniform_mat4x4f(u_model_loc, &model.m11);
         render_single_mesh(&mouse_follow.mesh);
