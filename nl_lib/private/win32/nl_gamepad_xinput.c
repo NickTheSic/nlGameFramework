@@ -164,5 +164,5 @@ int get_pressed_buttons(int controller_index)
 
 int is_button_pressed(unsigned char controller_index, int button)
 {
-    return get_pressed_buttons(controller_index) & button;
+    return controllers[controller_index].buttons & button;
 }
