@@ -7,7 +7,6 @@
 #include "private/common/nl_audio_openal.c"
 #include "private/common/nl_camera.c"
 #include "private/common/nl_fileio.c"
-#include "private/common/nl_gamepad_null.c"
 #include "private/common/nl_input.c"
 #include "private/common/nl_math.c"
 #include "private/common/nl_memory.c"
@@ -20,6 +19,7 @@
 #include "third_party/stb_image.c"
 
 #include "private/win32/nl_deltatime_win32.c"
+#include "private/win32/nl_gamepad_xinput.c"
 #include "private/win32/nl_gl_win32.c"
 #include "private/win32/nl_renderer_gl_win32.c"
 #include "private/win32/nl_window_win32.c"
