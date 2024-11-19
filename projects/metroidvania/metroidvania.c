@@ -2,69 +2,14 @@
 
 //
 #include "metroidvania.h"
-#include "player.h"
+#include "camera_control.h"
 #include "physics.h"
-
-
-#include "player.c"
-
-
-global_variable player_controller controller = {key_a, key_d, key_space};
-global_variable game_object player = {0};
-
-global_variable game_object mouse_follow = {0};
-
-global_variable mesh debug_points[4] = {0};
-
-global_variable float camera_pos_x = {0};
-global_variable float camera_pos_y = {0};
-
-
-unsigned int shader_program = 0;
-unsigned int u_model_loc = 0;
-unsigned int u_view_mat = 0;
-camera main_cam = {0};
-
 
 internal_function void winsizecbk(int width, int height)
 {
     create_orthographic_projection(&main_cam.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
     unsigned int projMat = get_uniform_loc(shader_program, "uProjMat");
     set_uniform_mat4x4f(projMat, &main_cam.proj_matrix.m11);
-}
-
-void camera_controls(float dt)
-{
-    char bIsDirty = 0;
-
-    if (key_is_held(key_right))
-    {
-        camera_pos_x -= GRAVITY_FALL * dt;
-        bIsDirty = 1;
-    }
-    else if (key_is_held(key_left))
-    {
-        camera_pos_x += GRAVITY_FALL * dt;
-        bIsDirty = 1;
-    }
-
-    if (key_is_held(key_up))
-    {
-        camera_pos_y -= GRAVITY_FALL * dt;
-        bIsDirty = 1;
-    }
-    else if (key_is_held(key_down))
-    {
-        camera_pos_y += GRAVITY_FALL * dt;
-        bIsDirty = 1;
-    }
-
-    if (bIsDirty > 0)
-    {
-        create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){camera_pos_x,camera_pos_y,0.0f});
-        u_view_mat = get_uniform_loc(shader_program, "uViewMat");
-        set_uniform_mat4x4f(u_view_mat, &main_cam.view_matrix.m11);
-    }
 }
 
 void app_specific_init(void)
@@ -87,7 +32,6 @@ void app_specific_init(void)
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
 
-    //create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const v3f translation);
     create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,0.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,0.0f});
     u_view_mat = get_uniform_loc(shader_program, "uViewMat");
     set_uniform_mat4x4f(u_view_mat, &main_cam.view_matrix.m11);
@@ -97,7 +41,7 @@ void app_specific_update(double dt)
 {
     player_update(dt, &player, &controller);
 
-    camera_controls(dt);
+    camera_controls(dt, &main_cam);
 
     const v2i mouse_posi = get_mouse_position_from_system();
     mouse_follow.pos = (v2f){(float)mouse_posi.x, (float)mouse_posi.y};
@@ -184,3 +128,6 @@ void app_specific_cleanup(void)
         free_mesh(&debug_points[i]);
     }
 }
+
+#include "camera_control.c"
+#include "player.c"

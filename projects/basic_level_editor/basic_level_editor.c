@@ -104,7 +104,7 @@ void app_specific_render()
     use_shader_program(sp);
     begin_render_batch(&batch);
 
-    colour COLOURS[] =
+    const colour COLOURS[] =
     {   
         COLOUR_RED, COLOUR_GREEN, COLOUR_BLUE, COLOUR_WHITE
     };
