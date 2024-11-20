@@ -157,7 +157,7 @@ void udpate_gamepad(void)
     }
 }
 
-int get_pressed_buttons(int controller_index)
+int get_pressed_buttons(unsigned char controller_index)
 {
     return controllers[controller_index].buttons;
 }
