@@ -1,8 +1,9 @@
 #include "../nl_audio.h"
+#include "../nl_debug.h"
 #include <pspaudiolib.h>
 #include <pspaudio.h>
 
-void audioCallback(void* buf, unsigned int length, void *userdata) 
+internal_function void channel_bgm(void* buf, unsigned int length, void *userdata) 
 {
 
 }
@@ -10,7 +11,7 @@ void audioCallback(void* buf, unsigned int length, void *userdata)
 int init_audio_system(void)
 {
     pspAudioInit();
-    pspAudioSetChannelCallback(0, audioCallback, NULL);
+    pspAudioSetChannelCallback(0, channel_bgm, NULL);
 }
 
 void cleanup_audio_system(void)

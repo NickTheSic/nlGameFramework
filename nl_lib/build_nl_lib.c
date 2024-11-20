@@ -105,6 +105,7 @@
 #include "private/null/nl_shader_null.c"
 #include "private/null/nl_vertex_attrib_null.c"
 
+#include "private/psp/nl_audio_psp.c"
 #include "private/psp/nl_deltatime_psp.c"
 #include "private/psp/nl_gamepad_psp.c"
 #include "private/psp/nl_renderer_psp.c"
