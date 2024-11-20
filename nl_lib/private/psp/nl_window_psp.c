@@ -4,6 +4,10 @@
 #include <pspdebug.h>
 #include <pspkernel.h>
 
+// Unused... 
+// Guess I should have set function that does nothing so I don't have extern variables
+PFNWINDOWSIZECALLBACK pfn_window_size_callback;
+
 int running = {1};
 
 internal_function int exit_callback(int arg1, int arg2, void *common) 
