@@ -19,3 +19,8 @@ if [ "$1" == "tux" ]
 then
     ./build_scripts/build_tux.sh $2
 fi
+
+if [ "$1" == "psp" ]
+then 
+    ./build_scripts/build_psp.sh $2
+fi
