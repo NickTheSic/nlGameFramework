@@ -1,11 +1,11 @@
 #ifndef __NL_DEBUG_H__
 #define __NL_DEBUG_H__
 
-#include <stdio.h>
-
 #ifdef PSP
+#include <pspdebug.h> 
 #define NL_LOG(m,...) pspDebugScreenPrintf(m,##__VA_ARGS__);
 #else
+#include <stdio.h>
 #define NL_LOG(m,...) fprintf(stdout, m,##__VA_ARGS__); fprintf(stdout, "\n");
 #endif
 

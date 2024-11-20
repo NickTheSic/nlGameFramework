@@ -16,13 +16,14 @@ void udpate_gamepad()
     sceCtrlReadBufferPositive(&controller, 1);
 }
 
-int get_pressed_buttons(int controller)
+int get_pressed_buttons(unsigned char controller_id)
 {
-    NL_UNUSED(controller)
+    NL_UNUSED(controller_id)
     return controller.Buttons;
 }
 
-int is_button_pressed(int button)
+int is_button_pressed(unsigned char controller_index, int button)
 {
+    NL_UNUSED(controller_index);
     return controller.Buttons & button;
 }

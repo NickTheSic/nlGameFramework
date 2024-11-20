@@ -15,9 +15,9 @@ void run()
     update_input_frame_state();
     udpate_gamepad();
     
-    double dt = 0.0;
-#ifndef GEKKO
-    dt = get_frame_delta_time();
+    double dt = get_frame_delta_time();
+
+#if !NOT_YET_IMPLEMENTED
     // debug FPS
     {
         static float TimedLoop;

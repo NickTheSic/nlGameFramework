@@ -9,7 +9,7 @@ int init_gamepad_system(void);
 void cleanup_gamepad_system(void);
 
 void udpate_gamepad(void);
-int get_pressed_buttons(int);
+int get_pressed_buttons(unsigned char controller_id);
 int is_button_pressed(unsigned char controller_index, int button);
 
 #endif//__NL_GAMEPAD_H__

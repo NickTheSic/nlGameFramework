@@ -2,6 +2,13 @@
 #define __NL_PSP_INCLUDE_H__
 
 // Just a helper file for now while I figure things out
+#include <pspkernel.h>
+#include <pspdebug.h>
+#include <pspdisplay.h>
+
+// TODO: Placing this here for testing purposes as this is PSP specific
+// in the future will consider moving this somewhere else to be changed per project
+PSP_MODULE_INFO("NL LIB", 0, 0, 1);
 
 #define BUFFER_WIDTH 512
 #define BUFFER_HEIGHT 272

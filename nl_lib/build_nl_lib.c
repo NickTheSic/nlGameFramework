@@ -57,17 +57,18 @@
 #include "private/common/nl_input.c"
 #include "private/common/nl_math.c"
 #include "private/common/nl_memory.c"
-#include "private/common/nl_mesh_gl.c"
 #include "private/common/nl_random.c"
-#include "private/common/nl_renderer_gl_common.c"
-#include "private/common/nl_shader.c"
-#include "private/common/nl_vertex_attrib_gl.c"
+
+#include "private/gl/nl_gl_linux.c"
+#include "private/gl/nl_mesh_gl.c"
+#include "private/gl/nl_renderer_gl_common.c"
+#include "private/gl/nl_renderer_gl_linux.c"
+#include "private/gl/nl_shader.c"
+#include "private/gl/nl_vertex_attrib_gl.c"
 
 #include "third_party/stb_image.c"
 
 #include "private/linux/nl_window_linux.c"
-#include "private/linux/nl_renderer_gl_linux.c"
-#include "private/linux/nl_gl_linux.c"
 #include "private/linux/nl_deltatime_linux.c"
 
 
@@ -90,11 +91,6 @@
 #include "private/gcn/nl_window_gcn.c"
 
 #elif defined(PSP)
-
-// TODO: Placing this here for testing purposes as this is PSP specific
-// in the future will consider moving this somewhere else to be changed per project
-PSP_MODULE_INFO("NL LIB", 0, 0, 1);
-
 #include "private/common/nl_camera.c"
 #include "private/common/nl_fileio.c"
 #include "private/common/nl_input.c"
@@ -103,7 +99,6 @@ PSP_MODULE_INFO("NL LIB", 0, 0, 1);
 #include "private/common/nl_random.c"
 
 #include "private/null/nl_audio_null.c"
-#include "private/null/nl_gl_null.c"
 #include "private/null/nl_mesh_null.c"
 #include "private/null/nl_shader_null.c"
 #include "private/null/nl_vertex_attrib_null.c"
