@@ -1,4 +1,5 @@
 #include "../nl_window.h"
+#include "nl_psp_include.h"
 #include <pspdebug.h>
 
 int initialize_window(int width, int height, const char* title)

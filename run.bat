@@ -15,4 +15,8 @@ IF %1==gcn (
     %DOLPHIN_EMULATOR% _build\gcn\game.dol
 )
 
+IF %1==psp (
+    %PPSSPP_EMULATOR% _build\psp\%2\EBOOT.PBP
+)
+
 @echo on

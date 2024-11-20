@@ -2,7 +2,7 @@
 #define __NL_GAMEPAD_H__
 
 // Based off gamecube and wii library to start
-
+// immediately not viable for psp nds etc with only one controller
 #define MAX_PLAYERS 4
 
 int init_gamepad_system(void);
