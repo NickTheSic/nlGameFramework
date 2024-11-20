@@ -6,4 +6,4 @@ includes="-I../../nl_lib -I/usr/x86_64-w64-mingw32/include/"
 
 output="_build/win/"
 
-./usr/bin/x86_64-w64-mingw32-gcc-win32 $flags $includes $1 $2 $3 $libs -o $output"build_nl_lib.exe"
+gcc $flags $includes $1 $2 $3 $libs -o $output"build_nl_lib.exe"
