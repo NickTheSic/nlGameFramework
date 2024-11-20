@@ -1,6 +1,6 @@
 #include "../nl_renderer.h"
 #include "../nl_debug.h"
-#include "../nl_gl.h"
+#include "nl_gl.h"
 
 int initialize_renderer_subsystem()
 {

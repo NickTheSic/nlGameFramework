@@ -14,11 +14,7 @@
 #include "private/nl_mesh.h"
 #include "private/nl_random.h"
 #include "private/nl_renderer.h"
-
-#ifndef GEKKO
 #include "private/nl_shader.h"
-#endif
-
 #include "private/nl_vertex_attrib.h"
 #include "private/nl_vertex_data.h"
 #include "private/nl_window.h"

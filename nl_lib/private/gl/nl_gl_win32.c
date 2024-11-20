@@ -1,4 +1,5 @@
-#include "../nl_gl.h"
+#include "nl_gl.h"
+#include "nl_gl_win32.h"
 
 PFNGLATTACHSHADERPROC glAttachShader;
 PFNGLBINDBUFFERPROC glBindBuffer;

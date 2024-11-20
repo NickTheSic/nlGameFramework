@@ -2,6 +2,7 @@
 #define __NL_GL_WEB_H__
  
 #include <emscripten.h>
+#include <emscripten/html5_webgl.h>
 
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>

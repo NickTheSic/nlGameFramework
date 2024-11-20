@@ -2,7 +2,7 @@
 #define __NL_GL_WIN32_H__
 
 
-#include "nl_win32_include.h"
+#include "../win32/nl_win32_include.h"
 #include "GL/gl.h"
 
 

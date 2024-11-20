@@ -1,5 +1,5 @@
 #include "../nl_mesh.h"
-#include "../nl_gl.h"
+#include "nl_gl.h"
 
 
 void generate_mesh_using_vertices_and_indices(mesh* const mesh, const vertex_data* const vertices, int vertice_count, const unsigned int* const indices, unsigned int indice_count)

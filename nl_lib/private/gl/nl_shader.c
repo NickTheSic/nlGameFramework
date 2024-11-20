@@ -1,6 +1,6 @@
 #include "../nl_shader.h"
 #include "../nl_debug.h"
-#include "../nl_gl.h"
+#include "nl_gl.h"
 
 const char* common_vert_shader_code =
 NL_SHADER_VERSION_HEADER

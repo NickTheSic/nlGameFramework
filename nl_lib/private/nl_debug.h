@@ -19,8 +19,8 @@
 
 #define NL_UNUSED(x) (void)(x); DO_ONCE(NL_LOG("variable %s is not being used in %s", #x, __FUNCTION__););
 
-#define CANNOT_EXIT_MAIN_LOOP defined(__EMSCRIPTEN__) || defined(GEKKO) || defined(PSP)
+#define CANNOT_EXIT_MAIN_LOOP (defined(__EMSCRIPTEN__) || defined(GEKKO) || defined(PSP))
 
-#define NOT_YET_IMPLEMENTED defined(GEKKO) || defined(PSP)
+#define NOT_YET_IMPLEMENTED (defined(GEKKO) || defined(PSP))
 
 #endif //__NL_DEBUG_H__

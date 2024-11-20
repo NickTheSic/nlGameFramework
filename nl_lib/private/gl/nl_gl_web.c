@@ -1,4 +1,5 @@
-#include "../nl_gl.h"
+#include "nl_gl.h"
+#include "nl_gl_web.h"
 
 EGLRenderer g_EGLRenderer;
 
