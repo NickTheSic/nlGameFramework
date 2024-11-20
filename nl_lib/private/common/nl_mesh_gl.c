@@ -98,7 +98,7 @@ void generate_circle_mesh(mesh* const mesh, float radius, int segments)
     data[0].pos = (v3f){0.0f,0.0f,0.0f};
     data[0].color = col;
     float angle_diff = 2 * 3.1415f / (float)segments;
-    for (int i = 0; i < vertice_count-1; ++i)
+    for (unsigned int i = 0; i < vertice_count-1; ++i)
     {
         const float x = cosf( angle_diff * i ) * radius;
         const float y = sinf( angle_diff * i ) * radius;
@@ -113,7 +113,7 @@ void generate_circle_mesh(mesh* const mesh, float radius, int segments)
     indices[1] = 1;
     indices[2] = 2;
     unsigned int start = 3;
-    for (int i = 3; i < indice_count; i+=3)
+    for (unsigned int i = 3; i < indice_count; i+=3)
     {
         indices[i] = 0;
         indices[i+1] = start-1;

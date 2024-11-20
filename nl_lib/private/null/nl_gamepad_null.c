@@ -18,7 +18,7 @@ int get_pressed_buttons(int controller)
     return 0;
 }
 
-int is_button_pressed(int button)
+int is_button_pressed(unsigned char controller, int button)
 {
     NL_UNUSED(button);
     NL_UNIMPLEMENTED_FUNC

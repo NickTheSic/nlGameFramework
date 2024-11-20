@@ -1,7 +1,7 @@
 #include "../nl_gamepad.h"
 #include <ogc/pad.h>
 
-global_variable int buttons_down_this_frame[MAX_PLAYERS] = 0;
+global_variable int buttons_down_this_frame[MAX_PLAYERS] = {0};
 
 int init_gamepad_system(void)
 {
@@ -15,7 +15,7 @@ void udpate_gamepad(void)
     
     for (unsigned char i = 0; i < MAX_PLAYERS; ++i)
     {
-        buttons_down_this_frame = PAD_ButtonsDown(i);
+        buttons_down_this_frame[i] = PAD_ButtonsDown(i);
     }
 }
 

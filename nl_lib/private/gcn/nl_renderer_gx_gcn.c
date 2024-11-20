@@ -31,6 +31,8 @@ int initialize_renderer_subsystem()
 	GX_SetCullMode(GX_CULL_NONE);
 	GX_CopyDisp(get_gcn_framebuffer(),GX_TRUE);
 	GX_SetDispCopyGamma(GX_GM_1_0);
+
+    return 1;
 }
 
 void begin_render_frame()

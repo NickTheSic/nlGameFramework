@@ -28,6 +28,4 @@
 #include "private/web/nl_web_glue.h"
 #endif//__EMSCRIPTEN__
 
-#define CANNOT_EXIT_MAIN_LOOP (__EMSCRIPTEN__ || GEKKO || PSP)
-
 #endif //__NL_LIB_H__

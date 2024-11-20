@@ -13,7 +13,7 @@ typedef enum nl_key nl_key;
 #include "linux/nl_keys_linux.h"
 
 #else
-#include "common/nl_keys_null.h"
+#include "null/nl_keys_null.h"
 #endif
 
 #endif

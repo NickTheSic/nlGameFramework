@@ -1,7 +1,7 @@
 #include "../nl_fileio.h"
 #include "../nl_memory.h"
 
-#include "../nl_renderer.h"
+#include "../nl_vertex_data.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -165,12 +165,13 @@ internal_function void parse_vertices_indices(const file_contents *const content
 
 void load_mesh_from_file(const char* const file, mesh* const mesh)
 {
-#ifdef GEKKO
+#ifdef NOT_YET_IMPLEMENTED
     NL_UNUSED(file); NL_UNUSED(mesh);
     NL_UNIMPLEMENTED_FUNC;
+    return;
 #endif
 
-#if !defined GEKKO
+#if !defined NOT_YET_IMPLEMENTED
     NL_LOG("Loading Mesh %s", file);
 
     int vertice_count = 0;
