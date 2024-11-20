@@ -1,5 +1,6 @@
 #include "../nl_audio.h"
 #include "../nl_debug.h"
+#include "../nl_wave_file.h"
 #include <pspaudiolib.h>
 #include <pspaudio.h>
 
