@@ -5,7 +5,7 @@
 
 char list[0x20000] __attribute__((aligned(64)));
 
-int initialize_renderer_subsystem()
+int initialize_renderer_subsystem(void)
 {
     sceGuInit();
 
@@ -33,21 +33,21 @@ int initialize_renderer_subsystem()
     return 1;
 }
 
-void begin_render_frame()
+void begin_render_frame(void)
 {
     sceGuStart(GU_DIRECT, list);
     sceGuClearColor(0xFFFFFFFF); // White background
     sceGuClear(GU_COLOR_BUFFER_BIT);
 }
 
-void end_render_frame()
+void end_render_frame(void)
 {
     sceGuFinish();
     sceGuSync(0, 0);
     sceDisplayWaitVblankStart();
 }
 
-void renderer_swap_buffers()
+void renderer_swap_buffers(void)
 {
     sceGuSwapBuffers();
 }
@@ -67,12 +67,12 @@ void set_viewport_size(int width, int height)
     NL_UNIMPLEMENTED_FUNC;
 }
 
-void set_wireframe_rendering()
+void set_wireframe_rendering(void)
 {
     NL_UNIMPLEMENTED_FUNC;
 }
 
-void set_fill_rendering()
+void set_fill_rendering(void)
 {
     NL_UNIMPLEMENTED_FUNC;
 }

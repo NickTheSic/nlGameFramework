@@ -2,22 +2,24 @@
 #include <pspdebug.h>
 #include <pspdisplay.h>
 
-int initialize_renderer_subsystem()
+int initialize_renderer_subsystem(void)
 {
+    pspDebugScreenInit();
+
     return 1;
 }
 
-void begin_render_frame()
+void begin_render_frame(void)
 {
     pspDebugScreenSetXY(0, 0);
 }
 
-void end_render_frame()
+void end_render_frame(void)
 {
     sceDisplayWaitVblankStart();
 }
 
-void renderer_swap_buffers()
+void renderer_swap_buffers(void)
 {
     NL_UNIMPLEMENTED_FUNC;
 }
