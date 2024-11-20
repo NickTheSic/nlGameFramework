@@ -1,4 +1,4 @@
-#include "../batch2d.h"
+#include "../nl_graphics.h"
 #include "private/gl/nl_gl.h"
 
 #include "grid.h"

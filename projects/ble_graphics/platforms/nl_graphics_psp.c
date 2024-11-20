@@ -1,4 +1,4 @@
-#include "../batch2d.h"
+#include "../nl_graphics.h"
 
 #include <pspgu.h>
 #include <pspge.h>
@@ -76,8 +76,8 @@ void add_sprite_to_render_batch(batch2d* const batch, v2f pos, colour col, v2f s
     vertices[0].x = pos.x;
     vertices[0].y = pos.y;
 
-    vertices[1].x = pos.x + size;
-    vertices[1].y = pos.y + size;
+    vertices[1].x = pos.x + size.x;
+    vertices[1].y = pos.y + size.y;
 
     sceGuColor(col.unsigned_integer);
     //             int prim,   int vtype,            int count, const void* indices, const void* vertices

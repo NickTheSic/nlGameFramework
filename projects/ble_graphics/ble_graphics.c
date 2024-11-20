@@ -1,6 +1,6 @@
 #include "nl_lib.h"
 
-#include "batch2d.h"
+#include "nl_graphics.h"
 #include "grid.h"
 
 #ifdef PSP
@@ -147,9 +147,9 @@ void app_specific_cleanup()
 }
 
 #ifdef PSP
-#include "platforms/batch2d_psp.c"
+#include "platforms/nl_graphics_psp.c"
 #else
-#include "platforms/batch2d_gl.c"
+#include "platforms/nl_graphics_gl.c"
 #endif
 
 #include "grid.c"

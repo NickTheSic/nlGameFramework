@@ -1,5 +1,5 @@
-#ifndef __NL_BATCH2D_H__
-#define __NL_BATCH2D_H__
+#ifndef __NL_GRAPHICS_H__
+#define __NL_GRAPHICS_H__
 
 #include <private/nl_colour.h>
 
@@ -19,4 +19,4 @@ void end_render_batch(batch2d* const batch);
 void set_batch_view_matrix(float* m11);
 void set_batch_proj_matrix(float* m11);
 
-#endif//__NL_BATCH2D_H__
+#endif//__NL_GRAPHICS_H__
