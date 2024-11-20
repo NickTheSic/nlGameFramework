@@ -13,14 +13,14 @@ void udpate_gamepad(void)
 
 int get_pressed_buttons(int controller)
 {
-    NL_UNUSED(controller)
+    NL_UNUSED(controller);
     NL_UNIMPLEMENTED_FUNC;
     return 0;
 }
 
 int is_button_pressed(unsigned char controller, int button)
 {
-    NL_UNUSED(button);
+    NL_UNUSED(controller);NL_UNUSED(button);
     NL_UNIMPLEMENTED_FUNC
     return 0;
 }

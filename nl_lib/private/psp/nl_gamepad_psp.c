@@ -1,26 +1,28 @@
 #include "../nl_gamepad.h"
+#include <pspctrl.h>
+
+global_variable SceCtrlData controller;
 
 int init_gamepad_system(void)
 {
-    NL_UNIMPLEMENTED_FUNC;
+    sceCtrlSetSamplingCycle(0);
+    sceCtrlSetSamplingMode(PSP_CTRL_MODE_ANALOG);
+
     return 1;
 }
 
-void udpate_gamepad(void)
+void udpate_gamepad()
 {
-    NL_UNIMPLEMENTED_FUNC;
+    sceCtrlReadBufferPositive(&controller, 1);
 }
 
 int get_pressed_buttons(int controller)
 {
     NL_UNUSED(controller)
-    NL_UNIMPLEMENTED_FUNC;
-    return 0;
+    return controller.Buttons;
 }
 
 int is_button_pressed(int button)
 {
-    NL_UNUSED(button);
-    NL_UNIMPLEMENTED_FUNC
-    return 0;
+    return controller.Buttons & button;
 }

@@ -5,6 +5,7 @@
 //                     Renderer System                         //
 /////////////////////////////////////////////////////////////////
 int initialize_renderer_subsystem();
+void cleanup_renderer_subsystem(void);
 
 void begin_render_frame();
 void end_render_frame();

@@ -90,6 +90,11 @@
 #include "private/gcn/nl_window_gcn.c"
 
 #elif defined(PSP)
+
+// TODO: Placing this here for testing purposes as this is PSP specific
+// in the future will consider moving this somewhere else to be changed per project
+PSP_MODULE_INFO("NL LIB", 0, 0, 1);
+
 #include "private/common/nl_camera.c"
 #include "private/common/nl_fileio.c"
 #include "private/common/nl_input.c"
@@ -98,16 +103,18 @@
 #include "private/common/nl_random.c"
 
 #include "private/null/nl_audio_null.c"
-#include "private/null/nl_deltatime_null.c"
-#include "private/null/nl_gamepad_null.c"
 #include "private/null/nl_gl_null.c"
 #include "private/null/nl_mesh_null.c"
-#include "private/null/nl_renderer_null.c"
 #include "private/null/nl_shader_null.c"
 #include "private/null/nl_vertex_attrib_null.c"
-#include "private/null/nl_window_null.c"
+
+#include "private/psp/nl_deltatime_psp.c"
+#include "private/psp/nl_gamepad_psp.c"
+#include "private/psp/nl_renderer_psp.c"
+#include "private/psp/nl_window_psp.c"
 
 #include "third_party/stb_image.c"
+
 
 #else
 #warning Incomplete Library for this platform. Using null platform

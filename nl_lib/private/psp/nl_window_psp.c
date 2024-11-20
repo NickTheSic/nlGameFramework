@@ -3,7 +3,10 @@
 int initialize_window(int width, int height, const char* title)
 {
     NL_UNUSED(width); NL_UNUSED(height); NL_UNUSED(title);
-    NL_UNIMPLEMENTED_FUNC;
+
+    // Not necessisarily debug screen though...
+    pspDebugScreenInit();
+
     return 1;
 }
 
@@ -30,8 +33,7 @@ void window_swap_buffers(void)
 
 v2i get_screen_size(void)
 {
-    NL_UNIMPLEMENTED_FUNC;
-    return (v2i){0,0};
+    return (v2i){SCREEN_WIDTH,SCREEN_HEIGHT};
 }
 
 void set_window_title(const char* title)
