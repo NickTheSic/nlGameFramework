@@ -11,7 +11,7 @@ void udpate_gamepad(void)
     NL_UNIMPLEMENTED_FUNC;
 }
 
-int get_pressed_buttons(int controller)
+int get_pressed_buttons(unsigned char controller)
 {
     NL_UNUSED(controller);
     NL_UNIMPLEMENTED_FUNC;

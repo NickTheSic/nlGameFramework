@@ -1,7 +1,7 @@
 #include "../nl_graphics.h"
 #include "private/gl/nl_gl.h"
 
-#include "grid.h"
+#include "../grid.h"
 
 static const char* batch_vert_shader_code =
 NL_SHADER_VERSION_HEADER
@@ -170,6 +170,11 @@ void add_square_to_render_batch(batch2d* const batch, v2f pos, colour col, float
 
 void add_sprite_to_render_batch(batch2d* const batch, v2f pos, colour col, v2f size, unsigned int texture_id)
 {
+    NL_UNUSED(batch);
+    NL_UNUSED(pos);
+    NL_UNUSED(col);
+    NL_UNUSED(size);
+    NL_UNUSED(texture_id);
     NL_UNIMPLEMENTED_FUNC;
 }
 

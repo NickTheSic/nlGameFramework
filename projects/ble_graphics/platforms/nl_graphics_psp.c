@@ -68,6 +68,7 @@ void add_square_to_render_batch(batch2d* const batch, v2f pos, colour col, float
 
 void add_sprite_to_render_batch(batch2d* const batch, v2f pos, colour col, v2f size, unsigned int texture_id)
 {
+    NL_UNUSED(batch);
     NL_UNIMPLEMENTED_FUNC;
 
     // incomplete as I don't have a texture ID
