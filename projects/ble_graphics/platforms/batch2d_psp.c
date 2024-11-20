@@ -1,5 +1,9 @@
 #include "../batch2d.h"
 
+#include <pspgu.h>
+#include <pspge.h>
+#include <pspdisplay.h>
+
 typedef struct 
 {
     unsigned short u, v;
@@ -30,7 +34,7 @@ void begin_render_batch(batch2d* const batch)
 
 void add_to_render_batch(batch2d* const batch, v2f pos, colour col, float size)
 {
-    NL_UNUSED(batch);NL_UNUSED(col);
+    NL_UNUSED(batch);
     NL_UNIMPLEMENTED_FUNC;
 
     Vertex* vertices = (Vertex*)sceGuGetMemory(2 * sizeof(Vertex));
@@ -38,12 +42,12 @@ void add_to_render_batch(batch2d* const batch, v2f pos, colour col, float size)
     vertices[0].x = pos.x;
     vertices[0].y = pos.y;
 
-    vertices[1].x = pos.x + size.x;
-    vertices[1].y = pos.y + size.y;
+    vertices[1].x = pos.x + size;
+    vertices[1].y = pos.y + size;
 
-    sceGuColor(0xFF0000FF); // Red, colors are ABGR
-    sceGuDrawArray(GU_SPRITES, GU_TEXTURE_16BIT | GU_VERTEX_16BIT | GU_TRANSFORM_2D, 2, 0, vertices);
-
+    sceGuColor(col.unsigned_integer);
+    //             int prim,   int vtype,            int count, const void* indices, const void* vertices
+    sceGuDrawArray(GU_SPRITES, GU_TEXTURE_16BIT | GU_VERTEX_32BITF | GU_TRANSFORM_2D, 2, 0, vertices);
 }
 
 void end_render_batch(batch2d* const batch)

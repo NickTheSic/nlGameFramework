@@ -125,7 +125,7 @@ void app_specific_render()
 
             if (grid_coords.x == x && grid_coords.y == y)
             {
-                add_to_render_batch(batch, (v2f){px,py}, (colour){0,0,0,255}, grid_.cell_size);
+                add_to_render_batch(batch, (v2f){px,py},(colour){0,0,0,255}, grid_.cell_size);
             }
             else
             {

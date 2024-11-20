@@ -16,7 +16,11 @@ IF %1==gcn (
 )
 
 IF %1==psp (
-    %PPSSPP_EMULATOR% _build\psp\%2\EBOOT.PBP
+   call "%PPSSPP_EMULATOR%" -v _build\psp\%2\EBOOT.PBP
+)
+
+IF %1==nds(
+    %DESMUME_EMULATOR% "_build\nds\game.nds"
 )
 
 @echo on

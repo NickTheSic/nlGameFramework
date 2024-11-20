@@ -41,11 +41,9 @@ void run()
 
     app_specific_update(dt);
 
-#ifndef GEKKO
     begin_render_frame();
     app_specific_render();
     end_render_frame();
-#endif
 
 #if !defined CANNOT_EXIT_MAIN_LOOP
     if (key_is_held(key_control) && key_was_pressed(key_c))
@@ -75,7 +73,6 @@ int main(int count, char** args)
         return -1;
     }
 
-#ifndef GEKKO
     if (init_audio_system() == 0)
     {
         return -1;
@@ -87,7 +84,6 @@ int main(int count, char** args)
     }
     set_background_colour_4f(0.5f,0.5f,0.85f,1.0f);
     init_delta_time();
-#endif
 
     app_specific_init();
 

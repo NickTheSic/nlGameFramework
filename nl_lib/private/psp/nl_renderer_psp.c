@@ -36,7 +36,8 @@ int initialize_renderer_subsystem(void)
 void begin_render_frame(void)
 {
     sceGuStart(GU_DIRECT, list);
-    sceGuClearColor(0xFFFFFFFF); // White background
+    //sceGuClearColor(0xFFFFFFFF); // White background
+    sceGuClearColor(0xff777777); // White background
     sceGuClear(GU_COLOR_BUFFER_BIT);
 }
 
@@ -45,6 +46,8 @@ void end_render_frame(void)
     sceGuFinish();
     sceGuSync(0, 0);
     sceDisplayWaitVblankStart();
+
+    sceGuSwapBuffers();
 }
 
 void renderer_swap_buffers(void)
