@@ -77,9 +77,10 @@ void app_specific_init(void)
     init_grid(&grid_, 10, 10);
     grid_.cell_size = 50;
 
+    int other = 0;
     for (int i = 0; i < grid_.h * grid_.w; ++i)
     {
-        grid_.data[i] = (i%grid_.h)%4;
+        grid_.data[i] = (i%grid_.h + (other+=i))%4;
     }
 }
 
@@ -125,16 +126,16 @@ void app_specific_render()
 
             if (grid_coords.x == x && grid_coords.y == y)
             {
-                add_to_render_batch(batch, (v2f){px,py},(colour){0,0,0,255}, grid_.cell_size);
+                add_square_to_render_batch(batch, (v2f){px,py},(colour){0,0,0,255}, grid_.cell_size);
             }
             else
             {
-                add_to_render_batch(batch, (v2f){px,py}, COLOURS[get_value_at_coords(&grid_, x, y)], grid_.cell_size);
+                add_square_to_render_batch(batch, (v2f){px,py}, COLOURS[get_value_at_coords(&grid_, x, y)], grid_.cell_size);
             }
         }
     }
 
-    add_to_render_batch(batch, mouse_pos, COLOUR_BLUE, 5.0f);
+    add_square_to_render_batch(batch, mouse_pos, COLOUR_BLUE, 5.0f);
 
     end_render_batch(batch);
 }

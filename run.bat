@@ -19,7 +19,7 @@ IF %1==psp (
    call "%PPSSPP_EMULATOR%" -v _build\psp\%2\EBOOT.PBP
 )
 
-IF %1==nds(
+IF %1==nds (
     %DESMUME_EMULATOR% "_build\nds\game.nds"
 )
 

@@ -37,7 +37,8 @@ void begin_render_frame(void)
 {
     sceGuStart(GU_DIRECT, list);
     //sceGuClearColor(0xFFFFFFFF); // White background
-    sceGuClearColor(0xff777777); // White background
+    sceGuClearColor(0xff777777); // grey background
+    //sceGuClearColor(random_int_in_range(0xff000000, 0xffffffff)); // random background for debug purposes
     sceGuClear(GU_COLOR_BUFFER_BIT);
 }
 

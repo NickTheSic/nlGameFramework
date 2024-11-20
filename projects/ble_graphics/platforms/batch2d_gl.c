@@ -126,7 +126,28 @@ internal_function void render_batch(batch2d* const batch)
     batch->current_count = 0;
 }
 
-void add_to_render_batch(batch2d* const batch, v2f pos, colour col, float size)
+void add_rectangle_to_render_batch(batch2d* const batch, v2f pos, colour col, v2f size)
+{
+    if (batch->current_count == batch->max_count)
+    {
+        render_batch(batch);
+    }
+
+    const unsigned int current_idx = batch->current_count * 4;
+
+    batch_vertex_data square_verts[4];
+    square_verts[0] = (batch_vertex_data){{pos.x, pos.y, 0.0f}, col};
+    square_verts[1] = (batch_vertex_data){{pos.x +  size.x, pos.y, 0.0f}, col};
+    square_verts[2] = (batch_vertex_data){{pos.x +  size.x, pos.y +  size.y, 0.0f}, col};
+    square_verts[3] = (batch_vertex_data){{pos.x, pos.y +  size.y, 0.0f}, col};
+
+    batch_vertex_data* const dest = &batch->vertices[current_idx];
+    memcpy(dest, &square_verts, sizeof(batch_vertex_data)*4);
+
+    batch->current_count++;
+}
+
+void add_square_to_render_batch(batch2d* const batch, v2f pos, colour col, float size)
 {
     if (batch->current_count == batch->max_count)
     {
@@ -145,6 +166,11 @@ void add_to_render_batch(batch2d* const batch, v2f pos, colour col, float size)
     memcpy(dest, &square_verts, sizeof(batch_vertex_data)*4);
 
     batch->current_count++;
+}
+
+void add_sprite_to_render_batch(batch2d* const batch, v2f pos, colour col, v2f size, unsigned int texture_id)
+{
+    NL_UNIMPLEMENTED_FUNC;
 }
 
 void end_render_batch(batch2d* const batch)
