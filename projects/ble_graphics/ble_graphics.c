@@ -3,6 +3,17 @@
 #include "batch2d.h"
 #include "grid.h"
 
+#ifdef PSP
+#include <pspctrl.h>
+#define key_right PSP_CTRL_RIGHT
+#define key_left PSP_CTRL_LEFT
+#define key_down PSP_CTRL_DOWN
+#define key_up PSP_CTRL_UP
+
+#define key_is_held(b) is_button_pressed(0, b)
+
+#endif
+
 global_variable batch2d* batch = {0};
 
 global_variable camera main_cam = {0};
@@ -92,7 +103,7 @@ void app_specific_update(double dt)
     if (mouse_button_was_pressed(NL_MOUSE_BUTTON_LEFT))
     {
         value = get_value_at_coords(&grid_, grid_coords.x, grid_coords.y);
-        value = ++value%4;
+        value = (++value)%4;
         set_value_at_coord(&grid_, grid_coords.x, grid_coords.y, value);
     }
 
