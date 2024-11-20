@@ -1,4 +1,4 @@
-#include "../nl_gl.h"
+#include "nl_gl.h"
 
 int initialize_gl()
 {

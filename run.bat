@@ -12,7 +12,7 @@ IF %1==web (
 )
 
 IF %1==gcn (
-    D:\Downloads\Dolphin-x64\Dolphin.exe _build\gcn\game.dol
+    %DOLPHIN_EMULATOR% _build\gcn\game.dol
 )
 
 @echo on
