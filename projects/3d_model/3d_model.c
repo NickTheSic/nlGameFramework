@@ -33,7 +33,7 @@ void app_specific_init(void)
 
     _recalculate_camera();
 
-    shader_program = create_shader_program(vert_shader_code, common_fragment_shader_code);
+    shader_program = create_shader_program(vert_shader_code, get_common_fragment_shader_code());
     use_shader_program(shader_program);
 
     transformLoc = glGetUniformLocation(shader_program, "transform");
