@@ -1,8 +1,8 @@
-#ifndef __NL_KEYS_GCN_H__
-#define __NL_KEYS_GCN_H__
+#ifndef __NL_KEYS_NULL_H__
+#define __NL_KEYS_NULL_H__
 
 // Could point to a restructure of the inputas keys are part of the input specifically. 
-// Input on gamecube would only be controller
+// Input on homebrew consoles
 
 enum nl_key
 {
@@ -10,4 +10,4 @@ enum nl_key
     NL_KEY_COUNT
 };
 
-#endif//__NL_KEYS_GCN_H__
+#endif//__NL_KEYS_NULL_H__

@@ -4,8 +4,8 @@
 extern "C" {
 #endif
 
-void init_delta_time();
-double get_frame_delta_time();
+void init_delta_time(void);
+double get_frame_delta_time(void);
 
 #ifdef __cplusplus
 }

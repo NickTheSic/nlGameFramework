@@ -10,7 +10,6 @@ struct camera
 };
 
 void initialize_camera_to_identity(camera* const cam);
-
 void project_mouse_to_camera(camera* const cam, v2f* mouse_pos_on_screen);
 
 #endif //__NL_CAMERA_H__

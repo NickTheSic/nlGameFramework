@@ -12,11 +12,8 @@ typedef enum nl_key nl_key;
 #elif defined(__linux__)
 #include "linux/nl_keys_linux.h"
 
-#elif defined(GEKKO)
-#include "gcn/nl_keys_gcn.h"
-
 #else
-#error incomplete platform
+#include "common/nl_keys_null.h"
 #endif
 
 #endif
