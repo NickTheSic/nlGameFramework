@@ -1,5 +1,6 @@
 #include "simple_sprite.h"
 #include "private/gl/nl_gl.h"
+#include <math.h>
 
 void generate_simple_sprite_using_vertices_and_indices(simple_sprite* const simple_sprite, const vertex_data* const vertices, int vertice_count, const unsigned int* const indices, unsigned int indice_count)
 {
