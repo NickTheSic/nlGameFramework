@@ -1,7 +1,11 @@
 #include "player.h"
 
+global_variable unsigned int jump_sound = {0};
+
 void player_init(game_object* const player)
 {
+    jump_sound = load_sound_file("data/retrogamesfx.wav");
+
     player->width = PLAYER_WIDTH;
     player->pos = (v2f){100.0f,100.0f};
     generate_square_mesh(&player->mesh, player->width, (colourf){1.0f,0.5f,0.2f,1.0f});
@@ -28,6 +32,7 @@ void player_update(double dt, game_object* const player, player_controller* cons
         {
             player->vertical_speed = GRAVITY_RAISE;
             player->is_grounded = 0;
+            play_sound(jump_sound);
         }
     }
 
