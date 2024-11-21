@@ -14,7 +14,7 @@
 typedef struct game_object game_object;
 struct game_object
 {
-    simple_sprite mesh;
+    simple_sprite sprite;
     v2f pos;
     float vertical_speed;
     float width;

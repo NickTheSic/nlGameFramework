@@ -2,12 +2,6 @@
 #include "private/gl/nl_gl.h"
 #include <math.h>
 
-typedef struct sprite_vertices sprite_vertices;
-struct sprite_vertices
-{
-    v3f pos;
-};
-
 internal_function void generate_simple_sprite_using_vertices_and_indices(simple_sprite* const simple_sprite, const sprite_vertices* const vertices, int vertice_count, const unsigned int* const indices, unsigned int indice_count)
 {
     const size_t vertices_data_size = sizeof(sprite_vertices) * vertice_count;
@@ -67,10 +61,10 @@ void generate_rectangle_simple_sprite(simple_sprite* const simple_sprite, float 
 {
     sprite_vertices square_vertices[] =
     {
-        (v3f){0.0f,  0.0f,   0.0f},
-        (v3f){width, 0.0f,   0.0f},
-        (v3f){width, height, 0.0f},
-        (v3f){0.0f,  height, 0.0f},
+        {{0.0f,  0.0f,   0.0f}},
+        {{width, 0.0f,   0.0f}},
+        {{width, height, 0.0f}},
+        {{0.0f,  height, 0.0f}},
     };
 
     static const unsigned int indices[] = {0,1,2,0,2,3};
@@ -81,4 +75,9 @@ void generate_rectangle_simple_sprite(simple_sprite* const simple_sprite, float 
 void generate_square_simple_sprite(simple_sprite* const simple_sprite, float width)
 {
     generate_rectangle_simple_sprite(simple_sprite, width, width);
+}
+
+void load_texture_for_sprite(simple_sprite* const sprite, const char* filename)
+{
+
 }

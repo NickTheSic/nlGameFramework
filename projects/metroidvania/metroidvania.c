@@ -15,7 +15,7 @@ void app_specific_init(void)
 {
     player_init(&player);
 
-    generate_square_simple_sprite(&mouse_follow.mesh, PLAYER_HALF_WIDTH);
+    generate_square_simple_sprite(&mouse_follow.sprite, PLAYER_HALF_WIDTH);
 
     shader_program = create_shader_program(vertex_shader_code, fragment_shader_code);
     use_shader_program(shader_program);
@@ -71,7 +71,7 @@ void app_specific_render(void)
         model.m41 = player.pos.x;
         model.m42 = player.pos.y;
         set_uniform_mat4x4f(u_model_loc, &model.m11);
-        render_single_simple_sprite(&player.mesh);
+        render_single_simple_sprite(&player.sprite);
     }
 
     {
@@ -79,14 +79,14 @@ void app_specific_render(void)
         model.m42 = (mouse_follow.pos.y-PLAYER_QUARTER_WIDTH);
 
         set_uniform_mat4x4f(u_model_loc, &model.m11);
-        render_single_simple_sprite(&mouse_follow.mesh);
+        render_single_simple_sprite(&mouse_follow.sprite);
     }
 }
 
 void app_specific_cleanup(void)
 {
-    free_simple_sprite(&player.mesh);
-    free_simple_sprite(&mouse_follow.mesh);
+    free_simple_sprite(&player.sprite);
+    free_simple_sprite(&mouse_follow.sprite);
 }
 
 #include "camera_control.c"

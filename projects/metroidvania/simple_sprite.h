@@ -1,8 +1,11 @@
-#ifndef __SIMPLE_SPRITE__
-#define __SIMPLE_SPRITE__
+#ifndef __SIMPLE_SPRITE_H__
+#define __SIMPLE_SPRITE_H__
 
-#include "private/nl_colour.h"
-
+typedef struct sprite_vertices sprite_vertices;
+struct sprite_vertices
+{
+    v3f pos;
+};
 typedef struct simple_sprite simple_sprite;
 struct simple_sprite
 {
@@ -15,7 +18,7 @@ struct simple_sprite
     unsigned int vertice_count;
 
     unsigned int* indices;
-    struct sprite_vertices* vertices;
+    sprite_vertices* vertices;
 };
 
 void render_single_simple_sprite(simple_sprite* const sprite);
@@ -23,7 +26,9 @@ void render_single_simple_sprite(simple_sprite* const sprite);
 void generate_rectangle_simple_sprite(simple_sprite *const sprite, float width, float height);
 void generate_square_simple_sprite(simple_sprite *const sprite, float width);
 
+void load_texture_for_sprite(simple_sprite* const sprite, const char* filename);
+
 void free_simple_sprite(simple_sprite *const sprite);
 
 
-#endif//__SIMPLE_SPRITE__
+#endif//__SIMPLE_SPRITE_H__
