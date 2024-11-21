@@ -15,13 +15,7 @@ void app_specific_init(void)
 {
     player_init(&player);
 
-    generate_square_simple_sprite(&mouse_follow.mesh, PLAYER_HALF_WIDTH, (colourf){0.5f,0.1f,1.0f,1.0f});
-    //generate_circle_simple_sprite(&mouse_follow.mesh, PLAYER_HALF_WIDTH, 10);
-    
-    generate_square_simple_sprite(&debug_points[0], PLAYER_QUARTER_WIDTH, (colourf){1.f,1.f,1.0f,1.0f});
-    generate_square_simple_sprite(&debug_points[1], PLAYER_QUARTER_WIDTH, (colourf){1.f,0.f,0.0f,1.0f});
-    generate_square_simple_sprite(&debug_points[2], PLAYER_QUARTER_WIDTH, (colourf){0.f,1.f,0.0f,1.0f});
-    generate_square_simple_sprite(&debug_points[3], PLAYER_QUARTER_WIDTH, (colourf){0.f,0.f,1.0f,1.0f});
+    generate_square_simple_sprite(&mouse_follow.mesh, PLAYER_HALF_WIDTH);
 
     shader_program = create_shader_program(vertex_shader_code, fragment_shader_code);
     use_shader_program(shader_program);
@@ -81,39 +75,8 @@ void app_specific_render(void)
     }
 
     {
-        model.m41 = player.pos.x;
-        model.m42 = player.pos.y;
-
-        set_uniform_mat4x4f(u_model_loc, &model.m11);
-        render_single_simple_sprite(&debug_points[0]);
-    }
-    {
-        model.m41 = player.pos.x + player.width - PLAYER_QUARTER_WIDTH;
-        model.m42 = player.pos.y;
-
-        set_uniform_mat4x4f(u_model_loc, &model.m11);
-        render_single_simple_sprite(&debug_points[1]);
-    }
-    {
-        model.m41 = player.pos.x + player.width - PLAYER_QUARTER_WIDTH;
-        model.m42 = player.pos.y + player.width - PLAYER_QUARTER_WIDTH;
-
-        set_uniform_mat4x4f(u_model_loc, &model.m11);
-        render_single_simple_sprite(&debug_points[2]);
-    }
-    {
-        model.m41 = player.pos.x;
-        model.m42 = player.pos.y + player.width - PLAYER_QUARTER_WIDTH;
-
-        set_uniform_mat4x4f(u_model_loc, &model.m11);
-        render_single_simple_sprite(&debug_points[3]);
-    }
-
-    {
-       // model.m41 = (mouse_follow.pos.x-PLAYER_QUARTER_WIDTH);
-       // model.m42 = (mouse_follow.pos.y-PLAYER_QUARTER_WIDTH);
-        model.m41 = (mouse_follow.pos.x);
-        model.m42 = (mouse_follow.pos.y);
+        model.m41 = (mouse_follow.pos.x-PLAYER_QUARTER_WIDTH);
+        model.m42 = (mouse_follow.pos.y-PLAYER_QUARTER_WIDTH);
 
         set_uniform_mat4x4f(u_model_loc, &model.m11);
         render_single_simple_sprite(&mouse_follow.mesh);
@@ -124,11 +87,6 @@ void app_specific_cleanup(void)
 {
     free_simple_sprite(&player.mesh);
     free_simple_sprite(&mouse_follow.mesh);
-
-    for (int i = 0; i < 4; ++i)
-    {
-        free_simple_sprite(&debug_points[i]);
-    }
 }
 
 #include "camera_control.c"
