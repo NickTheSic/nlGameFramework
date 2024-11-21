@@ -45,8 +45,6 @@ void create_fustrum(mat4x4f* const mat, float left, float right, float bottom, f
 
 void create_orthographic_projection(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z)
 {
-    //memset(mat, 0, sizeof(mat4x4f));
-
     float delta_x = right-left;
     float delta_y = top-bottom;
     float delta_z = far_z-near_z;
@@ -57,6 +55,7 @@ void create_orthographic_projection(mat4x4f* const mat, float left, float right,
     mat->m22 = 2.0f/delta_y;
     mat->m21 = mat->m23 = mat->m24 = 0.0f;
     
+    DO_ONCE(NL_LOG("Orthographic Project is Left Handed"));
     //mat->m33 = -2.0f/delta_z; //Right Handed
     mat->m33 = 2.0f/delta_z; //Left Handed
     mat->m31 = mat->m32 = mat->m34 = 0.0f;
