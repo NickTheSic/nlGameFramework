@@ -37,4 +37,8 @@ IF /I %1==wii (
     call "build_scripts/build_wii" %2
 )
 
+IF /I %1==gba (
+    call "build_scripts/build_gba" %2
+)
+
 @echo on

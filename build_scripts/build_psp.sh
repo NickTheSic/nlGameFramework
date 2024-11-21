@@ -6,7 +6,7 @@ INCLUDES="-I$PSP_SDK/include -I$PSP_DEV/psp/include -Inl_lib"
 LIBDIR="-L$PSP_SDK/lib -L$PSP_DEV/lib -L$PSP_DEV/psp/lib"
 LIBS="-lpspdebug -lpspdisplay -lpspge -lpspgu -lpspctrl -lpspaudio -lpspaudiolib -lopenal -lstdc++"
 DEFINES="-DPSP -D_PSP_FW_VERSION=600 -D__PSP__"
-FLAGS="-Wall -Wextra -g -Wl,-zmax-page-size=128"
+FLAGS="-Wall -Wextra -g -Wl,-zmax-page-size=128 -Wl,-Map,_build/psp/$1.map"
 PRX_SPECS="-specs=$PSP_SDK/lib/prxspecs -Wl,-q,-T$PSP_SDK/lib/linkfile.prx"
 OUTPUT="_build/psp"
 
