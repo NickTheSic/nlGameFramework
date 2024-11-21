@@ -31,10 +31,10 @@ NL_SHADER_VERSION_HEADER
 "    FragColor = texture(sprite_texture,uv_coords);         \n"
 "}                                                          \0";
 
-global_variable unsigned int shader_program = 0;
-global_variable unsigned int u_model_loc = 0;
-global_variable unsigned int u_view_mat = 0;
-global_variable unsigned int u_proj_mat = 0;
+global_variable unsigned int shader_program = {0};
+global_variable unsigned int u_model_loc = {0};
+global_variable unsigned int u_view_mat = {0};
+global_variable unsigned int u_proj_mat = {0};
 
 void set_model_matrix(float* m11)
 {

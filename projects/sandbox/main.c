@@ -4,6 +4,9 @@
 #include <emscripten.h>
 #endif
 
+float highest_fps = -1.0f;
+float lowest_fps = 54028234663.0000000000000000; // a really big number higher than the average fps I have ever seen
+
 extern void app_specific_init(void);
 extern void app_specific_update(double dt);
 extern void app_specific_render(void);
@@ -30,6 +33,9 @@ void run()
     		fps = (double)frameCount / TimedLoop;
     		TimedLoop -= 1.f;
     		frameCount = 0;
+
+            highest_fps = highest_fps > fps ? highest_fps : fps;
+            lowest_fps = lowest_fps < fps ? lowest_fps : fps;
             
             char c[50];
             sprintf(c, "FPS: %f\n", fps);
@@ -101,6 +107,9 @@ int main(int count, char** args)
     cleanup_audio_system();
 #endif
     basic_memory_leak_check();
+
+    NL_LOG("Highest FPS Reached: %f", highest_fps);
+    NL_LOG("Lowest FPS Reached: %f", lowest_fps);
 
     return 0;
 }

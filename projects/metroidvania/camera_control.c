@@ -8,8 +8,6 @@
 global_variable float camera_pos_x = {0};
 global_variable float camera_pos_y = {0};
 
-extern unsigned int shader_program;
-
 void camera_controls(float dt, camera* const cam)
 {
     char bIsDirty = 0;
