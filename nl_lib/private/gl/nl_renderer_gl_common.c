@@ -9,6 +9,9 @@ int initialize_renderer_subsystem()
         return 0;
     }
 
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable( GL_BLEND );
+
     return 1;
 }
 
