@@ -1,5 +1,5 @@
 #include "nl_lib.h"
-#include "private/nl_gl.h"
+#include "private/gl/nl_gl.h"
 
 #include "grid.c"
 
@@ -76,7 +76,7 @@ void app_specific_init(void)
     
     initialize_camera_to_identity(&TheGame->game_camera);
 
-    TheGame->shader_program = create_shader_program(common_vert_shader_code , common_fragment_shader_code);
+    TheGame->shader_program = create_common_shader_program();
     use_shader_program(TheGame->shader_program);
 
     pfn_window_size_callback = &winsizecbk;
@@ -145,7 +145,7 @@ internal_function void game_draw()
     transform2d transform = {0};
     transform.size = (v2f){1.0f,1.0f};
     transform.rotation = 0.f;
-    for (int i = 0; i < TheGame->grid.Width *TheGame->grid.Height; ++i)
+    for (unsigned int i = 0; i < TheGame->grid.Width *TheGame->grid.Height; ++i)
     {
         create_identity_matrix(&mat);
         transform.position  = grid_to_world_position(&TheGame->grid, i);
