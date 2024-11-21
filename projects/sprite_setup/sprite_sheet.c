@@ -88,7 +88,7 @@ void init_sprite_sheet(spritesheet* const sheet, unsigned int batch_count, unsig
              0,
              GL_RGBA,
              GL_UNSIGNED_BYTE,
-             0
+             0 //size of buffer 
              );
 }
 

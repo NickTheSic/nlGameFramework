@@ -10,6 +10,7 @@ void player_init(game_object* const player)
     player->width = PLAYER_WIDTH;
     player->pos = (v2f){100.0f,100.0f};
     generate_square_simple_sprite(&player->sprite, player->width);
+    load_texture_for_sprite(&player->sprite, "data/thing.png");
 }
 
 void player_update(double dt, game_object* const player, player_controller* const controller)

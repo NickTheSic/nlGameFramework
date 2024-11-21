@@ -1,5 +1,6 @@
 #include "simple_sprite.h"
 #include "private/gl/nl_gl.h"
+#include <third_party/stb_image.h>
 #include <math.h>
 
 internal_function void generate_simple_sprite_using_vertices_and_indices(simple_sprite* const simple_sprite, const sprite_vertices* const vertices, int vertice_count, const unsigned int* const indices, unsigned int indice_count)
@@ -30,6 +31,9 @@ internal_function void generate_simple_sprite_using_vertices_and_indices(simple_
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(sprite_vertices), (void*)offsetof(sprite_vertices, pos));
     glEnableVertexAttribArray(0);
 
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(sprite_vertices), (void*)offsetof(sprite_vertices, uv));
+    glEnableVertexAttribArray(1);
+
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -40,10 +44,14 @@ void render_single_simple_sprite(simple_sprite* simple_sprite)
     glBindVertexArray(simple_sprite->VAO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, simple_sprite->EBO);
 
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, simple_sprite->texture_id);
+
     glDrawElements(GL_TRIANGLES, simple_sprite->indice_count, GL_UNSIGNED_INT, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void free_simple_sprite(simple_sprite* const simple_sprite)
@@ -61,10 +69,10 @@ void generate_rectangle_simple_sprite(simple_sprite* const simple_sprite, float 
 {
     sprite_vertices square_vertices[] =
     {
-        {{0.0f,  0.0f,   0.0f}},
-        {{width, 0.0f,   0.0f}},
-        {{width, height, 0.0f}},
-        {{0.0f,  height, 0.0f}},
+        {{0.0f,  0.0f,   0.0f}, {0.0f,0.0f}},
+        {{width, 0.0f,   0.0f}, {1.0f,0.0f}},
+        {{width, height, 0.0f}, {1.0f,1.0f}},
+        {{0.0f,  height, 0.0f}, {0.0f,1.0f}},
     };
 
     static const unsigned int indices[] = {0,1,2,0,2,3};
@@ -79,5 +87,29 @@ void generate_square_simple_sprite(simple_sprite* const simple_sprite, float wid
 
 void load_texture_for_sprite(simple_sprite* const sprite, const char* filename)
 {
+    stbi_set_flip_vertically_on_load(1);
 
+    int x, y, channel;
+    unsigned char * data = stbi_load(filename, &x, &y, &channel, 4);
+
+    //glActiveTexture(GL_TEXTURE0);
+    glGenTextures(1, &sprite->texture_id);
+    glBindTexture(GL_TEXTURE_2D, sprite->texture_id);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    glTexImage2D(GL_TEXTURE_2D,
+             0,
+             GL_RGBA,
+             x, y,
+             0,
+             GL_RGBA,
+             GL_UNSIGNED_BYTE,
+             data
+             );
+
+    stbi_image_free(data);
 }

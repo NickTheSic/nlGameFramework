@@ -5,7 +5,9 @@ typedef struct sprite_vertices sprite_vertices;
 struct sprite_vertices
 {
     v3f pos;
+    v2f uv;
 };
+
 typedef struct simple_sprite simple_sprite;
 struct simple_sprite
 {

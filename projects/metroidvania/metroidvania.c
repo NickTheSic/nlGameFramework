@@ -16,6 +16,7 @@ void app_specific_init(void)
     player_init(&player);
 
     generate_square_simple_sprite(&mouse_follow.sprite, PLAYER_HALF_WIDTH);
+    load_texture_for_sprite(&mouse_follow.sprite, "data/test_sprite.png");
 
     shader_program = create_shader_program(vertex_shader_code, fragment_shader_code);
     use_shader_program(shader_program);
@@ -65,6 +66,8 @@ void app_specific_update(double dt)
 
 void app_specific_render(void)
 {
+    use_shader_program(shader_program);
+    
     mat4x4f model = {0};
     create_identity_matrix(&model);
     {
