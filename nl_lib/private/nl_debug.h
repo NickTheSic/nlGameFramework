@@ -25,7 +25,7 @@
 #define CANNOT_EXIT_MAIN_LOOP 0
 #endif
 
-#if defined(GEKKO) || defined(PSP)
+#if defined(GEKKO) || defined(PSP) || defined(__GBA__)
 #define NOT_YET_IMPLEMENTED 1
 #else
 #define NOT_YET_IMPLEMENTED 0

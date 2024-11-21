@@ -118,6 +118,10 @@
 #else
 #warning Incomplete Library for this platform. Using null platform
 
+#if defined(__GBA__)
+#include <tonc.h>
+#endif
+
 #include "private/common/nl_camera.c"
 #include "private/common/nl_fileio.c"
 #include "private/common/nl_input.c"
