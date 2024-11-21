@@ -12,15 +12,11 @@ internal_function void winsizecbk(int width, int height)
 
 void app_specific_init(void)
 {
-    player_init(&player);
-
-    generate_rectangle_simple_sprite(&ground.sprite, 100, 10);
-    load_texture_for_sprite(&ground.sprite, "data/thing.png");
-
-    generate_square_simple_sprite(&mouse_follow.sprite, PLAYER_HALF_WIDTH);
-    load_texture_for_sprite(&mouse_follow.sprite, "data/test_sprite.png");
-
     init_sprite_renderer();
+
+    player_init(&player);
+    init_gameobject(&ground, 100, 20, (v2f){0.f,0.f}, "data/thing.png");
+    init_gameobject(&mouse_follow, PLAYER_HALF_WIDTH, PLAYER_HALF_WIDTH, (v2f){0.f,0.f}, "data/test_sprite.png");
 
     pfn_window_size_callback = &winsizecbk;
     v2i screen_size = get_screen_size();
@@ -33,33 +29,11 @@ void app_specific_init(void)
 void app_specific_update(double dt)
 {
     player_update(dt, &player, &controller);
-
     camera_controls(dt, &main_cam);
 
     const v2i mouse_posi = get_mouse_position_from_system();
     mouse_follow.pos = (v2f){(float)mouse_posi.x, (float)mouse_posi.y};
     project_mouse_to_camera(&main_cam, &mouse_follow.pos);
-
-    // Overlap Code
-    {
-        aabb player_box = {0};
-        player_box.min.x = player.pos.x;
-        player_box.min.y = player.pos.y;
-        player_box.max.x = player.pos.x + player.width;
-        player_box.max.y = player.pos.y + player.width;
-
-        aabb mouse_box  = {0};
-        mouse_box.min.x = mouse_follow.pos.x - PLAYER_QUARTER_WIDTH;
-        mouse_box.min.y = mouse_follow.pos.y - PLAYER_QUARTER_WIDTH;
-        mouse_box.max.x = mouse_follow.pos.x + PLAYER_QUARTER_WIDTH;
-        mouse_box.max.y = mouse_follow.pos.y + PLAYER_QUARTER_WIDTH;
-
-        if (aabb_box_overlap(player_box, mouse_box))
-        {
-            local_persist int count;
-            NL_LOG("Overlap! %d", ++count);
-        }
-    }
 }
 
 void app_specific_render(void)
