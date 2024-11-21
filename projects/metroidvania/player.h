@@ -16,8 +16,9 @@ struct game_object
 {
     nl_sprite sprite;
     v2f pos;
-    float vertical_speed;
     float width;
+    float height;
+    float vertical_speed;
 
     char is_grounded;
 };
@@ -29,6 +30,8 @@ struct player_controller
     nl_key right;
     nl_key jump;
 };
+
+void init_gameobject(game_object* const object, float width, float height, v2f start, const char* sprite_path);
 
 void player_init(game_object* const player);
 void player_update(double dt, game_object* const player, player_controller* const controller);

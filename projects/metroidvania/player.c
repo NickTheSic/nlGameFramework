@@ -2,14 +2,20 @@
 
 global_variable unsigned int jump_sound = {0};
 
+void init_gameobject(game_object* const object, float width, float height, v2f start, const char* sprite_path)
+{
+    object->width = width;
+    object->height = height;
+    object->pos = start;
+    generate_rectangle_simple_sprite(&object->sprite, object->width, object->height);
+    load_texture_for_sprite(&object->sprite, sprite_path);
+}
+
 void player_init(game_object* const player)
 {
     jump_sound = load_sound_file("data/retrogamesfx.wav");
 
-    player->width = PLAYER_WIDTH;
-    player->pos = (v2f){100.0f,100.0f};
-    generate_square_simple_sprite(&player->sprite, player->width);
-    load_texture_for_sprite(&player->sprite, "data/thing.png");
+    init_gameobject(player, PLAYER_WIDTH, PLAYER_WIDTH, (v2f){100.f,100.f}, "data/thing.png");
 }
 
 void player_update(double dt, game_object* const player, player_controller* const controller)
