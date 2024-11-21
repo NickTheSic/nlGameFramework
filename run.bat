@@ -26,6 +26,10 @@ IF %1==nds (
     %DESMUME_EMULATOR% "_build\nds\game.nds"
 )
 
+IF %1==gba (
+    
+)
+
 :end
 
 @echo on

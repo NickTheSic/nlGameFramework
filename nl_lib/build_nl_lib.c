@@ -115,12 +115,29 @@
 //#include "third_party/stb_image.c"
 
 
+#elif defined(__GBA__)
+#include "private/common/nl_camera.c"
+#include "private/common/nl_fileio.c"
+#include "private/common/nl_input.c"
+#include "private/common/nl_math.c"
+#include "private/common/nl_memory.c"
+#include "private/common/nl_random.c"
+
+//#include "third_party/stb_image.c"
+
+#include "private/null/nl_mesh_null.c"
+#include "private/null/nl_shader_null.c"
+#include "private/null/nl_vertex_attrib_null.c"
+
+#include "private/gba/nl_audio_gba.c"
+#include "private/gba/nl_deltatime_gba.c"
+#include "private/gba/nl_gamepad_gba.c"
+#include "private/gba/nl_renderer_gba.c"
+#include "private/gba/nl_window_gba.c"
+
+
 #else
 #warning Incomplete Library for this platform. Using null platform
-
-#if defined(__GBA__)
-#include <tonc.h>
-#endif
 
 #include "private/common/nl_camera.c"
 #include "private/common/nl_fileio.c"
