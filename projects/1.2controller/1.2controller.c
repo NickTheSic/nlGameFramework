@@ -1,0 +1,23 @@
+#include "nl_lib.h"
+
+//TODO: A Generic way for controllers to work
+
+void app_specific_init(void)
+{
+
+}
+
+void app_specific_update(double dt)
+{
+    NL_UNUSED(dt);
+}
+
+void app_specific_render(void)
+{
+
+}
+
+void app_specific_cleanup(void)
+{
+    
+}
