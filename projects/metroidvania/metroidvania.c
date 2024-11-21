@@ -1,6 +1,5 @@
 #include "nl_lib.h"
 
-//
 #include "metroidvania.h"
 #include "camera_control.h"
 #include "private/nl_physics2d.h"
@@ -16,13 +15,13 @@ void app_specific_init(void)
 {
     player_init(&player);
 
-    //generate_square_mesh(&mouse_follow.mesh, PLAYER_HALF_WIDTH, (colourf){0.5f,0.1f,1.0f,1.0f});
-    generate_circle_mesh(&mouse_follow.mesh, PLAYER_HALF_WIDTH, 10);
+    generate_square_simple_sprite(&mouse_follow.mesh, PLAYER_HALF_WIDTH, (colourf){0.5f,0.1f,1.0f,1.0f});
+    //generate_circle_simple_sprite(&mouse_follow.mesh, PLAYER_HALF_WIDTH, 10);
     
-    generate_square_mesh(&debug_points[0], PLAYER_QUARTER_WIDTH, (colourf){1.f,1.f,1.0f,1.0f});
-    generate_square_mesh(&debug_points[1], PLAYER_QUARTER_WIDTH, (colourf){1.f,0.f,0.0f,1.0f});
-    generate_square_mesh(&debug_points[2], PLAYER_QUARTER_WIDTH, (colourf){0.f,1.f,0.0f,1.0f});
-    generate_square_mesh(&debug_points[3], PLAYER_QUARTER_WIDTH, (colourf){0.f,0.f,1.0f,1.0f});
+    generate_square_simple_sprite(&debug_points[0], PLAYER_QUARTER_WIDTH, (colourf){1.f,1.f,1.0f,1.0f});
+    generate_square_simple_sprite(&debug_points[1], PLAYER_QUARTER_WIDTH, (colourf){1.f,0.f,0.0f,1.0f});
+    generate_square_simple_sprite(&debug_points[2], PLAYER_QUARTER_WIDTH, (colourf){0.f,1.f,0.0f,1.0f});
+    generate_square_simple_sprite(&debug_points[3], PLAYER_QUARTER_WIDTH, (colourf){0.f,0.f,1.0f,1.0f});
 
     shader_program = create_shader_program(vertex_shader_code, fragment_shader_code);
     use_shader_program(shader_program);
@@ -78,7 +77,7 @@ void app_specific_render(void)
         model.m41 = player.pos.x;
         model.m42 = player.pos.y;
         set_uniform_mat4x4f(u_model_loc, &model.m11);
-        render_single_mesh(&player.mesh);
+        render_single_simple_sprite(&player.mesh);
     }
 
     {
@@ -86,28 +85,28 @@ void app_specific_render(void)
         model.m42 = player.pos.y;
 
         set_uniform_mat4x4f(u_model_loc, &model.m11);
-        render_single_mesh(&debug_points[0]);
+        render_single_simple_sprite(&debug_points[0]);
     }
     {
         model.m41 = player.pos.x + player.width - PLAYER_QUARTER_WIDTH;
         model.m42 = player.pos.y;
 
         set_uniform_mat4x4f(u_model_loc, &model.m11);
-        render_single_mesh(&debug_points[1]);
+        render_single_simple_sprite(&debug_points[1]);
     }
     {
         model.m41 = player.pos.x + player.width - PLAYER_QUARTER_WIDTH;
         model.m42 = player.pos.y + player.width - PLAYER_QUARTER_WIDTH;
 
         set_uniform_mat4x4f(u_model_loc, &model.m11);
-        render_single_mesh(&debug_points[2]);
+        render_single_simple_sprite(&debug_points[2]);
     }
     {
         model.m41 = player.pos.x;
         model.m42 = player.pos.y + player.width - PLAYER_QUARTER_WIDTH;
 
         set_uniform_mat4x4f(u_model_loc, &model.m11);
-        render_single_mesh(&debug_points[3]);
+        render_single_simple_sprite(&debug_points[3]);
     }
 
     {
@@ -117,20 +116,21 @@ void app_specific_render(void)
         model.m42 = (mouse_follow.pos.y);
 
         set_uniform_mat4x4f(u_model_loc, &model.m11);
-        render_single_mesh(&mouse_follow.mesh);
+        render_single_simple_sprite(&mouse_follow.mesh);
     }
 }
 
 void app_specific_cleanup(void)
 {
-    free_mesh(&player.mesh);
-    free_mesh(&mouse_follow.mesh);
+    free_simple_sprite(&player.mesh);
+    free_simple_sprite(&mouse_follow.mesh);
 
     for (int i = 0; i < 4; ++i)
     {
-        free_mesh(&debug_points[i]);
+        free_simple_sprite(&debug_points[i]);
     }
 }
 
 #include "camera_control.c"
 #include "player.c"
+#include "simple_sprite.c"

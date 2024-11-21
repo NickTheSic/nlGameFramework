@@ -1,6 +1,8 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
+#include "simple_sprite.h"
+
 #define PLAYER_MAX_SPEED (150.0f)
 #define PLAYER_WIDTH (50.0f)
 #define PLAYER_HALF_WIDTH (PLAYER_WIDTH * 0.5f)
@@ -12,7 +14,7 @@
 typedef struct game_object game_object;
 struct game_object
 {
-    mesh mesh;
+    simple_sprite mesh;
     v2f pos;
     float vertical_speed;
     float width;

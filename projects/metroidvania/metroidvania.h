@@ -2,6 +2,7 @@
 #define __METROIDVANIA_H__
 
 #include "player.h"
+#include "simple_sprite.h"
 
 /*
 TODO:
@@ -41,7 +42,7 @@ global_variable game_object player = {0};
 
 global_variable game_object mouse_follow = {0};
 
-global_variable mesh debug_points[4] = {0};
+global_variable simple_sprite debug_points[4] = {0};
 
 global_variable unsigned int shader_program = 0;
 global_variable unsigned int u_model_loc = 0;
