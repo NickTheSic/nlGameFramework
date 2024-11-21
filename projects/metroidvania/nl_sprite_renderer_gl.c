@@ -3,6 +3,12 @@
 #include <third_party/stb_image.h>
 #include <math.h>
 
+struct sprite_vertex_data
+{
+    v3f pos;
+    v2f uv;
+};
+
 global_variable const char* vertex_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                                   \n"

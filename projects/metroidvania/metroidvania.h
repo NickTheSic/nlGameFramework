@@ -17,7 +17,7 @@ TODO:
 
 global_variable player_controller controller = {key_a, key_d, key_space};
 global_variable game_object player = {0};
-
+global_variable game_object ground = {0};
 global_variable game_object mouse_follow = {0};
 
 global_variable camera main_cam = {0};

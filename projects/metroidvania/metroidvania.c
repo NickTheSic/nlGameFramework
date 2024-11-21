@@ -14,6 +14,9 @@ void app_specific_init(void)
 {
     player_init(&player);
 
+    generate_rectangle_simple_sprite(&ground.sprite, 100, 10);
+    load_texture_for_sprite(&ground.sprite, "data/thing.png");
+
     generate_square_simple_sprite(&mouse_follow.sprite, PLAYER_HALF_WIDTH);
     load_texture_for_sprite(&mouse_follow.sprite, "data/test_sprite.png");
 
@@ -64,6 +67,11 @@ void app_specific_render(void)
     mat4x4f model = {0};
     create_identity_matrix(&model);
     {
+        set_model_matrix(&model.m11);
+        render_single_simple_sprite(&ground.sprite);
+    }
+
+    {
         model.m41 = player.pos.x;
         model.m42 = player.pos.y;
         set_model_matrix(&model.m11);
@@ -83,6 +91,7 @@ void app_specific_cleanup(void)
 {
     free_simple_sprite(&player.sprite);
     free_simple_sprite(&mouse_follow.sprite);
+    free_simple_sprite(&ground.sprite);
 }
 
 #include "camera_control.c"

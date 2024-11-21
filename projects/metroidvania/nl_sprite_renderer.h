@@ -2,12 +2,6 @@
 #define __NL_SPRITE_RENDERER_H__
 
 typedef struct sprite_vertex_data sprite_vertex_data;
-struct sprite_vertex_data
-{
-    v3f pos;
-    v2f uv;
-};
-
 typedef struct nl_sprite nl_sprite;
 struct nl_sprite
 {
