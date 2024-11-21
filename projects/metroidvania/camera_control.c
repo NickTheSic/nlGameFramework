@@ -1,5 +1,7 @@
 #include "camera_control.h"
 
+#include "nl_sprite_renderer.h"
+
 #include <private/nl_math.h>
 #include <private/nl_shader.h>
 
@@ -37,7 +39,6 @@ void camera_controls(float dt, camera* const cam)
     if (bIsDirty > 0)
     {
         create_srt_matrix(&cam->view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){camera_pos_x,camera_pos_y,0.0f});
-        u_view_mat = get_uniform_loc(shader_program, "uViewMat");
-        set_uniform_mat4x4f(u_view_mat, &cam->view_matrix.m11);
+        set_view_matrix(&cam->view_matrix.m11);
     }
 }

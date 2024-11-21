@@ -1,5 +1,4 @@
 #include "player.h"
-#include "simple_sprite.h"
 
 global_variable unsigned int jump_sound = {0};
 

@@ -7,8 +7,7 @@
 internal_function void winsizecbk(int width, int height)
 {
     create_orthographic_projection(&main_cam.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
-    unsigned int projMat = get_uniform_loc(shader_program, "uProjMat");
-    set_uniform_mat4x4f(projMat, &main_cam.proj_matrix.m11);
+    set_projection_matrix(&main_cam.proj_matrix.m11);
 }
 
 void app_specific_init(void)
@@ -18,18 +17,14 @@ void app_specific_init(void)
     generate_square_simple_sprite(&mouse_follow.sprite, PLAYER_HALF_WIDTH);
     load_texture_for_sprite(&mouse_follow.sprite, "data/test_sprite.png");
 
-    shader_program = create_shader_program(vertex_shader_code, fragment_shader_code);
-    use_shader_program(shader_program);
-
-    u_model_loc = get_uniform_loc(shader_program, "uModelMat");
+    init_sprite_renderer();
 
     pfn_window_size_callback = &winsizecbk;
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
 
     create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,0.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,0.0f});
-    u_view_mat = get_uniform_loc(shader_program, "uViewMat");
-    set_uniform_mat4x4f(u_view_mat, &main_cam.view_matrix.m11);
+    set_view_matrix(&main_cam.view_matrix.m11);
 }
 
 void app_specific_update(double dt)
@@ -65,15 +60,13 @@ void app_specific_update(double dt)
 }
 
 void app_specific_render(void)
-{
-    use_shader_program(shader_program);
-    
+{   
     mat4x4f model = {0};
     create_identity_matrix(&model);
     {
         model.m41 = player.pos.x;
         model.m42 = player.pos.y;
-        set_uniform_mat4x4f(u_model_loc, &model.m11);
+        set_model_matrix(&model.m11);
         render_single_simple_sprite(&player.sprite);
     }
 
@@ -81,7 +74,7 @@ void app_specific_render(void)
         model.m41 = (mouse_follow.pos.x-PLAYER_QUARTER_WIDTH);
         model.m42 = (mouse_follow.pos.y-PLAYER_QUARTER_WIDTH);
 
-        set_uniform_mat4x4f(u_model_loc, &model.m11);
+        set_model_matrix(&model.m11);
         render_single_simple_sprite(&mouse_follow.sprite);
     }
 }
@@ -94,4 +87,4 @@ void app_specific_cleanup(void)
 
 #include "camera_control.c"
 #include "player.c"
-#include "simple_sprite.c"
+#include "nl_sprite_renderer_gl.c"
