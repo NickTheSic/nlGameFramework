@@ -12,13 +12,25 @@ typedef struct
 
 struct batch2d
 {
-    int unused;
+    int primitive_type;
+    int batch_count;
+    int current_vertices;
+    Vertex* vertices;
 };
 
 batch2d* init_batch(unsigned int count)
 {
-    NL_UNUSED(count);
-    return 0;
+    batch2d *batch = memory_allocate(sizeof(batch2d));
+    batch->primitive_type = GU_SPRITES;
+
+    // First issue: A sprite needs 2 points per item. a triangle needs 3. 
+    // lines need 2, a line strip or triangle strip start normal then only need 1 new one after
+    // assumption: these will be sprites so count * 2
+    batch->batch_count = count*2; // 2 vertices per sprite
+
+    batch->current_vertices = 0;
+
+    return batch;
 }
 
 void free_batch(batch2d** batch)
@@ -28,15 +40,17 @@ void free_batch(batch2d** batch)
 
 void begin_render_batch(batch2d* const batch)
 {
-    NL_UNUSED(batch);
-    NL_UNIMPLEMENTED_FUNC;
+    batch->vertices = (Vertex*)sceGuGetMemory(sizeof(Vertex) * batch->batch_count);
+}
+
+internal_function void render_batch(batch2d* const batch)
+{
+    
 }
 
 void add_rectangle_to_render_batch(batch2d* const batch, v2f pos, colour col, v2f size)
 {
     NL_UNUSED(batch);
-
-    Vertex* vertices = (Vertex*)sceGuGetMemory(2 * sizeof(Vertex));
 
     vertices[0].x = pos.x;
     vertices[0].y = pos.y;
@@ -46,7 +60,7 @@ void add_rectangle_to_render_batch(batch2d* const batch, v2f pos, colour col, v2
 
     sceGuColor(col.unsigned_integer);
     //             int prim,   int vtype,            int count, const void* indices, const void* vertices
-    sceGuDrawArray(GU_SPRITES, GU_TEXTURE_16BIT | GU_VERTEX_32BITF | GU_TRANSFORM_2D, 2, 0, vertices);
+    sceGuDrawArray(batch->primitive_type, GU_TEXTURE_16BIT | GU_VERTEX_32BITF | GU_TRANSFORM_2D, 2, 0, vertices);
 }
 
 void add_square_to_render_batch(batch2d* const batch, v2f pos, colour col, float size)

@@ -93,6 +93,7 @@
 
 
 #elif defined(PSP)
+//#include "private/common/nl_audio_openal.c"
 #include "private/common/nl_camera.c"
 #include "private/common/nl_fileio.c"
 #include "private/common/nl_input.c"
@@ -107,7 +108,8 @@
 #include "private/psp/nl_audio_psp.c"
 #include "private/psp/nl_deltatime_psp.c"
 #include "private/psp/nl_gamepad_psp.c"
-#include "private/psp/nl_renderer_psp.c"
+#include "private/psp/nl_renderer_debug_psp.c"
+//#include "private/psp/nl_renderer_psp.c"
 #include "private/psp/nl_window_psp.c"
 
 //#include "third_party/stb_image.c"

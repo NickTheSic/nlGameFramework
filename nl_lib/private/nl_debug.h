@@ -10,14 +10,14 @@
 #endif
 
 #define DO_ONCE(thing) {static int doonce = 1; if (doonce){ doonce = 0; thing; }}
-#define NL_UNIMPLEMENTED_FUNC DO_ONCE(NL_LOG("Unimplemented Function %s in %s", __FUNCTION__, __FILE__););
+#define NL_UNIMPLEMENTED_FUNC //DO_ONCE(NL_LOG("Unimplemented Function %s in %s", __FUNCTION__, __FILE__););
 #define NL_DEPRECATED_FUNC(replace) DO_ONCE(NL_LOG("Deprecated Function %s in %s, replace with %s", __FUNCTION__, __FILE__, replace););
 
 #define internal_function static
 #define global_variable static
 #define local_persist static
 
-#define NL_UNUSED(x) (void)(x); DO_ONCE(NL_LOG("variable %s is not being used in %s", #x, __FUNCTION__););
+#define NL_UNUSED(x) (void)(x); //DO_ONCE(NL_LOG("variable %s is not being used in %s", #x, __FUNCTION__););
 
 #if defined(__EMSCRIPTEN__) || defined(GEKKO) || defined(PSP)
 #define CANNOT_EXIT_MAIN_LOOP 1
