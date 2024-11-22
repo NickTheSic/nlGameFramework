@@ -81,7 +81,7 @@ internal_function void set_man_start_position(void)
     man_pos.y = LASER_BOTTOM_Y + 32.f;
 }
 
-internal_function void set_money_end_position(void)
+internal_function void set_money_end_position(int furthest_active_laser)
 {
     money_pos.x = LASER_START_X + 64 + (50 * furthest_active_laser);
     money_pos.y = LASER_BOTTOM_Y + 32;
@@ -104,8 +104,8 @@ internal_function void generate_game_laser_beams(void)
         if (lasers[i].laser_active)
         {furthest_active_laser = i;}
     }
-    
-    set_money_end_position();
+
+    set_money_end_position(furthest_active_laser);
 }
 
 void app_specific_init(void)
