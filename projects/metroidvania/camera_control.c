@@ -3,7 +3,6 @@
 #include "nl_sprite_renderer.h"
 
 #include <private/nl_math.h>
-#include <private/nl_shader.h>
 
 global_variable float camera_pos_x = {0};
 global_variable float camera_pos_y = {0};

@@ -67,7 +67,7 @@ int main(int count, char** args)
     init_random_number_generator(80);
     //init_random_number_generator(time(NULL));
 
-    if (!initialize_window(800,600, "Sandbox Mode"))
+    if (!initialize_window(600,300, "Sandbox Mode"))
     {
         NL_LOG("Failed to initialize window");
         return -1;
