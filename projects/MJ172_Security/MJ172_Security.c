@@ -9,6 +9,7 @@ global_variable camera main_cam = {0};
 #define LASER_TOP_Y LASER_BOTTOM_Y + LASER_DISTANCE
 #define LASER_START_X 120.f
 #define MAX_LASER_BEAMS_IN_GAME 3
+#define BEAM_CHECK_TIME 3.0f
 
 nl_sprite laser_base = {0};
 nl_sprite laser_beam = {0};
@@ -21,6 +22,10 @@ v2f money_pos = {0};
 
 v2f laser_beam_positions[MAX_LASER_BEAMS_IN_GAME] = {0};
 v2f laser_beam_size = {0};
+
+float current_beam_reset_time = 0.0f;
+
+unsigned char laser_beam_active[MAX_LASER_BEAMS_IN_GAME] = {0};
 
 unsigned int coin_pickup_sfx = {0};
 unsigned int laser_hit_sfx = {0};
@@ -85,11 +90,25 @@ void app_specific_init(void)
     {
         laser_beam_positions[i].x = LASER_START_X + (i*50);
         laser_beam_positions[i].y = LASER_BOTTOM_Y;
+
+        laser_beam_active[i] = (unsigned char)random_int_in_range(0,2);
+        NL_LOG("Random Int: %d", (int)laser_beam_active[i]);
     }
 }
 
 void app_specific_update(double dt)
 {
+    current_beam_reset_time += dt;
+    if (current_beam_reset_time >= BEAM_CHECK_TIME)
+    {
+        current_beam_reset_time -= BEAM_CHECK_TIME;
+        for (int i = 0; i < MAX_LASER_BEAMS_IN_GAME; ++i)
+        {
+            laser_beam_active[i] = (unsigned char)random_int_in_range(0,2);
+            NL_LOG("Random Int: %d", (int)laser_beam_active[i]);
+        }
+    }
+    
     switch(started)
     {
         case 0:
@@ -129,7 +148,7 @@ void app_specific_update(double dt)
                 laser_box.max.x = laser_beam_positions[i].x + laser_beam_size.x;
                 laser_box.max.y = laser_beam_positions[i].y + laser_beam_size.y;
 
-                if (aabb_box_overlap(man_box, laser_box))
+                if (aabb_box_overlap(man_box, laser_box) && laser_beam_active[i])
                 {
                     started = 0;
                     play_sound(laser_hit_sfx);
@@ -152,7 +171,8 @@ void app_specific_render(void)
             model.m41 = laser_beam_positions[i].x;
             model.m42 = laser_beam_positions[i].y;
             set_model_matrix(&model.m11);
-            render_single_simple_sprite(&laser_beam);
+            if (laser_beam_active[i])
+                render_single_simple_sprite(&laser_beam);
             render_single_simple_sprite(&laser_base);
 
             model.m42 = LASER_TOP_Y;
