@@ -17,7 +17,6 @@ void run()
 {
     poll_events();
     update_input_frame_state();
-    udpate_gamepad();
     
     double dt = get_frame_delta_time();
 
@@ -71,12 +70,6 @@ int main(int count, char** args)
     if (!initialize_window(500,300, "Sandbox Mode"))
     {
         NL_LOG("Failed to initialize window");
-        return -1;
-    }
-
-    if (!init_gamepad_system())
-    {
-        NL_LOG("Failed to initialize gamepad system");
         return -1;
     }
 

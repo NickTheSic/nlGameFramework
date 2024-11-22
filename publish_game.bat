@@ -7,11 +7,6 @@ IF "%2"=="" (
     echo missing second parameter. should be the project
 )
 
-IF /I %1==win (
-call "publish_scripts/publish_win" %2
-goto publish_success
-)
-
 IF /I %1==html (
 call "publish_scripts/publish_html" %2
 goto publish_success
