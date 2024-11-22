@@ -10,7 +10,7 @@
 #include "../../third_party/al.h"
 #include "../../third_party/alc.h"
 
-#define MAX_SOUND_BUFFERS 3
+#define MAX_SOUND_BUFFERS 4
 
 typedef struct audio_system audio_system;
 struct audio_system

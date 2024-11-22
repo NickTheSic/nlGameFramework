@@ -38,6 +38,7 @@ float current_beam_reset_time = 0.0f;
 unsigned int coin_pickup_sfx = {0};
 unsigned int laser_hit_sfx = {0};
 unsigned int run_start_sfx = {0};
+unsigned int sneak_bgm = {0};
 
 unsigned char game_state = 0;
 
@@ -52,6 +53,7 @@ internal_function void load_game_sfx(void)
     coin_pickup_sfx = load_sound_file("data/coinPickup.wav");
     laser_hit_sfx = load_sound_file("data/laserHit.wav");
     run_start_sfx = load_sound_file("data/run.wav");
+    sneak_bgm = load_sound_file("data/SneakySong.wav");
 }
 
 internal_function void generate_game_sprites(void)
@@ -169,6 +171,9 @@ void app_specific_init(void)
     generate_game_sprites();
     load_game_sfx();
 
+    set_sound_to_loop(sneak_bgm);
+    play_sound(sneak_bgm);
+
     restart_game();
 
     pfn_window_size_callback = &winsizecbk;
@@ -215,7 +220,7 @@ void app_specific_update(double dt)
                 game_state = 0;
                 play_sound(run_start_sfx);
             }
-            
+
             collision_test();
         } break;
 
@@ -227,7 +232,7 @@ void app_specific_update(double dt)
 
         case 4:
         {
-            difficulty=++difficulty%5;
+            difficulty = (difficulty+1) % 5;
             // hit coins
             restart_game();
         } break;
