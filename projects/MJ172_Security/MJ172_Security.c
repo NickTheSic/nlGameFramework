@@ -18,6 +18,10 @@ nl_sprite money = {0};
 v2f man_pos = {0};
 v2f money_pos = {0};
 
+unsigned int coin_pickup_sfx = {0};
+unsigned int laser_hit_sfx = {0};
+unsigned int run_start_sfx = {0};
+
 unsigned char started = 0;
 
 internal_function void winsizecbk(int width, int height)
@@ -45,6 +49,10 @@ void app_specific_init(void)
     generate_rectangle_simple_sprite(&money, 32, 32);
     load_texture_for_sprite(&money, "data/money.png");
 
+    coin_pickup_sfx = load_sound_file("data/coinPickup.wav");
+    laser_hit_sfx = load_sound_file("data/laserHit.wav");
+    run_start_sfx = load_sound_file("data/run.wav");
+
     man_pos.x = LASER_START_X - 40.f;
     man_pos.y =LASER_BOTTOM_Y + 32.f;
     money_pos.x = LASER_START_X + 48 + (50 * 3);
@@ -65,6 +73,7 @@ void app_specific_update(double dt)
         if (key_was_pressed(key_space))
         {
             started = 1;
+            play_sound(run_start_sfx);
         }
     }
 
@@ -85,6 +94,7 @@ void app_specific_update(double dt)
         if (aabb_box_overlap(man_box, money_box))
         {
             started = 0;
+            play_sound(coin_pickup_sfx);
         }
     }
 }

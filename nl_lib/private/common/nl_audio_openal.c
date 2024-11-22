@@ -50,7 +50,7 @@ static ALuint load_wav_sound(const char* filename)
         return 0;
     }
 
-    if (local_audio_system->sounds_loaded >= MAX_SOUND_BUFFERS-1)
+    if (local_audio_system->sounds_loaded >= MAX_SOUND_BUFFERS)
     {
         NL_LOG("Unable to allocate more sounds for this buffer.  We have reached the max sounds and can't load %s", filename);
         return 0;
