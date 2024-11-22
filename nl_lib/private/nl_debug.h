@@ -13,7 +13,7 @@
 #define NL_UNIMPLEMENTED_FUNC //DO_ONCE(NL_LOG("Unimplemented Function %s in %s", __FUNCTION__, __FILE__););
 #define NL_DEPRECATED_FUNC(replace) DO_ONCE(NL_LOG("Deprecated Function %s in %s, replace with %s", __FUNCTION__, __FILE__, replace););
 
-#define internal_function static
+#define internal_function static inline
 #define global_variable static
 #define local_persist static
 

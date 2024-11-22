@@ -8,6 +8,7 @@ global_variable camera main_cam = {0};
 #define LASER_DISTANCE 170.f
 #define LASER_TOP_Y LASER_BOTTOM_Y + LASER_DISTANCE
 #define LASER_START_X 120.f
+#define MAX_LASER_BEAMS_IN_GAME 3
 
 nl_sprite laser_base = {0};
 nl_sprite laser_beam = {0};
@@ -17,6 +18,9 @@ nl_sprite money = {0};
 
 v2f man_pos = {0};
 v2f money_pos = {0};
+
+v2f laser_beam_positions[MAX_LASER_BEAMS_IN_GAME] = {0};
+v2f laser_beam_size = {0};
 
 unsigned int coin_pickup_sfx = {0};
 unsigned int laser_hit_sfx = {0};
@@ -30,10 +34,15 @@ internal_function void winsizecbk(int width, int height)
     set_projection_matrix(&main_cam.proj_matrix.m11);
 }
 
-void app_specific_init(void)
+internal_function void load_game_sfx(void)
 {
-    init_sprite_renderer();
+    coin_pickup_sfx = load_sound_file("data/coinPickup.wav");
+    laser_hit_sfx = load_sound_file("data/laserHit.wav");
+    run_start_sfx = load_sound_file("data/run.wav");
+}
 
+internal_function void generate_game_sprites(void)
+{
     generate_rectangle_simple_sprite(&laser_base, 32, 16);
     load_texture_for_sprite(&laser_base, "data/laser_stop.png");
 
@@ -48,15 +57,22 @@ void app_specific_init(void)
 
     generate_rectangle_simple_sprite(&money, 32, 32);
     load_texture_for_sprite(&money, "data/money.png");
+}
 
-    coin_pickup_sfx = load_sound_file("data/coinPickup.wav");
-    laser_hit_sfx = load_sound_file("data/laserHit.wav");
-    run_start_sfx = load_sound_file("data/run.wav");
+void app_specific_init(void)
+{
+    init_sprite_renderer();
+
+    generate_game_sprites();
+    load_game_sfx();
 
     man_pos.x = LASER_START_X - 40.f;
-    man_pos.y =LASER_BOTTOM_Y + 32.f;
+    man_pos.y = LASER_BOTTOM_Y + 32.f;
     money_pos.x = LASER_START_X + 48 + (50 * 3);
     money_pos.y = LASER_BOTTOM_Y + 32;
+
+    laser_beam_size.x = 32.f;
+    laser_beam_size.y = LASER_DISTANCE;
 
     pfn_window_size_callback = &winsizecbk;
     v2i screen_size = get_screen_size();
@@ -64,38 +80,64 @@ void app_specific_init(void)
 
     create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,0.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,0.0f});
     set_view_matrix(&main_cam.view_matrix.m11);
+
+    for (int i = 0; i < MAX_LASER_BEAMS_IN_GAME; ++i)
+    {
+        laser_beam_positions[i].x = LASER_START_X + (i*50);
+        laser_beam_positions[i].y = LASER_BOTTOM_Y;
+    }
 }
 
 void app_specific_update(double dt)
 {
-    if (started == 0)
+    switch(started)
     {
-        if (key_was_pressed(key_space))
+        case 0:
         {
-            started = 1;
-            play_sound(run_start_sfx);
-        }
-    }
+            if (key_was_pressed(key_space))
+            {
+                started = 1;
+                play_sound(run_start_sfx);
+            }
+        } break;
 
-    if (started == 1)
-    {
-        man_pos.x += 100 * dt;
-
-        aabb man_box = {0};
-        man_box.min = man_pos;
-        man_box.max.x = man_pos.x + 32;
-        man_box.max.y = man_pos.y + 64;
-
-        aabb money_box = {0};
-        money_box.min = money_pos;
-        money_box.max.x = money_pos.x + 32;
-        money_box.max.y = money_pos.y + 32;
-
-        if (aabb_box_overlap(man_box, money_box))
+        case 1:
         {
-            started = 0;
-            play_sound(coin_pickup_sfx);
-        }
+            man_pos.x += 100 * dt;
+
+            aabb man_box = {0};
+            man_box.min = man_pos;
+            man_box.max.x = man_pos.x + 32;
+            man_box.max.y = man_pos.y + 64;
+
+            aabb money_box = {0};
+            money_box.min = money_pos;
+            money_box.max.x = money_pos.x + 32;
+            money_box.max.y = money_pos.y + 32;
+
+            if (aabb_box_overlap(man_box, money_box))
+            {
+                started = 0;
+                play_sound(coin_pickup_sfx);
+            }
+
+            for (int i = 0; i < MAX_LASER_BEAMS_IN_GAME; ++i)
+            {
+                aabb laser_box = {0};
+                laser_box.min.x = laser_beam_positions[i].x;
+                laser_box.min.y = laser_beam_positions[i].y;
+                laser_box.max.x = laser_beam_positions[i].x + laser_beam_size.x;
+                laser_box.max.y = laser_beam_positions[i].y + laser_beam_size.y;
+
+                if (aabb_box_overlap(man_box, laser_box))
+                {
+                    started = 0;
+                    play_sound(laser_hit_sfx);
+                    break;
+                }
+            }
+
+        } break;
     }
 }
 
@@ -105,20 +147,18 @@ void app_specific_render(void)
     //model.m41
     create_identity_matrix(&model);
     {
-        model.m41 = LASER_START_X;
         for (int i = 0; i < 3; ++i)
         {
-            model.m42 = LASER_BOTTOM_Y;
+            model.m41 = laser_beam_positions[i].x;
+            model.m42 = laser_beam_positions[i].y;
             set_model_matrix(&model.m11);
             render_single_simple_sprite(&laser_beam);
             render_single_simple_sprite(&laser_base);
+
             model.m42 = LASER_TOP_Y;
             set_model_matrix(&model.m11);
             render_single_simple_sprite(&laser_top);
-            model.m41 += 50;
         }
-        model.m42 = LASER_BOTTOM_Y + 32;
-        set_model_matrix(&model.m11);
     }
 
     create_identity_matrix(&model);
@@ -128,6 +168,7 @@ void app_specific_render(void)
         set_model_matrix(&model.m11);
         render_single_simple_sprite(&money);
     }
+
     create_identity_matrix(&model);
     {
         model.m41 = man_pos.x;
