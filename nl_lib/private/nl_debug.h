@@ -31,4 +31,10 @@
 #define NOT_YET_IMPLEMENTED 0
 #endif
 
+#if defined(__EMSCRIPTEN__) || defined(_WIN32)
+#define NL_USE_GL_RENDERER 1
+#else
+#define NL_USE_GL_RENDERER 0
+#endif
+
 #endif //__NL_DEBUG_H__

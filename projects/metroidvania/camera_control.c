@@ -10,6 +10,9 @@ global_variable float camera_pos_y = {0};
 
 void camera_controls(float dt, camera* const cam)
 {
+#ifdef NOT_YET_IMPLEMENTED
+    NL_UNUSED(dt);NL_UNUSED(cam);
+#else
     char bIsDirty = 0;
 
     if (key_is_held(key_right))
@@ -39,4 +42,5 @@ void camera_controls(float dt, camera* const cam)
         create_srt_matrix(&cam->view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){camera_pos_x,camera_pos_y,0.0f});
         set_view_matrix(&cam->view_matrix.m11);
     }
+#endif
 }

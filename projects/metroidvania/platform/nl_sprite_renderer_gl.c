@@ -1,4 +1,4 @@
-#include "nl_sprite_renderer.h"
+#include "../nl_sprite_renderer.h"
 #include "private/gl/nl_gl.h"
 #include <third_party/stb_image.h>
 #include <math.h>

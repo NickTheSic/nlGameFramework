@@ -70,4 +70,9 @@ void app_specific_cleanup(void)
 
 #include "camera_control.c"
 #include "player.c"
-#include "nl_sprite_renderer_gl.c"
+
+#ifdef PSP
+#include "platform/nl_sprite_renderer_psp.c"
+#else
+#include "platform/nl_sprite_renderer_gl.c"
+#endif
