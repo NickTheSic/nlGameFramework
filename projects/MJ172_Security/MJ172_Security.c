@@ -3,8 +3,9 @@
 
 global_variable camera main_cam = {0};
 
-#define LASER_BOTTOM_Y 100.f
-#define LASER_TOP_Y 228.f
+#define LASER_BOTTOM_Y 80.f
+#define LASER_DISTANCE 170.f
+#define LASER_TOP_Y LASER_BOTTOM_Y + LASER_DISTANCE
 #define LASER_START_X 120.f
 
 nl_sprite laser_base = {0};
@@ -27,7 +28,7 @@ void app_specific_init(void)
     generate_rectangle_simple_sprite(&laser_top, 32, 16);
     load_texture_for_sprite(&laser_top, "data/laser_top.png");
 
-    generate_rectangle_simple_sprite(&laser_beam, 32, 128);
+    generate_rectangle_simple_sprite(&laser_beam, 32, LASER_DISTANCE);
     load_texture_for_sprite(&laser_beam, "data/single_red_pixel.png");
 
     pfn_window_size_callback = &winsizecbk;
