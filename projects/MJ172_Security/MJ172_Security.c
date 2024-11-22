@@ -11,6 +11,8 @@ global_variable camera main_cam = {0};
 #define MAX_LASER_BEAMS_IN_GAME 4
 #define BEAM_CHECK_TIME 3.0f
 
+unsigned int difficulty = {1};
+
 typedef struct laser laser;
 struct laser
 {
@@ -72,7 +74,7 @@ internal_function void generate_game_sprites(void)
 
 internal_function unsigned char get_laser_beam_showing(laser* const laser)
 {
-    return (laser->laser_active > 0 ? (unsigned char)random_int_in_range(0,3) : 0);
+    return (laser->laser_active > 0 ? (unsigned char)random_int_in_range(0,difficulty) : 0);
 }
 
 internal_function void set_man_start_position(void)
@@ -123,6 +125,43 @@ internal_function void restart_game(void)
     generate_game_laser_beams();
 }
 
+internal_function void collision_test(void)
+{
+    aabb man_box = {0};
+    man_box.min = man_pos;
+    man_box.max.x = man_pos.x + 32;
+    man_box.max.y = man_pos.y + 64;
+
+    aabb money_box = {0};
+    money_box.min = money_pos;
+    money_box.max.x = money_pos.x + 32;
+    money_box.max.y = money_pos.y + 32;
+
+    if (aabb_box_overlap(man_box, money_box))
+    {
+        game_state = 4;
+        play_sound(coin_pickup_sfx);
+    }
+
+    for (int i = 0; i < MAX_LASER_BEAMS_IN_GAME; ++i)
+    {
+        if (lasers[i].laser_active && lasers[i].beam_active)
+        {
+            aabb laser_box = {0};
+            laser_box.min.x = lasers[i].pos.x;
+            laser_box.min.y = lasers[i].pos.y;
+            laser_box.max.x = lasers[i].pos.x + laser_beam_size.x;
+            laser_box.max.y = lasers[i].pos.y + laser_beam_size.y;
+            if (aabb_box_overlap(man_box, laser_box))
+            {
+                game_state = 3;
+                play_sound(laser_hit_sfx);
+                break;
+            }
+        }
+    }
+}
+
 void app_specific_init(void)
 {
     init_sprite_renderer();
@@ -171,41 +210,13 @@ void app_specific_update(double dt)
         {
             man_pos.x += 100 * dt;
 
-            aabb man_box = {0};
-            man_box.min = man_pos;
-            man_box.max.x = man_pos.x + 32;
-            man_box.max.y = man_pos.y + 64;
-
-            aabb money_box = {0};
-            money_box.min = money_pos;
-            money_box.max.x = money_pos.x + 32;
-            money_box.max.y = money_pos.y + 32;
-
-            if (aabb_box_overlap(man_box, money_box))
+            if (key_was_pressed(key_space))
             {
-                game_state = 4;
-                play_sound(coin_pickup_sfx);
+                game_state = 0;
+                play_sound(run_start_sfx);
             }
-
-            for (int i = 0; i < MAX_LASER_BEAMS_IN_GAME; ++i)
-            {
-                if (lasers[i].laser_active && lasers[i].beam_active)
-                {
-                    aabb laser_box = {0};
-                    laser_box.min.x = lasers[i].pos.x;
-                    laser_box.min.y = lasers[i].pos.y;
-                    laser_box.max.x = lasers[i].pos.x + laser_beam_size.x;
-                    laser_box.max.y = lasers[i].pos.y + laser_beam_size.y;
-
-                    if (aabb_box_overlap(man_box, laser_box))
-                    {
-                        game_state = 3;
-                        play_sound(laser_hit_sfx);
-                        break;
-                    }
-                }
-            }
-
+            
+            collision_test();
         } break;
 
         case 3:
@@ -216,10 +227,10 @@ void app_specific_update(double dt)
 
         case 4:
         {
+            difficulty=++difficulty%5;
             // hit coins
             restart_game();
         } break;
-
     }
 }
 
