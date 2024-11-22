@@ -1,5 +1,6 @@
 #include "nl_lib.h"
 #include "nl_sprite_renderer.h"
+#include <private/nl_physics2d.h>
 
 global_variable camera main_cam = {0};
 
@@ -13,6 +14,11 @@ nl_sprite laser_beam = {0};
 nl_sprite laser_top = {0};
 nl_sprite man = {0};
 nl_sprite money = {0};
+
+v2f man_pos = {0};
+v2f money_pos = {0};
+
+unsigned char started = 0;
 
 internal_function void winsizecbk(int width, int height)
 {
@@ -39,6 +45,11 @@ void app_specific_init(void)
     generate_rectangle_simple_sprite(&money, 32, 32);
     load_texture_for_sprite(&money, "data/money.png");
 
+    man_pos.x = LASER_START_X - 40.f;
+    man_pos.y =LASER_BOTTOM_Y + 32.f;
+    money_pos.x = LASER_START_X + 48 + (50 * 3);
+    money_pos.y = LASER_BOTTOM_Y + 32;
+
     pfn_window_size_callback = &winsizecbk;
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
@@ -49,7 +60,33 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
-    NL_UNUSED(dt);
+    if (started == 0)
+    {
+        if (key_was_pressed(key_space))
+        {
+            started = 1;
+        }
+    }
+
+    if (started == 1)
+    {
+        man_pos.x += 100 * dt;
+
+        aabb man_box = {0};
+        man_box.min = man_pos;
+        man_box.max.x = man_pos.x + 32;
+        man_box.max.y = man_pos.y + 64;
+
+        aabb money_box = {0};
+        money_box.min = money_pos;
+        money_box.max.x = money_pos.x + 32;
+        money_box.max.y = money_pos.y + 32;
+
+        if (aabb_box_overlap(man_box, money_box))
+        {
+            started = 0;
+        }
+    }
 }
 
 void app_specific_render(void)
@@ -72,13 +109,19 @@ void app_specific_render(void)
         }
         model.m42 = LASER_BOTTOM_Y + 32;
         set_model_matrix(&model.m11);
-        render_single_simple_sprite(&money);
     }
 
     create_identity_matrix(&model);
     {
-        model.m41 = LASER_START_X - 40.f;
-        model.m42 = LASER_BOTTOM_Y + 32.f;
+        model.m41 = money_pos.x;
+        model.m42 = money_pos.y;
+        set_model_matrix(&model.m11);
+        render_single_simple_sprite(&money);
+    }
+    create_identity_matrix(&model);
+    {
+        model.m41 = man_pos.x;
+        model.m42 = man_pos.y;
         set_model_matrix(&model.m11);
         render_single_simple_sprite(&man);
     }
