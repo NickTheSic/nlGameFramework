@@ -37,4 +37,10 @@
 #define NL_USE_GL_RENDERER 0
 #endif
 
+#if defined(GEKKO) || defined(PSP) || defined(__GBA__) || defined(NDS)
+#define PLATFORM_CONSOLE 1
+#else
+#define PLATFORM_CONSOLE 0
+#endif
+
 #endif //__NL_DEBUG_H__

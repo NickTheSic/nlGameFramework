@@ -44,10 +44,10 @@ unsigned int load_sound_file(const char* const filename)
 
     wav_file_header * const wav_header = (wav_file_header* const)(sound_file.content);
     NL_UNUSED(wav_header);
-    const short channels = wav_header->channels;
-    const short bits_per_sample = wav_header->bits_per_sample;
-    const int data_size = wav_header->data_size;
-    const int sample_rate = wav_header->sample_rate;
+    //const short channels = wav_header->channels;
+    //const short bits_per_sample = wav_header->bits_per_sample;
+    //const int data_size = wav_header->data_size;
+    //const int sample_rate = wav_header->sample_rate;
 
     pspAudioSetChannelCallback(0, channel_bgm, NULL);
 

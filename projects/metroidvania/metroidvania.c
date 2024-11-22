@@ -1,5 +1,9 @@
 #include "nl_lib.h"
 
+#if PLATFORM_CONSOLE
+#include "private/nl_keys_to_controller.h"
+#endif
+
 #include "metroidvania.h"
 #include "camera_control.h"
 #include "private/nl_physics2d.h"

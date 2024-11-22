@@ -80,12 +80,14 @@ internal_function void scale_matrix_2f(mat4x4f* const mat, v2f scale)
     mat->m13 *= 1.0f;    mat->m23 *= 1.0f;    mat->m33 *= 1.0f;    mat->m43 *= 1.0f;
 }
 
+#if 0 // supress warning since I am not using this
 internal_function void scale_matrix_1f(mat4x4f* const mat, float scale)
 {
     mat->m11 *= scale; mat->m21 *= scale; mat->m31 *= scale; mat->m41 *= scale;
     mat->m12 *= scale; mat->m22 *= scale; mat->m32 *= scale; mat->m42 *= scale;
     mat->m13 *= scale; mat->m23 *= scale; mat->m33 *= scale; mat->m43 *= scale;
 }
+#endif
 
 internal_function void rotate_matrix(mat4x4f* const mat, float angle, float x, float y, float z)
 {

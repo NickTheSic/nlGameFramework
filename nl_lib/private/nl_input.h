@@ -2,7 +2,6 @@
 #define __NL_INPUT_H__
 
 #include "nl_keys.h"
-#include "nl_math.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -24,7 +23,6 @@ int key_was_released(nl_key k);
 
 // Works if I don't reset to 0.  Use case was for rebinding a key
 int get_last_key_pressed(void);
-
 
 void set_mouse_button_down(int mb);
 void set_mouse_button_up(int mb);

@@ -15,9 +15,9 @@ void fopen_s(FILE** file, const char* filename, const char* descript)
 #define strtok_s strtok_r
 #endif
 
-#if defined (GEKKO)
+#if defined(GEKKO) || defined(PSP)
 // The following fails and suggests_sscanf_r which I cannot seem to find online
-#define sscanf_s(...); 
+#define sscanf_s sscanf 
 #endif
 
 void read_entire_file(const char* filename, file_contents* const contents)
@@ -165,12 +165,6 @@ internal_function void parse_vertices_indices(const file_contents *const content
 
 void load_mesh_from_file(const char* const file, mesh* const mesh)
 {
-#if NOT_YET_IMPLEMENTED
-    NL_UNUSED(file); NL_UNUSED(mesh);
-    NL_UNIMPLEMENTED_FUNC;
-    return;
-
-#else
     NL_LOG("Loading Mesh %s", file);
 
     int vertice_count = 0;
@@ -263,6 +257,4 @@ void load_mesh_from_file(const char* const file, mesh* const mesh)
     memory_free(indices);
     memory_free(vd);
     clear_file_read(&loaded_mesh);
-
-#endif
 }
