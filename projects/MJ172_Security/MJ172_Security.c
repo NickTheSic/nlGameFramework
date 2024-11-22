@@ -89,6 +89,9 @@ internal_function void set_money_end_position(int furthest_active_laser)
 
 internal_function void generate_game_laser_beams(void)
 {
+    laser_beam_size.x = 32.f;
+    laser_beam_size.y = LASER_DISTANCE;
+
     int furthest_active_laser = 0;
     for (int i = 0; i < MAX_LASER_BEAMS_IN_GAME; ++i)
     {
@@ -108,6 +111,18 @@ internal_function void generate_game_laser_beams(void)
     set_money_end_position(furthest_active_laser);
 }
 
+internal_function reset_game(void)
+{
+    set_man_start_position();
+    game_state = 0;
+}   
+
+internal_function restart_game(void)
+{
+    reset_game();
+    generate_game_laser_beams();
+}
+
 void app_specific_init(void)
 {
     init_sprite_renderer();
@@ -115,11 +130,7 @@ void app_specific_init(void)
     generate_game_sprites();
     load_game_sfx();
 
-    set_man_start_position();
-
-    laser_beam_size.x = 32.f;
-    laser_beam_size.y = LASER_DISTANCE;
-    generate_game_laser_beams();
+    restart_game();
 
     pfn_window_size_callback = &winsizecbk;
     v2i screen_size = get_screen_size();
@@ -127,7 +138,6 @@ void app_specific_init(void)
 
     create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,0.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,0.0f});
     set_view_matrix(&main_cam.view_matrix.m11);
-
 }
 
 void app_specific_update(double dt)
@@ -173,7 +183,7 @@ void app_specific_update(double dt)
 
             if (aabb_box_overlap(man_box, money_box))
             {
-                game_state = 0;
+                game_state = 4;
                 play_sound(coin_pickup_sfx);
             }
 
@@ -189,7 +199,7 @@ void app_specific_update(double dt)
 
                     if (aabb_box_overlap(man_box, laser_box))
                     {
-                        game_state = 0;
+                        game_state = 3;
                         play_sound(laser_hit_sfx);
                         break;
                     }
@@ -197,6 +207,19 @@ void app_specific_update(double dt)
             }
 
         } break;
+
+        case 3:
+        {
+            //Hit Laser
+            reset_game();
+        } break;
+
+        case 4:
+        {
+            // hit coins
+            restart_game();
+        } break;
+
     }
 }
 
