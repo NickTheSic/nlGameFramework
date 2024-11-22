@@ -8,7 +8,7 @@ IF "%2"=="" (
 )
 
 IF /I %1==win (
-echo incomplete publish platform
+call "publish_scripts/publish_win" %2
 goto publish_success
 )
 
