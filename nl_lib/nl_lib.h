@@ -14,9 +14,9 @@
 #include "private/nl_mesh.h"
 #include "private/nl_random.h"
 #include "private/nl_renderer.h"
-#include "private/nl_shader.h"
-#include "private/nl_vertex_attrib.h"
-#include "private/nl_vertex_data.h"
+//#include "private/nl_shader.h"
+//#include "private/nl_vertex_attrib.h"
+//#include "private/nl_vertex_data.h"
 #include "private/nl_window.h"
 
 
