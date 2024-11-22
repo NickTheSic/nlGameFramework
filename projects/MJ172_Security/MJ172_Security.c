@@ -11,6 +11,8 @@ global_variable camera main_cam = {0};
 nl_sprite laser_base = {0};
 nl_sprite laser_beam = {0};
 nl_sprite laser_top = {0};
+nl_sprite man = {0};
+nl_sprite money = {0};
 
 internal_function void winsizecbk(int width, int height)
 {
@@ -30,6 +32,12 @@ void app_specific_init(void)
 
     generate_rectangle_simple_sprite(&laser_beam, 32, LASER_DISTANCE);
     load_texture_for_sprite(&laser_beam, "data/single_red_pixel.png");
+
+    generate_rectangle_simple_sprite(&man, 32, 64);
+    load_texture_for_sprite(&man, "data/man.png");
+
+    generate_rectangle_simple_sprite(&money, 32, 32);
+    load_texture_for_sprite(&money, "data/money.png");
 
     pfn_window_size_callback = &winsizecbk;
     v2i screen_size = get_screen_size();
@@ -62,13 +70,28 @@ void app_specific_render(void)
             render_single_simple_sprite(&laser_top);
             model.m41 += 50;
         }
+        model.m42 = LASER_BOTTOM_Y + 32;
+        set_model_matrix(&model.m11);
+        render_single_simple_sprite(&money);
     }
+
+    create_identity_matrix(&model);
+    {
+        model.m41 = LASER_START_X - 40.f;
+        model.m42 = LASER_BOTTOM_Y + 32.f;
+        set_model_matrix(&model.m11);
+        render_single_simple_sprite(&man);
+    }
+
 }
 
 void app_specific_cleanup(void)
 {
     free_simple_sprite(&laser_base);
     free_simple_sprite(&laser_beam);
+    free_simple_sprite(&laser_top);
+    free_simple_sprite(&man);
+    free_simple_sprite(&money);
 }
 
 #include "nl_sprite_renderer_gl.c"

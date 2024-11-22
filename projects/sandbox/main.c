@@ -67,7 +67,7 @@ int main(int count, char** args)
     init_random_number_generator(80);
     //init_random_number_generator(time(NULL));
 
-    if (!initialize_window(600,300, "Sandbox Mode"))
+    if (!initialize_window(500,300, "Sandbox Mode"))
     {
         NL_LOG("Failed to initialize window");
         return -1;
@@ -88,7 +88,7 @@ int main(int count, char** args)
     {
         return -1;
     }
-    set_background_colour_4f(0.5f,0.5f,0.85f,1.0f);
+    set_background_colour_4f(0.5f,0.5f,0.5f,1.0f);
     init_delta_time();
 
     app_specific_init();
