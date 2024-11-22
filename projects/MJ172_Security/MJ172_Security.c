@@ -72,7 +72,7 @@ internal_function void generate_game_sprites(void)
 
 internal_function unsigned char get_laser_beam_showing(laser* const laser)
 {
-    return (lasers->laser_active > 0 ? (unsigned char)random_int_in_range(0,3) : 0);
+    return (laser->laser_active > 0 ? (unsigned char)random_int_in_range(0,3) : 0);
 }
 
 internal_function void set_man_start_position(void)
@@ -111,13 +111,13 @@ internal_function void generate_game_laser_beams(void)
     set_money_end_position(furthest_active_laser);
 }
 
-internal_function reset_game(void)
+internal_function void reset_game(void)
 {
     set_man_start_position();
     game_state = 0;
 }   
 
-internal_function restart_game(void)
+internal_function void restart_game(void)
 {
     reset_game();
     generate_game_laser_beams();

@@ -2,6 +2,7 @@
 
 #ifdef __EMSCRIPTEN__  
 #include <emscripten.h>
+#include <time.h>
 #endif
 
 float highest_fps = -1.0f;
