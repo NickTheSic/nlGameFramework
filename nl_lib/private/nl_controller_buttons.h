@@ -7,6 +7,11 @@
 
 // Opting for the western use of PS* Cross and Circle
 
+// Can call the main to buttons
+// PRIMARY
+// SECONDARY
+// for interact and enter
+
 //copied from pspctrl_h
 #if defined(PSP) 
 #define NL_GAMEPAD_SELECT               0x000001  //PSP SELECT
