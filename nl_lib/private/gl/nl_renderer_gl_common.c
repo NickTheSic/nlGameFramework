@@ -9,6 +9,7 @@ int initialize_renderer_subsystem()
         return 0;
     }
 
+    // Required for sprite rendering
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable( GL_BLEND );
 
