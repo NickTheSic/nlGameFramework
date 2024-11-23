@@ -8,6 +8,7 @@ struct sprite_vertex_data
 {
     v3f pos;
     v2f uv;
+    colour col;
 };
 
 typedef struct texture_data texture_data;
@@ -33,10 +34,12 @@ global_variable const char* vertex_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                                   \n"
 "layout (location = 1) in vec2 aUV_coord;                              \n"
+"layout (location = 2) in vec4 aCol;                                   \n"
 "uniform mat4 uModelMat;                                               \n"
 "uniform mat4 uViewMat;                                                \n"
 "uniform mat4 uProjMat;                                                \n"
 "out vec2 uv_coords;                                                   \n"
+"out vec2 oCol;                                                        \n"
 "void main() {                                                         \n"
 "   gl_Position = uProjMat * uViewMat * uModelMat * vec4(aPos,1.0);    \n"
 "   uv_coords = aUV_coord;                                             \n"
@@ -45,10 +48,11 @@ NL_SHADER_VERSION_HEADER
 global_variable const char* fragment_shader_code =
 NL_SHADER_VERSION_HEADER
 "out vec4 FragColor;                                        \n"
+"in vec4 oCol;                                              \n"
 "in vec2 uv_coords;                                         \n"
 "uniform sampler2D sprite_texture;                          \n"
 "void main() {                                              \n"
-"    FragColor = texture(sprite_texture,uv_coords);         \n"
+"    FragColor = texture(sprite_texture,uv_coords) * oCol;  \n"
 "}                                                          \0";
 
 global_variable unsigned int shader_program = {0};
@@ -135,7 +139,7 @@ internal_function void generate_simple_sprite_using_vertices_and_indices(nl_spri
 
     glGenBuffers(1, &simple_sprite->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, simple_sprite->VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices_data_size, vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices_data_size, vertices, GL_DYNMAIC_DRAW);
 
     glGenBuffers(1, &simple_sprite->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, simple_sprite->EBO);
@@ -146,6 +150,9 @@ internal_function void generate_simple_sprite_using_vertices_and_indices(nl_spri
 
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, uv));
     glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(2, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, col));
+    glEnableVertexAttribArray(2);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -161,10 +168,19 @@ void render_single_simple_sprite(nl_sprite* simple_sprite)
     glBindTexture(GL_TEXTURE_2D, texture_atlas.texture_id);
 
     glDrawElements(GL_TRIANGLES, simple_sprite->indice_count, GL_UNSIGNED_INT, 0);
+}
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-    glBindTexture(GL_TEXTURE_2D, 0);
+void render_single_sprite_colour(nl_sprite* const sprite, colour col)
+{
+    glBindVertexArray(simple_sprite->VAO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, simple_sprite->EBO);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture_atlas.texture_id);
+
+    glBufferSubDataGL(GL_ARRAY_BUFFER, (void*)offsetof(sprite_vertex_data, col), sizeof(colour), &col);
+
+    glDrawElements(GL_TRIANGLES, simple_sprite->indice_count, GL_UNSIGNED_INT, 0);
 }
 
 void free_simple_sprite(nl_sprite* const simple_sprite)
@@ -183,10 +199,10 @@ void generate_rectangle_simple_sprite(nl_sprite* const sprite, float width, floa
     texture_data td = texture_atlas.textures[sprite->texture_id];
     sprite_vertex_data square_vertices[] =
     {
-        {{0.0f,  0.0f,   0.0f},  td.coord_bl},
-        {{width, 0.0f,   0.0f}, {td.coord_tr.x, td.coord_bl.y}},
-        {{width, height, 0.0f},  td.coord_tr},
-        {{0.0f,  height, 0.0f}, {td.coord_bl.x, td.coord_tr.y}},
+        {{0.0f,  0.0f,   0.0f},  td.coord_bl,                   COLOUR_WHITE},
+        {{width, 0.0f,   0.0f}, {td.coord_tr.x, td.coord_bl.y}, COLOUR_WHITE},
+        {{width, height, 0.0f},  td.coord_tr,                   COLOUR_WHITE},
+        {{0.0f,  height, 0.0f}, {td.coord_bl.x, td.coord_tr.y}, COLOUR_WHITE},
     };
 
     generate_simple_sprite_using_vertices_and_indices(sprite, square_vertices, 4);

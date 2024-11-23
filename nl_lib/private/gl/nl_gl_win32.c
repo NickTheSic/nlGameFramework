@@ -51,6 +51,8 @@ PFNGLCHECKFRAMEBUFFERSTATUSPROC glCheckFramebufferStatus;
 PFNGLBINDRENDERBUFFERPROC glBindRenderbuffer;
 PFNGLFRAMEBUFFERRENDERBUFFERPROC glFramebufferRenderbuffer;
 
+PFNGLBUFFERSUBDATAPROC glBufferSubData;
+
 int initialize_gl()
 {
 #define LOAD_GL_EXTENSION(type, fn) fn = (type)wglGetProcAddress(#fn); if (fn == 0){return 0;} 
@@ -104,6 +106,7 @@ int initialize_gl()
         LOAD_GL_EXTENSION(PFNGLCHECKFRAMEBUFFERSTATUSPROC, glCheckFramebufferStatus);
         LOAD_GL_EXTENSION(PFNGLBINDRENDERBUFFERPROC, glBindRenderbuffer);
         LOAD_GL_EXTENSION(PFNGLFRAMEBUFFERRENDERBUFFERPROC, glFramebufferRenderbuffer);
+        LOAD_GL_EXTENSION(PFNGLBUFFERSUBDATAPROC, glBufferSubData);
     }
 #undef LOAD_GL_EXTENSION
 

@@ -173,4 +173,7 @@ extern PFNGLBINDRENDERBUFFERPROC glBindRenderbuffer;
 typedef void (APIENTRY* PFNGLFRAMEBUFFERRENDERBUFFERPROC)(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer);
 extern PFNGLFRAMEBUFFERRENDERBUFFERPROC glFramebufferRenderbuffer;
 
+typedef void (APIENTRY* PFNGLBUFFERSUBDATAPROC)(GLenum target, ptrdiff_t offset, ptrdiff_t size, const void * data);
+extern PFNGLBUFFERSUBDATAPROC glBufferSubData;
+
 #endif //__NL_GL_WIN32_H__

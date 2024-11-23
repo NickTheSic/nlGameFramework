@@ -1,6 +1,8 @@
 #ifndef __NL_SPRITE_RENDERER_H__
 #define __NL_SPRITE_RENDERER_H__
 
+#include "private/nl_colour.h"
+
 typedef struct sprite_vertex_data sprite_vertex_data;
 typedef struct nl_sprite nl_sprite;
 struct nl_sprite
@@ -21,6 +23,7 @@ struct nl_sprite
 void init_sprite_renderer(void);
 
 void render_single_simple_sprite(nl_sprite* const sprite);
+void render_single_sprite_colour(nl_sprite* const sprite, colour col);
 
 void generate_rectangle_simple_sprite(nl_sprite *const sprite, float width, float height);
 void generate_square_simple_sprite(nl_sprite *const sprite, float width);
