@@ -13,4 +13,4 @@ flags="-Wall -Wextra -sWASM=1 -sALLOW_MEMORY_GROWTH=1 -sMAX_WEBGL_VERSION=2 -sMI
 
 output="_build/web/"
 
-emcc $flags $shell_file $includes nl_lib/build_nl_lib.c projects/sandbox/main.c projects/$1/$1.c $data -o ${output}"index.html"
+emcc $flags $shell_file $includes nl_lib/build_nl_lib.c projects/main/main.c projects/$1/$1.c $data -o ${output}"index.html"

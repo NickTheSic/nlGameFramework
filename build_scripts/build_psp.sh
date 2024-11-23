@@ -23,7 +23,7 @@ fi
 #fi
 
 #psp-gcc $DEFINES $INCLUDES $FLAGS $LIBDIR -o $OUTPUT/$1.elf nl_lib/build_nl_lib.c projects/sandbox/main.c projects/$1/$1.c $LIBS $PRX_SPECS
-psp-gcc $DEFINES $INCLUDES $FLAGS $LIBDIR -o $OUTPUT/$1.elf nl_lib/build_nl_lib.c projects/sandbox/main.c projects/$1/$1.c $LIBS
+psp-gcc $DEFINES $INCLUDES $FLAGS $LIBDIR -o $OUTPUT/$1.elf nl_lib/build_nl_lib.c projects/main/main.c projects/$1/$1.c $LIBS
 echo "code compiled" 
 psp-fixup-imports $OUTPUT/$1.elf
 echo "fixed imports"

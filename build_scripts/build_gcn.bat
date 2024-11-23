@@ -10,7 +10,7 @@ set includes=-Inl_lib
 set flags=-Wall -Wextra -g -O2
 set output=_build/gcn/
 
-set files=nl_lib/build_nl_lib.c projects/sandbox/main.c projects/%1/%1.c
+set files=nl_lib/build_nl_lib.c projects/main/main.c projects/%1/%1.c
 
 @echo on
 
