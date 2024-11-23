@@ -58,20 +58,20 @@ internal_function void load_game_sfx(void)
 
 internal_function void generate_game_sprites(void)
 {
-    generate_rectangle_simple_sprite(&laser_base, 32, 16);
     load_texture_for_sprite(&laser_base, "data/laser_stop.png");
+    generate_rectangle_simple_sprite(&laser_base, 32, 16);
 
-    generate_rectangle_simple_sprite(&laser_top, 32, 16);
     load_texture_for_sprite(&laser_top, "data/laser_top.png");
+    generate_rectangle_simple_sprite(&laser_top, 32, 16);
 
-    generate_rectangle_simple_sprite(&laser_beam, 32, LASER_DISTANCE);
     load_texture_for_sprite(&laser_beam, "data/single_red_pixel.png");
+    generate_rectangle_simple_sprite(&laser_beam, 32, LASER_DISTANCE);
 
-    generate_rectangle_simple_sprite(&man, 32, 64);
     load_texture_for_sprite(&man, "data/man.png");
+    generate_rectangle_simple_sprite(&man, 32, 64);
 
-    generate_rectangle_simple_sprite(&money, 32, 32);
     load_texture_for_sprite(&money, "data/money.png");
+    generate_rectangle_simple_sprite(&money, 32, 32);
 }
 
 internal_function unsigned char get_laser_beam_showing(laser* const laser)

@@ -10,6 +10,20 @@ struct sprite_vertex_data
     v2f uv;
 };
 
+typedef struct texture_data texture_data;
+struct texture_data
+{
+    v2f coord_bl;
+    v2f coord_tr;
+};
+// temporary game specific value of 5
+texture_data textures[5] = {0};
+unsigned int next_texture_to_load = {0};
+unsigned int atlas_texture_id = {0};
+unsigned int current_texture_x_loaded = {0};
+float texture_height;
+float texture_width;
+
 global_variable const char* vertex_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                                   \n"
@@ -52,6 +66,34 @@ void set_projection_matrix(float* m11)
     set_uniform_mat4x4f(u_proj_mat, m11);
 }
 
+internal_function void init_sprite_atlas()
+{
+    glGenTextures(1, &atlas_texture_id);
+    glBindTexture(GL_TEXTURE_2D, atlas_texture_id);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    unsigned int x_size = 32*5;
+    unsigned int y_size = 64;
+    unsigned char* null_data = (unsigned char* )memory_allocate(sizeof(unsigned char) * x_size * y_size)
+
+    glTexImage2D(GL_TEXTURE_2D,
+             0,
+             GL_RGBA,
+             x_size, y_size,
+             0,
+             GL_RGBA,
+             GL_UNSIGNED_BYTE,
+             null_data
+             );
+
+    texture_height = (float)y_size;
+    texture_width  = (float)x_size;
+}
+
 void init_sprite_renderer(void)
 {
     shader_program = create_shader_program(vertex_shader_code, fragment_shader_code);
@@ -60,6 +102,8 @@ void init_sprite_renderer(void)
     u_model_loc = get_uniform_loc(shader_program, "uModelMat");
     u_view_mat = get_uniform_loc(shader_program, "uViewMat");
     u_proj_mat = get_uniform_loc(shader_program, "uProjMat");
+
+    init_sprite_atlas();
 }
 
 internal_function void generate_simple_sprite_using_vertices_and_indices(nl_sprite* const simple_sprite, const sprite_vertex_data* const vertices, int vertice_count, const unsigned int* const indices, unsigned int indice_count)
@@ -104,7 +148,7 @@ void render_single_simple_sprite(nl_sprite* simple_sprite)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, simple_sprite->EBO);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, simple_sprite->texture_id);
+    glBindTexture(GL_TEXTURE_2D, atlas_texture_id);
 
     glDrawElements(GL_TRIANGLES, simple_sprite->indice_count, GL_UNSIGNED_INT, 0);
 
@@ -124,19 +168,20 @@ void free_simple_sprite(nl_sprite* const simple_sprite)
     glDeleteBuffers(1, &simple_sprite->VAO);
 }
 
-void generate_rectangle_simple_sprite(nl_sprite* const simple_sprite, float width, float height)
+void generate_rectangle_simple_sprite(nl_sprite* const sprite, float width, float height)
 {
+    texture_data td = textures[sprite->texture_id];
     sprite_vertex_data square_vertices[] =
     {
-        {{0.0f,  0.0f,   0.0f}, {0.0f,0.0f}},
-        {{width, 0.0f,   0.0f}, {1.0f,0.0f}},
-        {{width, height, 0.0f}, {1.0f,1.0f}},
-        {{0.0f,  height, 0.0f}, {0.0f,1.0f}},
+        {{0.0f,  0.0f,   0.0f},  td.coord_bl},
+        {{width, 0.0f,   0.0f}, {td.coord_tr.x, td.coord_bl.y}},
+        {{width, height, 0.0f},  td.coord_tr},
+        {{0.0f,  height, 0.0f}, {td.coord_bl.x, td.coord_tr.y}},
     };
 
     static const unsigned int indices[] = {0,1,2,0,2,3};
 
-    generate_simple_sprite_using_vertices_and_indices(simple_sprite, square_vertices, 4, indices, 6);
+    generate_simple_sprite_using_vertices_and_indices(sprite, square_vertices, 4, indices, 6);
 }
 
 void generate_square_simple_sprite(nl_sprite* const simple_sprite, float width)
@@ -151,24 +196,22 @@ void load_texture_for_sprite(nl_sprite* const sprite, const char* filename)
     int x, y, channel;
     unsigned char * data = stbi_load(filename, &x, &y, &channel, 4);
 
-    //glActiveTexture(GL_TEXTURE0);
-    glGenTextures(1, &sprite->texture_id);
-    glBindTexture(GL_TEXTURE_2D, sprite->texture_id);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-    glTexImage2D(GL_TEXTURE_2D,
-             0,
-             GL_RGBA,
-             x, y,
-             0,
-             GL_RGBA,
-             GL_UNSIGNED_BYTE,
-             data
-             );
+    glTexSubImage2D(GL_TEXTURE_2D, 0,
+                    current_texture_x_loaded, 0,
+                    x, y, 
+                    GL_RGBA,
+                    GL_UNSIGNED_BYTE,
+                    data);
 
     stbi_image_free(data);
+
+    textures[next_texture_to_load].coord_bl.x = (float)current_texture_x_loaded / texture_width;
+    textures[next_texture_to_load].coord_bl.y = 0;
+
+    current_texture_x_loaded += x;
+
+    textures[next_texture_to_load].coord_tr.x = current_texture_x_loaded / texture_width;
+    textures[next_texture_to_load].coord_tr.y = y / texture_height;
+
+    sprite->texture_id = next_texture_to_load++;
 }
