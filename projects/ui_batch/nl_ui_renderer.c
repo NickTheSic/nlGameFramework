@@ -1,5 +1,6 @@
 #include "nl_ui_renderer.h"
-#include "private/nl_gl.h"
+#include "private/gl/nl_gl.h"
+#include "private/nl_shader.h"
 
 static const char* ui_vert_shader_code =
 NL_SHADER_VERSION_HEADER

@@ -1,5 +1,5 @@
 #include "nl_lib.h"
-#include "private/nl_gl.h"
+#include "private/gl/nl_gl.h"
 
 #include "ui_stuff.h"
 

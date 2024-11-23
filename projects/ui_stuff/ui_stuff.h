@@ -1,6 +1,6 @@
 #ifndef __NL_UI_STUFF_H__
 #define __NL_UI_STUFF_H__
-
+#include "private/nl_shader.h"
 
 static const char* ui_vert_shader_code =
 NL_SHADER_VERSION_HEADER
