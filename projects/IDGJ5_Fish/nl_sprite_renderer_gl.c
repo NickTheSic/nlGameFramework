@@ -16,13 +16,18 @@ struct texture_data
     v2f coord_bl;
     v2f coord_tr;
 };
-// temporary game specific value of 5
-texture_data textures[5] = {0};
-unsigned int next_texture_to_load = {0};
-unsigned int atlas_texture_id = {0};
-unsigned int current_texture_x_loaded = {0};
-float texture_height;
-float texture_width;
+
+typedef struct sprite_atlas sprite_atlas;
+struct sprite_atlas 
+{
+    unsigned int texture_id;
+    unsigned int next_texture_to_load;
+    unsigned int current_texture_x_loaded;
+    float texture_height;
+    float texture_width;
+    texture_data textures[5];
+};
+global_variable sprite_atlas texture_atlas = {0};
 
 global_variable const char* vertex_shader_code =
 NL_SHADER_VERSION_HEADER
@@ -68,8 +73,8 @@ void set_projection_matrix(float* m11)
 
 internal_function void init_sprite_atlas()
 {
-    glGenTextures(1, &atlas_texture_id);
-    glBindTexture(GL_TEXTURE_2D, atlas_texture_id);
+    glGenTextures(1, &texture_atlas.texture_id);
+    glBindTexture(GL_TEXTURE_2D, texture_atlas.texture_id);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -90,8 +95,8 @@ internal_function void init_sprite_atlas()
              null_data
              );
 
-    texture_height = (float)y_size;
-    texture_width  = (float)x_size;
+    texture_atlas.texture_height = (float)y_size;
+    texture_atlas.texture_width  = (float)x_size;
 
     memory_free(null_data);
 }
@@ -153,7 +158,7 @@ void render_single_simple_sprite(nl_sprite* simple_sprite)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, simple_sprite->EBO);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, atlas_texture_id);
+    glBindTexture(GL_TEXTURE_2D, texture_atlas.texture_id);
 
     glDrawElements(GL_TRIANGLES, simple_sprite->indice_count, GL_UNSIGNED_INT, 0);
 
@@ -175,7 +180,7 @@ void free_simple_sprite(nl_sprite* const simple_sprite)
 
 void generate_rectangle_simple_sprite(nl_sprite* const sprite, float width, float height)
 {
-    texture_data td = textures[sprite->texture_id];
+    texture_data td = texture_atlas.textures[sprite->texture_id];
     sprite_vertex_data square_vertices[] =
     {
         {{0.0f,  0.0f,   0.0f},  td.coord_bl},
@@ -200,7 +205,7 @@ void load_texture_for_sprite(nl_sprite* const sprite, const char* filename)
     unsigned char * data = stbi_load(filename, &x, &y, &channel, 4);
 
     glTexSubImage2D(GL_TEXTURE_2D, 0,
-                    current_texture_x_loaded, 0,
+                    texture_atlas.current_texture_x_loaded, 0,
                     x, y, 
                     GL_RGBA,
                     GL_UNSIGNED_BYTE,
@@ -208,13 +213,13 @@ void load_texture_for_sprite(nl_sprite* const sprite, const char* filename)
 
     stbi_image_free(data);
 
-    textures[next_texture_to_load].coord_bl.x = (float)current_texture_x_loaded / texture_width;
-    textures[next_texture_to_load].coord_bl.y = 0;
+    texture_atlas.textures[texture_atlas.next_texture_to_load].coord_bl.x = (float)texture_atlas.current_texture_x_loaded / texture_atlas.texture_width;
+    texture_atlas.textures[texture_atlas.next_texture_to_load].coord_bl.y = 0;
 
-    current_texture_x_loaded += x;
+    texture_atlas.current_texture_x_loaded += x;
 
-    textures[next_texture_to_load].coord_tr.x = current_texture_x_loaded / texture_width;
-    textures[next_texture_to_load].coord_tr.y = y / texture_height;
+    texture_atlas.textures[texture_atlas.next_texture_to_load].coord_tr.x = texture_atlas.current_texture_x_loaded / texture_atlas.texture_width;
+    texture_atlas.textures[texture_atlas.next_texture_to_load].coord_tr.y = y / texture_atlas.texture_height;
 
-    sprite->texture_id = next_texture_to_load++;
+    sprite->texture_id = texture_atlas.next_texture_to_load++;
 }
