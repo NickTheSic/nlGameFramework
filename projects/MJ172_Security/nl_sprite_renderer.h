@@ -21,6 +21,7 @@ struct nl_sprite
 void init_sprite_renderer(void);
 
 void render_single_simple_sprite(nl_sprite* const sprite);
+void render_single_sprite_colour(nl_sprite* const sprite, colour col);
 
 void generate_rectangle_simple_sprite(nl_sprite *const sprite, float width, float height);
 void generate_square_simple_sprite(nl_sprite *const sprite, float width);

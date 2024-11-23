@@ -282,7 +282,8 @@ void app_specific_render(void)
         model.m41 = man_pos.x;
         model.m42 = man_pos.y;
         set_model_matrix(&model.m11);
-        render_single_simple_sprite(&man);
+        render_single_sprite_colour(&man, COLOUR_GREEN);
+        //render_single_simple_sprite(&man);
     }
 
 }
