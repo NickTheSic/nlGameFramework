@@ -1,10 +1,6 @@
 #include "nl_lib.h"
 #include <private/nl_keys_to_controller.h>
 
-// if control is pressed and released seems like my favourite way
-// game pad is super easy it seems, just define the buttons for each platform
-// I'll start there
-
 #define NL_CONTROL_TYPE_KEYBOARD   0x01
 #define NL_CONTROL_TYPE_MOUSE      0x02
 #define NL_CONTROL_TYPE_CONTROLLRE 0x04
