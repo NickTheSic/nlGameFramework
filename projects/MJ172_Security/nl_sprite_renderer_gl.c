@@ -92,6 +92,8 @@ internal_function void init_sprite_atlas()
 
     texture_height = (float)y_size;
     texture_width  = (float)x_size;
+
+    memory_free(null_data);
 }
 
 void init_sprite_renderer(void)
@@ -106,8 +108,11 @@ void init_sprite_renderer(void)
     init_sprite_atlas();
 }
 
-internal_function void generate_simple_sprite_using_vertices_and_indices(nl_sprite* const simple_sprite, const sprite_vertex_data* const vertices, int vertice_count, const unsigned int* const indices, unsigned int indice_count)
+internal_function void generate_simple_sprite_using_vertices_and_indices(nl_sprite* const simple_sprite, const sprite_vertex_data* const vertices, int vertice_count)
 {
+    static const unsigned int indices[] = {0,1,2,0,2,3};
+    static const unsigned int indice_count = 6;
+
     const size_t vertices_data_size = sizeof(sprite_vertex_data) * vertice_count;
     const size_t indice_data_size = indice_count * sizeof(unsigned int);
 
@@ -179,9 +184,7 @@ void generate_rectangle_simple_sprite(nl_sprite* const sprite, float width, floa
         {{0.0f,  height, 0.0f}, {td.coord_bl.x, td.coord_tr.y}},
     };
 
-    static const unsigned int indices[] = {0,1,2,0,2,3};
-
-    generate_simple_sprite_using_vertices_and_indices(sprite, square_vertices, 4, indices, 6);
+    generate_simple_sprite_using_vertices_and_indices(sprite, square_vertices, 4);
 }
 
 void generate_square_simple_sprite(nl_sprite* const simple_sprite, float width)
