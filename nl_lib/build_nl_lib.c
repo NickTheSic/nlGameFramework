@@ -17,7 +17,6 @@
 #include "private/gl/nl_gl_win32.c"
 #include "private/gl/nl_renderer_gl_common.c"
 #include "private/gl/nl_renderer_gl_win32.c"
-#include "private/gl/nl_mesh_gl.c"
 #include "private/gl/nl_shader.c"
 #include "private/gl/nl_vertex_attrib_gl.c"
 
@@ -38,7 +37,6 @@
 #include "third_party/stb_image.c"
 
 #include "private/gl/nl_gl_web.c"
-#include "private/gl/nl_mesh_gl.c"
 #include "private/gl/nl_renderer_gl_common.c"
 #include "private/gl/nl_renderer_gl_web.c"
 #include "private/gl/nl_shader.c"

@@ -1,4 +1,6 @@
-#include "nl_lib.h"
+#include <nl_lib.h>
+#include "nl_mesh.h"
+#include "private/nl_shader.h"
 #include "private/gl/nl_gl.h"
 #include "string.h" //memcpy
 
@@ -87,3 +89,5 @@ void app_specific_cleanup(void)
 {
     free_mesh(&untitled);
 }
+
+#include "nl_mesh_gl.c"
