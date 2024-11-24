@@ -23,9 +23,8 @@ fi
 
 #psp-gcc $DEFINES $INCLUDES $FLAGS $LIBDIR -o $OUTPUT/$1.elf nl_lib/build_nl_lib.c projects/sandbox/main.c projects/$1/$1.c $LIBS $PRX_SPECS
 psp-gcc $DEFINES $INCLUDES $FLAGS $LIBDIR -o $OUTPUT/$1.elf nl_lib/build_nl_lib.c projects/main/main.c projects/$1/$1.c $LIBS && echo "code compiled" 
-psp-fixup-imports $OUTPUT/$1.elf && echo "fixed imports"
+psp-fixup-imports $OUTPUT/$1.elf && echo "fixed imports" 
 #psp-prxgen $OUTPUT/$1.elf $OUTPUT/$1.prx
 #echo "prx generated"
-mksfoex -d MEMSIZE=1 -s APP_VER=01.00 $1 $OUTPUT/PARAM.SFO
-pack-pbp $OUTPUT/$1/EBOOT.PBP $OUTPUT/PARAM.SFO NULL NULL NULL NULL NULL $OUTPUT/$1.elf NULL
+mksfoex -d MEMSIZE=1 -s APP_VER=01.00 $1 $OUTPUT/PARAM.SFO && pack-pbp $OUTPUT/$1/EBOOT.PBP $OUTPUT/PARAM.SFO NULL NULL NULL NULL NULL $OUTPUT/$1.elf NULL
 #pack-pbp $OUTPUT/$1-prx/EBOOT.PBP $OUTPUT/PARAM.SFO NULL NULL NULL NULL NULL $OUTPUT/$1.prx NULL

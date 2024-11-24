@@ -89,7 +89,7 @@ int main(int count, char** args)
     {
         return -1;
     }
-    //set_background_colour_4f(0.5f,0.5f,0.5f,1.0f);
+    set_background_colour_4f(0.5f,0.5f,0.5f,1.0f);
     init_delta_time();
 
     app_specific_init();
@@ -104,9 +104,7 @@ int main(int count, char** args)
 #endif
 
     app_specific_cleanup();
-#ifndef GEKKO
     cleanup_audio_system();
-#endif
     basic_memory_leak_check();
 
     NL_LOG("Highest FPS Reached: %f", highest_fps);

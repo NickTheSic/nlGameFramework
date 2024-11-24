@@ -1,9 +1,12 @@
 #include "../nl_renderer.h"
+#include "../nl_colour.h"
 #include "nl_psp_include.h"
 #include <pspgu.h>
 #include <pspdisplay.h>
 
 char list[0x20000] __attribute__((aligned(64)));
+
+colour bg_colour = {0};
 
 int initialize_renderer_subsystem(void)
 {
@@ -30,15 +33,15 @@ int initialize_renderer_subsystem(void)
     sceGuFinish();
     sceGuDisplay(GU_TRUE);
 
+    bg_colour.unsigned_integer = 0xff777777;
+
     return 1;
 }
 
 void begin_render_frame(void)
 {
     sceGuStart(GU_DIRECT, list);
-    //sceGuClearColor(0xFFFFFFFF); // White background
     sceGuClearColor(0xff777777); // grey background
-    //sceGuClearColor(random_int_in_range(0xff000000, 0xffffffff)); // random background for debug purposes
     sceGuClear(GU_COLOR_BUFFER_BIT);
 }
 
@@ -61,8 +64,10 @@ void renderer_swap_buffers(void)
 /////////////////////////////////////////////////////////////////
 void set_background_colour_4f(float r, float g, float b, float a)
 {
-    NL_UNUSED(r);NL_UNUSED(g);NL_UNUSED(b);NL_UNUSED(a);
-    NL_UNIMPLEMENTED_FUNC;
+    bg_colour.r = 255*r;
+    bg_colour.b = 255*b;
+    bg_colour.g = 255*g;
+    bg_colour.a = 255*a;
 }
 
 void set_viewport_size(int width, int height)
@@ -92,6 +97,7 @@ void set_cull_face_enabled(int enabled)
     NL_UNUSED(enabled);
     NL_UNIMPLEMENTED_FUNC;
 }
+
 void set_cull_face_side(int front)
 {
     NL_UNUSED(front);

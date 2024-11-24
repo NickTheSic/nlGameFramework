@@ -15,8 +15,8 @@ double get_frame_delta_time()
     struct timeval now;
     gettimeofday(&now, NULL);
 
-    unsigned int ticks = (now.tv_sec-start.tv_sec)*1000+(now.tv_usec-start.tv_usec)/1000;
-    double dt = (double)(ticks - prev_ticks) / 1000.0f;
+    unsigned int ticks = (now.tv_sec-start.tv_sec)*1000+(now.tv_usec-start.tv_usec)*0.001f;
+    double dt = (double)(ticks - prev_ticks) * 0.001f;
     prev_ticks = ticks;
     return dt;
 }

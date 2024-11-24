@@ -104,11 +104,13 @@
 #include "private/psp/nl_audio_psp.c"
 #include "private/psp/nl_deltatime_psp.c"
 #include "private/psp/nl_gamepad_psp.c"
+#if 0
 #include "private/psp/nl_renderer_debug_psp.c"
-//#include "private/psp/nl_renderer_psp.c"
+#else 
+#include "private/psp/nl_renderer_psp.c"
+#endif
 #include "private/psp/nl_window_psp.c"
-
-//#include "third_party/stb_image.c"
+#include "third_party/stb_image.c"
 
 
 #elif defined(__GBA__)

@@ -1,7 +1,8 @@
 #include "nl_sprite_renderer.h"
 #include "private/gl/nl_gl.h"
 #include "private/nl_shader.h"
-#include <third_party/stb_image.h>
+#define STBI_ONLY_PNG
+#include <third_party/main_stb_image.h>
 #include <math.h>
 
 struct sprite_vertex_data
@@ -96,8 +97,6 @@ internal_function void init_sprite_atlas()
 
     texture_height = (float)y_size;
     texture_width  = (float)x_size;
-
-    memory_free(null_data);
 }
 
 void init_sprite_renderer(void)
