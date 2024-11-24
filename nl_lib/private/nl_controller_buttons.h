@@ -16,10 +16,10 @@
 #if defined(PSP) 
 #define NL_GAMEPAD_SELECT               0x000001  //PSP SELECT
 #define NL_GAMEPAD_START              0x000008  //PSP START
-#define NL_GAMEPAD_D_UP               0x000010  //PSP UP
-#define NL_GAMEPAD_D_RIGHT            0x000020  //PSP RIGHT
-#define NL_GAMEPAD_D_DOWN      	      0x000040  //PSP DOWN
-#define NL_GAMEPAD_D_LEFT      	      0x000080  //PSP LEFT
+#define NL_GAMEPAD_DPAD_UP               0x000010  //PSP UP
+#define NL_GAMEPAD_DPAD_RIGHT            0x000020  //PSP RIGHT
+#define NL_GAMEPAD_DPAD_DOWN      	      0x000040  //PSP DOWN
+#define NL_GAMEPAD_DPAD_LEFT      	      0x000080  //PSP LEFT
 #define NL_GAMEPAD_L             0x000100  //PSP LTRIGGER
 #define NL_GAMEPAD_R             0x000200  //PSP RTRIGGER
 #define NL_GAMEPAD_Y                  0x001000  //PSP TRIANGLE

@@ -1,6 +1,8 @@
 #ifndef __NL_GAMEPAD_H__
 #define __NL_GAMEPAD_H__
 
+#include "nl_controller_buttons.h"
+
 // Based off gamecube and wii library to start
 // immediately not viable for psp nds etc with only one controller
 #define MAX_PLAYERS 4
