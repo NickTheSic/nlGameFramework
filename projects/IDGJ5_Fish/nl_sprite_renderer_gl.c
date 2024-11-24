@@ -39,17 +39,18 @@ NL_SHADER_VERSION_HEADER
 "uniform mat4 uViewMat;                                                \n"
 "uniform mat4 uProjMat;                                                \n"
 "out vec2 uv_coords;                                                   \n"
-"out vec2 oCol;                                                        \n"
+"out vec4 oCol;                                                        \n"
 "void main() {                                                         \n"
 "   gl_Position = uProjMat * uViewMat * uModelMat * vec4(aPos,1.0);    \n"
 "   uv_coords = aUV_coord;                                             \n"
+"   oCol = aCol;                                                       \n"
 "}                                                                     \0";
 
 global_variable const char* fragment_shader_code =
 NL_SHADER_VERSION_HEADER
 "out vec4 FragColor;                                        \n"
-"in vec4 oCol;                                              \n"
 "in vec2 uv_coords;                                         \n"
+"in vec4 oCol;                                              \n"
 "uniform sampler2D sprite_texture;                          \n"
 "void main() {                                              \n"
 "    FragColor = texture(sprite_texture,uv_coords) * oCol;  \n"
@@ -139,7 +140,7 @@ internal_function void generate_simple_sprite_using_vertices_and_indices(nl_spri
 
     glGenBuffers(1, &simple_sprite->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, simple_sprite->VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices_data_size, vertices, GL_DYNMAIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices_data_size, vertices, GL_DYNAMIC_DRAW);
 
     glGenBuffers(1, &simple_sprite->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, simple_sprite->EBO);
@@ -172,15 +173,26 @@ void render_single_simple_sprite(nl_sprite* simple_sprite)
 
 void render_single_sprite_colour(nl_sprite* const sprite, colour col)
 {
-    glBindVertexArray(simple_sprite->VAO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, simple_sprite->EBO);
+    glBindVertexArray(sprite->VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, sprite->VBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sprite->EBO);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture_atlas.texture_id);
 
-    glBufferSubDataGL(GL_ARRAY_BUFFER, (void*)offsetof(sprite_vertex_data, col), sizeof(colour), &col);
+    size_t offset_inc = sizeof(sprite_vertex_data);
 
-    glDrawElements(GL_TRIANGLES, simple_sprite->indice_count, GL_UNSIGNED_INT, 0);
+    glBufferSubData(GL_ARRAY_BUFFER, offsetof(sprite_vertex_data, col), sizeof(colour), &col);
+    glBufferSubData(GL_ARRAY_BUFFER, offsetof(sprite_vertex_data, col)+offset_inc, sizeof(colour), &col);
+    glBufferSubData(GL_ARRAY_BUFFER, offsetof(sprite_vertex_data, col)+(offset_inc*2), sizeof(colour), &col);
+    glBufferSubData(GL_ARRAY_BUFFER, offsetof(sprite_vertex_data, col)+(offset_inc*3), sizeof(colour), &col);
+
+    glDrawElements(GL_TRIANGLES, sprite->indice_count, GL_UNSIGNED_INT, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindVertexArray(0);
 }
 
 void free_simple_sprite(nl_sprite* const simple_sprite)
