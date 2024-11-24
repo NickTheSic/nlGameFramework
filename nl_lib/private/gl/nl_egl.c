@@ -4,7 +4,7 @@ EGLRenderer g_EGLRenderer;
 
 //TODO: Seems like different platforms may have different requirements
 
-int initialize_gles(NativeWindowType platform_window)
+int initialize_egl(NativeWindowType platform_window)
 {
     EGLint const attribute_list[] = 
 	{ 

@@ -7,7 +7,7 @@ int initialize_gl(void)
     EmscriptenWebGLContextAttributes attr = {};
     emscripten_webgl_init_context_attributes(&attr);
 
-    return initialize_gles(0);
+    return initialize_egl(0);
 }
 
 // a silly hack to be able to include and compile this
