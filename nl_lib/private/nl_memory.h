@@ -16,7 +16,7 @@ extern "C" {
 void *_memory_allocate(size_t size);
 void memory_free(void* memory);
 
-void basic_memory_leak_check();
+void basic_memory_leak_check(); //Used in debug + by main
 
 
 #ifdef __cplusplus
