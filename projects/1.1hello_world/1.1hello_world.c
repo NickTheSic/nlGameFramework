@@ -1,12 +1,15 @@
 #include "nl_lib.h"
 
+global_variable float total_time = {0.0f};
+
 void app_specific_init(void)
 {
     NL_LOG("Hello, World!");
 }
 void app_specific_update(double dt)
 {
-    NL_UNUSED(dt);
+    total_time+=dt;
+    NL_LOG("Frame: %f, total: %f", dt, total_time);
 }
 
 void app_specific_render(void){}
