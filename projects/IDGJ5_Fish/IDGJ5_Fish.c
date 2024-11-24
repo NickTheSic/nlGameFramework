@@ -16,7 +16,7 @@ internal_function void winsizecbk(int width, int height)
     set_projection_matrix(&main_cam.proj_matrix.m11);
 }
 
-internal_function load_sprites()
+internal_function int load_sprites()
 {
     init_sprite_renderer();
 
@@ -48,10 +48,13 @@ void app_specific_update(double dt)
 void app_specific_render(void)
 {
     mat4x4f model = {0};
-    create_identity_matrix(&model);
-    set_model_matrix(&model.m11);
-    //render_single_sprite_colour(&fish, COLOUR_BLUE);
-    render_single_simple_sprite(&fish);
+    {
+        create_identity_matrix(&model);
+        model.m41 = player_pos.x;
+        model.m42 = player_pos.y;
+        set_model_matrix(&model.m11);
+        render_single_simple_sprite(&fish);
+    }
 }
 
 void app_specific_cleanup(void)
