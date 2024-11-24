@@ -34,7 +34,7 @@ void player_update(double dt, game_object* const player, player_controller* cons
 
     if (player->is_grounded == 0)
     {
-        if (player->vertical_speed <= 0.0f)
+        if (player->vertical_speed <= 0.0f || !key_is_held(controller->jump))
         {
             player->vertical_speed -= (GRAVITY_FALL + 150) * dt;
 

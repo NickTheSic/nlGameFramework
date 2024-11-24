@@ -94,8 +94,21 @@
 #define NL_GAMEPAD_X                0x4000 //xinput x
 #define NL_GAMEPAD_Y                0x8000 //xinput y
 
-// NO CONTROLLER in a browser!  
-//#elif defined(__EMSCRIPTEN__)
+// NO CONTROLLER in a browser... at least not that I know of
+#elif defined(__EMSCRIPTEN__)
+#define NL_GAMEPAD_DPAD_LEFT	
+#define NL_GAMEPAD_DPAD_RIGHT	
+#define NL_GAMEPAD_DPAD_DOWN	
+#define NL_GAMEPAD_DPAD_UP		
+#define NL_GAMEPAD_Z			
+#define NL_GAMEPAD_R			
+#define NL_GAMEPAD_L			
+#define NL_GAMEPAD_A			
+#define NL_GAMEPAD_B			
+#define NL_GAMEPAD_X			
+#define NL_GAMEPAD_Y			
+#define NL_GAMEPAD_START		
+
 //#elif defined(__GBA__)
 // Not sure if I should use libtonc or libgba or skip this entirely
 #else
