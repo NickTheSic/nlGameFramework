@@ -2,6 +2,10 @@
 #include "nl_sprite_renderer.h"
 #include <private/nl_physics2d.h>
 
+#if PLATFORM_CONSOLE
+#include <private/nl_keys_to_controller.h>
+#endif
+
 global_variable camera main_cam = {0};
 
 #define LASER_BOTTOM_Y 80.f
@@ -285,7 +289,6 @@ void app_specific_render(void)
         render_single_sprite_colour(&man, COLOUR_GREEN);
         //render_single_simple_sprite(&man);
     }
-
 }
 
 void app_specific_cleanup(void)
@@ -297,4 +300,10 @@ void app_specific_cleanup(void)
     free_simple_sprite(&money);
 }
 
+#if defined (PSP)
+#include "nl_sprite_renderer_psp.c"
+
+#else
 #include "nl_sprite_renderer_gl.c"
+
+#endif

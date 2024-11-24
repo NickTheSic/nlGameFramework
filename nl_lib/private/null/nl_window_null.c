@@ -1,5 +1,8 @@
 #include "../nl_window.h"
 
+// Avoid link errors for null platforms
+PFNWINDOWSIZECALLBACK pfn_window_size_callback;
+
 int initialize_window(int width, int height, const char* title)
 {
     NL_UNUSED(width); NL_UNUSED(height); NL_UNUSED(title);

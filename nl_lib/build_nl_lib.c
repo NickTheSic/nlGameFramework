@@ -74,7 +74,6 @@
 #elif defined(GCN_GEKKO)
 #include "private/null/nl_audio_null.c"
 #include "private/null/nl_deltatime_null.c"
-#include "private/null/nl_mesh_null.c"
 #include "private/null/nl_shader_null.c"
 #include "private/null/nl_vertex_attrib_null.c"
 
@@ -99,7 +98,6 @@
 #include "private/common/nl_memory.c"
 #include "private/common/nl_random.c"
 
-#include "private/null/nl_mesh_null.c"
 #include "private/null/nl_shader_null.c"
 #include "private/null/nl_vertex_attrib_null.c"
 

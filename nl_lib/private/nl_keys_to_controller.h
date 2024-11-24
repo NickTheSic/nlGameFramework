@@ -4,6 +4,7 @@
 #include "nl_controller_buttons.h"
 
 // This is some basic glue so I can have homebrew controls froms the keyboard mouse input controls
+// TODO: Decide if this should be a platform console only header first
 
 #define nl_key unsigned int
 
