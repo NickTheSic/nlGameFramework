@@ -10,6 +10,9 @@
 #elif defined (__linux__)
 #define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
 
+#elif defined (__SWITCH__)
+#define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
+
 #elif defined (NOT_YET_IMPLEMENTED)
 #define NL_SHADER_VERSION_HEADER //define it as nothing to compile
 

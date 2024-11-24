@@ -28,6 +28,8 @@ struct EGLRenderer
 };
 extern EGLRenderer g_EGLRenderer;
 
-void initialize_gles(void);
+// TODO: Learn more about gles
+// Switch hombrew uses an NSurface, Emscripten didn't need one
+int initialize_gles(NativeWindowType platform_window);
 
 #endif//__NL_GLES_H__
