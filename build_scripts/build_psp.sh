@@ -16,7 +16,6 @@ mkdir "_build/psp/$1"
 fi
 
 #if I build with PRX_SPECS the elf eboot doesn't work
-
 #if [ ! -d "_build/psp/$1-prx" ]
 #then
 #mkdir "_build/psp/$1-prx"

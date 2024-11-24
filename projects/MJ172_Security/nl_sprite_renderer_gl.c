@@ -83,7 +83,6 @@ internal_function void init_sprite_atlas()
 
     unsigned int x_size = 32*5;
     unsigned int y_size = 64;
-    unsigned char* null_data = (unsigned char* )memory_allocate(sizeof(unsigned char) * x_size * y_size)
 
     glTexImage2D(GL_TEXTURE_2D,
              0,
@@ -92,7 +91,7 @@ internal_function void init_sprite_atlas()
              0,
              GL_RGBA,
              GL_UNSIGNED_BYTE,
-             null_data
+             0
              );
 
     texture_height = (float)y_size;

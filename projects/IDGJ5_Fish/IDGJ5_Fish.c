@@ -10,6 +10,7 @@ global_variable v2f player_pos = {0};
 global_variable v2f hook_pos = {0};
 global_variable v2f *bait_pos = {0};
 
+global_variable v2f player_size = {64.f, 32.f};
 global_variable float player_speed = {100};
 
 global_variable camera main_cam = {0};
@@ -25,7 +26,7 @@ internal_function void load_sprites()
     init_sprite_renderer();
 
     load_texture_for_sprite(&fish, "data/fish.png");
-    generate_rectangle_simple_sprite(&fish, 64, 32);
+    generate_rectangle_simple_sprite(&fish, player_size.x, player_size.y);
 
     load_texture_for_sprite(&bait, "data/bait.png");
     generate_rectangle_simple_sprite(&bait, 32, 32);
