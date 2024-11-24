@@ -28,7 +28,7 @@
 #define NL_GAMEPAD_X                  0x008000  //PSP SQUARE
 
 //copied from libogc pad.h
-#elif defined(GEKKO_GCN)
+#elif defined(GCN_GEKKO)
 #define NL_GAMEPAD_DPAD_LEFT		0x0001 //gamecube left
 #define NL_GAMEPAD_DPAD_RIGHT		0x0002 //gamecube right
 #define NL_GAMEPAD_DPAD_DOWN	    0x0004 //gamecube down
@@ -43,7 +43,7 @@
 #define NL_GAMEPAD_START		    0x1000 //gamecube start
 
 //copoied from libogc wpad
-#elif defined(GEKKO_WII)
+#elif defined(WII_GEKKO)
 #define NL_GAMEPAD_Y			    0x0001       //wii 2
 #define NL_GAMEPAD_X			    0x0002       //wii 1
 #define NL_GAMEPAD_B			    0x0004       //wii b

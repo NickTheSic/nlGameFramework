@@ -19,7 +19,7 @@ void udpate_gamepad(void)
     }
 }
 
-int get_pressed_buttons(int controller)
+int get_pressed_buttons(unsigned char controller)
 {
     return PAD_ButtonsDown(controller);
 }
