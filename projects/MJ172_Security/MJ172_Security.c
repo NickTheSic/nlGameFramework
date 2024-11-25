@@ -49,7 +49,7 @@ unsigned char game_state = 0;
 internal_function void winsizecbk(int width, int height)
 {
     create_orthographic_projection(&main_cam.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
-    set_projection_matrix(&main_cam.proj_matrix.m11);
+    set_projection_matrix(&main_cam.proj_matrix);
 }
 
 internal_function void load_game_sfx(void)
@@ -185,7 +185,7 @@ void app_specific_init(void)
     winsizecbk(screen_size.x, screen_size.y);
 
     create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,0.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,0.0f});
-    set_view_matrix(&main_cam.view_matrix.m11);
+    set_view_matrix(&main_cam.view_matrix);
 }
 
 void app_specific_update(double dt)
@@ -246,7 +246,6 @@ void app_specific_update(double dt)
 void app_specific_render(void)
 {
     mat4x4f model = {0};
-    //model.m41
     create_identity_matrix(&model);
     {
         for (int i = 0; i < MAX_LASER_BEAMS_IN_GAME; ++i)
@@ -258,7 +257,7 @@ void app_specific_render(void)
 
             model.m41 = lasers[i].pos.x;
             model.m42 = lasers[i].pos.y;
-            set_model_matrix(&model.m11);
+            set_model_matrix(&model);
 
             if (lasers[i].beam_active)
             {
@@ -268,7 +267,7 @@ void app_specific_render(void)
             render_single_simple_sprite(&laser_base);
 
             model.m42 = LASER_TOP_Y;
-            set_model_matrix(&model.m11);
+            set_model_matrix(&model);
             render_single_simple_sprite(&laser_top);
         }
     }
@@ -277,7 +276,7 @@ void app_specific_render(void)
     {
         model.m41 = money_pos.x;
         model.m42 = money_pos.y;
-        set_model_matrix(&model.m11);
+        set_model_matrix(&model);
         render_single_simple_sprite(&money);
     }
 
@@ -285,7 +284,7 @@ void app_specific_render(void)
     {
         model.m41 = man_pos.x;
         model.m42 = man_pos.y;
-        set_model_matrix(&model.m11);
+        set_model_matrix(&model);
         render_single_sprite_colour(&man, COLOUR_GREEN);
         //render_single_simple_sprite(&man);
     }

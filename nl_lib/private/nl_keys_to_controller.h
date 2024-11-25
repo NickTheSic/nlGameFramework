@@ -20,6 +20,6 @@
 
 #define key_space NL_GAMEPAD_A
 
-#define key_was_pressed(k) is_button_pressed(0, k)
+#define key_was_pressed(k) was_button_pressed(0, k)
 
 #endif//__NL_KEYS_TO_CONTROLLER_H__

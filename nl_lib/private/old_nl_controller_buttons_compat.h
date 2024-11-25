@@ -1,5 +1,14 @@
-#ifndef __NL_CONTROLLER_BUTTONS_H__
-#define __NL_CONTROLLER_BUTTONS_H__
+#ifndef __OLD_NL_CONTROLLER_BUTTONS_COMPAT_H__
+#define __OLD_NL_CONTROLLER_BUTTONS_COMPAT_H__
+
+// The values listed here are the values as defined in their respective SDKS
+
+// Keeping around in case I go back to this but at the moment it is not used how I expected
+
+// This may not be working how I was hoping it would
+// I wanted to standardize the names and their respective values
+// But handling input like I do with keyboard and mouse does not work the same with PSP
+// better to have them index in the order of bytes maybe
 
 // Opting for the western use of PS* Cross and Circle
 
@@ -8,20 +17,20 @@
 // SECONDARY
 // for interact and enter
 
-//PSP INDEXES
+//copied from pspctrl_h
 #if defined(PSP) 
-#define NL_GAMEPAD_SELECT     0x00  //0x000001  //PSP SELECT
-#define NL_GAMEPAD_START      0x01  //0x000008  //PSP START
-#define NL_GAMEPAD_DPAD_UP    0x02  //0x000010  //PSP UP
-#define NL_GAMEPAD_DPAD_RIGHT 0x03  //0x000020  //PSP RIGHT
-#define NL_GAMEPAD_DPAD_DOWN  0x04  //0x000040  //PSP DOWN
-#define NL_GAMEPAD_DPAD_LEFT  0x05  //0x000080  //PSP LEFT
-#define NL_GAMEPAD_L          0x06  //0x000100  //PSP LTRIGGER
-#define NL_GAMEPAD_R          0x07  //0x000200  //PSP RTRIGGER
-#define NL_GAMEPAD_Y          0x08  //0x001000  //PSP TRIANGLE
-#define NL_GAMEPAD_B          0x09  //0x002000  //PSP CIRCLE
-#define NL_GAMEPAD_A          0x0A  //0x004000  //PSP CROSS
-#define NL_GAMEPAD_X          0x0B  //0x008000  //PSP SQUARE
+#define NL_GAMEPAD_SELECT        0x000001  //PSP SELECT
+#define NL_GAMEPAD_START         0x000008  //PSP START
+#define NL_GAMEPAD_DPAD_UP       0x000010  //PSP UP
+#define NL_GAMEPAD_DPAD_RIGHT    0x000020  //PSP RIGHT
+#define NL_GAMEPAD_DPAD_DOWN     0x000040  //PSP DOWN
+#define NL_GAMEPAD_DPAD_LEFT     0x000080  //PSP LEFT
+#define NL_GAMEPAD_L             0x000100  //PSP LTRIGGER
+#define NL_GAMEPAD_R             0x000200  //PSP RTRIGGER
+#define NL_GAMEPAD_Y             0x001000  //PSP TRIANGLE
+#define NL_GAMEPAD_B             0x002000  //PSP CIRCLE
+#define NL_GAMEPAD_A             0x004000  //PSP CROSS
+#define NL_GAMEPAD_X             0x008000  //PSP SQUARE
 
 //copied from libogc pad.h
 #elif defined(GCN_GEKKO)

@@ -31,9 +31,9 @@ void load_texture_for_sprite(nl_sprite* const sprite, const char* filename);
 void free_simple_sprite(nl_sprite *const sprite);
 
 
-void set_model_matrix(float* m11);
-void set_view_matrix(float* m11);
-void set_projection_matrix(float* m11);
+void set_model_matrix(mat4x4f* mat);
+void set_view_matrix(mat4x4f* mat);
+void set_projection_matrix(mat4x4f* mat);
 
 
 #endif//__NL_SPRITE_H__

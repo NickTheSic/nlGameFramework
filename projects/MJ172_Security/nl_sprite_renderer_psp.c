@@ -43,14 +43,14 @@ void render_single_sprite_colour(nl_sprite* const sprite, colour col)
     vertices[0].v = 0.0f;
     vertices[0].colour = col.unsigned_integer;
     vertices[0].x = _MODEL_POS.x;
-    vertices[0].y = _MODEL_POS.y;
+    vertices[0].y = get_screen_size().y - _MODEL_POS.y;
     vertices[0].z = 0.0f;
 
-    vertices[1].u = 64.0f;
-    vertices[1].v = 64.0f;
+    vertices[1].u = texture->width;
+    vertices[1].v = texture->height;
     vertices[1].colour = col.unsigned_integer;
     vertices[1].x = _MODEL_POS.x + 32.f;
-    vertices[1].y = _MODEL_POS.y + 32.f;
+    vertices[1].y = get_screen_size().y - _MODEL_POS.y + 32.f;
     vertices[1].z = 0.0f;
 
     sceGuTexMode(GU_PSM_8888, 0, 0, GU_FALSE);
@@ -90,22 +90,20 @@ void free_simple_sprite(nl_sprite *const sprite)
     NL_UNIMPLEMENTED_FUNC;
 }
 
-void set_model_matrix(float* m11)
+void set_model_matrix(mat4x4f* mat)
 {
-    // I don't like this I should be passing in a matrix ptr
-    // but lets see if this works
-    _MODEL_POS.x = m11[12];
-    _MODEL_POS.y = m11[13];
+    _MODEL_POS.x = mat->m41;
+    _MODEL_POS.y = mat->m42;
 }
 
-void set_view_matrix(float* m11)
+void set_view_matrix(mat4x4f* mat)
 {
-    NL_UNUSED(m11);
+    NL_UNUSED(mat);
     NL_UNIMPLEMENTED_FUNC;
 }
 
-void set_projection_matrix(float* m11)
+void set_projection_matrix(mat4x4f* mat)
 {
-    NL_UNUSED(m11);
+    NL_UNUSED(mat);
     NL_UNIMPLEMENTED_FUNC;
 }
