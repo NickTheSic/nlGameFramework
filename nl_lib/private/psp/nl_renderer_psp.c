@@ -30,7 +30,23 @@ int initialize_renderer_subsystem(void)
     sceGuDepthFunc(GU_GEQUAL); //Depth buffer is reversed, so GEQUAL instead of LEQUAL
     sceGuEnable(GU_DEPTH_TEST); //Enable depth testing
 
+    sceGuFrontFace(GU_CCW);
+	sceGuEnable(GU_CULL_FACE);
+	
+	// Texturing
+	sceGuEnable(GU_TEXTURE_2D);
+	sceGuShadeModel(GU_SMOOTH);
+	sceGuTexWrap(GU_REPEAT, GU_REPEAT);
+	
+	// Blending
+	sceGuEnable(GU_BLEND);
+	sceGuBlendFunc(GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0, 0);
+
+	sceGuTexFilter(GU_LINEAR,GU_LINEAR);
+
     sceGuFinish();
+
+
     sceGuDisplay(GU_TRUE);
 
     bg_colour.unsigned_integer = 0xff777777;

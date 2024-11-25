@@ -4,7 +4,7 @@
 
 global_variable SceCtrlData controller;
 
-// If I rewrite this, with all the buttons in order, I could have cast to an
+// I do believe that the implementation of psp sdk provides a way to get a Make or Break state which is what this is supposed to calculate
 typedef struct gamepad_button_state gamepad_button_state;
 struct gamepad_button_state
 {
@@ -24,8 +24,10 @@ struct gamepad_button_state
             GENERATE_BUTTON_STATE_VARIABLES(circle);
             GENERATE_BUTTON_STATE_VARIABLES(cross);
             GENERATE_BUTTON_STATE_VARIABLES(square);
+
+            unsigned char stick_x, stick_y;
             // explicit padding
-            unsigned char pad : 4;
+            unsigned char pad : 2;
         };
         unsigned long long int bytes;
     };  
@@ -57,6 +59,9 @@ void udpate_gamepad()
     GENERATE_UPDATE_STATE(controller_state, controller.Buttons, PSP_CTRL_CIRCLE, circle);
     GENERATE_UPDATE_STATE(controller_state, controller.Buttons, PSP_CTRL_CROSS, cross);
     GENERATE_UPDATE_STATE(controller_state, controller.Buttons, PSP_CTRL_SQUARE, square);
+
+    controller_state.stick_x = controller.Lx;
+    controller_state.stick_y = controller.Ly;
 }
 
 int get_pressed_buttons(unsigned char controller_id)

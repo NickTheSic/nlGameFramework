@@ -68,7 +68,7 @@ internal_function void generate_game_sprites(void)
     load_texture_for_sprite(&laser_top, "data/laser_top.png");
     generate_rectangle_simple_sprite(&laser_top, 32, 16);
 
-    load_texture_for_sprite(&laser_beam, "data/single_red_pixel.png");
+    load_texture_for_sprite(&laser_beam, "data/ground.png");
     generate_rectangle_simple_sprite(&laser_beam, 32, LASER_DISTANCE);
 
     load_texture_for_sprite(&man, "data/man.png");

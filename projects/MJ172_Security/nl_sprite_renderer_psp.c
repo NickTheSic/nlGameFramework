@@ -3,8 +3,15 @@
 #include <pspdisplay.h>
 #include <pspgu.h>
 
+#define USE_STB 1
+
+#ifdef USE_STB
 #define STBI_ONLY_PNG
 #include <stb_image.h>
+#else
+#include <SDL.h>
+#include <SDL_image.h>
+#endif
 
 struct sprite_vertex_data
 {    
@@ -16,6 +23,7 @@ struct sprite_vertex_data
 typedef struct
 {
     int width, height;
+    int u, v;
     uint32_t * data;
 } Texture;
 
@@ -26,7 +34,11 @@ v2f _MODEL_POS = {0};
 
 void init_sprite_renderer(void)
 {
+    #if USE_STB
     NL_UNIMPLEMENTED_FUNC
+    #else
+    IMG_Init(IMG_INIT_PNG);
+    #endif
 }
 
 void render_single_simple_sprite(nl_sprite* const sprite)
@@ -43,18 +55,18 @@ void render_single_sprite_colour(nl_sprite* const sprite, colour col)
     vertices[0].v = 0.0f;
     vertices[0].colour = col.unsigned_integer;
     vertices[0].x = _MODEL_POS.x;
-    vertices[0].y = get_screen_size().y - _MODEL_POS.y;
+    vertices[0].y = get_screen_size().y - (texture->height + _MODEL_POS.y);;
     vertices[0].z = 0.0f;
 
-    vertices[1].u = texture->width;
-    vertices[1].v = texture->height;
+    vertices[1].u = texture->u;
+    vertices[1].v = texture->v;
     vertices[1].colour = col.unsigned_integer;
-    vertices[1].x = _MODEL_POS.x + 32.f;
-    vertices[1].y = get_screen_size().y - _MODEL_POS.y + 32.f;
+    vertices[1].x = _MODEL_POS.x + texture->width;
+    vertices[1].y = get_screen_size().y - _MODEL_POS.y;
     vertices[1].z = 0.0f;
 
     sceGuTexMode(GU_PSM_8888, 0, 0, GU_FALSE);
-    sceGuTexFunc(GU_TFX_REPLACE, GU_TCC_RGB);
+    sceGuTexFunc(GU_TFX_REPLACE, GU_TCC_RGBA);
     sceGuTexImage(0, texture->width, texture->height, texture->width, texture->data);
 
     sceGuEnable(GU_TEXTURE_2D); 
@@ -75,11 +87,24 @@ void generate_square_simple_sprite(nl_sprite *const sprite, float width)
 
 void load_texture_for_sprite(nl_sprite* const sprite, const char* filename)
 {
+#ifdef USE_STB
     textures[next_texture].data = (uint32_t *)stbi_load(filename, 
-        &(textures[next_texture].width), &(textures[next_texture].height), NULL, STBI_rgb_alpha);
+        &(textures[next_texture].u), &(textures[next_texture].v), NULL, STBI_rgb_alpha);
 
     // Make sure the texture cache is reloaded
     sceKernelDcacheWritebackInvalidateAll();
+#else
+    SDL_Surface * pixels = IMG_Load(filename);
+    SDL_Texture * sprite = SDL_CreateTextureFromSurface(renderer, pixels);
+    SDL_FreeSurface(pixels);
+
+    // Store the dimensions of the texture
+    SDL_Rect sprite_rect;
+    SDL_QueryTexture(sprite, NULL, NULL, &sprite_rect.w, &sprite_rect.h);
+
+    textures[next_texture].u = sprite_rect.w;
+    textures[next_texture].v = sprite_rect.h;
+#endif
 
     sprite->texture_id = next_texture++;
 }
