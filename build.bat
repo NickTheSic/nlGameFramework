@@ -8,11 +8,6 @@ IF "%2"=="" (
     echo missing second parameter. should be the project to build. If you specified the project you may be missing the platform
 )
 
-IF /I %1==win_x (
-call "build_scripts/build_win32_lib.bat" && call "build_scripts/build_win_sandbox.bat" %2
-goto compile_hit
-)
-
 IF /I %1==win (
 call "build_scripts/build_win_aio.bat" ../../nl_lib/build_nl_lib.c ../../projects/main/main.c ../../projects/%2/%2.c
 goto compile_hit
