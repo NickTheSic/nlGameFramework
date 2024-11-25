@@ -9,6 +9,13 @@ DEFINES="-DPSP -D_PSP_FW_VERSION=600 -D__PSP__"
 FLAGS="-Wall -Wextra -g -Wl,-zmax-page-size=128 -Wl,-Map,_build/psp/$1.map"
 PRX_SPECS="-specs=$PSP_SDK/lib/prxspecs -Wl,-q,-T$PSP_SDK/lib/linkfile.prx"
 OUTPUT="_build/psp"
+ 
+ICON0=data/icon0.png    #png Recommended: 144x80 
+ICON1=NULL              #pmf
+PIC0=NULL               #png
+PIC1=NULL               #png Recommended: 480x272
+SND0=NULL               #at3 
+PSAR=NULL               #data.psar
 
 if [ ! -d "_build/psp/$1" ]
 then
@@ -26,5 +33,5 @@ psp-gcc $DEFINES $INCLUDES $FLAGS $LIBDIR -o $OUTPUT/$1.elf nl_lib/build_nl_lib.
 psp-fixup-imports $OUTPUT/$1.elf && echo "fixed imports" 
 #psp-prxgen $OUTPUT/$1.elf $OUTPUT/$1.prx
 #echo "prx generated"
-mksfoex -d MEMSIZE=1 -s APP_VER=01.00 $1 $OUTPUT/PARAM.SFO && pack-pbp $OUTPUT/$1/EBOOT.PBP $OUTPUT/PARAM.SFO NULL NULL NULL NULL NULL $OUTPUT/$1.elf NULL
+mksfoex -d MEMSIZE=1 -s APP_VER=01.00 $1 $OUTPUT/PARAM.SFO && pack-pbp $OUTPUT/$1/EBOOT.PBP $OUTPUT/PARAM.SFO $ICON0 $ICON1 $PIC0 $PIC1 $SND0 $OUTPUT/$1.elf $PSAR
 #pack-pbp $OUTPUT/$1-prx/EBOOT.PBP $OUTPUT/PARAM.SFO NULL NULL NULL NULL NULL $OUTPUT/$1.prx NULL
