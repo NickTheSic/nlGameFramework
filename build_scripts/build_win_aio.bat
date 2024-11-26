@@ -9,7 +9,7 @@ set includes=/I../../nl_lib
 echo on
 
 :: rc /r ../../program.rc /OUT _build\win32 :: create a file that contains app icon
-cl %flags% %includes% %1 %2 %3 program.res %libs%
+cl %flags% %includes% %1 %2 %3 win_icon0.res %libs%
 
 @echo off
 popd
