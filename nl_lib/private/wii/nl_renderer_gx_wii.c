@@ -1,6 +1,6 @@
 #include "../nl_renderer.h"
 #include "../nl_window.h"
-#include "nl_window_helpers_gcn.h"
+#include "nl_window_helpers_wii.h"
 #include <ogc/gx.h>
 #include <ogc/system.h>
 #include <malloc.h>
@@ -29,7 +29,7 @@ int initialize_renderer_subsystem()
 					((mode->viHeight==2*mode->xfbHeight)?GX_ENABLE:GX_DISABLE));
 
 	GX_SetCullMode(GX_CULL_NONE);
-	GX_CopyDisp(get_gcn_framebuffer(),GX_TRUE);
+	GX_CopyDisp(get_wii_framebuffer(),GX_TRUE);
 	GX_SetDispCopyGamma(GX_GM_1_0);
 
     return 1;
@@ -50,6 +50,10 @@ void end_render_frame()
 void set_background_colour_4f(float r, float g, float b, float a)
 {
     NL_UNIMPLEMENTED_FUNC;
+    NL_UNUSED(r);
+    NL_UNUSED(g);
+    NL_UNUSED(b);
+    NL_UNUSED(a);
 }
 
 void renderer_swap_buffers()

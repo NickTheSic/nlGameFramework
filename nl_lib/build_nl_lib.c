@@ -89,6 +89,24 @@
 #include "private/gcn/nl_window_gcn.c"
 
 
+#elif defined(WII_GEKKO)
+#include "private/null/nl_audio_null.c"
+#include "private/null/nl_shader_null.c"
+#include "private/null/nl_vertex_attrib_null.c"
+
+#include "private/common/nl_camera.c"
+#include "private/common/nl_fileio.c"
+#include "private/common/nl_input.c"
+#include "private/common/nl_math.c"
+#include "private/common/nl_memory.c"
+#include "private/common/nl_random.c"
+
+#include "private/wii/nl_deltatime_wii.c"
+#include "private/wii/nl_renderer_gx_wii.c"
+#include "private/wii/nl_gamepad_wii.c"
+#include "private/wii/nl_window_wii.c"
+
+
 #elif defined(PSP)
 //#include "private/common/nl_audio_openal.c"
 #include "private/common/nl_camera.c"
@@ -149,7 +167,6 @@
 #include "private/null/nl_audio_null.c"
 #include "private/null/nl_deltatime_null.c"
 #include "private/null/nl_gamepad_null.c"
-#include "private/null/nl_mesh_null.c"
 #include "private/null/nl_renderer_null.c"
 #include "private/null/nl_shader_null.c"
 #include "private/null/nl_vertex_attrib_null.c"

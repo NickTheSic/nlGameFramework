@@ -19,6 +19,11 @@ IF %1==gcn (
     goto end
 )
 
+IF %1==wii (
+    %DOLPHIN_EMULATOR% _build\wii\game.dol
+    goto end
+)
+
 IF %1==psp (
     IF "%2"=="" (
         echo need to specify game to run
