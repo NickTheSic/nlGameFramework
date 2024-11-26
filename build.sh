@@ -20,7 +20,13 @@ then
     ./build_scripts/build_tux.sh $2
 fi
 
+if [ "$1" == "pspprx" ]
+then 
+    ./build_scripts/build_psp_prx.sh $2
+fi
+
 if [ "$1" == "psp" ]
 then 
     ./build_scripts/build_psp.sh $2
 fi
+
