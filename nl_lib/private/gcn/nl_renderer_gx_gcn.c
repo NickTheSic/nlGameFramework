@@ -50,6 +50,10 @@ void end_render_frame()
 void set_background_colour_4f(float r, float g, float b, float a)
 {
     NL_UNIMPLEMENTED_FUNC;
+    NL_UNUSED(r);
+    NL_UNUSED(g);
+    NL_UNUSED(b);
+    NL_UNUSED(a);
 }
 
 void renderer_swap_buffers()

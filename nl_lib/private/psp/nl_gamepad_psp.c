@@ -5,33 +5,30 @@
 global_variable SceCtrlData controller;
 
 // I do believe that the implementation of psp sdk provides a way to get a Make or Break state which is what this is supposed to calculate
-typedef struct gamepad_button_state gamepad_button_state;
-struct gamepad_button_state
+typedef union gamepad_button_state gamepad_button_state;
+union gamepad_button_state
 {
-    union
+    struct
     {
-        struct
-        {
-            GENERATE_BUTTON_STATE_VARIABLES(select);
-            GENERATE_BUTTON_STATE_VARIABLES(start);
-            GENERATE_BUTTON_STATE_VARIABLES(dpad_up);
-            GENERATE_BUTTON_STATE_VARIABLES(dpad_right);
-            GENERATE_BUTTON_STATE_VARIABLES(dpad_down);
-            GENERATE_BUTTON_STATE_VARIABLES(dpad_left);
-            GENERATE_BUTTON_STATE_VARIABLES(ltrigger);
-            GENERATE_BUTTON_STATE_VARIABLES(rtrigger);
-            GENERATE_BUTTON_STATE_VARIABLES(triangle);
-            GENERATE_BUTTON_STATE_VARIABLES(circle);
-            GENERATE_BUTTON_STATE_VARIABLES(cross);
-            GENERATE_BUTTON_STATE_VARIABLES(square);
-
-            unsigned char stick_x, stick_y;
-            // explicit padding
-            unsigned char pad : 2;
-        };
-        unsigned long long int bytes;
-    };  
-};
+        GENERATE_BUTTON_STATE_VARIABLES(select);
+        GENERATE_BUTTON_STATE_VARIABLES(start);
+        GENERATE_BUTTON_STATE_VARIABLES(dpad_up);
+        GENERATE_BUTTON_STATE_VARIABLES(dpad_right);
+        GENERATE_BUTTON_STATE_VARIABLES(dpad_down);
+        GENERATE_BUTTON_STATE_VARIABLES(dpad_left);
+        GENERATE_BUTTON_STATE_VARIABLES(ltrigger);
+        GENERATE_BUTTON_STATE_VARIABLES(rtrigger);
+        GENERATE_BUTTON_STATE_VARIABLES(triangle);
+        GENERATE_BUTTON_STATE_VARIABLES(circle);
+        GENERATE_BUTTON_STATE_VARIABLES(cross);
+        GENERATE_BUTTON_STATE_VARIABLES(square);
+        
+        unsigned char stick_x, stick_y;
+        // explicit padding
+        unsigned char pad : 2;
+    };
+    unsigned long long int bytes;
+}; 
 
 global_variable gamepad_button_state controller_state = {0}; 
 

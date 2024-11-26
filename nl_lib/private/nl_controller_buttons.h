@@ -25,18 +25,18 @@
 
 //copied from libogc pad.h
 #elif defined(GCN_GEKKO)
-#define NL_GAMEPAD_DPAD_LEFT		0x0001 //gamecube left
-#define NL_GAMEPAD_DPAD_RIGHT		0x0002 //gamecube right
-#define NL_GAMEPAD_DPAD_DOWN	    0x0004 //gamecube down
-#define NL_GAMEPAD_DPAD_UP			0x0008 //gamecube up
-#define NL_GAMEPAD_Z			    0x0010 //gamecube z
-#define NL_GAMEPAD_R			    0x0020 //gamecube r
-#define NL_GAMEPAD_L			    0x0040 //gamecube l 
-#define NL_GAMEPAD_A			    0x0100 //gamecube a
-#define NL_GAMEPAD_B			    0x0200 //gamecube b
-#define NL_GAMEPAD_X			    0x0400 //gamecube x
-#define NL_GAMEPAD_Y			    0x0800 //gamecube y
-#define NL_GAMEPAD_START		    0x1000 //gamecube start
+#define NL_GAMEPAD_DPAD_LEFT		0x00 //0x0001 //gamecube left
+#define NL_GAMEPAD_DPAD_RIGHT		0x01 //0x0002 //gamecube right
+#define NL_GAMEPAD_DPAD_DOWN	    0x02 //0x0004 //gamecube down
+#define NL_GAMEPAD_DPAD_UP			0x03 //0x0008 //gamecube up
+#define NL_GAMEPAD_Z			    0x04 //0x0010 //gamecube z
+#define NL_GAMEPAD_R			    0x05 //0x0020 //gamecube r
+#define NL_GAMEPAD_L			    0x06 //0x0040 //gamecube l 
+#define NL_GAMEPAD_A			    0x07 //0x0100 //gamecube a
+#define NL_GAMEPAD_B			    0x08 //0x0200 //gamecube b
+#define NL_GAMEPAD_X			    0x09 //0x0400 //gamecube x
+#define NL_GAMEPAD_Y			    0x0A //0x0800 //gamecube y
+#define NL_GAMEPAD_START		    0x0B //0x1000 //gamecube start
 
 //copoied from libogc wpad
 #elif defined(WII_GEKKO)
