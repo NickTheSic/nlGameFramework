@@ -38,21 +38,21 @@
 #define NL_GAMEPAD_Y			    0x0A //0x0800 //gamecube y
 #define NL_GAMEPAD_START		    0x0B //0x1000 //gamecube start
 
-//copoied from libogc wpad
+//copied from libogc wpad
 #elif defined(WII_GEKKO)
-#define NL_GAMEPAD_Y			    0x0001       //wii 2
-#define NL_GAMEPAD_X			    0x0002       //wii 1
-#define NL_GAMEPAD_B			    0x0004       //wii b
-#define NL_GAMEPAD_A			    0x0008       //wii a
-#define NL_GAMEPAD_SELECT		    0x0010       //wii -
-//#define WPAD_BUTTON_HOME		    0x0080       //wii home
-#define NL_GAMEPAD_DPAD_LEFT	    0x0100       //wii left
-#define NL_GAMEPAD_DPAD_RIGHT	    0x0200       //wii right
-#define NL_GAMEPAD_DPAD_DOWN	    0x0400       //wii down
-#define NL_GAMEPAD_DPAD_UP		    0x0800       //wii up
-#define NL_GAMEPAD_START		    0x1000       //wii +	
-#define NL_GAMEPAD_L	            (0x0001<<16) //nunchuck z
-#define NL_GAMEPAD_R	            (0x0002<<16) //nunchuck c
+#define NL_GAMEPAD_Y			   0x00  //0x0001       //wii 2
+#define NL_GAMEPAD_X			   0x01  //0x0002       //wii 1
+#define NL_GAMEPAD_B			   0x02  //0x0004       //wii b
+#define NL_GAMEPAD_A			   0x03  //0x0008       //wii a
+#define NL_GAMEPAD_SELECT		   0x04  //0x0010       //wii -
+//#define WPAD_BUTTON_HOME		         //0x0080       //wii home
+#define NL_GAMEPAD_DPAD_LEFT	   0x05  //0x0100       //wii left
+#define NL_GAMEPAD_DPAD_RIGHT	   0x06  //0x0200       //wii right
+#define NL_GAMEPAD_DPAD_DOWN	   0x07  //0x0400       //wii down
+#define NL_GAMEPAD_DPAD_UP		   0x08  //0x0800       //wii up
+#define NL_GAMEPAD_START		   0x09  //0x1000       //wii +	
+#define NL_GAMEPAD_L	           0x0A  //(0x0001<<16) //nunchuck z
+#define NL_GAMEPAD_R	           0x0B  //(0x0002<<16) //nunchuck c
 
 // copied from calico gba
 #elif defined(NDS)
@@ -78,12 +78,12 @@
 #define NL_GAMEPAD_DPAD_LEFT        0x0004 //xinput left
 #define NL_GAMEPAD_DPAD_RIGHT       0x0008 //xinput right
 #define NL_GAMEPAD_START            0x0010 //xinput start
-#define NL_GAMEPAD_SELECT            0x0020 //xinput back Could also be select button
+#define NL_GAMEPAD_SELECT           0x0020 //xinput back Could also be select button
 
 //#define XINPUT_GAMEPAD_LEFT_THUMB       0x0040 //xinput left thumb
 //#define XINPUT_GAMEPAD_RIGHT_THUMB      0x0080 //xinput right thumb
 #define NL_GAMEPAD_L    0x0100 //xinput left shoulder
-#define NL_GAMEPAD_R   0x0200 //xinput right shoulder
+#define NL_GAMEPAD_R    0x0200 //xinput right shoulder
 
 #define NL_GAMEPAD_A                0x1000 //xinput a
 #define NL_GAMEPAD_B                0x2000 //xinput b
