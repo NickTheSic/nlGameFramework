@@ -14,7 +14,18 @@ void udpate_gamepad(void);
 int get_pressed_buttons(unsigned char controller_id);
 int is_button_pressed(unsigned char controller_index, int button);
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int was_button_pressed(unsigned char controller, unsigned char button);
 int was_button_released(unsigned char controller, unsigned char button);
+
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif//__NL_GAMEPAD_H__
