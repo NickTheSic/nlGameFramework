@@ -296,3 +296,8 @@ void set_window_title(const char* title)
 {
 	SetWindowTextA(g_window.window, title);
 }
+
+void set_window_size_callback(PFNWINDOWSIZECALLBACK callback)
+{
+	pfn_window_size_callback = callback;
+}

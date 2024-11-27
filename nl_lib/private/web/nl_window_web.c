@@ -107,3 +107,8 @@ void set_window_title(const char* title)
 {
 	emscripten_set_window_title(title);
 }
+
+void set_window_size_callback(PFNWINDOWSIZECALLBACK callback)
+{
+	pfn_window_size_callback = callback;
+}

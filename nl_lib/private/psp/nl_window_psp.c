@@ -4,10 +4,6 @@
 #include <pspdebug.h>
 #include <pspkernel.h>
 
-// Unused... 
-// Guess I should have set function that does nothing so I don't have extern variables
-PFNWINDOWSIZECALLBACK pfn_window_size_callback;
-
 int running = {1};
 
 internal_function int exit_callback(int arg1, int arg2, void *common) 
@@ -50,6 +46,7 @@ int initialize_window(int width, int height, const char* title)
 void poll_events(void)
 {
     NL_UNIMPLEMENTED_FUNC;
+    // Intentionally empty
 }
 
 int window_active(void)
@@ -60,10 +57,12 @@ int window_active(void)
 void window_request_close(void)
 {
     NL_UNIMPLEMENTED_FUNC;
+    // Intentionally empty
 }
 
 void window_swap_buffers(void)
 {
+    // Intentionally empty
     NL_UNIMPLEMENTED_FUNC;
 }
 
@@ -75,5 +74,11 @@ v2i get_screen_size(void)
 void set_window_title(const char* title)
 {
     NL_UNUSED(title);
-    NL_UNIMPLEMENTED_FUNC;
+    // Intentionally empty
+}
+
+void set_window_size_callback(PFNWINDOWSIZECALLBACK callback)
+{
+    NL_UNUSED(callback);
+    // Intentionally empty
 }

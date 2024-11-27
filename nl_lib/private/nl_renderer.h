@@ -4,12 +4,12 @@
 /////////////////////////////////////////////////////////////////
 //                     Renderer System                         //
 /////////////////////////////////////////////////////////////////
-int initialize_renderer_subsystem();
+int initialize_renderer_subsystem(void);
 void cleanup_renderer_subsystem(void);
 
-void begin_render_frame();
-void end_render_frame();
-void renderer_swap_buffers();
+void begin_render_frame(void);
+void end_render_frame(void);
+void renderer_swap_buffers(void);
 
 /////////////////////////////////////////////////////////////////
 //              Wrappers around GL specific calls              //
