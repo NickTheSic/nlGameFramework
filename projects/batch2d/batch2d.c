@@ -11,7 +11,6 @@ global_variable unsigned int loc_proj_mat = {0};
 
 global_variable camera main_cam = {0};
 
-
 internal_function void winsizecbk(int width, int height)
 {
     create_orthographic_projection(&main_cam.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
@@ -26,7 +25,7 @@ void app_specific_init(void)
     loc_proj_mat = get_uniform_loc(sp, "uProjMat");
     
 
-    pfn_window_size_callback = &winsizecbk;
+    set_window_size_callback(&winsizecbk);
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
 

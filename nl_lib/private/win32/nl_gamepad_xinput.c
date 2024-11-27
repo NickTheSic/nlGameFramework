@@ -166,3 +166,20 @@ int is_button_pressed(unsigned char controller_index, int button)
 {
     return controllers[controller_index].buttons & button;
 }
+
+// Incorrectly setup
+int was_button_pressed(unsigned char controller_index, unsigned char button)
+{
+    XINPUT_STATE state = {0};
+    if (XInputGetState(controller_index, &state) == 0)
+    {   
+        return (state.Gamepad.wButtons & button) != 0;
+    }
+    return 0;
+}
+
+int was_button_released(unsigned char controller_index, unsigned char button)
+{
+    NL_UNIMPLEMENTED_FUNC;
+    return 0;
+}

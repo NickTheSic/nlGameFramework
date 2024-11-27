@@ -22,7 +22,7 @@ void app_specific_init(void)
     init_gameobject(&ground, 100, 20, (v2f){0.f,0.f}, "data/ground.png");
     init_gameobject(&mouse_follow, PLAYER_HALF_WIDTH, PLAYER_HALF_WIDTH, (v2f){0.f,0.f}, "data/test_sprite.png");
 
-    pfn_window_size_callback = &winsizecbk;
+    set_window_size_callback(&winsizecbk);
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
 

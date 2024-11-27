@@ -2,7 +2,7 @@
 #include "../nl_controller_state_defines.h"
 #include <pspctrl.h>
 
-global_variable SceCtrlData controller;
+global_variable SceCtrlData controller = {0};
 
 // I do believe that the implementation of psp sdk provides a way to get a Make or Break state which is what this is supposed to calculate
 typedef union gamepad_button_state gamepad_button_state;
@@ -23,9 +23,8 @@ union gamepad_button_state
         GENERATE_BUTTON_STATE_VARIABLES(cross);
         GENERATE_BUTTON_STATE_VARIABLES(square);
         
-        unsigned char stick_x, stick_y;
         // explicit padding
-        unsigned char pad : 2;
+        unsigned char pad : 4;
     };
     unsigned long long int bytes;
 }; 

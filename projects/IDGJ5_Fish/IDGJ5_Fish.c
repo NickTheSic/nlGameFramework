@@ -37,7 +37,7 @@ void app_specific_init(void)
     set_background_colour_4f(0.3f,0.5f,1.0f,1.0f);
     load_sprites();
 
-    pfn_window_size_callback = &winsizecbk;
+    set_window_size_callback(&winsizecbk);
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
 

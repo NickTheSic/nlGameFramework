@@ -1,6 +1,8 @@
 #include "nl_lib.h"
-#include "private/nl_gl.h"
-
+#include "private/gl/nl_gl.h"
+#include "private/nl_shader.h"
+#include "private/nl_vertex_data.h"
+#include "nl_mesh.h"
 #include <string.h>
 
 global_variable const char* vert_shader_code =
@@ -40,6 +42,12 @@ struct batch_render3d
     // Rewrite it when I get to it I guess!
     unsigned int* indice_batch;
 };
+
+void free_batch_renderer(batch_render* const batch)
+{
+    memory_free(batch->vertex_batch);
+    memory_free(batch->indice_batch);
+}
 
 void init_batch_renderer(batch_render* const batch, unsigned int max_vertices, unsigned int max_indices)
 {
@@ -183,4 +191,8 @@ void app_specific_cleanup()
 {
     free_mesh(&triangle);
     free_mesh(&square);
+
+    free_batch_renderer(&batch);
 }
+
+#include "nl_mesh_gl.c"

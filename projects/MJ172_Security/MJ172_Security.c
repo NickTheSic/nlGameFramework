@@ -180,7 +180,7 @@ void app_specific_init(void)
 
     restart_game();
 
-    pfn_window_size_callback = &winsizecbk;
+    set_window_size_callback(&winsizecbk);
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
 

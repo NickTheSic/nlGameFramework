@@ -2,6 +2,7 @@
 #define __NL_BATCH2D_H__
 
 #include <private/nl_colour.h>
+#include <private/nl_shader.h>
 
 static const char* batch_vert_shader_code =
 NL_SHADER_VERSION_HEADER

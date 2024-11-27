@@ -1,5 +1,5 @@
 #include "sprite_batch.h"
-#include "private/nl_gl.h"
+#include "private/gl/nl_gl.h"
 
 void init_batch(sprite_batch* const batch, unsigned int count)
 {   
