@@ -79,7 +79,7 @@ void app_specific_init(void)
     TheGame->shader_program = create_common_shader_program();
     use_shader_program(TheGame->shader_program);
 
-    pfn_window_size_callback = &winsizecbk;
+    set_window_size_callback(&winsizecbk);
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
 
@@ -193,3 +193,5 @@ void app_specific_cleanup()
     free_mesh(&TheGame->Player.m);
     memory_free(TheGame);
 }
+
+#include "nl_mesh_gl.c"

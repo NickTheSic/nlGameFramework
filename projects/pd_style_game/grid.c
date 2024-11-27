@@ -1,5 +1,6 @@
 #include "grid.h"
 #include "string.h" //memcpy
+#include "nl_mesh.h"
 
 #define GRID_CELL_SIZE 64
 #define GRID_CELL_HALF_SIZE GRID_CELL_SIZE/2.0f
