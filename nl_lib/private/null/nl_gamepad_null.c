@@ -24,3 +24,17 @@ int is_button_pressed(unsigned char controller, int button)
     NL_UNIMPLEMENTED_FUNC
     return 0;
 }
+
+int was_button_pressed(unsigned char controller, unsigned char button)
+{
+    NL_UNUSED(controller);NL_UNUSED(button);
+    NL_UNIMPLEMENTED_FUNC
+    return 0;
+}
+
+int was_button_released(unsigned char controller, unsigned char button)
+{
+    NL_UNUSED(controller);NL_UNUSED(button);
+    NL_UNIMPLEMENTED_FUNC
+    return 0;
+}

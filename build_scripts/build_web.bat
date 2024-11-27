@@ -7,7 +7,8 @@ set includes=-Inl_lib
 set shell_file=--shell-file build_scripts/MinimalShell.html
 set flags=-Wall -Wextra -sWASM=1 -sALLOW_MEMORY_GROWTH=1 -sMAX_WEBGL_VERSION=2 -sMIN_WEBGL_VERSION=2 -sFULL_ES3 -sFULL_ES2
 
-set output=_build/web/
+IF NOT EXIST "_build\web\%1\" mkdir "_build\web\%1"
+set output="_build/web/%1/"
 
 @echo on
 

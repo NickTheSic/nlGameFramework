@@ -57,19 +57,19 @@ global_variable unsigned int u_model_loc = {0};
 global_variable unsigned int u_view_mat = {0};
 global_variable unsigned int u_proj_mat = {0};
 
-void set_model_matrix(float* m11)
+void set_model_matrix(mat4x4f*const mat)
 {
-    set_uniform_mat4x4f(u_model_loc, m11);
+    set_uniform_mat4x4f(u_model_loc, &mat->m11);
 }
 
-void set_view_matrix(float* m11)
+void set_view_matrix(mat4x4f*const mat)
 {
-    set_uniform_mat4x4f(u_view_mat, m11);
+    set_uniform_mat4x4f(u_view_mat, &mat->m11);
 }
 
-void set_projection_matrix(float* m11)
+void set_projection_matrix(mat4x4f*const mat)
 {
-    set_uniform_mat4x4f(u_proj_mat, m11);
+    set_uniform_mat4x4f(u_proj_mat, &mat->m11);
 }
 
 internal_function void init_sprite_atlas()

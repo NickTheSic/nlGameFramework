@@ -109,6 +109,18 @@
 // Not sure if I should use libtonc or libgba or skip this entirely
 #else
 #warning No controller input bindings setup
+#define NL_GAMEPAD_DPAD_LEFT	0
+#define NL_GAMEPAD_DPAD_RIGHT	0
+#define NL_GAMEPAD_DPAD_DOWN	0
+#define NL_GAMEPAD_DPAD_UP		0
+#define NL_GAMEPAD_Z			0
+#define NL_GAMEPAD_R			0
+#define NL_GAMEPAD_L			0
+#define NL_GAMEPAD_A			0
+#define NL_GAMEPAD_B			0
+#define NL_GAMEPAD_X			0
+#define NL_GAMEPAD_Y			0
+#define NL_GAMEPAD_START	    0
 #endif
 
 #endif//__NL_CONTROLLER_BUTTONS_H__

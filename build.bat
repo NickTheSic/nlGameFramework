@@ -8,6 +8,8 @@ IF "%2"=="" (
     echo missing second parameter. should be the project to build. If you specified the project you may be missing the platform
 )
 
+IF NOT EXIST _build/NUL mkdir _build
+
 IF /I %1==win (
 call "build_scripts/build_win_aio.bat" ../../nl_lib/build_nl_lib.c ../../projects/main/main.c ../../projects/%2/%2.c
 goto compile_hit

@@ -141,7 +141,6 @@
 
 //#include "third_party/stb_image.c"
 
-#include "private/null/nl_mesh_null.c"
 #include "private/null/nl_shader_null.c"
 #include "private/null/nl_vertex_attrib_null.c"
 

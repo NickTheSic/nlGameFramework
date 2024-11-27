@@ -9,6 +9,8 @@ set SPEC=-specs=gba.specs
 set DEFS=-D__GBA__
 set OUTPUT=_build\gba
 
+IF NOT EXIST "_build\gba" mkdir "_build\gba"
+
 @echo on
 
 %COMP% %FLAG% %ARCH% %DEFS% %INCL% -c nl_lib\build_nl_lib.c -o %OUTPUT%\nl_lib.o
