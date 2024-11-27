@@ -106,3 +106,5 @@ void app_specific_cleanup(void)
     free_mesh(&square_center.m);
     free_mesh(&mouse.m);
 }
+
+#include "nl_mesh_gl.c"

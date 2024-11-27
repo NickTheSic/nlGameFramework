@@ -1,6 +1,9 @@
 #ifndef __NL_UI_STUFF_H__
 #define __NL_UI_STUFF_H__
 #include "private/nl_shader.h"
+#include "private/nl_vertex_data.h"
+#include "nl_mesh.h"
+
 
 static const char* ui_vert_shader_code =
 NL_SHADER_VERSION_HEADER
