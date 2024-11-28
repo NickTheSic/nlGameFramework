@@ -16,6 +16,10 @@ internal_function void vk_create_instance(void)
     appInfo.pEngineName = "nl_lib";
     appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
     appInfo.apiVersion = VK_API_VERSION_1_0;
+
+    VkInstanceCreateInfo create_info = {0};
+    create_info.sType = VK_STRUCTURE_TYPE_CREATE_INFO;
+    create_info.pApplicationInfo = &app_info;
 }
 
 int initialize_renderer_subsystem(void)

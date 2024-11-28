@@ -2,10 +2,12 @@
 
 IF "%1"=="" (
     echo missing first parameter, should be the platform
+    goto exit
 )
 
 IF "%2"=="" (
     echo missing second parameter. should be the project to build. If you specified the project you may be missing the platform
+    goto exit
 )
 
 IF NOT EXIST _build/NUL mkdir _build
@@ -47,6 +49,7 @@ IF /I %1==gba (
     goto compile_hit
 )
 
+:exit
 :compile_hit
 
 @echo on
