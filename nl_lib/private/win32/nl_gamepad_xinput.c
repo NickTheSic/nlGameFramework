@@ -155,6 +155,64 @@ void udpate_gamepad(void)
             }
         }
     }
+
+    if (controllers[0].dpad_up)
+    {
+        NL_LOG("controllers[i].dpad_up");
+    }       
+    if (controllers[0].dpad_down)
+    {
+        NL_LOG("controllers[i].dpad_down");
+    }     
+    if (controllers[0].dpad_left)
+    {
+        NL_LOG("controllers[i].dpad_left");
+    }     
+    if (controllers[0].dpad_right)
+    {
+        NL_LOG("controllers[i].dpad_right");
+    }    
+    if (controllers[0].start)
+    {
+        NL_LOG("controllers[i].start");
+    }         
+    if (controllers[0].select)
+    {
+        NL_LOG("controllers[i].select");
+    }        
+    if (controllers[0].left_stick)
+    {
+        NL_LOG("controllers[i].left_stick");
+    }    
+    if (controllers[0].right_stick)
+    {
+        NL_LOG("controllers[i].right_stick");
+    }   
+    if (controllers[0].left_shoulder)
+    {
+        NL_LOG("controllers[i].");
+    } 
+    if (controllers[0].right_shoulder)
+    {
+        NL_LOG("controllers[i].");
+    }
+    if (controllers[0].a)
+    {
+        NL_LOG("controllers[i].a");
+    }             
+    if (controllers[0].b)
+    {
+        NL_LOG("controllers[i].b");
+    }             
+    if (controllers[0].x)
+    {
+        NL_LOG("controllers[i].x");
+    }             
+    if (controllers[0].y)
+    {
+        NL_LOG("controllers[i].y");
+    }             
+
 }
 
 int get_pressed_buttons(unsigned char controller_index)
