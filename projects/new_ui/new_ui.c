@@ -14,7 +14,16 @@ void app_specific_update(double dt)
 
 void app_specific_render(void)
 {
+    begin_ui_render();
 
+    ui_element e = {0};
+    e.color = COLOURF_RED;
+    e.pos = (v2f){0.1f, 0.1f};
+    e.size = (v2f){0.1f, 0.1f};
+
+    DEBUG_add_elem(&e);
+
+    end_ui_render();
 }
 
 void app_specific_cleanup(void)
