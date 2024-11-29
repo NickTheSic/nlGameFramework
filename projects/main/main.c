@@ -64,33 +64,12 @@ int main(int count, char** args)
 {
     NL_UNUSED(count);NL_UNUSED(args);
 
-    // Consistent seed for testing
-    init_random_number_generator(80);
-    //init_random_number_generator(time(NULL));
-
-    if (!initialize_window(800,600, "Sandbox Mode"))
+    if (platform_init() == 0)
     {
-        NL_LOG("Failed to initialize window");
-        return -1;
+        NL_LOG("Failed to initialize platform layer");
     }
 
-    if (!init_gamepad_system())
-    {
-        NL_LOG("Failed to initialize gamepad system");
-        return -1;
-    }
-
-    if (init_audio_system() == 0)
-    {
-        return -1;
-    }
-
-    if (!initialize_renderer_subsystem())
-    {
-        return -1;
-    }
     set_background_colour_4f(0.5f,0.5f,0.5f,1.0f);
-    init_delta_time();
 
     app_specific_init();
 
@@ -104,8 +83,7 @@ int main(int count, char** args)
 #endif
 
     app_specific_cleanup();
-    cleanup_audio_system();
-    basic_memory_leak_check();
+    platform_cleanup();
 
     NL_LOG("Highest FPS Reached: %f", highest_fps);
     NL_LOG("Lowest FPS Reached: %f", lowest_fps);

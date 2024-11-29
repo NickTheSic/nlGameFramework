@@ -11,12 +11,9 @@
 #include "private/nl_input.h"
 #include "private/nl_math.h"
 #include "private/nl_memory.h"
+#include "private/nl_platform.h"
 #include "private/nl_random.h"
 #include "private/nl_renderer.h"
 #include "private/nl_window.h"
-
-#ifdef  __EMSCRIPTEN__
-#include "private/web/nl_web_glue.h"
-#endif//__EMSCRIPTEN__
 
 #endif //__NL_LIB_H__
