@@ -3,6 +3,8 @@
 #include <private/gl/nl_gl.h>
 #include <private/nl_shader.h>
 
+#include <string.h>
+
 #define UI_MAX_BATCH_COUNT 10
 
 typedef struct ui_vertex_data ui_vertex_data;
@@ -116,7 +118,7 @@ void begin_ui_render(void)
     glEnableVertexAttribArray(1);
 }
 
-internal_function render_batch(void)
+internal_function void render_batch(void)
 {
     glBindBuffer(GL_ARRAY_BUFFER, ui_renderer.vbo);
     glBufferSubData(GL_ARRAY_BUFFER, 0, ui_renderer.current_count*4*sizeof(ui_vertex_data), ui_renderer.vertices);
@@ -166,22 +168,36 @@ internal_function void add_element_to_render_batch(const ui_element* const eleme
 
 int ui_do_text_button(ui_element* elem, int x, int y, const char* label)
 {
+    NL_UNUSED(elem); 
+    NL_UNUSED(x);
+    NL_UNUSED(y); 
+    NL_UNUSED(label);
     return 0;
 }
 
 int ui_do_icon_button(ui_element* elem, int x, int y, unsigned int texture)
 {
+    NL_UNUSED(elem); 
+    NL_UNUSED(x);
+    NL_UNUSED(y); 
+    NL_UNUSED(texture);
     return 0;
 }
 
 void  ui_do_text(ui_element* elem, int x, int y, const char* text)
 {
-
+    NL_UNUSED(elem); 
+    NL_UNUSED(x);
+    NL_UNUSED(y); 
+    NL_UNUSED(text);
 }
 
 void  ui_do_icon(ui_element* elem, int x, int y, unsigned int texture_id)
 {
-
+    NL_UNUSED(elem); 
+    NL_UNUSED(x);
+    NL_UNUSED(y); 
+    NL_UNUSED(texture_id);
 }
 
 void DEBUG_add_elem(ui_element* const elem)

@@ -41,20 +41,18 @@ void app_specific_render(void)
     mat4x4f model = {0};
     create_identity_matrix(&model);
     set_model_matrix(&model);
-    render_single_sprite_colour(&man, COLOUR_GREEN);
+    render_single_simple_sprite(&man);
+    //render_single_sprite_colour(&man, COLOUR_GREEN);
 
     end_sprite_render();
 
 
     begin_ui_render();
-
     ui_element e = {0};
     e.color = COLOURF_RED;
     e.pos = (v2f){100.1f, 100.1f};
     e.size = (v2f){10.1f, 10.1f};
-
     DEBUG_add_elem(&e);
-
     end_ui_render();
 }
 

@@ -10,7 +10,11 @@ IF %1==win (
 )
 
 IF %1==web (
-    emrun _build\web\index.html
+    IF "%2"=="" (
+        echo need to specify game to run
+        goto end
+    )
+    emrun _build\web\%2\index.html
     goto end
 )
 
