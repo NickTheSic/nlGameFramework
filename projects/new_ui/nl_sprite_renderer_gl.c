@@ -120,9 +120,19 @@ internal_function void generate_simple_sprite_using_vertices_and_indices(nl_spri
     const size_t indice_data_size = indice_count * sizeof(unsigned int);
 
     simple_sprite->vertices = (sprite_vertex_data*)memory_allocate(vertices_data_size);
+    if (simple_sprite->vertices == 0)
+    {
+        NL_LOG("Unable to allocate memory for simple sprite vertices.  Returning early");
+        return;
+    }
     memcpy(simple_sprite->vertices, vertices, vertices_data_size);
 
     simple_sprite->indices = (unsigned int*)memory_allocate(indice_data_size);
+    if (simple_sprite->indices == 0)
+    {
+        NL_LOG("Unable to allocate memory for simple sprite indices. Returning early");
+        return;
+    }
     memcpy(simple_sprite->indices, indices, indice_data_size);
 
     simple_sprite->vertice_count = vertice_count;
@@ -247,6 +257,12 @@ void load_texture_for_sprite(nl_sprite* const sprite, const char* filename)
 
     int x, y, channel;
     unsigned char * data = stbi_load(filename, &x, &y, &channel, 4);
+
+    if (data == 0)
+    {
+        NL_LOG("Unable to load image.  stbi_load returned null data.  Returning early");
+        return;
+    }
 
     glTexSubImage2D(GL_TEXTURE_2D, 0,
                     current_texture_x_loaded, 0,

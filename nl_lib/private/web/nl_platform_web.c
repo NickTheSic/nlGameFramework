@@ -12,11 +12,13 @@ int platform_init(void)
 
     if (init_audio_system() == 0)
     {
+        NL_LOG("Unable to intialize the audio system");
         return 0;
     }
 
     if (!initialize_renderer_subsystem())
     {
+        NL_LOG("Unable to intialize renderer subsystem");
         return 0;
     }
 

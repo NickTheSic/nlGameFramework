@@ -91,6 +91,7 @@ static ALuint load_wav_sound(const char* filename)
     {
         NL_LOG("Unable to deduce the format of the audio file");
     }
+    NL_LOG("%s is %d format", filename, format);
 
     alBufferData(local_audio_system->buffers[local_audio_system->sounds_loaded],
                 format, 

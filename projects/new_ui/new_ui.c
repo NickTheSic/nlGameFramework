@@ -37,13 +37,13 @@ void app_specific_update(double dt)
 void app_specific_render(void)
 {
     begin_sprite_render();
-
     mat4x4f model = {0};
     create_identity_matrix(&model);
+    model.m41 = 200.f;
+    model.m42 = 100.f;
     set_model_matrix(&model);
     render_single_simple_sprite(&man);
     //render_single_sprite_colour(&man, COLOUR_GREEN);
-
     end_sprite_render();
 
 

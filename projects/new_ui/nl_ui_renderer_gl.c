@@ -81,6 +81,12 @@ void init_ui_renderer(void)
     glBufferData(GL_ARRAY_BUFFER, vertice_data, (void*)0, GL_DYNAMIC_DRAW);
 
     unsigned int *indices = (unsigned int*)memory_allocate(indice_data);
+    if (indices == 0)
+    {
+        NL_LOG("Failed to allocate memory for ui renderer indices!  Doing an early return");
+        return;
+    }
+
     unsigned int offset = 0;
     for (unsigned int i = 0; i < indice_count; i+=6)
     {
