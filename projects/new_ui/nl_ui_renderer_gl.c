@@ -16,10 +16,10 @@ static const char* ui_vert_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec2 aPos;                   \n"
 "layout (location = 1) in vec4 aColor;                 \n"
-"uniform mat4 uViewMat;                                \n"
+"uniform mat4 uProjMat;                                \n"
 "out vec4 oColor;                                      \n"
 "void main() {                                         \n"
-"   vec4 viewPos = /*uViewMat **/ vec4(aPos, 0.0, 1.0);    \n"
+"   vec4 viewPos = uProjMat * vec4(aPos, 0.0, 1.0);    \n"
 "   gl_Position = viewPos;                             \n"
 "   oColor = aColor;                                   \n"
 "}                                                     \0";
@@ -43,15 +43,27 @@ struct ui_batch_renderer
 
     unsigned int current_count;
 
-// TODO: Note that I multiplythe max by four, as there are 4 vertices per object
     ui_vertex_data vertices[4*UI_MAX_BATCH_COUNT];
 };
 global_variable ui_batch_renderer ui_renderer = {0};
+
+global_variable unsigned int loc_projection_matrix = {0};
+
+void set_screen_dimensions(int x, int y)
+{
+    mat4x4f viewport = {0};
+    create_orthographic_projection(&viewport, 0, x, 0, y, -0.1f, 100.f);
+    set_uniform_mat4x4f(loc_projection_matrix, &viewport.m11);
+}
 
 void init_ui_renderer(void)
 {
     ui_renderer.shader_program = create_shader_program(ui_vert_shader_code, ui_fragment_shader_code);
     use_shader_program(ui_renderer.shader_program);
+
+    loc_projection_matrix = get_uniform_loc(ui_renderer.shader_program, "uProjMat");
+    v2i screen =  get_screen_size();
+    set_screen_dimensions(screen.x, screen.y);
 
     const unsigned int vertice_count = UI_MAX_BATCH_COUNT * 4;
     const unsigned int indice_count  = UI_MAX_BATCH_COUNT * 6;
@@ -152,7 +164,12 @@ internal_function void add_element_to_render_batch(const ui_element* const eleme
     ui_renderer.current_count++;
 }
 
-int ui_do_button(ui_element* elem, int x, int y, const char* label)
+int ui_do_text_button(ui_element* elem, int x, int y, const char* label)
+{
+    return 0;
+}
+
+int ui_do_icon_button(ui_element* elem, int x, int y, unsigned int texture)
 {
     return 0;
 }
@@ -162,7 +179,7 @@ void  ui_do_text(ui_element* elem, int x, int y, const char* text)
 
 }
 
-void  ui_do_icon(ui_element* elem, int x, int y)
+void  ui_do_icon(ui_element* elem, int x, int y, unsigned int texture_id)
 {
 
 }

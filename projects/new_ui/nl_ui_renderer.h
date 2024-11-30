@@ -19,9 +19,10 @@ void end_ui_render(void);
 
 void set_screen_dimensions(int x, int y);
 
-int ui_do_button(ui_element* elem, int x, int y, const char* label);
+int ui_do_text_button(ui_element* elem, int x, int y, const char* label);
+int ui_do_icon_button(ui_element* elem, int x, int y, unsigned int texture);
 void  ui_do_text(ui_element* elem, int x, int y, const char* text);
-void  ui_do_icon(ui_element* elem, int x, int y);
+void  ui_do_icon(ui_element* elem, int x, int y, unsigned int texture);
 
 void DEBUG_add_elem(ui_element* const elem);
 
