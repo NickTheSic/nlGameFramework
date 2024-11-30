@@ -5,8 +5,8 @@
 #include <time.h>
 #endif
 
-float highest_fps = -1.0f;
-float lowest_fps = 54028234663.0000000000000000; // a really big number higher than the average fps I have ever seen
+global_variable float highest_fps = -1.0f;
+global_variable float lowest_fps = 54028234663.0000000000000000; // a really big number higher than the average fps I have ever seen
 
 extern void app_specific_init(void);
 extern void app_specific_update(double dt);
