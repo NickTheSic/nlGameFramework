@@ -98,8 +98,7 @@ v3f v3f_cross(const v3f lhs, const v3f rhs)
 {
     NL_UNIMPLEMENTED_FUNC;
     (void)lhs; (void)rhs;
-    v3f result = {0};
-    return (result);
+    return (result){0,0,0};
 }   
 
 float v2f_length_squared(const v2f vec)
