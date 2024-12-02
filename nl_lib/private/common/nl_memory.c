@@ -1,4 +1,5 @@
 #include "../nl_memory.h"
+#include "../nl_debug.h"
 
 #include <stdlib.h>
 #include <memory.h>
