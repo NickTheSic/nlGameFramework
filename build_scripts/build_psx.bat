@@ -7,18 +7,16 @@ set INCLUDES=-Inl_lib
 set FILES=nl_lib/build_nl_lib.c projects/main/main.c
 set DEFINES=-D__PSX__
 
+set COMPILE_LINE=%FLAGS% -Xo$80010000 %INCLUDES% %DEFINES% %FILES% projects\%1\%1.c 
+
 IF NOT EXIST %OUTPUT%/NUL mkdir %OUTPUT%
 @echo on
 
-ccpsx %FLAGS% -Xo$80010000 %DEFINES% -DNTSCVIDEOMODE=1 %FILES% projects\%1\%1.c -o%OUTPUT%\psNA.cpe,%OUTPUT%\psNA.sym,%OUTPUT%\psNA.map
-
 :: NA
-cpe2x /ca %OUTPUT%\psNA.cpe  
+ccpsx -DNTSCVIDEOMODE=1 %COMPILE_LINE% -o%OUTPUT%\psNA.cpe,%OUTPUT%\psNA.sym,%OUTPUT%\psNA.map && cpe2x /ca %OUTPUT%\psNA.cpe  
 
-
-::ccpsx %FLAGS% -Xo$80010000 %DEFINES% -DPALVIDEOMODE=1 %FILES% projects\%1\%1.c -o%OUTPUT%\psEU.cpe,%OUTPUT%\psEU.sym,%OUTPUT%\psEU.map
 :: EU
-::cpe2x /ce %OUTPUT%\psEU.cpe
+::ccpsx -DPALVIDEOMODE=1 %COMPILE_LINE% -o%OUTPUT%\psEU.cpe,%OUTPUT%\psEU.sym,%OUTPUT%\psEU.map && cpe2x /ce %OUTPUT%\psEU.cpe
 
 :: JP
 ::cpe2x /cj %OUTPUT%\psJP.cpe

@@ -2,6 +2,7 @@
 #include "../nl_debug.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <memory.h>
 
 global_variable int _BASIC_MEMORY_COUNTER = {0};
@@ -11,8 +12,12 @@ void *_memory_allocate(size_t size)
     void* memory = (void*)malloc(size);
     if (memory == 0)
     {
-        // Could make better
+        // Could make better - Should not riddle the code with these test defines
+        #ifdef __PSX__
+        NL_LOG("Unable to allocate enough memory");
+        #elif
         NL_LOG("Unable to allocate memory of size %zi", size);
+        #endif
         return 0;
     }
 
