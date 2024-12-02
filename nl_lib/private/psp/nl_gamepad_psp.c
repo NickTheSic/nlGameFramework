@@ -55,9 +55,6 @@ void udpate_gamepad()
     GENERATE_UPDATE_STATE(controller_state, controller.Buttons, PSP_CTRL_CIRCLE, circle);
     GENERATE_UPDATE_STATE(controller_state, controller.Buttons, PSP_CTRL_CROSS, cross);
     GENERATE_UPDATE_STATE(controller_state, controller.Buttons, PSP_CTRL_SQUARE, square);
-
-    controller_state.stick_x = controller.Lx;
-    controller_state.stick_y = controller.Ly;
 }
 
 int get_pressed_buttons(unsigned char controller_id)

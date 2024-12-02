@@ -8,10 +8,10 @@ global_variable nl_sprite man = {0};
 
 internal_function void winsizecbk(int width, int height)
 {
+    set_screen_dimensions(width, height);
+
     create_orthographic_projection(&main_cam.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
     set_projection_matrix(&main_cam.proj_matrix);
-
-    set_screen_dimensions(width, height);
 }
 
 void app_specific_init(void)

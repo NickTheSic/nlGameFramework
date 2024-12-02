@@ -34,11 +34,11 @@ struct colourf
 #define COLOUR_RED (colour){255,0,0,255}
 #define COLOURF_RED (colourf){1.f,0.f,0.f,1.f}
 
-#define COLOUR_GREEN (colour){255,255,0,0}
-#define COLOURF_GREEN (colourf){1.f,1.f,0.f,0.f}
+#define COLOUR_BLUE (colour){255,255,0,0}
+#define COLOURF_BLUE (colourf){1.f,1.f,0.f,0.f}
 
-#define COLOUR_BLUE (colour){255,0,255,0}
-#define COLOURF_BLUE (colourf){1.f,0.f,1.f,0.f}
+#define COLOUR_GREEN (colour){255,0,255,0}
+#define COLOURF_GREEN (colourf){1.f,0.f,1.f,0.f}
 
 #define COLOUR_WHITE (colour){255,255,255,255}
 #define COLOURF_WHITE (colourf){1.f,1.f,1.f,1.f}

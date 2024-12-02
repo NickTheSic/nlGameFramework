@@ -49,6 +49,11 @@ IF /I %1==gba (
     goto compile_hit
 )
 
+IF /I %1==psx (
+    call "build_scripts/build_psx.bat" %2
+    goto compile_hit
+)
+
 :exit
 :compile_hit
 

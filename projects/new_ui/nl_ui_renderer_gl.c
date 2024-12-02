@@ -55,6 +55,9 @@ void set_screen_dimensions(int x, int y)
 {
     mat4x4f viewport = {0};
     create_orthographic_projection(&viewport, 0, x, 0, y, -0.1f, 100.f);
+
+    use_shader_program(ui_renderer.shader_program);
+
     set_uniform_mat4x4f(loc_projection_matrix, &viewport.m11);
 }
 
@@ -104,6 +107,10 @@ void init_ui_renderer(void)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indice_data, indices, GL_STATIC_DRAW);
 
     memory_free(indices);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 void cleanup_ui_renderer(void)
@@ -117,6 +124,7 @@ void begin_ui_render(void)
 
     glBindVertexArray(ui_renderer.vao);
     glBindBuffer(GL_ARRAY_BUFFER, ui_renderer.vbo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ui_renderer.ebo);
 
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(ui_vertex_data), (void*)offsetof(ui_vertex_data, pos));
     glEnableVertexAttribArray(0); 
