@@ -1,13 +1,13 @@
 #ifndef __NL_MEMORY_H__
 #define __NL_MEMORY_H__
 
-#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#if 0 // to find memory leaks
+#if 0 && !defined(__PSX__) // to find memory leaks
+#include <stddef.h>
 #define memory_allocate(s) _memory_allocate(s); NL_LOG("%s %d", __FILE__, __LINE__);
 #else 
 #define memory_allocate(s) _memory_allocate(s);

@@ -79,5 +79,5 @@ void set_mouse_position_from_system(int x, int y)
 
 v2i get_mouse_position_from_system(void)
 {
-    return {0,0};
+    return (v2i){0,0};
 }
