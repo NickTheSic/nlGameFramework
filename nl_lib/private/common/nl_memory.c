@@ -15,7 +15,7 @@ void *_memory_allocate(size_t size)
         // Could make better - Should not riddle the code with these test defines
         #ifdef __PSX__
         NL_LOG("Unable to allocate enough memory");
-        #elif
+        #else
         NL_LOG("Unable to allocate memory of size %zi", size);
         #endif
         return 0;

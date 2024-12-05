@@ -6,7 +6,7 @@
 #define NL_LOG(m,...) //pspDebugScreenPrintf(m,##__VA_ARGS__);
 #elif defined(__PSX__)
 #define NL_LOG(m,...) printf(m,##__VA_ARGS__);
-#elif
+#else
 #include <stdio.h>
 #define NL_LOG(m,...) fprintf(stdout, m,##__VA_ARGS__); fprintf(stdout, "\n");
 #endif
