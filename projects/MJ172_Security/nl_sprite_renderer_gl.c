@@ -4,6 +4,7 @@
 #define STBI_ONLY_PNG
 #include <third_party/main_stb_image.h>
 #include <math.h>
+#include <string.h>
 
 struct sprite_vertex_data
 {

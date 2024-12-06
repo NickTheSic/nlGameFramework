@@ -60,7 +60,6 @@ global_variable unsigned int u_proj_mat = {0};
 void set_model_matrix(mat4x4f*const mat)
 {
     use_shader_program(shader_program);
-
     set_uniform_mat4x4f(u_model_loc, &mat->m11);
 }
 
@@ -171,14 +170,14 @@ void begin_sprite_render(void)
 {
     use_shader_program(shader_program);
     
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, pos));
-    glEnableVertexAttribArray(0);
+    // Cannot call vertex attrivs without binding a VAO on web
 
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, uv));
-    glEnableVertexAttribArray(1);
-
-    glVertexAttribPointer(2, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, col));
-    glEnableVertexAttribArray(2);
+    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, pos));
+    //glEnableVertexAttribArray(0);
+    //glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, uv));
+    //glEnableVertexAttribArray(1);
+    //glVertexAttribPointer(2, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, col));
+    //glEnableVertexAttribArray(2);
 }
 
 void end_sprite_render(void)
@@ -188,11 +187,22 @@ void end_sprite_render(void)
 
 void render_single_simple_sprite(nl_sprite* simple_sprite)
 {
+    use_shader_program(shader_program);
+
     glBindVertexArray(simple_sprite->VAO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, simple_sprite->EBO);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, atlas_texture_id);
+
+    // cannot call this here befor the draw elements on windows.  Wish I knew where to learn more about why it doesn't work
+
+    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, pos));
+    //glEnableVertexAttribArray(0);
+    //glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, uv));
+    //glEnableVertexAttribArray(1);
+    //glVertexAttribPointer(2, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, col));
+    //glEnableVertexAttribArray(2);
 
     glDrawElements(GL_TRIANGLES, simple_sprite->indice_count, GL_UNSIGNED_INT, 0);
 
@@ -239,12 +249,13 @@ void free_simple_sprite(nl_sprite* const simple_sprite)
 void generate_rectangle_simple_sprite(nl_sprite* const sprite, float width, float height)
 {
     texture_data td = textures[sprite->texture_id];
+    const colour white = COLOUR_WHITE;
     sprite_vertex_data square_vertices[] =
     {
-        {{0.0f,  0.0f,   0.0f},  td.coord_bl,                   COLOUR_WHITE},
-        {{width, 0.0f,   0.0f}, {td.coord_tr.x, td.coord_bl.y}, COLOUR_WHITE},
-        {{width, height, 0.0f},  td.coord_tr,                   COLOUR_WHITE},
-        {{0.0f,  height, 0.0f}, {td.coord_bl.x, td.coord_tr.y}, COLOUR_WHITE},
+        {{0.0f,  0.0f,   0.0f},  td.coord_bl,                   white},
+        {{width, 0.0f,   0.0f}, {td.coord_tr.x, td.coord_bl.y}, white},
+        {{width, height, 0.0f},  td.coord_tr,                   white},
+        {{0.0f,  height, 0.0f}, {td.coord_bl.x, td.coord_tr.y}, white},
     };
 
     generate_simple_sprite_using_vertices_and_indices(sprite, square_vertices, 4);

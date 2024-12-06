@@ -16,8 +16,8 @@ internal_function void winsizecbk(int width, int height)
 
 void app_specific_init(void)
 {
-    init_ui_renderer();
     init_sprite_renderer();
+    init_ui_renderer();
 
     load_texture_for_sprite(&man, "data/man.png");
     generate_rectangle_simple_sprite(&man, 32, 64);
@@ -39,8 +39,8 @@ void app_specific_render(void)
     begin_sprite_render();
     mat4x4f model = {0};
     create_identity_matrix(&model);
-    model.m41 = 200.f;
-    model.m42 = 100.f;
+    //model.m41 = 200.f;
+    //model.m42 = 100.f;
     set_model_matrix(&model);
     render_single_simple_sprite(&man);
     //render_single_sprite_colour(&man, COLOUR_GREEN);
