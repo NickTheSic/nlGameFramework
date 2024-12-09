@@ -3,15 +3,8 @@
 #include <pspdisplay.h>
 #include <pspgu.h>
 
-#define USE_STB 1
-
-#ifdef USE_STB
 #define STBI_ONLY_PNG
 #include <stb_image.h>
-#else
-#include <SDL.h>
-#include <SDL_image.h>
-#endif
 
 struct sprite_vertex_data
 {    
@@ -34,11 +27,7 @@ v2f _MODEL_POS = {0};
 
 void init_sprite_renderer(void)
 {
-    #if USE_STB
     NL_UNIMPLEMENTED_FUNC
-    #else
-    IMG_Init(IMG_INIT_PNG);
-    #endif
 }
 
 void render_single_simple_sprite(nl_sprite* const sprite)
@@ -87,24 +76,11 @@ void generate_square_simple_sprite(nl_sprite *const sprite, float width)
 
 void load_texture_for_sprite(nl_sprite* const sprite, const char* filename)
 {
-#ifdef USE_STB
     textures[next_texture].data = (uint32_t *)stbi_load(filename, 
         &(textures[next_texture].u), &(textures[next_texture].v), NULL, STBI_rgb_alpha);
 
     // Make sure the texture cache is reloaded
     sceKernelDcacheWritebackInvalidateAll();
-#else
-    SDL_Surface * pixels = IMG_Load(filename);
-    SDL_Texture * sprite = SDL_CreateTextureFromSurface(renderer, pixels);
-    SDL_FreeSurface(pixels);
-
-    // Store the dimensions of the texture
-    SDL_Rect sprite_rect;
-    SDL_QueryTexture(sprite, NULL, NULL, &sprite_rect.w, &sprite_rect.h);
-
-    textures[next_texture].u = sprite_rect.w;
-    textures[next_texture].v = sprite_rect.h;
-#endif
 
     sprite->texture_id = next_texture++;
 }

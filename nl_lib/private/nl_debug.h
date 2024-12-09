@@ -1,14 +1,19 @@
 #ifndef __NL_DEBUG_H__
 #define __NL_DEBUG_H__
 
+// Could hide these in a platform specific debug header
 #if defined(PSP)
-#include <pspdebug.h> 
-#define NL_LOG(m,...) //pspDebugScreenPrintf(m,##__VA_ARGS__);
+#   include <pspdebug.h> 
+#   if defined(PSP_DEBUG_RENDERER)
+#       define NL_LOG(m,...) pspDebugScreenPrintf(m,##__VA_ARGS__);
+#   else
+#       define NL_LOG(m,...)
+#   endif
 #elif defined(__PSX__)
-#define NL_LOG(m,...) printf(m,##__VA_ARGS__);
+#   define NL_LOG(m,...) printf(m,##__VA_ARGS__);
 #else
-#include <stdio.h>
-#define NL_LOG(m,...) fprintf(stdout, m,##__VA_ARGS__); fprintf(stdout, "\n");
+#   include <stdio.h>
+#   define NL_LOG(m,...) fprintf(stdout, m,##__VA_ARGS__); fprintf(stdout, "\n");
 #endif
 
 #define DO_ONCE(thing) {static int doonce = 1; if (doonce){ doonce = 0; thing; }}
@@ -22,27 +27,27 @@
 #define NL_UNUSED(x) (void)(x); //DO_ONCE(NL_LOG("variable %s is not being used in %s", #x, __FUNCTION__););
 
 #if defined(__EMSCRIPTEN__) || defined(GEKKO) || defined(PSP)
-#define CANNOT_EXIT_MAIN_LOOP 1
+#   define CANNOT_EXIT_MAIN_LOOP 1
 #else
-#define CANNOT_EXIT_MAIN_LOOP 0
+#   define CANNOT_EXIT_MAIN_LOOP 0
 #endif
 
 #if defined(GEKKO) || defined(PSP) || defined(__GBA__)
-#define NOT_YET_IMPLEMENTED 1
+#   define NOT_YET_IMPLEMENTED 1
 #else
-#define NOT_YET_IMPLEMENTED 0
+#   define NOT_YET_IMPLEMENTED 0
 #endif
 
 #if defined(__EMSCRIPTEN__) || defined(_WIN32)
-#define NL_USE_GL_RENDERER 1
+#   define NL_USE_GL_RENDERER 1
 #else
-#define NL_USE_GL_RENDERER 0
+#   define NL_USE_GL_RENDERER 0
 #endif
 
 #if defined(GEKKO) || defined(PSP) || defined(__GBA__) || defined(NDS)
-#define PLATFORM_CONSOLE 1
+#   define PLATFORM_CONSOLE 1
 #else
-#define PLATFORM_CONSOLE 0
+#   define PLATFORM_CONSOLE 0
 #endif
 
 #endif //__NL_DEBUG_H__

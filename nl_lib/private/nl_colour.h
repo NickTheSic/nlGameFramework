@@ -6,9 +6,9 @@
 #define NL_COLOUR_STRUCT_LAYOUT_AGBR a,g,b,r
 
 #if defined (PSP)
-#define NL_COLOUR_STRUCT_LAYOUT a,g,b,r
+#   define NL_COLOUR_STRUCT_LAYOUT a,g,b,r
 #else 
-#define NL_COLOUR_STRUCT_LAYOUT r,g,b,a
+#   define NL_COLOUR_STRUCT_LAYOUT r,g,b,a
 #endif
 
 typedef struct colour colour;
