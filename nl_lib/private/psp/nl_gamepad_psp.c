@@ -66,7 +66,7 @@ int get_pressed_buttons(unsigned char controller_id)
 int is_button_pressed(unsigned char controller_index, int button)
 {
     NL_UNUSED(controller_index);
-    return controller.Buttons & button;
+    return (controller_state.bytes & ((unsigned long long)0x01 << (button*5))) != 0;
 }
 
 int was_button_pressed(unsigned char controller, unsigned char button)
