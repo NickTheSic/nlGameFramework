@@ -1,15 +1,12 @@
 #include "nl_lib.h"
 #include "loot_locker.h"
-
-#ifndef LOOT_LOCKER_GAME_KEY
-#   warning NEED TO SET LOOT_LOCKER_GAME_KEY BEFORE COMPILING
-#   define LOOT_LOCKER_GAME_KEY 0
-#endif
-#define LOOT_LOCKER_GAME_KEY_NAME VALUE_TO_STR(LOOT_LOCKER_GAME_KEY)
+#include "whalepass_gg.h"
+#include "api_key_defines.h"
 
 void app_specific_init(void)
 {
-    ll_guest_login(LOOT_LOCKER_GAME_KEY_NAME);
+    //ll_guest_login(LOOT_LOCKER_GAME_KEY_NAME);
+    wgg_authenticate(WHALEPASS_SERVER_KEY_NAME, WHALEPASS_GAME_ID_NAME, WHALEPASS_PLAYER_ID_NAME);
 }
 
 void app_specific_update(double dt)
@@ -29,4 +26,5 @@ void app_specific_cleanup(void)
 
 #ifdef __EMSCRIPTEN__
 #include "loot_locker_web.c"
+#include "whalepass_gg_web.c"
 #endif
