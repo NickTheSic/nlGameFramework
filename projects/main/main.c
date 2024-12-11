@@ -39,7 +39,11 @@ static inline void run()
             lowest_fps = lowest_fps < fps ? lowest_fps : fps;
             
             char c[50];
+            #ifdef __WIN32
             sprintf_s(c, 50, "FPS: %f\n", fps);
+            #else
+            sprintf(c, "FPS: %f\n", fps);
+            #endif
             set_window_title(c);
     	}
     	frameCount++;
