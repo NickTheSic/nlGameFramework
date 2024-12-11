@@ -13,7 +13,7 @@ extern void app_specific_update(double dt);
 extern void app_specific_render(void);
 extern void app_specific_cleanup(void);
 
-static inline void run()
+internal_function void run()
 {
     poll_events();
     update_input_frame_state();
