@@ -20,7 +20,7 @@ global_variable grid grid_ = {0};
 
 internal_function void winsizecbk(int width, int height)
 {
-    create_orthographic_projection(&main_cam.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
+    create_orthographic_projection(&main_cam.proj_matrix, 0.f, (float)width, 0.f, (float)height, -0.1f, 100.f);
     set_uniform_mat4x4f(loc_proj_mat, &main_cam.proj_matrix.m11);
 }
 
@@ -83,7 +83,7 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
-    camera_controls(dt);
+    camera_controls((float)(dt));
 
     const v2i mouse_posi = get_mouse_position_from_system();
     mouse_pos = (v2f){(float)mouse_posi.x, (float)mouse_posi.y};

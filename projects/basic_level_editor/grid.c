@@ -44,8 +44,8 @@ v2i world_to_grid_coords(const grid* const grid, v2f world_pos)
     // Issue - a negative world pos still starts at 0 but does not take into a account that the mouse is in -1 
     // A negative world pos around the origin after division results in a 0,0 coord when we should be in negative
     v2i result = {0};
-    result.x = (world_pos.x) / (float)grid->cell_size;
-    result.y = (world_pos.y) / (float)grid->cell_size;
+    result.x = (int)((world_pos.x) / (float)grid->cell_size);
+    result.y = (int)((world_pos.y) / (float)grid->cell_size);
     return (result);
 }
 
