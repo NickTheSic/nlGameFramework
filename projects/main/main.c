@@ -29,7 +29,7 @@ internal_function void run()
     	static float fps;
 
     	TimedLoop += (float)(dt);
-    	if (TimedLoop > 1.f)
+    	if (TimedLoop >= 1.f)
     	{
     		fps = (float)(frameCount) / TimedLoop;
     		TimedLoop -= 1.f;
@@ -74,7 +74,6 @@ int main(int count, char** args)
     }
 
     set_background_colour_4f(0.5f,0.5f,0.5f,1.0f);
-
     app_specific_init();
 
 #if defined(__EMSCRIPTEN__)
