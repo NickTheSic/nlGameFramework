@@ -26,6 +26,9 @@
 
 #define NL_UNUSED(x) (void)(x); //DO_ONCE(NL_LOG("variable %s is not being used in %s", #x, __FUNCTION__););
 
+#define QUOTE_STR(name) #name // turn the value passed in into a string
+#define VALUE_TO_STR(name) QUOTE_STR(name) // Use this as for some reason the above doesn't work on its own
+
 #if defined(__EMSCRIPTEN__) || defined(GEKKO) || defined(PSP)
 #   define CANNOT_EXIT_MAIN_LOOP 1
 #else
