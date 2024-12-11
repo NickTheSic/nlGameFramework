@@ -1,7 +1,8 @@
-#include "../nl_window.h"
-#include "../nl_input.h"
-#include "../nl_renderer.h"
-#include "../nl_debug.h"
+#include <private/nl_window.h>
+#include <private/nl_input.h>
+#include <private/nl_renderer.h>
+#include <private/nl_debug.h>
+
 #include "nl_win32_include.h"
 
 typedef struct win32_window win32_window;
@@ -12,6 +13,9 @@ struct win32_window
     HGLRC context;
 
     int running;
+	
+	// Explicit Padding
+	int pad;
 };
 global_variable win32_window g_window;
 
@@ -87,8 +91,8 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 		case WM_MOUSEWHEEL:
 		{
 			short mouse_delta = GET_WHEEL_DELTA_WPARAM(wParam);
-			short modifier = GET_KEYSTATE_WPARAM(wParam);
-			
+			//short modifier = GET_KEYSTATE_WPARAM(wParam);
+
 			add_mouse_scroll(mouse_delta);
 		} break;
 
@@ -106,7 +110,7 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
     return (result);
 }
 
-void poll_events()
+void poll_events(void)
 {
     MSG msg = {0};
     //while (PeekMessage(&msg, g_window.window, 0, 0, PM_REMOVE) != 0)

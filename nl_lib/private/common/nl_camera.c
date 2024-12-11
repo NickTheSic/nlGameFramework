@@ -1,5 +1,5 @@
-#include "../nl_camera.h"
-#include "../nl_math.h"
+#include <private/nl_camera.h>
+#include <private/nl_math.h>
 
 void initialize_camera_to_identity(camera* const cam)
 {

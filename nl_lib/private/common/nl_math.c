@@ -1,6 +1,6 @@
-#include "../nl_math.h"
+#include <private/nl_math.h>
 #include <math.h>
-#include "string.h" // memset
+#include <string.h> // memset
 
 #define PI 3.14159f
 
@@ -202,13 +202,13 @@ float matrix_determinant(const mat4x4f* const matrix)
 
 int invert_matrix_4x4(const mat4x4f* const original, mat4x4f* const inverse)
 {
-    int determinant = matrix_determinant(original);
+    float determinant = matrix_determinant(original);
 
     if (determinant == 0) return 0;
 
     mat4x4f temp = *original;
 
-    const float inverse_det = 1.0f / (float)determinant;
+    const float inverse_det = 1.0f / determinant;
     for (int i = 0; i < 16; i += 4)
     {
         (&temp.m11)[i+0] *= inverse_det;
@@ -411,8 +411,8 @@ void v2i_mat4_transfrom(v2i* const lhs, const mat4x4f* const mat)
 
     const float w = 1.0f / (mat->m41 * lhs->x + mat->m42 * lhs->y + mat->m44);
 
-    temp.x = ((mat->m11 * lhs->x) + (mat->m12 * lhs->y) + mat->m14) * w;
-    temp.y = ((mat->m21 * lhs->x) + (mat->m22 * lhs->y) + mat->m24) * w;
+    temp.x = (int)(((mat->m11 * lhs->x) + (mat->m12 * lhs->y) + mat->m14) * w);
+    temp.y = (int)(((mat->m21 * lhs->x) + (mat->m22 * lhs->y) + mat->m24) * w);
 
     *lhs = temp;
 }

@@ -10,7 +10,7 @@ extern "C" {
 void *_memory_allocate(size_t size);
 void memory_free(void* memory);
 
-void basic_memory_leak_check(); //Used in debug + by main
+void basic_memory_leak_check(void); //Used in debug + by main
 
 #if defined(__PSX__) || 1
 #define memory_allocate(s) _memory_allocate(s);

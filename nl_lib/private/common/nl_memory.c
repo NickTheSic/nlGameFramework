@@ -1,5 +1,5 @@
-#include "../nl_memory.h"
-#include "../nl_debug.h"
+#include <private/nl_memory.h>
+#include <private/nl_debug.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -35,7 +35,7 @@ void memory_free(void* memory)
     --_BASIC_MEMORY_COUNTER;
 }
 
-void basic_memory_leak_check()
+void basic_memory_leak_check(void)
 {
     if (_BASIC_MEMORY_COUNTER > 0)
     {

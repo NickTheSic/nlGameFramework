@@ -6,7 +6,7 @@
 #endif
 
 global_variable float highest_fps = -1.0f;
-global_variable float lowest_fps = 54028234663.000000; // a really big number higher than the average fps I have ever seen
+global_variable float lowest_fps = 54028234663.000000f; // a really big number higher than the average fps I have ever seen
 
 extern void app_specific_init(void);
 extern void app_specific_update(double dt);
@@ -28,10 +28,10 @@ static inline void run()
     	static int frameCount;
     	static float fps;
 
-    	TimedLoop += dt;
+    	TimedLoop += (float)(dt);
     	if (TimedLoop > 1.f)
     	{
-    		fps = (double)frameCount / TimedLoop;
+    		fps = (float)(frameCount) / TimedLoop;
     		TimedLoop -= 1.f;
     		frameCount = 0;
 
@@ -39,7 +39,7 @@ static inline void run()
             lowest_fps = lowest_fps < fps ? lowest_fps : fps;
             
             char c[50];
-            sprintf(c, "FPS: %f\n", fps);
+            sprintf_s(c, 50, "FPS: %f\n", fps);
             set_window_title(c);
     	}
     	frameCount++;

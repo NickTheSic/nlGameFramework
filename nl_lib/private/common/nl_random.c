@@ -6,7 +6,7 @@ void init_random_number_generator(int seed)
     srand(seed);
 }
 
-inline static float random_percent()
+inline static float random_percent(void)
 {
     return (float)rand()/(float)RAND_MAX;
 }

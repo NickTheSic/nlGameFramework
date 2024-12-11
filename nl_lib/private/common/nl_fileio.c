@@ -1,7 +1,7 @@
-#include "../nl_fileio.h"
-#include "../nl_memory.h"
-#include "../nl_debug.h"
-#include "../nl_vertex_data.h"
+#include <private/nl_fileio.h>
+#include <private/nl_memory.h>
+#include <private/nl_debug.h>
+#include <private/nl_vertex_data.h>
 
 #include <stdio.h>
 #include <string.h>
@@ -83,10 +83,10 @@ void load_from_binary_file(const char* const filename, unsigned int size, char* 
 
 const char* find_file_type_from_name(const char* const filename)
 {
-    int name_length = strlen(filename);
+    size_t name_length = strlen(filename);
     const char* file_type = &filename[name_length-1];
 
-    for (int i = name_length - 1; i < 0; ++i)
+    for (size_t i = name_length - 1; i < 0; ++i)
     {
         file_type = &filename[i];
         if (file_type[0] == '.')

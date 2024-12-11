@@ -1,5 +1,5 @@
-#include "../nl_input.h"
-#include "../nl_debug.h"
+#include <private/nl_input.h>
+#include <private/nl_debug.h>
 
 typedef struct  input_key_state input_key_state;
 struct input_key_state
@@ -74,7 +74,7 @@ void update_input_frame_state(void)
 }
 
 
-internal_function void set_key_state(nl_key k, int state)
+internal_function void set_key_state(nl_key k, unsigned char state)
 {
     key_states[k].down_state = state;
 }
@@ -105,13 +105,13 @@ int key_was_released(nl_key k)
     return (key_states[k].released == 1);
 }
 
-int get_last_key_pressed()
+int get_last_key_pressed(void)
 {
     return last_key_pressed;
 }
 
 
-internal_function void set_mouse_button_state(int mb, int state)
+internal_function void set_mouse_button_state(int mb, unsigned char state)
 {
     mouse_button_states[mb].down_state = state;
 }

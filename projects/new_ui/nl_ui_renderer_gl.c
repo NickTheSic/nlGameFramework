@@ -54,7 +54,7 @@ global_variable unsigned int loc_projection_matrix = {0};
 void set_screen_dimensions(int x, int y)
 {
     mat4x4f viewport = {0};
-    create_orthographic_projection(&viewport, 0, x, 0, y, -0.1f, 100.f);
+    create_orthographic_projection(&viewport, 0.f, (float)x, 0.f, (float)y, -0.1f, 100.f);
 
     use_shader_program(ui_renderer.shader_program);
     set_uniform_mat4x4f(loc_projection_matrix, &viewport.m11);

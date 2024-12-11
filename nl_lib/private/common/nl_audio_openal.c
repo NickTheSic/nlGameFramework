@@ -1,14 +1,14 @@
-#include "../nl_audio.h"
+#include <private/nl_audio.h>
 
-#include "../nl_debug.h"
-#include "../nl_fileio.h"
-#include "../nl_memory.h"
-#include "../nl_wave_file.h"
+#include <private/nl_debug.h>
+#include <private/nl_fileio.h>
+#include <private/nl_memory.h>
+#include <private/nl_wave_file.h>
 
 #include "string.h" // for strcmp
 
-#include "../../third_party/al.h"
-#include "../../third_party/alc.h"
+#include <third_party/al.h>
+#include <third_party/alc.h>
 
 #define MAX_SOUND_BUFFERS 4
 
@@ -19,6 +19,8 @@ struct audio_system
     ALCcontext* context;
 
     int sounds_loaded; // buffers and sounds that have been used 
+    //explicit padding
+    int pad;
 
     ALuint *buffers;
     ALuint *sounds;

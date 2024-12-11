@@ -9,7 +9,7 @@ struct mesh;
 typedef struct file_contents file_contents;
 struct file_contents
 {
-    unsigned int size;
+    size_t size;
     char* content;
 };
 

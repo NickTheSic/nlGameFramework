@@ -1,10 +1,8 @@
 #ifndef __NL_GL_WIN32_H__
 #define __NL_GL_WIN32_H__
 
-
-#include "../win32/nl_win32_include.h"
-#include "GL/gl.h"
-
+#include <private/win32/nl_win32_include.h>
+#include <GL/gl.h>
 
 #define GL_ARRAY_BUFFER          0x8892		
 #define GL_STREAM_DRAW           0x88E0
