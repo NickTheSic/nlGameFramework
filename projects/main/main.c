@@ -6,14 +6,14 @@
 #endif
 
 global_variable float highest_fps = -1.0f;
-global_variable float lowest_fps = 54028234663.0000000000000000; // a really big number higher than the average fps I have ever seen
+global_variable float lowest_fps = 54028234663.000000; // a really big number higher than the average fps I have ever seen
 
 extern void app_specific_init(void);
 extern void app_specific_update(double dt);
 extern void app_specific_render(void);
 extern void app_specific_cleanup(void);
 
-void run()
+static inline void run()
 {
     poll_events();
     update_input_frame_state();

@@ -11,9 +11,9 @@ unsigned int sfx = 0;
 
 void app_specific_init(void)
 {
-    song = load_sound_file("data/StS_Funeral.wav");
+    song = load_sound_file("data/SneakySong.wav");
     NL_LOG("Song Loaded");
-    sfx = load_sound_file("data/retrogamesfx.wav");
+    sfx = load_sound_file("data/laserHit.wav");
     NL_LOG("SFX Loaded");
 
     set_sound_to_loop(song);
