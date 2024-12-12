@@ -19,9 +19,6 @@ internal_function void wgg_request_success(emscripten_fetch_t *fetch)
     NL_LOG("Finished downloading %llu bytes from URL %s.\n", fetch->numBytes, fetch->url);
     NL_LOG("Result Data: %s", fetch->data);
 
-    // Whoops! This was supposed to be common but now it is specific
-    ll_handle_successful_login(fetch->data);
-
     wgg_cleanup_request(fetch);
 }
 

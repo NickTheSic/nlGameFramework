@@ -5,42 +5,32 @@
 #include <string.h>
 #include <emscripten/fetch.h>
 
-/*
-
-example login response
-{
-  "success": true,
-  "session_token": "e6fa44946f077dd9fe67311ab3f188c596df9969",
-  "player_id": 3,
-  "public_uid": "TSEYDXD8",
-  "player_identifier": "ec9b35e6-b184-4f34-b49f-980f86b291e2",
-  "player_created_at": "2022-05-30T07:56:01+00:00",
-  "check_grant_notifications": true,
-  "check_deactivation_notifications": false,
-  "seen_before": true
-}
-
-*/
-
 typedef struct ll_login_response ll_login_response;
 struct ll_login_response
 {
-    char* session_token;
+    char* session_token; // Sent with 'x-session-token' as the header key
     char* player_identifier;
 };
 global_variable ll_login_response ll_login = {0};
 
-internal_function void ll_handle_successful_login(const char* const data)
-{
-    char *input = (char*)memory_allocate(strlen(data) + 1);
-    memcpy(input, data, strlen(data));
+global_variable char* ll_active_request_data = 0;
 
+internal_function void ll_cleanup_request(emscripten_fetch_t *fetch)
+{
+    memory_free(ll_active_request_data);
+    ll_active_request_data = 0;
+    emscripten_fetch_close(fetch);
+}
+
+internal_function void ll_handle_successful_login(emscripten_fetch_t *fetch)
+{
+    char *input = (char*)memory_allocate(strlen(fetch->data) + 1);
+    memcpy(input, fetch->data, strlen(fetch->data));
     char* token = strtok(input, "\"");
-    NL_LOG("Token: %s",token);
 
     do {
         token = strtok(0, "\"");
-        NL_LOG("Token: %s",token);
+
         if (strcmp(token, "session_token") == 0)
         {
             token = strtok(0, "\""); // gets :
@@ -48,7 +38,7 @@ internal_function void ll_handle_successful_login(const char* const data)
             ll_login.session_token = memory_allocate(strlen(token) + 1);
             memcpy(ll_login.session_token, token, strlen(token));
         }
-        if (strcmp(token, "player_identifier") == 0)
+        else if (strcmp(token, "player_identifier") == 0)
         {
             token = strtok(0, "\""); // gets :
             token = strtok(0, "\""); // our player id
@@ -61,24 +51,13 @@ internal_function void ll_handle_successful_login(const char* const data)
     NL_LOG("Player ID: %s", ll_login.player_identifier)
 
     memory_free(input);
-}
-
-global_variable char* ll_active_request_data = 0;
-
-internal_function void ll_cleanup_request(emscripten_fetch_t *fetch)
-{
-    memory_free(ll_active_request_data);
-    ll_active_request_data = 0;
-    emscripten_fetch_close(fetch);
+    ll_cleanup_request(fetch);
 }
 
 internal_function void ll_request_success(emscripten_fetch_t *fetch) 
 {
     NL_LOG("Finished downloading %llu bytes from URL %s.\n", fetch->numBytes, fetch->url);
     NL_LOG("Result Data: %s", fetch->data);
-
-    ll_handle_successful_login(fetch->data);
-
     ll_cleanup_request(fetch);
 }
 
@@ -103,7 +82,7 @@ void ll_guest_login(const char* const game_key)
     strcpy(attr.requestMethod, "POST");
 
     attr.attributes = EMSCRIPTEN_FETCH_LOAD_TO_MEMORY;
-    attr.onsuccess = ll_request_success;
+    attr.onsuccess = ll_handle_successful_login;
     attr.onerror = ll_request_failed;
 
     const char * headers[] = {"Content-Type", "application/json", 0};
