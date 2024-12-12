@@ -6,7 +6,7 @@ set WII_FLAGS= -mrvl -mcpu=750 -meabi -mhard-float
 
 set DEFINES=-DGEKKO -DWII_GEKKO
 
-set includes=-Inl_lib
+set includes=-Inl_lib -Iprojects/%1
 set flags=-Wall -Wextra -g -O2
 set output=_build/wii/
 

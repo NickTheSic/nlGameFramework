@@ -3,7 +3,7 @@
 
 set FLAGS=-Wall -g -O3
 set OUTPUT=_build\psx
-set INCLUDES=-Inl_lib
+set INCLUDES=-Inl_lib -Iprojects/%1
 set FILES=nl_lib/build_nl_lib.c projects/main/main.c
 set DEFINES=-D__PSX__
 

@@ -3,7 +3,7 @@
 set COMP=%DEV_KIT_PRO_ROOT%\devkitARM\bin\arm-none-eabi-gcc
 set ARCH=-mthumb -mthumb-interwork
 set FLAG=-g -Wall -O2 -mcpu=arm7tdmi -mtune=arm7tdmi
-set INCL=-I%DEV_KIT_PRO_ROOT%\libtonc\include -I%DEV_KIT_PRO_ROOT%\libgba\include -Inl_lib
+set INCL=-I%DEV_KIT_PRO_ROOT%\libtonc\include -I%DEV_KIT_PRO_ROOT%\libgba\include -Inl_lib -Iprojects/%1
 set LIBS=-L%DEV_KIT_PRO_ROOT%\libtonc\lib -L%DEV_KIT_PRO_ROOT%\libgba\lib -lmm -ltonc
 set SPEC=-specs=gba.specs
 set DEFS=-D__GBA__

@@ -6,7 +6,7 @@ set GCN_FLAGS= -mogc -mcpu=750 -meabi -mhard-float
 
 set DEFINES=-DGEKKO -DGCN_GEKKO
 
-set includes=-Inl_lib
+set includes=-Inl_lib -Iprojects/%1
 set flags=-Wall -Wextra -g -O2
 set output=_build/gcn/
 

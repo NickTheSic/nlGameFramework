@@ -25,9 +25,9 @@ void app_specific_cleanup(void)
 }
 
 #ifdef __EMSCRIPTEN__
-#include "loot_locker_web.c"
-#include "whalepass_gg_web.c"
+#include "platform/loot_locker_web.c"
+#include "platform/whalepass_gg_web.c"
 #elif _WIN32
-#include "loot_locker_win.c"
-#include "whalepass_gg_win.c"
+#include "platform/loot_locker_win.c"
+#include "platform/whalepass_gg_win.c"
 #endif

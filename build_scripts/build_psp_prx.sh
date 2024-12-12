@@ -2,7 +2,7 @@
 
 PSP_SDK=$(psp-config -p)
 PSP_DEV=$(psp-config -d)
-INCLUDES="-I$PSP_SDK/include -I$PSP_DEV/psp/include -Inl_lib"
+INCLUDES="-I$PSP_SDK/include -I$PSP_DEV/psp/include -Inl_lib -Iprojects/$1"
 LIBDIR="-L$PSP_SDK/lib -L$PSP_DEV/lib -L$PSP_DEV/psp/lib"
 LIBS="-lpspdebug -lpspdisplay -lpspge -lpspgu -lpspctrl -lpspaudio -lpspaudiolib -lstdc++"
 DEFINES="-DPSP -D_PSP_FW_VERSION=600 -D__PSP__ $2" 

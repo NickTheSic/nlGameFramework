@@ -2,7 +2,7 @@
 
 PSP_SDK=$(psp-config -p)
 PSP_DEV=$(psp-config -d)
-INCLUDES="-I$PSP_SDK/include -I$PSP_DEV/psp/include -Inl_lib"
+INCLUDES="-I$PSP_SDK/include -I$PSP_DEV/psp/include -Inl_lib -Iprojects/$1"
 LIBDIR="-L$PSP_SDK/lib -L$PSP_DEV/lib -L$PSP_DEV/psp/lib"
 # LIBS="-lpspdebug -lpspdisplay -lpspge -lpspgu -lpspctrl -lpsphprm -lpspvramalloc -lpspvfpu -lSDL2 -lGL -lGLU -lglut -lSDL2_mixer -lvorbisfile -lvorbis -logg -lmodplug -lpthread -lpthreadglue -lstdc++ -lpspaudio -lpspaudiolib"
 LIBS="-lpspdebug -lpspdisplay -lpspge -lpspgu -lpspctrl -lpspvramalloc -lpspvfpu -lpthread -lpthreadglue -lstdc++ -lpspaudio -lpspaudiolib"
