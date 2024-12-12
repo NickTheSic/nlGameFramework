@@ -15,6 +15,6 @@ set output="_build/web/%1/"
 
 @echo on
 
-emcc %flags% %dist_flags% %EXTRA_FLAGS% %shell_file% %includes% %2 nl_lib/build_nl_lib.c projects/main/main.c projects/%1/%1.c %data% -o%output%index.html
+emcc %flags% %dist_flags% %EXTRA_FLAGS_WEB% %shell_file% %includes% %2 nl_lib/build_nl_lib.c projects/main/main.c projects/%1/%1.c %data% -o%output%index.html
 
 @echo off
