@@ -1,6 +1,7 @@
 #include "nl_mesh.h"
 #include "private/gl/nl_gl.h"
 
+#include <math.h>
 
 internal_function void parse_vertices_indices(const file_contents *const content, int*const vertices, int*const indices, int*const face_value_count)
 {
