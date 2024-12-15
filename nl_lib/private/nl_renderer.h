@@ -1,6 +1,11 @@
 #ifndef __NL_RENDERER_H__
 #define __NL_RENDERER_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /////////////////////////////////////////////////////////////////
 //                     Renderer System                         //
 /////////////////////////////////////////////////////////////////
@@ -23,5 +28,10 @@ void set_depth_test_enabled(int enabled);
 void set_cull_face_enabled(int enabled); 
 void set_cull_face_side(int front);
 void set_cull_front_face(int clockwise);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

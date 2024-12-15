@@ -1,13 +1,13 @@
 #ifndef __NL_MATH_H__
 #define __NL_MATH_H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifdef __PSX__
-// Terrible but there are no floats so this is a place to start
-#define float int
-#endif
+// NOTE: Math is a reason to use C++
+// operator overloading is nicer looking
+// v3 = v1 + v2 compared to v3 = v2f_add(v1, v2);
 
 typedef struct v2i v2i;
 struct v2i
@@ -53,7 +53,6 @@ struct mat4x4f
           m41,m42,m43,m44;
 };
 
-
 void create_identity_matrix(mat4x4f* const mat);
 void create_orthographic_projection(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z);
 void create_fustrum(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z);
@@ -65,7 +64,6 @@ void matrix_to_matrix_multiplication(mat4x4f* const result, mat4x4f* const o);
 int invert_matrix_4x4(const mat4x4f* const original, mat4x4f* const inverse);
 int invert_matrix_4x4_glm(const mat4x4f * original, mat4x4f* const inverse);
 float matrix_determinant(const mat4x4f* const matrix);
-
 
 float v3f_length_squared(const v3f vec);
 float v3f_length(const v3f vec);
@@ -83,17 +81,12 @@ v2f   v2f_add(const v2f lhs, const v2f rhs);
 v2f   v2f_normalize(const v2f vec);
 v2f   v2f_cross(const v2f lhs, const v2f rhs);
 
-
 void  v2i_mat4_transfrom(v2i* const lhs, const mat4x4f* const mat);
 void  v2f_mat4_transform(v2f* const lhs, const mat4x4f* const mat);
-
-
-// #ifdef __PSX__
-// #undef float
-// #endif
 
 
 #ifdef __cplusplus
 }
 #endif
+
 #endif

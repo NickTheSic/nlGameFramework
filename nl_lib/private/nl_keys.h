@@ -14,6 +14,8 @@
 #include "null/nl_keys_null.h"
 #endif
 
+// The includes include the actual enum definition
+// this is here after the fact so I can use nl_key 
 typedef enum nl_key nl_key;
 
 #endif

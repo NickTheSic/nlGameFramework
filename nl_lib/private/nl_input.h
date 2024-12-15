@@ -7,6 +7,7 @@
 extern "C" {
 #endif
 
+
 #define NL_MOUSE_BUTTON_LEFT 0
 #define NL_MOUSE_BUTTON_RIGHT 1
 #define NL_MOUSE_BUTTON_MIDDLE 2
@@ -37,7 +38,9 @@ int get_mouse_scroll_this_frame(void);
 void set_mouse_position_from_system(int x, int y);
 v2i get_mouse_position_from_system(void);
 
+
 #ifdef __cplusplus
 }
 #endif
+
 #endif //__NL_INPUT_H__

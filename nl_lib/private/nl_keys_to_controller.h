@@ -3,7 +3,10 @@
 
 #include "nl_controller_buttons.h"
 
-// This is some basic glue so I can have homebrew controls froms the keyboard mouse input controls
+// TODO: Create better input handling that specifically handles KB/M and Controller support for specific platforms
+// Probably requires the game controlls to be setup in a way that I can call the required function from the input
+
+// This is some basic glue so I can have homebrew controls froms the keyboard/mouse input controls
 // TODO: Decide if this should be a platform console only header first
 
 #define nl_key unsigned int

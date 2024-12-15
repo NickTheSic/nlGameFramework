@@ -1,6 +1,11 @@
 #ifndef __NL_VERTEX_ATTRIB_H__
 #define __NL_VERTEX_ATTRIB_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /////////////////////////////////////////////////////////////////
 //                To keep Atrrib Ptr calls generic             //
 /////////////////////////////////////////////////////////////////
@@ -16,5 +21,10 @@ struct vertex_atrribute_info
 };
 
 void setup_vertex_atrributes(size_t data_size, const vertex_atrribute_info* const attrib_info, const int attrib_count);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//__NL_VERTEX_ATTRIB_H__

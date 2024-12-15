@@ -1,6 +1,14 @@
 #ifndef __NL_SHADER_H__
 #define __NL_SHADER_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+// TODO: Consider moving this header into a renderer specific sub folder
+// This is very much GL renderer specific
+
 #if defined __EMSCRIPTEN__
 #define NL_SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"
 
@@ -35,5 +43,10 @@ void set_uniform_mat4x4f(unsigned int loc, const float* mat);
 
 const char* get_common_vertex_shader_code(void);
 const char* get_common_fragment_shader_code(void);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //__NL_SHADER_H__

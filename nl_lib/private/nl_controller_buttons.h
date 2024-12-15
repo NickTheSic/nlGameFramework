@@ -23,53 +23,6 @@
 #define NL_GAMEPAD_A          0x0A  //0x004000  //PSP CROSS
 #define NL_GAMEPAD_X          0x0B  //0x008000  //PSP SQUARE
 
-//copied from libogc pad.h
-#elif defined(GCN_GEKKO)
-#define NL_GAMEPAD_DPAD_LEFT		0x00 //0x0001 //gamecube left
-#define NL_GAMEPAD_DPAD_RIGHT		0x01 //0x0002 //gamecube right
-#define NL_GAMEPAD_DPAD_DOWN	    0x02 //0x0004 //gamecube down
-#define NL_GAMEPAD_DPAD_UP			0x03 //0x0008 //gamecube up
-#define NL_GAMEPAD_Z			    0x04 //0x0010 //gamecube z
-#define NL_GAMEPAD_R			    0x05 //0x0020 //gamecube r
-#define NL_GAMEPAD_L			    0x06 //0x0040 //gamecube l 
-#define NL_GAMEPAD_A			    0x07 //0x0100 //gamecube a
-#define NL_GAMEPAD_B			    0x08 //0x0200 //gamecube b
-#define NL_GAMEPAD_X			    0x09 //0x0400 //gamecube x
-#define NL_GAMEPAD_Y			    0x0A //0x0800 //gamecube y
-#define NL_GAMEPAD_START		    0x0B //0x1000 //gamecube start
-
-//copied from libogc wpad
-#elif defined(WII_GEKKO)
-#define NL_GAMEPAD_Y			   0x00  //0x0001       //wii 2
-#define NL_GAMEPAD_X			   0x01  //0x0002       //wii 1
-#define NL_GAMEPAD_B			   0x02  //0x0004       //wii b
-#define NL_GAMEPAD_A			   0x03  //0x0008       //wii a
-#define NL_GAMEPAD_SELECT		   0x04  //0x0010       //wii -
-//#define WPAD_BUTTON_HOME		         //0x0080       //wii home
-#define NL_GAMEPAD_DPAD_LEFT	   0x05  //0x0100       //wii left
-#define NL_GAMEPAD_DPAD_RIGHT	   0x06  //0x0200       //wii right
-#define NL_GAMEPAD_DPAD_DOWN	   0x07  //0x0400       //wii down
-#define NL_GAMEPAD_DPAD_UP		   0x08  //0x0800       //wii up
-#define NL_GAMEPAD_START		   0x09  //0x1000       //wii +	
-#define NL_GAMEPAD_L	           0x0A  //(0x0001<<16) //nunchuck z
-#define NL_GAMEPAD_R	           0x0B  //(0x0002<<16) //nunchuck c
-
-// copied from calico gba
-#elif defined(NDS)
-#define NL_GAMEPAD_A                 (1U<<0)  //nds a
-#define NL_GAMEPAD_B                 (1U<<1)  //nds b
-#define NL_GAMEPAD_SELECT            (1U<<2)  //nds select
-#define NL_GAMEPAD_START             (1U<<3)  //nds start
-#define NL_GAMEPAD_DPAD_RIGHT        (1U<<4)  //nds right
-#define NL_GAMEPAD_DPAD_LEFT         (1U<<5)  //nds left
-#define NL_GAMEPAD_DPAD_UP           (1U<<6)  //nds up
-#define NL_GAMEPAD_DPAD_DOWN         (1U<<7)  //nds down
-#define NL_GAMEPAD_R                 (1U<<8)  //nds r
-#define NL_GAMEPAD_L                 (1U<<9)  //nds l
-#define NL_GAMEPAD_X                 (1U<<10) //nds x
-#define NL_GAMEPAD_Y                 (1U<<11) //nds y
-//#define KEY_HINGE             (1U<<12) //nds hinge
-//#define KEY_DEBUG             (1U<<13) //nds debug
 
 //copied from xinput_h
 #elif defined(_WIN32)
@@ -105,8 +58,6 @@
 #define NL_GAMEPAD_Y			
 #define NL_GAMEPAD_START		
 
-//#elif defined(__GBA__)
-// Not sure if I should use libtonc or libgba or skip this entirely
 #else
 #warning No controller input bindings setup
 #define NL_GAMEPAD_DPAD_LEFT	0
