@@ -31,12 +31,5 @@ void app_specific_update(double dt)
     }
 }
 
-void app_specific_render(void)
-{
-
-}
-
-void app_specific_cleanup(void)
-{
-    
-}
+void app_specific_render(void){}
+void app_specific_cleanup(void){}
