@@ -1,6 +1,8 @@
 #ifndef __NL_FILE_IO_H__
 #define __NL_FILE_IO_H__
 
+#include <stddef.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

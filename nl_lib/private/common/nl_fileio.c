@@ -86,7 +86,7 @@ const char* find_file_type_from_name(const char* const filename)
     size_t name_length = strlen(filename);
     const char* file_type = &filename[name_length-1];
 
-    for (size_t i = name_length - 1; i < 0; ++i)
+    for (size_t i = name_length - 1; i > 0; --i)
     {
         file_type = &filename[i];
         if (file_type[0] == '.')

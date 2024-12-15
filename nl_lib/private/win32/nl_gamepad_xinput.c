@@ -240,7 +240,7 @@ int get_pressed_buttons(unsigned char controller_index)
 
 int is_button_pressed(unsigned char controller_index, int button)
 {
-    return (controllers[controller_index].buttons & button != 0);
+    return (controllers[controller_index].buttons & button) != 0;
 }
 
 // Incorrectly setup - Controller only handles if it is held, this wants to know if it was pressed this frame
