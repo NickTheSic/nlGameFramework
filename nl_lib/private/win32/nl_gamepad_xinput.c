@@ -33,6 +33,7 @@ struct win_gamepad
     };
 };
 
+// TODO: Note that I use MAX_PLAYERS which is probably not going to be needed for single player games
 global_variable win_gamepad controllers[MAX_PLAYERS] = {0}; 
 
 #define X_INPUT_GET_STATE(name) DWORD name(DWORD ControllerNumber, XINPUT_STATE* State)
@@ -208,11 +209,11 @@ void udpate_gamepad(void)
     }   
     if (controllers[0].left_shoulder)
     {
-        NL_LOG("controllers[i].");
+        NL_LOG("controllers[i].left shoulder");
     } 
     if (controllers[0].right_shoulder)
     {
-        NL_LOG("controllers[i].");
+        NL_LOG("controllers[i].right shoulder");
     }
     if (controllers[0].a)
     {
@@ -239,10 +240,10 @@ int get_pressed_buttons(unsigned char controller_index)
 
 int is_button_pressed(unsigned char controller_index, int button)
 {
-    return controllers[controller_index].buttons & button;
+    return (controllers[controller_index].buttons & button != 0);
 }
 
-// Incorrectly setup
+// Incorrectly setup - Controller only handles if it is held, this wants to know if it was pressed this frame
 int was_button_pressed(unsigned char controller_index, unsigned char button)
 {
     XINPUT_STATE state = {0};
