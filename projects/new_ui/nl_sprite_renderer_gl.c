@@ -195,14 +195,7 @@ void render_single_simple_sprite(nl_sprite* simple_sprite)
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, atlas_texture_id);
 
-    // cannot call this here befor the draw elements on windows.  Wish I knew where to learn more about why it doesn't work
-
-    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, pos));
-    //glEnableVertexAttribArray(0);
-    //glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, uv));
-    //glEnableVertexAttribArray(1);
-    //glVertexAttribPointer(2, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, col));
-    //glEnableVertexAttribArray(2);
+    // Cannot set vertex atrib pointers here, wish I knew where I could learn more about why
 
     glDrawElements(GL_TRIANGLES, simple_sprite->indice_count, GL_UNSIGNED_INT, 0);
 
