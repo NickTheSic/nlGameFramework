@@ -13,7 +13,7 @@ IF "%2"=="" (
 IF NOT EXIST _build/NUL mkdir _build
 
 IF /I %1==win (
-    call "build_scripts/build_win_aio.bat" ../../nl_lib/build_nl_lib.c ../../projects/main/main.c ../../projects/%2/%2.c
+    call "build_scripts/build_win.bat" %2
     goto compile_hit
 )
 
