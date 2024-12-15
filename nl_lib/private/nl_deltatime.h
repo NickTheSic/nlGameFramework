@@ -7,7 +7,7 @@ extern "C" {
 
 
 void init_delta_time(void);
-double get_frame_delta_time(void); // Calculates frame delta time
+double get_frame_delta_time(void); // Calculates frame delta time when called
 
 
 #ifdef __cplusplus

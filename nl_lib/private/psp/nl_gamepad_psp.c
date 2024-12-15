@@ -57,26 +57,22 @@ void udpate_gamepad()
     GENERATE_UPDATE_STATE(controller_state, controller.Buttons, PSP_CTRL_SQUARE, square);
 }
 
-int get_pressed_buttons(unsigned char controller_id)
+int get_pressed_buttons(void)
 {
-    NL_UNUSED(controller_id)
     return controller.Buttons;
 }
 
-int is_button_pressed(unsigned char controller_index, int button)
+int is_button_pressed(int button)
 {
-    NL_UNUSED(controller_index);
     return (controller_state.bytes & ((unsigned long long)0x01 << (button*5))) != 0;
 }
 
-int was_button_pressed(unsigned char controller, unsigned char button)
+int was_button_pressed(unsigned char button)
 {
-    NL_UNUSED(controller);
     return (controller_state.bytes & ((unsigned long long)0x02 << (button*5))) != 0;
 }
 
-int was_button_released(unsigned char controller, unsigned char button)
+int was_button_released(unsigned char button)
 {
-    NL_UNUSED(controller);
     return (controller_state.bytes & ((unsigned long long)0x04 << (button*5))) != 0;
 }

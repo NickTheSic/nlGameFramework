@@ -12,28 +12,28 @@ void app_specific_update(double dt)
     total_time+=dt;
     //NL_LOG("Frame: %f, total: %f", dt, total_time);
 
-    if (was_button_pressed(0, NL_GAMEPAD_A))
+    if (was_button_pressed(NL_GAMEPAD_A))
     {
         static int count;
         count++;
         NL_LOG("A Was Pressed! %d", count);
     }
 
-    if (was_button_pressed(0, NL_GAMEPAD_B))
+    if (was_button_pressed(NL_GAMEPAD_B))
     {
         static int count;
         count++;
         NL_LOG("B Was Pressed! %d", count);
     }
 
-    if (was_button_released(0, NL_GAMEPAD_Y))
+    if (was_button_released(NL_GAMEPAD_Y))
     {
         static int count;
         count++;
         NL_LOG("Y Was Released! %d", count);
     }
 
-    if (was_button_released(0, NL_GAMEPAD_DPAD_LEFT))
+    if (was_button_released(NL_GAMEPAD_DPAD_LEFT))
     {
         static int count;
         count++;

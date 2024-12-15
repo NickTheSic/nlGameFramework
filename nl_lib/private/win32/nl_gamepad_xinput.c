@@ -1,6 +1,17 @@
 #include "../nl_gamepad.h"
-
+#include "private/nl_controller_state_defines.h"
 #include <xinput.h>
+
+typedef struct gamepad_button_state gamepad_button_state;
+struct gamepad_button_state
+{
+    unsigned char held       : 1;
+    unsigned char pressed    : 1;
+    unsigned char released   : 1;
+    unsigned char down_state : 1;
+    unsigned char prev_state : 1;
+    unsigned char pad        : 3; // explicit padding
+};
 
 typedef struct win_gamepad win_gamepad;
 struct win_gamepad
@@ -11,30 +22,27 @@ struct win_gamepad
 
     union
     {
+        gamepad_button_state buttons[14];
         struct 
         {
-            unsigned short dpad_up        : 1;
-            unsigned short dpad_down      : 1;
-            unsigned short dpad_left      : 1;
-            unsigned short dpad_right     : 1;
-            unsigned short start          : 1;
-            unsigned short select         : 1;
-            unsigned short left_stick     : 1;
-            unsigned short right_stick    : 1; 
-            unsigned short left_shoulder  : 1;
-            unsigned short right_shoulder : 1;
-            unsigned short a              : 1;
-            unsigned short b              : 1;
-            unsigned short x              : 1;
-            unsigned short y              : 1;
-            unsigned short pad : 2; //explicit padding
+            gamepad_button_state dpad_up;
+            gamepad_button_state dpad_down;
+            gamepad_button_state dpad_left;
+            gamepad_button_state dpad_right;
+            gamepad_button_state start;
+            gamepad_button_state select;
+            gamepad_button_state left_stick;
+            gamepad_button_state right_stick; 
+            gamepad_button_state left_shoulder;
+            gamepad_button_state right_shoulder;
+            gamepad_button_state a;
+            gamepad_button_state b;
+            gamepad_button_state x;
+            gamepad_button_state y;
         };
-        unsigned short buttons;
     };
 };
-
-// TODO: Note that I use MAX_PLAYERS which is probably not going to be needed for single player games
-global_variable win_gamepad controllers[MAX_PLAYERS] = {0}; 
+global_variable win_gamepad win_controller = {0}; 
 
 #define X_INPUT_GET_STATE(name) DWORD name(DWORD ControllerNumber, XINPUT_STATE* State)
 typedef X_INPUT_GET_STATE(x_input_get_state);
@@ -110,154 +118,113 @@ void cleanup_gamepad_system(void)
     FreeLibrary(XInputLibrary);
 }
 
+#define UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(my_button, xinput_button)\
+{\
+win_controller.my_button.down_state = (pad->wButtons & xinput_button) != 0;\
+win_controller.my_button.pressed    = 0;\
+win_controller.my_button.released   = 0;\
+    if (win_controller.my_button.down_state != win_controller.my_button.prev_state)\
+    {\
+        if(win_controller.my_button.down_state)\
+        {\
+            win_controller.my_button.pressed = (win_controller.my_button.held == 0);\
+            win_controller.my_button.held = 1;\
+        }\
+        else\
+        {\
+            win_controller.my_button.released = 1;\
+            win_controller.my_button.held = 0;\
+        }\
+    }\
+win_controller.my_button.prev_state = win_controller.my_button.down_state;\
+}
+
 void udpate_gamepad(void)
 {
-    for (int i=0; i<MAX_PLAYERS; i++)
-    {
-        XINPUT_STATE state = {0};
-        if (XInputGetState(i, &state) == 0)
-        {   
-            XINPUT_GAMEPAD* pad = &state.Gamepad;
+    XINPUT_STATE state = {0};
+    if (XInputGetState(0, &state) == 0)
+    {   
+        const XINPUT_GAMEPAD* const pad = &state.Gamepad;
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(dpad_up, XINPUT_GAMEPAD_DPAD_UP);
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(dpad_down, XINPUT_GAMEPAD_DPAD_DOWN);
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(dpad_left, XINPUT_GAMEPAD_DPAD_LEFT);
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(dpad_right, XINPUT_GAMEPAD_DPAD_RIGHT);
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(start, XINPUT_GAMEPAD_START);
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(select, XINPUT_GAMEPAD_BACK);
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(left_stick, XINPUT_GAMEPAD_LEFT_THUMB);
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(right_stick, XINPUT_GAMEPAD_RIGHT_THUMB);
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(left_shoulder, XINPUT_GAMEPAD_LEFT_SHOULDER);
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(right_shoulder, XINPUT_GAMEPAD_RIGHT_SHOULDER);
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(a, XINPUT_GAMEPAD_A);
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(b, XINPUT_GAMEPAD_B);
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(x, XINPUT_GAMEPAD_X);
+        UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(y, XINPUT_GAMEPAD_Y);
 
-            controllers[i].dpad_up        = (pad->wButtons & XINPUT_GAMEPAD_DPAD_UP)        != 0;
-            controllers[i].dpad_down      = (pad->wButtons & XINPUT_GAMEPAD_DPAD_DOWN)      != 0;
-            controllers[i].dpad_left      = (pad->wButtons & XINPUT_GAMEPAD_DPAD_LEFT)      != 0;
-            controllers[i].dpad_right     = (pad->wButtons & XINPUT_GAMEPAD_DPAD_RIGHT)     != 0;
-            controllers[i].start          = (pad->wButtons & XINPUT_GAMEPAD_START)          != 0;
-            controllers[i].select         = (pad->wButtons & XINPUT_GAMEPAD_BACK)           != 0;
-            controllers[i].left_stick     = (pad->wButtons & XINPUT_GAMEPAD_LEFT_THUMB)     != 0;
-            controllers[i].right_stick    = (pad->wButtons & XINPUT_GAMEPAD_RIGHT_THUMB)    != 0;
-            controllers[i].left_shoulder  = (pad->wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)  != 0;
-            controllers[i].right_shoulder = (pad->wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) != 0;
-            controllers[i].a              = (pad->wButtons & XINPUT_GAMEPAD_A)              != 0;
-            controllers[i].b              = (pad->wButtons & XINPUT_GAMEPAD_B)              != 0;
-            controllers[i].x              = (pad->wButtons & XINPUT_GAMEPAD_X)              != 0;
-            controllers[i].y              = (pad->wButtons & XINPUT_GAMEPAD_Y)              != 0;
+        win_controller.left_trigger   = (float)pad->bLeftTrigger / 255.f;
+        win_controller.right_trigger  = (float)pad->bRightTrigger / 255.f;
 
-            controllers[i].left_trigger   = (float)pad->bLeftTrigger / 255.f;
-            controllers[i].right_trigger  = (float)pad->bRightTrigger / 255.f;
-
-            if (pad->sThumbLX < 0)
-            {
-                controllers[i].left_x_axis = (float)pad->sThumbLX / 32768.0f;
-            } 
-            else 
-            {
-                controllers[i].left_x_axis = (float)pad->sThumbLX / 32767.0f;
-            }
-
-            if (pad->sThumbLY < 0)
-            {
-                controllers[i].left_y_axis = (float)pad->sThumbLY / 32768.f;
-            } 
-            else 
-            {   
-                controllers[i].left_y_axis = (float)pad->sThumbLY / 32767.f;
-            }   
-
-            if (pad->sThumbRX < 0)
-            {
-                controllers[i].right_x_axis = (float)pad->sThumbRX / 32768.f;
-            } 
-            else 
-            {
-                controllers[i].right_x_axis = (float)pad->sThumbRX / 32767.f;
-            }
-
-            if (pad->sThumbRY < 0)
-            {
-                controllers[i].right_y_axis = (float)pad->sThumbRY / 32768.f;
-            } 
-            else 
-            {
-                controllers[i].right_y_axis = (float)pad->sThumbRY / 32767.f;
-            }
+        if (pad->sThumbLX < 0)
+        {
+            win_controller.left_x_axis = (float)pad->sThumbLX / 32768.0f;
+        } 
+        else 
+        {
+            win_controller.left_x_axis = (float)pad->sThumbLX / 32767.0f;
         }
-    }
 
-    if (controllers[0].dpad_up)
-    {
-        NL_LOG("controllers[i].dpad_up");
-    }       
-    if (controllers[0].dpad_down)
-    {
-        NL_LOG("controllers[i].dpad_down");
-    }     
-    if (controllers[0].dpad_left)
-    {
-        NL_LOG("controllers[i].dpad_left");
-    }     
-    if (controllers[0].dpad_right)
-    {
-        NL_LOG("controllers[i].dpad_right");
-    }    
-    if (controllers[0].start)
-    {
-        NL_LOG("controllers[i].start");
-    }         
-    if (controllers[0].select)
-    {
-        NL_LOG("controllers[i].select");
-    }        
-    if (controllers[0].left_stick)
-    {
-        NL_LOG("controllers[i].left_stick");
-    }    
-    if (controllers[0].right_stick)
-    {
-        NL_LOG("controllers[i].right_stick");
-    }   
-    if (controllers[0].left_shoulder)
-    {
-        NL_LOG("controllers[i].left shoulder");
-    } 
-    if (controllers[0].right_shoulder)
-    {
-        NL_LOG("controllers[i].right shoulder");
-    }
-    if (controllers[0].a)
-    {
-        NL_LOG("controllers[i].a");
-    }             
-    if (controllers[0].b)
-    {
-        NL_LOG("controllers[i].b");
-    }             
-    if (controllers[0].x)
-    {
-        NL_LOG("controllers[i].x");
-    }             
-    if (controllers[0].y)
-    {
-        NL_LOG("controllers[i].y");
-    }             
+        if (pad->sThumbLY < 0)
+        {
+            win_controller.left_y_axis = (float)pad->sThumbLY / 32768.f;
+        } 
+        else 
+        {   
+            win_controller.left_y_axis = (float)pad->sThumbLY / 32767.f;
+        }   
+
+        if (pad->sThumbRX < 0)
+        {
+            win_controller.right_x_axis = (float)pad->sThumbRX / 32768.f;
+        } 
+        else 
+        {
+            win_controller.right_x_axis = (float)pad->sThumbRX / 32767.f;
+        }
+
+        if (pad->sThumbRY < 0)
+        {
+            win_controller.right_y_axis = (float)pad->sThumbRY / 32768.f;
+        } 
+        else 
+        {
+            win_controller.right_y_axis = (float)pad->sThumbRY / 32767.f;
+        }
+    }      
 }
 
-int get_pressed_buttons(unsigned char controller_index)
+int get_pressed_buttons(void)
 {
-    return controllers[controller_index].buttons;
+    XINPUT_STATE state = {0};
+
+    if (XInputGetState(0, &state) == 0)
+    {
+        return state.Gamepad.wButtons;
+    }
+
+    return 0;
 }
 
-int is_button_pressed(unsigned char controller_index, int button)
+int is_button_pressed(unsigned char button)
 {
-    return (controllers[controller_index].buttons & button) != 0;
+    return win_controller.buttons[button].held;
 }
 
 // Incorrectly setup - Controller only handles if it is held, this wants to know if it was pressed this frame
-int was_button_pressed(unsigned char controller_index, unsigned char button)
+int was_button_pressed(unsigned char button)
 {
-    XINPUT_STATE state = {0};
-    if (XInputGetState(controller_index, &state) == 0)
-    {   
-        return (state.Gamepad.wButtons & button) != 0;
-    }
-    return 0;
+    return win_controller.buttons[button].pressed;
 }
 
-int was_button_released(unsigned char controller_index, unsigned char button)
+int was_button_released(unsigned char button)
 {
-    NL_UNUSED(controller_index);
-    NL_UNUSED(button);
-    NL_UNIMPLEMENTED_FUNC;
-    return 0;
+    return win_controller.buttons[button].released;
 }

@@ -43,6 +43,7 @@
 #define NL_GAMEPAD_X                0x4000 //xinput x
 #define NL_GAMEPAD_Y                0x8000 //xinput y
 
+
 // NO CONTROLLER in a browser... at least not that I know of
 #elif defined(__EMSCRIPTEN__)
 #define NL_GAMEPAD_DPAD_LEFT	
@@ -57,6 +58,7 @@
 #define NL_GAMEPAD_X			
 #define NL_GAMEPAD_Y			
 #define NL_GAMEPAD_START		
+
 
 #else
 #warning No controller input bindings setup

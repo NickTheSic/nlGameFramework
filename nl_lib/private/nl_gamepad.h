@@ -7,19 +7,16 @@
 extern "C" {
 #endif
 
-// Based off gamecube and wii library to start
-// immediately not viable for psp nds etc with only one controller
-#define MAX_PLAYERS 4
 
 int init_gamepad_system(void);
 void cleanup_gamepad_system(void);
 
 void udpate_gamepad(void);
-int get_pressed_buttons(unsigned char controller_id);
-int is_button_pressed(unsigned char controller_index, int button);
+int get_pressed_buttons(void);
 
-int was_button_pressed(unsigned char controller, unsigned char button);
-int was_button_released(unsigned char controller, unsigned char button);
+int is_button_down(unsigned char button);
+int was_button_pressed(unsigned char button);
+int was_button_released(unsigned char button);
 
 
 #ifdef __cplusplus
