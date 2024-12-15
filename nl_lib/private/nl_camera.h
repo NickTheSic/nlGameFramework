@@ -10,7 +10,7 @@ extern "C" {
 typedef struct camera camera;
 struct camera
 {
-    mat4x4f view_matrix; // Camera Psotion, Orientation and Target
+    mat4x4f view_matrix; // Camera Postion, Orientation and Target
     mat4x4f proj_matrix; // Defines Orthographic or Projection
 };
 

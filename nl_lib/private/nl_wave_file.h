@@ -6,13 +6,13 @@
 typedef struct wav_file_header wav_file_header;
 struct wav_file_header
 {
-    char RIFF[4];
+    char RIFF[4]; //Little Endian -> FFIR Big Endian 
 
     int  file_size;
-    char WAVE[4];
+    char WAVE[4]; //Little Endian -> EVAW Big Endian
     char fmt[4];
 
-    int  header_size; // May be different on OSX
+    int  header_size; // May be different on OSX where it is 48 instead of 44
     
     short format;
     short channels;
