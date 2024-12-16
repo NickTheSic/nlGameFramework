@@ -29,8 +29,6 @@ void render_single_sprite_colour(nl_sprite* const sprite, colour col);
 void generate_rectangle_simple_sprite(nl_sprite *const sprite, float width, float height);
 void generate_square_simple_sprite(nl_sprite *const sprite, float width);
 
-void load_texture_for_sprite(nl_sprite* const sprite, const char* filename);
-
 void free_simple_sprite(nl_sprite *const sprite);
 
 void set_model_matrix(mat4x4f* mat);

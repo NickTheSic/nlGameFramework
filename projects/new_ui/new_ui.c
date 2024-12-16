@@ -1,5 +1,6 @@
 #include "nl_lib.h"
 
+#include "nl_sprite_atlas.h"
 #include "nl_ui_renderer.h"
 #include "nl_sprite_renderer.h"
 
@@ -18,8 +19,9 @@ void app_specific_init(void)
 {
     init_sprite_renderer();
     init_ui_renderer();
+    initialize_sprite_atlas();
 
-    load_texture_for_sprite(&man, "data/man.png");
+    man.texture_id = load_sprite("data/man.png");
     generate_rectangle_simple_sprite(&man, 32, 64);
     
     set_window_size_callback(&winsizecbk);
@@ -64,3 +66,4 @@ void app_specific_cleanup(void)
 
 #include "nl_ui_renderer_gl.c"
 #include "nl_sprite_renderer_gl.c"
+#include "nl_sprite_atlas_gl.c"
