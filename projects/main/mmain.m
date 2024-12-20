@@ -1,5 +1,6 @@
 #include "nl_lib.h"
 #import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 extern void app_specific_init(void);
 extern void app_specific_update(double dt);
