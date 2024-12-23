@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.10</string>
+	<string>10.7</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2024 NickTheSic. All rights reserved.</string>
 </dict>

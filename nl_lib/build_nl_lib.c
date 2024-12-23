@@ -17,6 +17,20 @@
 #include "build_nl_lib/psp.c"
 
 
+#elif __APPLE__
+    #include <TargetConditionals.h>
+    #if TARGET_IPHONE_SIMULATOR
+         // iOS, tvOS, or watchOS Simulator
+    #elif TARGET_OS_MACCATALYST
+         // Mac's Catalyst (ports iOS API into Mac, like UIKit).
+    #elif TARGET_OS_IPHONE
+        // iOS, tvOS, or watchOS device
+    #elif TARGET_OS_MAC
+        #include "build_nl_lib/mac.m"
+    #else
+    #   error "Unknown Apple platform"
+    #endif
+
 #else
 #warning Incomplete Library for this platform. Using null platform
 
