@@ -23,6 +23,6 @@ then
 mkdir "_build/psp/$1"
 fi
 
-psp-gcc $DEFINES $INCLUDES $FLAGS $LIBDIR -o $OUTPUT/$1.elf nl_lib/build_nl_lib.c projects/main/main.c projects/$1/$1.c $LIBS && echo "code compiled" 
+psp-gcc $DEFINES $INCLUDES $FLAGS $LIBDIR -o $OUTPUT/$1.elf nl_lib/build_nl_lib.c projects/$1/$1.c $LIBS && echo "code compiled" 
 psp-fixup-imports $OUTPUT/$1.elf && echo "fixed imports" 
 mksfoex -d MEMSIZE=1 -s APP_VER=01.00 $1 $OUTPUT/PARAM.SFO && pack-pbp $OUTPUT/$1/EBOOT.PBP $OUTPUT/PARAM.SFO $ICON0 $ICON1 $PIC0 $PIC1 $SND0 $OUTPUT/$1.elf $PSAR

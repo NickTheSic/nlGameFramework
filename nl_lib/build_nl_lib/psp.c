@@ -1,4 +1,6 @@
 
+#include "main/pspmain.c"
+
 #include "private/common/nl_camera.c"
 #include "private/common/nl_fileio.c"
 #include "private/common/nl_input.c"

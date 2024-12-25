@@ -12,7 +12,7 @@ OUTPUT="-o $OUTPUT_DIR/Contents/MacOS/build_nl_lib"
 LIBS="-lobjc -framework Foundation"
 ARCH="-arch x86_64"
 
-NLBUILD="projects/main/mmain.m projects/$1/$1.c nl_lib/build_nl_lib/mac.m"
+NLBUILD="projects/$1/$1.c nl_lib/build_nl_lib/mac.m"
 
 $COMPILER $INCLUDES $ARCH $FLAGS $NLBUILD $LIBS $OUTPUT
 

@@ -8,7 +8,7 @@ set libs=User32.lib OpenGl32.lib gdi32.lib OpenAL32.lib ole32.lib
 set flags=/Od /EHa /Zi /std:c11 /W4
 set includes=/I../../nl_lib /I../../projects/%1
 
-set FILES=../../nl_lib/build_nl_lib.c ../../projects/main/main.c ../../projects/%1/%1.c
+set FILES=../../nl_lib/build_nl_lib.c ../../projects/%1/%1.c
 
 echo on
 

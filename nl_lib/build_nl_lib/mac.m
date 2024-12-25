@@ -1,5 +1,7 @@
 #include "nl_lib.h"
 
+#include "main/mmain.m"
+
 #include "private/null/nl_audio_null.c"
 #include "private/common/nl_camera.c"
 #include "private/common/nl_fileio.c"

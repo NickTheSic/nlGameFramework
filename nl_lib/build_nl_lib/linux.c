@@ -1,3 +1,6 @@
+
+#include "main/main.c"
+
 #include "private/common/nl_audio_openal.c"
 #include "private/common/nl_camera.c"
 #include "private/common/nl_fileio.c"
