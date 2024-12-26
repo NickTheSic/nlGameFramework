@@ -1,7 +1,7 @@
 # NL LIB
 The 5th iteration of my own game development framework. (Yes, I have done this 5 times!)
 
-![ProgrammerArtLogo](http://url/to/img.png](https://github.com/NickTheSic/nlGameFramework/blob/main/res/icon0.png))
+![ProgrammerArtLogo](http://url/to/img.png](https://github.com/NickTheSic/nlGameFramework/blob/main/res/icon0.png)
  
 ## About
 It is easy to use game engines like Unreal and premade frameworks like Raylib or SDL.  But there is something special about working low level and creating from the operating system. I have ported games to the Nintendo Switch, but they were Unreal Engine projects and the engine code was already there for me.  And while SDL has their own repo, software like raylib and godot don't have a premade implementation.  How do you roll your own platform layer if you don't have experience.
