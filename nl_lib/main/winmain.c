@@ -1,5 +1,7 @@
 #include "nl_lib.h"
 
+#include <private/win32/nl_win32_include.h>
+
 global_variable float highest_fps = -1.0f;
 global_variable float lowest_fps = 54028234663.000000f; // a really big number higher than the average fps I have ever seen
 
@@ -13,16 +15,17 @@ int main(int count, char** args)
 {
     NL_UNUSED(count);NL_UNUSED(args);
 #else 
-int __clrcall WinMain(
+int wWinMain(
     HINSTANCE hInstance,
     HINSTANCE hPrevInstance,
-    LPSTR     lpCmdLine,
+    LPWSTR     lpCmdLine,
     int       nShowCmd
 )
 {
     NL_UNUSED(hInstance);NL_UNUSED(hPrevInstance);
     NL_UNUSED(lpCmdLine);NL_UNUSED(nShowCmd);
 #endif
+
     if (platform_init() == 0)
     {
         NL_LOG("Failed to initialize platform layer");

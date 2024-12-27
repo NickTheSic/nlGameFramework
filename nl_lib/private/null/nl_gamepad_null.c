@@ -17,21 +17,21 @@ int get_pressed_buttons(void)
     return 0;
 }
 
-int is_button_pressed(unsigned char button)
+int is_button_pressed(button_value_type button)
 {
     NL_UNUSED(button);
     NL_UNIMPLEMENTED_FUNC
     return 0;
 }
 
-int was_button_pressed(unsigned char button)
+int was_button_pressed(button_value_type button)
 {
     NL_UNUSED(button);
     NL_UNIMPLEMENTED_FUNC
     return 0;
 }
 
-int was_button_released(unsigned char button)
+int was_button_released(button_value_type button)
 {
     NL_UNUSED(button);
     NL_UNIMPLEMENTED_FUNC

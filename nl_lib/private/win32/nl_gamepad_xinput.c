@@ -213,18 +213,18 @@ int get_pressed_buttons(void)
     return 0;
 }
 
-int is_button_pressed(unsigned char button)
+int is_button_pressed(button_value_type button)
 {
     return win_controller.buttons[button].held;
 }
 
 // Incorrectly setup - Controller only handles if it is held, this wants to know if it was pressed this frame
-int was_button_pressed(unsigned char button)
+int was_button_pressed(button_value_type button)
 {
     return win_controller.buttons[button].pressed;
 }
 
-int was_button_released(unsigned char button)
+int was_button_released(button_value_type button)
 {
     return win_controller.buttons[button].released;
 }

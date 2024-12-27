@@ -9,7 +9,7 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
-    total_time+=dt;
+    total_time += (float)dt;
     //NL_LOG("Frame: %f, total: %f", dt, total_time);
 
     if (was_button_pressed(NL_GAMEPAD_A))

@@ -14,9 +14,9 @@ void cleanup_gamepad_system(void);
 void udpate_gamepad(void);
 int get_pressed_buttons(void);
 
-int is_button_down(unsigned char button);
-int was_button_pressed(unsigned char button);
-int was_button_released(unsigned char button);
+int is_button_down(button_value_type button);
+int was_button_pressed(button_value_type button);
+int was_button_released(button_value_type button);
 
 
 #ifdef __cplusplus
