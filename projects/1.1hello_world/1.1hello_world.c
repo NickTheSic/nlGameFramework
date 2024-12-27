@@ -10,35 +10,9 @@ void app_specific_init(void)
 void app_specific_update(double dt)
 {
     total_time += (float)dt;
-    //NL_LOG("Frame: %f, total: %f", dt, total_time);
+    NL_LOG("Frame: %f, total: %f", dt, total_time);
 
-    if (was_button_pressed(NL_GAMEPAD_A))
-    {
-        static int count;
-        count++;
-        NL_LOG("A Was Pressed! %d", count);
-    }
-
-    if (was_button_pressed(NL_GAMEPAD_B))
-    {
-        static int count;
-        count++;
-        NL_LOG("B Was Pressed! %d", count);
-    }
-
-    if (was_button_released(NL_GAMEPAD_Y))
-    {
-        static int count;
-        count++;
-        NL_LOG("Y Was Released! %d", count);
-    }
-
-    if (was_button_released(NL_GAMEPAD_DPAD_LEFT))
-    {
-        static int count;
-        count++;
-        NL_LOG("Left Was Released! %d", count);
-    }
+    debug_test_controller();
 }
 
 void app_specific_render(void){}

@@ -62,17 +62,38 @@ int get_pressed_buttons(void)
     return controller.Buttons;
 }
 
-int is_button_pressed(int button)
+unsigned char button_is_held(button_value_type button)
 {
     return (controller_state.bytes & ((unsigned long long)0x01 << (button*5))) != 0;
 }
 
-int was_button_pressed(unsigned char button)
+unsigned char button_was_pressed(button_value_type button)
 {
     return (controller_state.bytes & ((unsigned long long)0x02 << (button*5))) != 0;
 }
 
-int was_button_released(unsigned char button)
+unsigned char button_was_released(button_value_type button)
 {
     return (controller_state.bytes & ((unsigned long long)0x04 << (button*5))) != 0;
+}
+
+
+#define PRINT_BUTTON_PRESS_RELEASE(button)\
+{if (button_was_pressed(button)){NL_LOG(#button" pressed");}\
+else if (button_was_released(button)){NL_LOG(#button" pressed");}}
+
+void debug_test_controller(void)
+{
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_DPAD_UP     );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_DPAD_DOWN   );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_DPAD_LEFT   );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_DPAD_RIGHT  );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_START       );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_SELECT      );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_L           );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_R           );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_A           );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_B           );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_X           );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_Y           );
 }

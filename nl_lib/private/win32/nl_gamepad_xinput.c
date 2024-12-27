@@ -213,18 +213,40 @@ int get_pressed_buttons(void)
     return 0;
 }
 
-int is_button_pressed(button_value_type button)
+unsigned char button_is_held(button_value_type button)
 {
     return win_controller.buttons[button].held;
 }
 
 // Incorrectly setup - Controller only handles if it is held, this wants to know if it was pressed this frame
-int was_button_pressed(button_value_type button)
+unsigned char button_was_pressed(button_value_type button)
 {
     return win_controller.buttons[button].pressed;
 }
 
-int was_button_released(button_value_type button)
+unsigned char button_was_released(button_value_type button)
 {
     return win_controller.buttons[button].released;
+}
+
+#define PRINT_BUTTON_PRESS_RELEASE(button)\
+{if (button_was_pressed(button)){NL_LOG(#button" pressed");}\
+else if (button_was_released(button)){NL_LOG(#button" pressed");}}
+
+void debug_test_controller(void)
+{
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_DPAD_UP     );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_DPAD_DOWN   );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_DPAD_LEFT   );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_DPAD_RIGHT  );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_START       );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_SELECT      );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_L           );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_R           );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_LEFT_THUMB  );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_RIGHT_THUMB );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_A           );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_B           );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_X           );
+    PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_Y           );
 }
