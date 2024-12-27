@@ -30,22 +30,20 @@ typedef unsigned char button_value_type;
 #elif defined(_WIN32)
 typedef unsigned short button_value_type;
 
-#define NL_GAMEPAD_DPAD_UP          ((button_value_type)(0x0001)) //xinput up
-#define NL_GAMEPAD_DPAD_DOWN        ((button_value_type)(0x0002)) //xinput down
-#define NL_GAMEPAD_DPAD_LEFT        ((button_value_type)(0x0004)) //xinput left
-#define NL_GAMEPAD_DPAD_RIGHT       ((button_value_type)(0x0008)) //xinput right
-#define NL_GAMEPAD_START            ((button_value_type)(0x0010)) //xinput start
-#define NL_GAMEPAD_SELECT           ((button_value_type)(0x0020)) //xinput back Could also be select button
-#define NL_GAMEPAD_L                ((button_value_type)(0x0100)) //xinput left shoulder
-#define NL_GAMEPAD_R                ((button_value_type)(0x0200)) //xinput right shoulder
-#define NL_GAMEPAD_A                ((button_value_type)(0x1000)) //xinput a
-#define NL_GAMEPAD_B                ((button_value_type)(0x2000)) //xinput b
-#define NL_GAMEPAD_X                ((button_value_type)(0x4000)) //xinput x
-#define NL_GAMEPAD_Y                ((button_value_type)(0x8000)) //xinput y
-
-// Extra / Not Consistent among all platforms
-#define NL_GAMEPAD_LEFT_THUMB       ((button_value_type)(0x0040)) //xinput left thumb
-#define NL_GAMEPAD_RIGHT_THUMB      ((button_value_type)(0x0080)) //xinput right thumb
+#define NL_GAMEPAD_DPAD_UP          ((button_value_type)(0x00))// ((0x0001)) //xinput up
+#define NL_GAMEPAD_DPAD_DOWN        ((button_value_type)(0x01))// ((0x0002)) //xinput down
+#define NL_GAMEPAD_DPAD_LEFT        ((button_value_type)(0x02))// ((0x0004)) //xinput left
+#define NL_GAMEPAD_DPAD_RIGHT       ((button_value_type)(0x03))// ((0x0008)) //xinput right
+#define NL_GAMEPAD_START            ((button_value_type)(0x04))// ((0x0010)) //xinput start
+#define NL_GAMEPAD_SELECT           ((button_value_type)(0x05))// ((0x0020)) //xinput back Could also be select button
+#define NL_GAMEPAD_L                ((button_value_type)(0x06))// ((0x0100)) //xinput left shoulder
+#define NL_GAMEPAD_R                ((button_value_type)(0x07))// ((0x0200)) //xinput right shoulder
+#define NL_GAMEPAD_LEFT_THUMB       ((button_value_type)(0x08))// ((0x0040)) //xinput left thumb
+#define NL_GAMEPAD_RIGHT_THUMB      ((button_value_type)(0x09))// ((0x0080)) //xinput right thumb
+#define NL_GAMEPAD_A                ((button_value_type)(0x0A))// ((0x1000)) //xinput a
+#define NL_GAMEPAD_B                ((button_value_type)(0x0B))// ((0x2000)) //xinput b
+#define NL_GAMEPAD_X                ((button_value_type)(0x0C))// ((0x4000)) //xinput x
+#define NL_GAMEPAD_Y                ((button_value_type)(0x0D))// ((0x8000)) //xinput y
 
 
 // NO CONTROLLER in a browser... at least not that I know of
