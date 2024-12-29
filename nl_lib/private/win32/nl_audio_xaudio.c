@@ -117,6 +117,11 @@ void cleanup_audio_system(void)
 {   
     for (int i = 0; i < MAX_SOUND_BUFFERS; ++i)
     {
+        if (loaded_sounds[i].data != 0)
+        {
+            memory_free(loaded_sounds[i].data);
+        }
+        
         if (xaudio_voices[i] != 0)
         {
             IXAudio2SourceVoice_DestroyVoice(xaudio_voices[i]);
@@ -140,7 +145,7 @@ unsigned int load_sound_file(const char* const filename)
 {
     const char* file_type = find_file_type_from_name(filename);
 
-    if (strcmp(file_type, ".wav"))
+    if (strcmp(file_type, ".wav\n"))
     {
         return load_wav_sound(filename);
     }
