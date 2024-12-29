@@ -5,6 +5,4 @@ _build/*
 
 devsetup.sh
 
-data/*
-
 game_ideas.txt
