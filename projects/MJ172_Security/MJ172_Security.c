@@ -48,7 +48,7 @@ unsigned char game_state = 0;
 
 internal_function void winsizecbk(int width, int height)
 {
-    create_orthographic_projection(&main_cam.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
+    create_orthographic_projection(&main_cam.proj_matrix, 0, (float)width, 0, (float)height, -0.1f, 100.f);
     set_projection_matrix(&main_cam.proj_matrix);
 }
 
@@ -190,7 +190,7 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
-    current_beam_reset_time += dt;
+    current_beam_reset_time += (float)dt;
     if (current_beam_reset_time >= BEAM_CHECK_TIME)
     {
         current_beam_reset_time -= BEAM_CHECK_TIME;
@@ -217,7 +217,7 @@ void app_specific_update(double dt)
 
         case 1:
         {
-            man_pos.x += 100 * dt;
+            man_pos.x += 100.f * (float)dt;
 
             if (key_was_pressed(key_space))
             {

@@ -1,7 +1,12 @@
 
 #include "main/winmain.c"
 
+#if defined USE_OPEN_AL_AUDIO
 #include "private/common/nl_audio_openal.c"
+#else
+#include "private/win32/nl_audio_xaudio.c"
+#endif
+
 #include "private/common/nl_camera.c"
 #include "private/common/nl_fileio.c"
 #include "private/common/nl_input.c"

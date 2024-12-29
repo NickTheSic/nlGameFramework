@@ -5,12 +5,10 @@
 #include <private/nl_memory.h>
 #include <private/nl_wave_file.h>
 
-#include "string.h" // for strcmp
+#include <string.h> // for strcmp
 
 #include <third_party/al.h>
 #include <third_party/alc.h>
-
-#define MAX_SOUND_BUFFERS 4
 
 typedef struct audio_system audio_system;
 struct audio_system
@@ -44,18 +42,18 @@ static void print_audio_device_name(void)
     NL_LOG("Opened %s for sound", name);
 }
 
-static ALuint load_wav_sound(const char* filename)
+internal_function ALuint load_wav_sound(const char* filename)
 {
     if (local_audio_system == 0)
     {
         NL_LOG("Audio system isn't initialized cannot load a sound");
-        return 0;
+        return NL_INVALID_SOUND;
     }
 
     if (local_audio_system->sounds_loaded >= MAX_SOUND_BUFFERS)
     {
         NL_LOG("Unable to allocate more sounds for this buffer.  We have reached the max sounds and can't load %s", filename);
-        return 0;
+        return NL_INVALID_SOUND;
     }
 
     file_contents sound_file = {0};
@@ -63,7 +61,7 @@ static ALuint load_wav_sound(const char* filename)
     if (sound_file.size == 0)
     {
         NL_LOG("Unable to open sound file: %s", filename);
-        return 0;
+        return NL_INVALID_SOUND;
     }
 
     wav_file_header * const wav_header = (wav_file_header* const)(sound_file.content);
@@ -129,7 +127,7 @@ unsigned int load_sound_file(const char* filename)
     }
 
     NL_LOG("No compatible audio type found for %s", file_type);
-    return 0;
+    return NL_INVALID_SOUND;
 }
 
 int init_audio_system(void)
@@ -199,10 +197,21 @@ void cleanup_audio_system(void)
 
 void play_sound(unsigned int sound)
 {
+    if (sound == NL_INVALID_SOUND)
+    {
+        NL_LOG("Trying to play and Invalid Sound!");
+        return;
+    }
     alSourcePlay(sound);
 }
 
 void set_sound_to_loop(unsigned int sound)
 {
+    if (sound == NL_INVALID_SOUND)
+    {
+        NL_LOG("Trying to loop and Invalid Sound!");
+        return;
+    }
+
     alSourcei(sound, AL_LOOPING, AL_TRUE);
 }

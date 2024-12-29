@@ -5,6 +5,9 @@
 extern "C" {
 #endif
 
+#define MAX_SOUND_BUFFERS 4
+
+#define NL_INVALID_SOUND 65530 // Arbitrary number that will probably be ever higher than the sounds that you can use at once
 
 int init_audio_system(void); 
 void cleanup_audio_system(void);

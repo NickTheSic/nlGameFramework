@@ -24,7 +24,7 @@ int wWinMain(
 {
     NL_UNUSED(hInstance);NL_UNUSED(hPrevInstance);
     NL_UNUSED(lpCmdLine);NL_UNUSED(nShowCmd);
-#endif
+#endif  
 
     if (platform_init() == 0)
     {
