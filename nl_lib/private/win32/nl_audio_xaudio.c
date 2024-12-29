@@ -87,6 +87,8 @@ internal_function unsigned int load_wav_sound(const char* filename)
     	return NL_INVALID_SOUND;
     }
 
+	IXAudio2SourceVoice_Start(xaudio_voices[current_voice], 0, XAUDIO2_COMMIT_NOW);
+
     ++currently_used_voices;
     NL_LOG("Successfully loaded %s in slot %d", filename, current_voice);
 
@@ -156,8 +158,6 @@ void cleanup_audio_system(void)
 
 unsigned int load_sound_file(const char* const filename)
 {
-    NL_LOG("Trying to load %s", filename);
-
     const char* file_type = find_file_type_from_name(filename);
 
     if (strcmp(file_type, ".wav\n"))
@@ -182,8 +182,6 @@ void play_sound(unsigned int sound)
     xaudio_loaded_sound* const voice = &loaded_sounds[sound];
     XAUDIO2_BUFFER* const buffer = &xaudio_buffers[sound];
     IXAudio2SourceVoice* const source = xaudio_voices[sound];
-
-	IXAudio2SourceVoice_Start(source, 0, XAUDIO2_COMMIT_NOW);
 
 	buffer->AudioBytes = voice->size;
 	buffer->pAudioData = voice->data;
