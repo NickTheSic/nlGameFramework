@@ -14,7 +14,7 @@ typedef struct file_contents file_contents;
 struct file_contents
 {
     size_t size;
-    char* content;
+    unsigned char* content;
 };
 
 void read_entire_file(const char* const filename, file_contents* const contents);

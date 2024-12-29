@@ -32,7 +32,7 @@ void read_entire_file(const char* filename, file_contents* const contents)
         fseek(fp, 0, SEEK_SET);
 
         contents->size = file_size;
-        contents->content = (char*)memory_allocate(sizeof(char) * file_size);
+        contents->content = (unsigned char*)memory_allocate(sizeof(char) * file_size);
         if (contents->content)
         {
             fread(contents->content, file_size, 1, fp);
