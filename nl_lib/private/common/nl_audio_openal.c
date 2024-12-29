@@ -121,7 +121,7 @@ unsigned int load_sound_file(const char* filename)
 {
     const char* file_type = find_file_type_from_name(filename);
 
-    if (strcmp(file_type, ".wav"))
+    if (strcmp(file_type, ".wav\n"))
     {
         return load_wav_sound(filename);
     }

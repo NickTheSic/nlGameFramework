@@ -95,6 +95,8 @@ internal_function unsigned int load_wav_sound(const char* filename)
 
 int init_audio_system(void)
 {
+    NL_LOG("Initializing XAudio as audio system");
+
     if (FAILED(CoInitializeEx(0, COINIT_MULTITHREADED)))
     {
 	    NL_LOG("CoInitialize returned S_Failed but this can be caused by a previous call to the function so I am continuing execution of init_audio");
@@ -154,6 +156,8 @@ void cleanup_audio_system(void)
 
 unsigned int load_sound_file(const char* const filename)
 {
+    NL_LOG("Trying to load %s", filename);
+
     const char* file_type = find_file_type_from_name(filename);
 
     if (strcmp(file_type, ".wav\n"))
@@ -169,7 +173,7 @@ void play_sound(unsigned int sound)
 {
     if (sound == NL_INVALID_SOUND)
     {
-        NL_LOG("Trying to loop and Invalid Sound!");
+        NL_LOG("Trying to play an Invalid Sound!");
         return;
     }
 
@@ -192,7 +196,7 @@ void set_sound_to_loop(unsigned int sound)
 {
     if (sound == NL_INVALID_SOUND)
     {
-        NL_LOG("Trying to loop and Invalid Sound!");
+        NL_LOG("Trying to loop an Invalid Sound!");
         return;
     }
 

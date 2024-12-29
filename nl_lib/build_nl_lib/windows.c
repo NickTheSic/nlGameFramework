@@ -1,7 +1,7 @@
 
 #include "main/winmain.c"
 
-#if defined USE_OPEN_AL_AUDIO
+#if 1
 #include "private/common/nl_audio_openal.c"
 #else
 #include "private/win32/nl_audio_xaudio.c"
