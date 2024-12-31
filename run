@@ -4,3 +4,9 @@ if [ $1 == "mac" ]
 then
     ./_build/mac/$2.app/Contents/MacOS/build_nl_lib
 fi
+
+if [ $1 == "web" ] 
+then
+    emrun ./_build/web/$2/index.html
+fi
+
