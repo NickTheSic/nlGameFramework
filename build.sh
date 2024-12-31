@@ -24,3 +24,9 @@ if [ "$1" == "mac" ]
 then
     ./build_scripts/build_mac.sh $2
 fi
+
+if [ "$1" == "web" ]
+then 
+    ./build_scripts/build_web.sh $2 $3
+fi
+

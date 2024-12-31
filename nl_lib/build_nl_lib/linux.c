@@ -4,7 +4,6 @@
 #include "private/common/nl_audio_openal.c"
 #include "private/common/nl_camera.c"
 #include "private/common/nl_fileio.c"
-#include "private/common/nl_gamepad_null.c"
 #include "private/common/nl_input.c"
 #include "private/common/nl_math.c"
 #include "private/common/nl_memory.c"
