@@ -32,6 +32,7 @@ enum nl_key
     key_y,
     key_z,
 
+    key_control, // UNKNOWN AT THE MOMENT - Will have to discover it in the future
 
     NL_KEY_COUNT
 };

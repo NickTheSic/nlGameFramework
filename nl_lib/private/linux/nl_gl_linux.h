@@ -4,6 +4,8 @@
 //Reference:
 //https://www.khronos.org/opengl/wiki/Programming_OpenGL_in_Linux:_GLX_and_Xlib
 
+// My Fedora machine is wayland. Won't be using X11 in there
+
 
 #include<stdio.h>
 #include<stdlib.h>
