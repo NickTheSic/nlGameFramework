@@ -24,7 +24,7 @@ void app_specific_update(double dt)
 {
     NL_UNUSED(dt);
 
-    if (key_was_pressed(key_space))
+    if (key_was_pressed(key_a))
     {
         NL_LOG("Key Was Pressed");
         play_sound(sfx);
