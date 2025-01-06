@@ -3,6 +3,16 @@
 #include <emscripten.h>
 #include <time.h>
 
+EM_JS(bool, verify_site, (), {
+    if (document.location.host == 'html-classic.itch.zone' || document.location.host == 'localhost:6931'){
+        return true;
+    }
+        
+    alert('This game can only be played at: https://nickthesic.itch.io');
+    throw 'Please Visit https://nickthesic.itch.io';
+    return false;
+});
+
 extern void app_specific_init(void);
 extern void app_specific_update(double dt);
 extern void app_specific_render(void);
@@ -46,6 +56,12 @@ internal_function void run()
 int main(int count, char** args)
 {
     NL_UNUSED(count);NL_UNUSED(args);
+
+    if (!verify_site())
+    {
+        NL_LOG("Failed to verify the correct website!");
+        return;
+    }
 
     if (platform_init() == 0)
     {

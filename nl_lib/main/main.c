@@ -3,6 +3,17 @@
 #ifdef __EMSCRIPTEN__  
 #include <emscripten.h>
 #include <time.h>
+
+EM_JS(bool, verify_site, (), {
+    if (document.location.host == 'html-classic.itch.zone' || document.location.host == 'localhost:6931'){
+        return true;
+    }
+        
+    alert('This game can only be played at: https://nickthesic.itch.io');
+    throw 'Please Visit https://nickthesic.itch.io';
+    return false;
+});
+
 #endif
 
 global_variable float highest_fps = -1.0f;
@@ -77,7 +88,9 @@ int main(int count, char** args)
     app_specific_init();
 
 #if defined(__EMSCRIPTEN__)
-    emscripten_set_main_loop(run, 0, 1);
+    if (verify_site()){
+        emscripten_set_main_loop(run, 0, 1);
+    }
 #else
     while (window_active())
     {
