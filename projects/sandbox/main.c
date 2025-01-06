@@ -45,8 +45,6 @@ int main(int count, char** args)
 {
     NL_UNUSED(count);NL_UNUSED(args);
 
-    // Consistent seed for testing
-    //init_random_number_generator(80);
     init_random_number_generator(time(NULL));
 
     if (!initialize_window(500,300, "Sandbox Mode"))
