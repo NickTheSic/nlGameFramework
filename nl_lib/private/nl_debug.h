@@ -5,8 +5,12 @@
 #include <pspdebug.h> 
 #define NL_LOG(m,...) pspDebugScreenPrintf(m,##__VA_ARGS__);
 #else
+#if 1
+#define NL_LOG(m,...)
+#else
 #include <stdio.h>
 #define NL_LOG(m,...) fprintf(stdout, m,##__VA_ARGS__); fprintf(stdout, "\n");
+#endif
 #endif
 
 #define DO_ONCE(thing) {static int doonce = 1; if (doonce){ doonce = 0; thing; }}

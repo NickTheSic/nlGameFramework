@@ -3,10 +3,18 @@
 #ifdef __EMSCRIPTEN__  
 #include <emscripten.h>
 #include <time.h>
-#endif
 
-float highest_fps = -1.0f;
-float lowest_fps = 54028234663.0000000000000000; // a really big number higher than the average fps I have ever seen
+EM_JS(bool, verify_site, (), {
+    if (document.location.host == 'html-classic.itch.zone' || document.location.host == 'localhost:6931'){
+        return true;
+    }
+        
+    alert('This game can only be played at: https://nickthesic.itch.io');
+    throw 'Please Visit https://nickthesic.itch.io';
+    return false;
+});
+
+#endif
 
 extern void app_specific_init(void);
 extern void app_specific_update(double dt);
@@ -19,32 +27,6 @@ void run()
     update_input_frame_state();
     
     double dt = get_frame_delta_time();
-
-#if !NOT_YET_IMPLEMENTED
-    // debug FPS
-    {
-        static float TimedLoop;
-    	static int frameCount;
-    	static float fps;
-
-    	TimedLoop += dt;
-    	if (TimedLoop > 1.f)
-    	{
-    		fps = (double)frameCount / TimedLoop;
-    		TimedLoop -= 1.f;
-    		frameCount = 0;
-
-            highest_fps = highest_fps > fps ? highest_fps : fps;
-            lowest_fps = lowest_fps < fps ? lowest_fps : fps;
-            
-            char c[50];
-            sprintf(c, "FPS: %f\n", fps);
-            set_window_title(c);
-    	}
-    	frameCount++;
-    }
-#endif
-
     app_specific_update(dt);
 
     begin_render_frame();
@@ -88,7 +70,10 @@ int main(int count, char** args)
     app_specific_init();
 
 #if defined(__EMSCRIPTEN__)
-    emscripten_set_main_loop(run, 0, 1);
+    if (verify_site()) 
+    {
+        emscripten_set_main_loop(run, 0, 1);
+    }
 #else
     while (window_active())
     {
@@ -101,9 +86,6 @@ int main(int count, char** args)
     cleanup_audio_system();
 #endif
     basic_memory_leak_check();
-
-    NL_LOG("Highest FPS Reached: %f", highest_fps);
-    NL_LOG("Lowest FPS Reached: %f", lowest_fps);
 
     return 0;
 }
