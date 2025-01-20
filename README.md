@@ -13,4 +13,3 @@ Very incomplete and constantly being update.  No standardized ABI yet as lots wi
 ## Attempt 5
 Yes, I have used GLFW and GLAD along with C++ to try and make this before.  Each time it gets to a state where I can make a game I realize I don't like using what I just created.  Everytime before I started from scratch, but this time I went with bare C and set things up. I see where I want to add C++ features like operator overloading or function overloading, (And a nicer String implementation than C) and I can add it in slowly as I change files.  Iteration is important and starting from scratch each time is good for C++ but I liked the c data framework I was making and this is an implementation like that.  Raylib and SDL are what the end goal is, but less abstraction and more specific game code in the end
 
-Publicly testing jenkins - seeing if this does what I hope
