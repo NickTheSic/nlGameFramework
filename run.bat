@@ -5,7 +5,7 @@ IF "%1"=="" (
 )
 
 IF %1==win (
-    call "_build//win32//build_nl_lib.exe"
+    call "_build//win32//%2//build_nl_lib.exe"
     goto end
 )
 
