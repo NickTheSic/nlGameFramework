@@ -60,7 +60,7 @@ int main(int count, char** args)
     if (!verify_site())
     {
         NL_LOG("Failed to verify the correct website!");
-        return;
+        return 1;
     }
 
     if (platform_init() == 0)
