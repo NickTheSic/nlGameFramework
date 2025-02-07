@@ -12,7 +12,8 @@ set includes=/I../../../nl_lib /I../../../projects/%1
 
 set FILES=../../../nl_lib/build_nl_lib.c ../../../projects/%1/%1.c
 
-echo on
+
+@echo on
 
 :: rc /r ../../../res/win_icon.rc /OUT ../../../res :: create a file that contains app icon
 cl %flags% %EXTRA_FLAGS_WIN% %includes% %FILES% ../../../res/win_icon0.res %libs% /link /LIBPATH:"../../../nl_lib/libs"
