@@ -9,7 +9,6 @@ global_variable camera main_cam = {0};
 #define LASER_TOP_Y LASER_BOTTOM_Y + LASER_DISTANCE
 #define LASER_START_X 120.f
 #define MAX_LASER_BEAMS_IN_GAME 4
-#define BEAM_CHECK_TIME 3.0f
 
 unsigned int difficulty = {1};
 
@@ -17,6 +16,9 @@ typedef struct laser laser;
 struct laser
 {
     v2f pos;
+    float laser_pos_x;
+    float delay;
+    float current_time;
     unsigned char beam_active; // The beam
     unsigned char laser_active; // the entire system
 };
@@ -32,8 +34,6 @@ v2f man_pos = {0};
 v2f money_pos = {0};
 
 v2f laser_beam_size = {0};
-
-float current_beam_reset_time = 0.0f;
 
 unsigned int coin_pickup_sfx = {0};
 unsigned int laser_hit_sfx = {0};
@@ -64,7 +64,7 @@ internal_function void generate_game_sprites(void)
     generate_rectangle_simple_sprite(&laser_top, 32, 16);
     load_texture_for_sprite(&laser_top, "data/laser_top.png");
 
-    generate_rectangle_simple_sprite(&laser_beam, 32, LASER_DISTANCE);
+    generate_rectangle_simple_sprite(&laser_beam, 16, LASER_DISTANCE);
     load_texture_for_sprite(&laser_beam, "data/single_red_pixel.png");
 
     generate_rectangle_simple_sprite(&man, 32, 64);
@@ -74,9 +74,18 @@ internal_function void generate_game_sprites(void)
     load_texture_for_sprite(&money, "data/money.png");
 }
 
-internal_function unsigned char get_laser_beam_showing(laser* const laser)
+internal_function unsigned char get_laser_beam_showing(laser* const laser, const float dt)
 {
-    return (laser->laser_active > 0 ? (unsigned char)random_int_in_range(0,difficulty) : 0);
+    unsigned char active = laser->beam_active;
+    laser->current_time += dt;
+
+    if (laser->current_time >= laser->delay)
+    {
+        active = !laser->beam_active;
+        laser->current_time -= laser->delay;
+    }
+
+    return active;
 }
 
 internal_function void set_man_start_position(void)
@@ -93,17 +102,22 @@ internal_function void set_money_end_position(int furthest_active_laser)
 
 internal_function void generate_game_laser_beams(void)
 {
-    laser_beam_size.x = 32.f;
+    laser_beam_size.x = 16.f;
     laser_beam_size.y = LASER_DISTANCE;
 
     int furthest_active_laser = 0;
     for (int i = 0; i < MAX_LASER_BEAMS_IN_GAME; ++i)
     {
-        lasers[i].pos.x = LASER_START_X + (i*50);
+        lasers[i].pos.x = (LASER_START_X) + (i*50);
         lasers[i].pos.y = LASER_BOTTOM_Y;
 
+        lasers[i].laser_pos_x = lasers[i].pos.x + 8;
+
+        lasers[i].delay = random_float_in_range(2,4);
+        lasers[i].current_time = 0.0f;
+
         lasers[i].laser_active = (unsigned char)random_int_in_range(0,3);
-        lasers[i].beam_active = get_laser_beam_showing(&lasers[i]);
+        lasers[i].beam_active = get_laser_beam_showing(&lasers[i], 1.0f);
 
         NL_LOG("Laser %d active: %d", i, (int)lasers[i].laser_active);
         NL_LOG("Laser %d beam active: %d", i, (int)lasers[i].beam_active);
@@ -150,9 +164,9 @@ internal_function void collision_test(void)
         if (lasers[i].laser_active && lasers[i].beam_active)
         {
             aabb laser_box = {0};
-            laser_box.min.x = lasers[i].pos.x;
+            laser_box.min.x = lasers[i].laser_pos_x;
             laser_box.min.y = lasers[i].pos.y;
-            laser_box.max.x = lasers[i].pos.x + laser_beam_size.x;
+            laser_box.max.x = lasers[i].laser_pos_x + laser_beam_size.x;
             laser_box.max.y = lasers[i].pos.y + laser_beam_size.y;
             if (aabb_box_overlap(man_box, laser_box))
             {
@@ -186,17 +200,11 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
-    current_beam_reset_time += dt;
-    if (current_beam_reset_time >= BEAM_CHECK_TIME)
+    for (int i = 0; i < MAX_LASER_BEAMS_IN_GAME; ++i)
     {
-        current_beam_reset_time -= BEAM_CHECK_TIME;
-        for (int i = 0; i < MAX_LASER_BEAMS_IN_GAME; ++i)
+        if (lasers[i].laser_active)
         {
-            if (lasers[i].laser_active)
-            {
-                lasers[i].beam_active = get_laser_beam_showing(&lasers[i]);
-                NL_LOG("Laser %d beam active: %d", i, (int)lasers[i].beam_active);
-            }
+            lasers[i].beam_active = get_laser_beam_showing(&lasers[i], dt);
         }
     }
     
@@ -252,7 +260,7 @@ void app_specific_render(void)
                 continue;
             }
 
-            model.m41 = lasers[i].pos.x;
+            model.m41 = lasers[i].laser_pos_x;
             model.m42 = lasers[i].pos.y;
             set_model_matrix(&model.m11);
 
@@ -261,8 +269,11 @@ void app_specific_render(void)
                 render_single_simple_sprite(&laser_beam);
             }
 
+            model.m41 = lasers[i].pos.x;
+            set_model_matrix(&model.m11);
             render_single_simple_sprite(&laser_base);
 
+            model.m41 = lasers[i].pos.x;
             model.m42 = LASER_TOP_Y;
             set_model_matrix(&model.m11);
             render_single_simple_sprite(&laser_top);
