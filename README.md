@@ -5,7 +5,7 @@ The 5th iteration of my own game development framework. (Yes, I have done this 5
 ![Programmer Art Logo](https://raw.githubusercontent.com/NickTheSic/nlGameFramework/refs/heads/main/res/icon0.png)
  
 ## About
-It is easy to use game engines like Unreal and premade frameworks like Raylib or SDL.  But there is something special about working low level and creating from the operating system. I have ported games to the Nintendo Switch, but they were Unreal Engine projects and the engine code was already there for me.  And while SDL has their own repo, software like raylib and godot don't have a premade implementation.  How do you roll your own platform layer if you don't have experience.
+It is easy to use game engines like Unreal and premade frameworks like Raylib or SDL.  But there is something special about working low level and creating from the operating system. I have ported games to the Nintendo Switch, but they were Unreal Engine projects and the engine code was already there for me.  And while SDL has their own repo, software like raylib and godot don't have a premade implementation.  How do you roll your own platform layer if you don't have experience?
 
 ## Use
 Very incomplete and constantly being update.  No standardized ABI yet as lots will change. I know how I would like the end use to be but getting there is the challenge.  I would suggest raylib or SDL, or checkout Handmade Hero to learn more and make games.  This is very much for my own use and learning.
