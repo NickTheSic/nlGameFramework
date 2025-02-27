@@ -17,40 +17,9 @@ IF /I %1==win (
     goto compile_hit
 )
 
-
 IF /I %1==web (
     call "build_scripts/build_web" %2 
     @echo off
-    goto compile_hit
-)
-
-IF /I %1==exgcn (
-    call "build_scripts/build_gcn_example" %2
-    goto compile_hit
-)
-
-IF /I %1==gcn (
-    call "build_scripts/build_gcn" %2
-    goto compile_hit
-)
-
-IF /I %1==nds (
-    call "build_scripts/build_nds" %2
-    goto compile_hit
-)
-
-IF /I %1==wii (
-    call "build_scripts/build_wii" %2
-    goto compile_hit
-)
-
-IF /I %1==gba (
-    call "build_scripts/build_gba" %2
-    goto compile_hit
-)
-
-IF /I %1==psx (
-    call "build_scripts/build_psx.bat" %2
     goto compile_hit
 )
 

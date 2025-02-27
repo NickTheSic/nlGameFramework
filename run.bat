@@ -18,16 +18,8 @@ IF %1==web (
     goto end
 )
 
-IF %1==gcn (
-    %DOLPHIN_EMULATOR% _build\gcn\game.dol
-    goto end
-)
 
-IF %1==wii (
-    %DOLPHIN_EMULATOR% _build\wii\game.dol
-    goto end
-)
-
+:: TODO: Don't run in emulator, setup the calls to debug on system
 IF %1==psp (
     IF "%2"=="" (
         echo need to specify game to run
@@ -37,16 +29,5 @@ IF %1==psp (
     goto end
 )
 
-IF %1==nds (
-    %DESMUME_EMULATOR% "_build\nds\game.nds"
-    goto end
-)
-
-IF %1==gba (
-    echo gba run not set up
-    goto end
-)
-
 :end
-
 @echo on

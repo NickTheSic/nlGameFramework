@@ -5,11 +5,6 @@ then
     echo please specify the platform
 fi
 
-if [ "$1" == "tux" ]
-then
-    ./build_scripts/build_tux.sh $2
-fi
-
 if [ "$1" == "pspprx" ]
 then 
     ./build_scripts/build_psp_prx.sh $2 $3
@@ -30,3 +25,7 @@ then
     ./build_scripts/build_web.sh $2 $3
 fi
 
+if [ "$1" == "tux" ]
+then
+    ./build_scripts/build_tux.sh $2
+fi
