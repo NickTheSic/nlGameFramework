@@ -50,5 +50,4 @@
 #include "private/null/nl_vertex_attrib_null.c"
 #include "private/null/nl_window_null.c"
 
-
 #endif // Platform

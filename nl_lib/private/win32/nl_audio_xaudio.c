@@ -4,8 +4,7 @@
 
 #include <string.h>
 
-// Thanks to https://github.com/tsherif/xaudio2-c-demo/ for the code reference in C (MIT License as of 2024-12-29 0:10)
-
+// Thanks to https://github.com/tsherif/xaudio2-c-demo/ for the code reference using C instead of C++ (MIT License as of 2024-12-29 0:10)
 typedef struct xaudio_loaded_sound xaudio_loaded_sound;
 struct xaudio_loaded_sound
 {
@@ -19,13 +18,77 @@ struct xaudio_loaded_sound
 // {
 
 // };
-
 IXAudio2 *xaudio_engine = {0};
 IXAudio2MasteringVoice *xaudio_mastering_voice = {0};
 IXAudio2SourceVoice *xaudio_voices[MAX_SOUND_BUFFERS] = {0};
 xaudio_loaded_sound loaded_sounds[MAX_SOUND_BUFFERS] = {0};
 XAUDIO2_BUFFER xaudio_buffers[MAX_SOUND_BUFFERS] = {0};
 int currently_used_voices = 0;
+
+
+// These don't seem required to compile but will be useful in the future
+void OnBufferEnd(IXAudio2VoiceCallback* This, void* pBufferContext) 
+{
+    NL_UNUSED(This); NL_UNUSED(pBufferContext);
+    NL_LOG("On XAudio Buffer End");
+}
+
+void OnStreamEnd(IXAudio2VoiceCallback* This) 
+{
+    NL_UNUSED(This); 
+    NL_LOG("On XAudio Stream End");
+}
+
+void OnVoiceProcessingPassEnd(IXAudio2VoiceCallback* This) 
+{
+    NL_UNUSED(This); 
+    // Comment due to spam
+    //NL_LOG("On XAudio Voice Processing Pass End");
+}
+
+void OnVoiceProcessingPassStart(IXAudio2VoiceCallback* This, UINT32 SamplesRequired) 
+{
+    NL_UNUSED(This); NL_UNUSED(SamplesRequired);
+    // Comment due to spam
+    //NL_LOG("On XAudio Voice Processing Pass Start");
+}
+
+void OnBufferStart(IXAudio2VoiceCallback* This, void* pBufferContext) 
+{
+    NL_UNUSED(This); NL_UNUSED(pBufferContext);
+    NL_LOG("On XAudio Buffer Start");
+}
+
+void OnLoopEnd(IXAudio2VoiceCallback* This, void* pBufferContext) 
+{
+    NL_UNUSED(This); NL_UNUSED(pBufferContext);
+    NL_LOG("On XAudio Buffer Start");
+}
+
+// Might be the most important of the callbacks!
+void OnVoiceError(IXAudio2VoiceCallback* This, void* pBufferContext, HRESULT Error) 
+{
+    NL_UNUSED(This); NL_UNUSED(pBufferContext); NL_UNUSED(Error); 
+    NL_LOG("On XAudio Voice Error");
+}
+
+///////////////////////////////////////////////////////////////
+// The trick to setting up callbacks in C is that the function
+// pointers go in the 'lpVtbl' property, which is of type 
+// IXAudio2VoiceCallbackVtbl*. (In C++, this is done by
+// inheriting from IXAudio2VoiceCallback.)
+///////////////////////////////////////////////////////////
+IXAudio2VoiceCallback xAudioCallbacks = {
+    .lpVtbl = &(IXAudio2VoiceCallbackVtbl) {
+        .OnStreamEnd = OnStreamEnd,
+        .OnVoiceProcessingPassEnd = OnVoiceProcessingPassEnd,
+        .OnVoiceProcessingPassStart = OnVoiceProcessingPassStart,
+        .OnBufferEnd = OnBufferEnd,
+        .OnBufferStart = OnBufferStart,
+        .OnLoopEnd = OnLoopEnd,
+        .OnVoiceError = OnVoiceError
+    }
+};
 
 internal_function unsigned int load_wav_sound(const char* filename)
 {
@@ -57,13 +120,18 @@ internal_function unsigned int load_wav_sound(const char* filename)
     }
     
     memcpy(sound->data, sound_file.content+sizeof(wav_file_header), header->data_size);
+    sound->size = header->data_size;
 
-    sound->format.wFormatTag      = header->format;         /* format type */
+    // wFormatTag is should not be equal to the header->format it seems
+    sound->format.wFormatTag      = header->format;         /* format type */ // defined as WAVE_FORMAT_EXTENSIBLE in mmreg.h
     sound->format.nChannels       = header->channels;       /* number of channels (i.e. mono, stereo...) */
     sound->format.nSamplesPerSec  = header->sample_rate;     /* sample rate */
     sound->format.nAvgBytesPerSec = header->bytes_per_second; /* for buffer estimation */
     sound->format.nBlockAlign     = header->bytes_per_sample; /* block size of data */
     sound->format.wBitsPerSample  = header->bits_per_sample;  /* Number of bits per sample of mono data */
+    //WAVE_FORMAT_PCM formats (and only WAVE_FORMAT_PCM formats), this member is ignored. 
+    //THIS: https://learn.microsoft.com/en-us/windows/win32/api/mmreg/ns-mmreg-waveformatextensible
+    //Says that cbSize must be 22
     sound->format.cbSize          = 0;                      /* The count in bytes of the size of*/
 
     clear_file_read(&sound_file);
@@ -75,7 +143,7 @@ internal_function unsigned int load_wav_sound(const char* filename)
     	&sound->format,                // source format
     	0,                             // flags
     	XAUDIO2_DEFAULT_FREQ_RATIO,    //MaxFrequencyRatio
-    	0,                             //xaudio callbacks
+    	&xAudioCallbacks,              //xaudio callbacks
     	NULL,                          // SendList
     	NULL                           // Effect Chain
     );
@@ -99,19 +167,25 @@ int init_audio_system(void)
 {
     NL_LOG("Initializing XAudio as audio system");
 
-    if (FAILED(CoInitializeEx(0, COINIT_MULTITHREADED)))
+    HRESULT com_result ={0};
+    com_result = CoInitializeEx(0, COINIT_MULTITHREADED);
+    if (FAILED(com_result))
     {
 	    NL_LOG("CoInitialize returned S_Failed but this can be caused by a previous call to the function so I am continuing execution of init_audio");
     }
 
     const UINT32 flags = 0;
-	if (FAILED(XAudio2Create(&xaudio_engine, flags, XAUDIO2_DEFAULT_PROCESSOR)))
+    com_result = XAudio2Create(&xaudio_engine, flags, XAUDIO2_DEFAULT_PROCESSOR);
+	if (FAILED(com_result))
 	{
 		NL_LOG("Failed to create xaudio2");
 		return 0;
 	}
 
-	if (FAILED(IXAudio2_CreateMasteringVoice(
+    // Reference https://learn.microsoft.com/en-us/windows/win32/api/audiosessiontypes/ne-audiosessiontypes-audio_stream_category
+    // The above will describe the AudioCategory. 
+    // May need to init one for game fx and BGM
+    com_result = IXAudio2_CreateMasteringVoice(
         xaudio_engine, 
         &xaudio_mastering_voice, 
         XAUDIO2_DEFAULT_CHANNELS, 
@@ -119,7 +193,10 @@ int init_audio_system(void)
         0, 
         0, 
         NULL, 
-        0)))
+        AudioCategory_GameEffects
+    );
+
+	if (FAILED(com_result))
 	{
 		NL_LOG("Failed to create mastering voice");
 		return 0;

@@ -157,7 +157,8 @@ int initialize_window(int width, int height, const char* title)
 	wc.lpszClassName = wide_title;
 	wc.cbClsExtra = 0;                              // No extra window data.
 	wc.cbWndExtra = 0;                              // No extra window data.
-	wc.hIcon = LoadIcon(0, IDI_WINLOGO);            // Load the default icon.
+	wc.hIcon = LoadIcon(0, IDI_APPLICATION);        // Load the default icon.
+	wc.hIconSm = LoadIcon(0, IDI_APPLICATION);      // Load the default icon.
 	wc.hCursor = LoadCursor(0, IDC_ARROW);          // Load the arrow pointer.
 	wc.hbrBackground = 0;                     // No background required for GL.
 	wc.lpszMenuName = 0; 
