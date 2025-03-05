@@ -22,6 +22,14 @@ void app_specific_update(double dt)
 {
     NL_UNUSED(dt);
 
+    int v = get_mouse_scroll_this_frame();
+
+    if (v != 0)
+    {
+        
+        set_master_volume()
+    }
+
     if (key_was_pressed(key_a))
     {
         NL_LOG("Key Was Pressed");

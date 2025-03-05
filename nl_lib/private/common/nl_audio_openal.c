@@ -17,13 +17,13 @@ struct audio_system
     ALCcontext* context;
 
     int sounds_loaded; // buffers and sounds that have been used 
-    //explicit padding
-    int pad;
+    float current_volume;
 
     ALuint *buffers;
     ALuint *sounds;
 };
 global_variable audio_system *local_audio_system = {0};
+
 
 static void print_audio_device_name(void)
 {
@@ -105,7 +105,7 @@ internal_function ALuint load_wav_sound(const char* filename)
     ALuint source;
     alGenSources(1, &source);
     alSourcef(source, AL_PITCH, 1);
-    alSourcef(source, AL_GAIN, 1.0f);
+    alSourcef(source, AL_GAIN, local_audio_system->current_volume);
     alSource3f(source, AL_POSITION, 0, 0, 0);
     alSource3f(source, AL_VELOCITY, 0, 0, 0);
     alSourcei(source, AL_LOOPING, AL_FALSE);
@@ -139,6 +139,8 @@ int init_audio_system(void)
         NL_LOG("Unable to allocate memory for the audio system");
         return 0;
     }
+
+    local_audio_system->current_volume = 1.0f;
 
     local_audio_system->buffers = (ALuint*)memory_allocate(sizeof(ALuint)*MAX_SOUND_BUFFERS);
     local_audio_system->sounds  = (ALuint*)memory_allocate(sizeof(ALuint)*MAX_SOUND_BUFFERS);
@@ -214,4 +216,35 @@ void set_sound_to_loop(unsigned int sound)
     }
 
     alSourcei(sound, AL_LOOPING, AL_TRUE);
+}
+
+void set_sfx_volume(float volume)
+{
+    NL_UNUSED(volume);
+    NL_UNIMPLEMENTED_FUNC   
+}
+
+void set_music_volume(float volume)
+{
+    NL_UNUSED(volume);
+    NL_UNIMPLEMENTED_FUNC
+}
+
+void set_master_volume(float volume)
+{
+    NL_UNUSED(volume);
+    NL_UNIMPLEMENTED_FUNC
+    if (1.0f < volume)
+    {
+        NL_LOG("AUDIO: I plan to pass in the values 0 -> 1 for volume. If this is greater then I am diving by 100 by default");
+        volume /= 100.0f;
+    }
+
+    local_audio_system->current_volume = volume;
+
+    // TODO: Would be nice to handle SFX and BGM separately but works for now
+    for (int i = 0; i < local_audio_system->sounds_loaded; ++i)
+    {
+        alSourcef(local_audio_system->sounds[i], AL_GAIN, volume);
+    }
 }

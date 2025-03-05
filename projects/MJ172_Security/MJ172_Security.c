@@ -16,6 +16,7 @@ global_variable camera main_cam = {0};
 #define BEAM_CHECK_TIME 3.0f
 
 unsigned int difficulty = {1};
+int current_volume = 50;
 
 typedef struct laser laser;
 struct laser
@@ -190,6 +191,19 @@ void app_specific_init(void)
 
 void app_specific_update(double dt)
 {
+    int v = get_mouse_scroll_this_frame();
+    if (v != 0)
+    {
+        current_volume += (v/60); // 1 scroll is apparently 120, so this should increase or decrease by 2
+
+        if (current_volume > 100){ current_volume = 100; }
+        if (current_volume < 0){ current_volume = 0; }
+
+        NL_LOG("Current Volume: %d", current_volume);
+        set_master_volume((float)current_volume/100.0f);
+    }
+
+
     current_beam_reset_time += (float)dt;
     if (current_beam_reset_time >= BEAM_CHECK_TIME)
     {

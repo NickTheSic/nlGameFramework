@@ -16,6 +16,9 @@ unsigned int load_sound_file(const char* const filename);
 void play_sound(unsigned int sound);
 void set_sound_to_loop(unsigned int sound);
 
+void set_sfx_volume(float volume);
+void set_music_volume(float volume);
+void set_master_volume(float volume);
 
 #ifdef __cplusplus
 }

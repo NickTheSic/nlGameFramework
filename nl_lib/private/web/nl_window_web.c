@@ -69,6 +69,16 @@ internal_function EM_BOOL mouse_move_callback(int event_type, const EmscriptenMo
 	return EM_FALSE;
 }
 
+internal_function EM_BOOL mouse_scroll_callback(int event_type, const EmscriptenWheelEvent* e, void* user_data)
+{
+	NL_UNUSED(user_data); NL_UNUSED(event_type);
+	
+	// Scroll seemed backwards in my initial test 
+	add_mouse_scroll((-1.0f * e->deltaY));
+
+	return EM_FALSE;
+}
+
 v2i get_screen_size()
 {
 	v2i result = {0};
@@ -88,6 +98,8 @@ int initialize_window(int width, int height, const char* title)
 	emscripten_set_mousedown_callback("#canvas", 0, 1, mouse_callback);
 
 	emscripten_set_mousemove_callback("#canvas", 0, 1, mouse_move_callback);
+
+	emscripten_set_wheel_callback("#canvas", 0, 1, mouse_scroll_callback);
 
     return 1;
 }

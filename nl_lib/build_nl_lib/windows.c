@@ -1,11 +1,5 @@
 #include "main/winmain.c"
 
-#if 0
-//#include "private/common/nl_audio_openal.c"
-#else
-#include "private/win32/nl_audio_xaudio.c"
-#endif
-
 #include "private/common/nl_camera.c"
 #include "private/common/nl_fileio.c"
 #include "private/common/nl_input.c"
@@ -21,6 +15,7 @@
 #include "private/gl/nl_shader.c"
 #include "private/gl/nl_vertex_attrib_gl.c"
 
+#include "private/win32/nl_audio_xaudio.c"
 #include "private/win32/nl_deltatime_win32.c"
 #include "private/win32/nl_gamepad_xinput.c"
 #include "private/win32/nl_platform_win.c"
