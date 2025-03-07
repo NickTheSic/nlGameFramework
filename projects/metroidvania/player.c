@@ -13,7 +13,7 @@ void init_gameobject(game_object* const object, float width, float height, v2f s
 
 void player_init(game_object* const _player)
 {
-    jump_sound = load_sound_file("data/retrogamesfx.wav");
+    jump_sound = load_sound_file("data/run.wav");
 
     init_gameobject(_player, PLAYER_WIDTH, PLAYER_WIDTH, (v2f){100.f,100.f}, "data/thing.png");
 }
