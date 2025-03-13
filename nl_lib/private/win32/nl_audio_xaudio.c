@@ -20,19 +20,20 @@ struct xaudio_volumes
     float master;
     float sfx;
     float music;
-} current_volumes;
+};
 
-// typedef struct xaudio_audio_system xaudio_audio_system;
-// struct xaudio_audio_system 
-// {
-
-// };
-IXAudio2 *xaudio_engine = {0};
-IXAudio2MasteringVoice *xaudio_mastering_voice = {0};
-IXAudio2SourceVoice *xaudio_voices[MAX_SOUND_BUFFERS] = {0};
-xaudio_loaded_sound loaded_sounds[MAX_SOUND_BUFFERS] = {0};
-XAUDIO2_BUFFER xaudio_buffers[MAX_SOUND_BUFFERS] = {0};
-int currently_used_voices = 0;
+typedef struct xaudio_audio_system xaudio_audio_system;
+struct xaudio_audio_system 
+{
+    IXAudio2 *xaudio_engine;
+    IXAudio2MasteringVoice *xaudio_mastering_voice;
+    IXAudio2SourceVoice *xaudio_voices[MAX_SOUND_BUFFERS];
+    xaudio_loaded_sound loaded_sounds[MAX_SOUND_BUFFERS];
+    XAUDIO2_BUFFER xaudio_buffers[MAX_SOUND_BUFFERS];
+    xaudio_volumes current_volumes;
+    int currently_used_voices;
+}; 
+global_variable xaudio_audio_system *local_xaudio_system = 0;
 
 // These don't seem required to compile but will be useful in the future
 void OnBufferEnd(IXAudio2VoiceCallback* This, void* pBufferContext) 
@@ -109,8 +110,15 @@ int init_audio_system(void)
 	    NL_LOG("CoInitialize returned S_Failed but this can be caused by a previous call to the function so I am continuing execution of init_audio");
     }
 
+    local_xaudio_system = (xaudio_audio_system*)memory_allocate(sizeof(xaudio_audio_system));
+    if (0 == local_xaudio_system)
+    {
+        NL_LOG("Unable to allocate space for the local xaudio system");
+        return 0;
+    }
+
     const UINT32 flags = 0;
-    com_result = XAudio2Create(&xaudio_engine, flags, XAUDIO2_DEFAULT_PROCESSOR);
+    com_result = XAudio2Create(&local_xaudio_system->xaudio_engine, flags, XAUDIO2_DEFAULT_PROCESSOR);
 	if (FAILED(com_result))
 	{
 		NL_LOG("Failed to create xaudio2");
@@ -121,8 +129,8 @@ int init_audio_system(void)
     // The above will describe the AudioCategory. 
     // May need to init one for game fx and BGM
     com_result = IXAudio2_CreateMasteringVoice(
-        xaudio_engine, 
-        &xaudio_mastering_voice, 
+        local_xaudio_system->xaudio_engine, 
+        &local_xaudio_system->xaudio_mastering_voice, 
         XAUDIO2_DEFAULT_CHANNELS, 
         XAUDIO2_DEFAULT_SAMPLERATE, 
         0, 
@@ -142,28 +150,35 @@ int init_audio_system(void)
 
 void cleanup_audio_system(void)
 {   
+    if (0 == local_xaudio_system)
+    {
+        CoUninitialize();
+        return;
+    }
+
     for (int i = 0; i < MAX_SOUND_BUFFERS; ++i)
     {
-        if (loaded_sounds[i].data != 0)
+        if (local_xaudio_system->loaded_sounds[i].data != 0)
         {
-            memory_free(loaded_sounds[i].data);
+            memory_free(local_xaudio_system->loaded_sounds[i].data);
         }
 
-        if (xaudio_voices[i] != 0)
+        if (local_xaudio_system->xaudio_voices[i] != 0)
         {
-            IXAudio2SourceVoice_DestroyVoice(xaudio_voices[i]);
+            IXAudio2SourceVoice_DestroyVoice(local_xaudio_system->xaudio_voices[i]);
         }
     }
 
-    if (xaudio_mastering_voice != 0)
+    if (local_xaudio_system->xaudio_mastering_voice != 0)
     {
-	    IXAudio2MasteringVoice_DestroyVoice(xaudio_mastering_voice);
+	    IXAudio2MasteringVoice_DestroyVoice(local_xaudio_system->xaudio_mastering_voice);
     }
 
-    if (xaudio_engine != 0)
+    if (local_xaudio_system->xaudio_engine != 0)
 	{
-		IXAudio2_Release(xaudio_engine);
+		IXAudio2_Release(local_xaudio_system->xaudio_engine);
 	}
+    memory_free(local_xaudio_system);
 
 	CoUninitialize();
 }
@@ -171,7 +186,7 @@ void cleanup_audio_system(void)
 
 internal_function unsigned int load_wav_sound(const char* filename)
 {
-    if (currently_used_voices >= MAX_SOUND_BUFFERS)
+    if (local_xaudio_system->currently_used_voices >= MAX_SOUND_BUFFERS)
     {
         NL_LOG("Unable to load %s as currently used voices are greater than the max allowed", filename);
         return NL_INVALID_SOUND;
@@ -185,10 +200,10 @@ internal_function unsigned int load_wav_sound(const char* filename)
         return NL_INVALID_SOUND;
     }
 
-    int current_voice = currently_used_voices;
+    int current_voice = local_xaudio_system->currently_used_voices;
 
     wav_file_header* const header = (wav_file_header* const)(sound_file.content);
-    xaudio_loaded_sound* const sound = &loaded_sounds[current_voice];
+    xaudio_loaded_sound* const sound = &local_xaudio_system->loaded_sounds[current_voice];
 
     sound->data = memory_allocate(header->data_size);
     if (!sound->data)
@@ -213,8 +228,8 @@ internal_function unsigned int load_wav_sound(const char* filename)
 
     HRESULT source_result = IXAudio2_CreateSourceVoice
     (
-    	xaudio_engine,                 // This
-    	&xaudio_voices[current_voice], // souce voice
+    	local_xaudio_system->xaudio_engine,                 // This
+    	&local_xaudio_system->xaudio_voices[current_voice], // souce voice
     	&sound->format,                // source format
     	0,                             // flags
     	XAUDIO2_DEFAULT_FREQ_RATIO,    //MaxFrequencyRatio
@@ -230,7 +245,7 @@ internal_function unsigned int load_wav_sound(const char* filename)
     	return NL_INVALID_SOUND;
     }
 
-	source_result = IXAudio2SourceVoice_Start(xaudio_voices[current_voice], 0, XAUDIO2_COMMIT_NOW);
+	source_result = IXAudio2SourceVoice_Start(local_xaudio_system->xaudio_voices[current_voice], 0, XAUDIO2_COMMIT_NOW);
 
     if (FAILED(source_result))
     {
@@ -239,7 +254,7 @@ internal_function unsigned int load_wav_sound(const char* filename)
         return NL_INVALID_SOUND;
     }
 
-    ++currently_used_voices;
+    ++local_xaudio_system->currently_used_voices;
     NL_LOG("Successfully loaded %s in slot %d", filename, current_voice);
 
     return current_voice;
@@ -275,9 +290,9 @@ void play_sound(unsigned int sound)
 
     NL_LOG("Trying to play sound: %d", sound);
 
-    xaudio_loaded_sound* const voice = &loaded_sounds[sound];
-    XAUDIO2_BUFFER* const buffer = &xaudio_buffers[sound];
-    IXAudio2SourceVoice* const source = xaudio_voices[sound];
+    xaudio_loaded_sound* const voice = &local_xaudio_system->loaded_sounds[sound];
+    XAUDIO2_BUFFER* const buffer = &local_xaudio_system->xaudio_buffers[sound];
+    IXAudio2SourceVoice* const source = local_xaudio_system->xaudio_voices[sound];
 
 	buffer->AudioBytes = voice->size;
 	buffer->pAudioData = voice->data;
@@ -297,7 +312,7 @@ void set_sound_to_loop(unsigned int sound)
 
     NL_LOG("Setting sound: %d to loop", sound);
 
-    XAUDIO2_BUFFER* const buffer = &xaudio_buffers[sound];
+    XAUDIO2_BUFFER* const buffer = &local_xaudio_system->xaudio_buffers[sound];
     buffer->LoopCount = XAUDIO2_LOOP_INFINITE;
 }
 
@@ -306,7 +321,7 @@ void set_sfx_volume(float volume)
     NL_UNUSED(volume);
     NL_UNIMPLEMENTED_FUNC
 
-    current_volumes.sfx = volume * current_volumes.master;
+    local_xaudio_system->current_volumes.sfx = volume * local_xaudio_system->current_volumes.master;
 }
 
 void set_music_volume(float volume)
@@ -314,7 +329,7 @@ void set_music_volume(float volume)
     NL_UNUSED(volume);
     NL_UNIMPLEMENTED_FUNC
 
-    current_volumes.music = volume * current_volumes.master;
+    local_xaudio_system->current_volumes.music = volume * local_xaudio_system->current_volumes.master;
 }
 
 void set_master_volume(float volume)
@@ -325,7 +340,7 @@ void set_master_volume(float volume)
         volume /= 100.0f;
     }
 
-    current_volumes.master = volume;
+    local_xaudio_system->current_volumes.master = volume;
 
-    IXAudio2SourceVoice_SetVolume(xaudio_mastering_voice, volume, XAUDIO2_COMMIT_NOW);
+    IXAudio2SourceVoice_SetVolume(local_xaudio_system->xaudio_mastering_voice, volume, XAUDIO2_COMMIT_NOW);
 }

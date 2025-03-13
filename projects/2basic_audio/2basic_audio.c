@@ -9,11 +9,14 @@ unsigned int sfx = 0;
 #define key_was_pressed(b) is_button_pressed(0, b)
 #endif
 
+static float volume = 0.75f;
+
 void app_specific_init(void)
 {
     song = load_sound_file("data/SneakySong.wav"); NL_LOG("Song Loaded");
     sfx = load_sound_file("data/run.wav");    NL_LOG("SFX Loaded");
-
+    
+    set_master_volume(volume);
     set_sound_to_loop(song);
     play_sound(song);
 }
@@ -22,12 +25,12 @@ void app_specific_update(double dt)
 {
     NL_UNUSED(dt);
 
+    // Really rough scroll to change volume
     int v = get_mouse_scroll_this_frame();
-
     if (v != 0)
     {
-        
-        set_master_volume()
+        volume += v / 120.f;
+        set_master_volume(volume);
     }
 
     if (key_was_pressed(key_a))
