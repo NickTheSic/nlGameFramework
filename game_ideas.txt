@@ -1,5 +1,11 @@
 
 
+
+
+
+/** All of the below are missed jams... **/
+
+
 https://itch.io/jam/mini-jame-gam-40: March 7th 2025 -> March 9th 2025
 https://itch.io/jam/untitled-game-jam-104: Jan 9th 2025 -> Jan 19th 2025
 https://itch.io/jam/boss-rush-jam-2025: Jan 2nd 2025 -> Feb 2nd 2025
@@ -20,10 +26,6 @@ Game Framework needs:
     Text Rendering Possibly. Could get away with just different Images
     UI Buttons. Need to click to open or close
     UI System: Need to show UI on screen infront of the game
-
-
-
-// Missed jams are below
 
 https://itch.io/jam/gigajam2: ENDED
 Main Themes: Elemental Power; Mystical Creatures; Lost Realms
