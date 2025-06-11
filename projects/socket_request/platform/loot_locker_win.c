@@ -22,6 +22,7 @@ WSADATA wsa_data = {0};
     }
 
     struct addrinfo *result = 0, *ptr = 0, hints;
+    NL_UNUSED(ptr);
 
     ZeroMemory( &hints, sizeof(hints) );
     hints.ai_family   = AF_INET;

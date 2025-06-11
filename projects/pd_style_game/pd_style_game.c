@@ -65,7 +65,7 @@ internal_function void move_player(GameObject* player, v2f movement, double dt)
 
 void winsizecbk(int width, int height)
 {
-    create_orthographic_projection(&TheGame->game_camera.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
+    create_orthographic_projection(&TheGame->game_camera.proj_matrix, 0.f, width, 0.f, height, -0.1f, 100.f);
     unsigned int projMat = glGetUniformLocation(TheGame->shader_program, "uProjMat");
     glUniformMatrix4fv(projMat, 1, GL_FALSE, &TheGame->game_camera.proj_matrix.m11);
 }
@@ -102,7 +102,7 @@ void app_specific_init(void)
         TheGame->Player.transform.position  = (v2f){100.0f,100.0f};
         TheGame->Player.transform.rotation = 0.0f;
 
-        const int SQUARE_HALF_SIZE = 16;
+        const float SQUARE_HALF_SIZE = 16.f;
         vertex_data square_verts[] =
         {
             {{-SQUARE_HALF_SIZE, -SQUARE_HALF_SIZE, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},

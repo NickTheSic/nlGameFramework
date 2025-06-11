@@ -26,7 +26,7 @@ void update_ui_screen_size(ui_renderer* const ui_renderer, int width, int height
 {
     mat4x4f mat = {0};
     create_identity_matrix(&mat);
-    create_orthographic_projection(&mat, 0, width, 0, height, -0.1f, 100.f);
+    create_orthographic_projection(&mat, 0.f, (float)width, 0.f, (float)height, -0.1f, 100.f);
 
     use_shader_program(ui_renderer->shader_program);
     unsigned int viewMat = glGetUniformLocation(ui_renderer->shader_program, "uViewMat");

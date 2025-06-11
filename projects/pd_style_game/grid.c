@@ -20,6 +20,8 @@ mesh grid_meshes[3] = {0};
 
 internal_function void make_grid_meshes(Grid* const grid)
 {
+    NL_UNUSED(grid);
+    
     const colourf gcols[] = 
     {
         {0.0f,0.0f,0.0f,0.0f},
