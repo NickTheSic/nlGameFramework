@@ -12,7 +12,6 @@ float get_movement_x()
 {
     float movement = 0;
 
-#if defined (__EMSCRIPTEN__) || defined (_WIN32)
     if (key_is_held(key_a))
     {
         movement -= 1.0f;
@@ -22,19 +21,18 @@ float get_movement_x()
     {
         movement += 1.0f;
     }
-#endif
-
-#if defined (PLATFORM_CONSOLE) || defined (_WIN32)
-    if (is_button_pressed(0, NL_GAMEPAD_DPAD_LEFT))
+    
+#if defined (_WIN32)
+    if (button_was_pressed(NL_GAMEPAD_DPAD_LEFT))
     {
         movement -= 1.0f;
     }
-    if (is_button_pressed(0, NL_GAMEPAD_DPAD_RIGHT))
+    if (button_was_pressed(NL_GAMEPAD_DPAD_RIGHT))
     {
         movement += 1.0f;
     }
 #endif
-
+    
     return movement;
 }
 
@@ -42,8 +40,6 @@ float get_movement_y()
 {
     float movement = 0;
     
-
-#if defined (__EMSCRIPTEN__) || defined (_WIN32)
     if (key_is_held(key_s))
     {
         movement -= 1.0f;
@@ -53,14 +49,13 @@ float get_movement_y()
     {
         movement += 1.0f;
     }
-#endif
 
-#if defined (PLATFORM_CONSOLE) || defined (_WIN32)
-    if (is_button_pressed(0, NL_GAMEPAD_DPAD_DOWN))
+#if defined (_WIN32)
+    if (button_was_pressed(NL_GAMEPAD_DPAD_DOWN))
     {
         movement -= 1.0f;
     }
-    if (is_button_pressed(0, NL_GAMEPAD_DPAD_UP))
+    if (button_was_pressed(NL_GAMEPAD_DPAD_UP))
     {
         movement += 1.0f;
     }
