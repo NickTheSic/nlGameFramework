@@ -71,15 +71,15 @@ void add_to_render_batch(sprite_batch* const batch, v2f pos)
     const unsigned int current_idx = batch->current_count * 4;
 
     const float SQUARE_HALF_SIZE = 50.f;
-    const sprite* const sp = get_sprite(0);
+    const sprite* const local_sprite = get_sprite(0);
     sprite_batch_vertex_data square_verts[4];
 
-    if (sp != 0)
+    if (local_sprite != 0)
     {
-        square_verts[0] = (sprite_batch_vertex_data){{pos.x + -SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->bl_coord.x, sp->bl_coord.y}};
-        square_verts[1] = (sprite_batch_vertex_data){{pos.x +  SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->tr_coord.x, sp->bl_coord.y}};
-        square_verts[2] = (sprite_batch_vertex_data){{pos.x +  SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->tr_coord.x, sp->tr_coord.y}};
-        square_verts[3] = (sprite_batch_vertex_data){{pos.x + -SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, (v2f){sp->bl_coord.x, sp->tr_coord.y}};
+        square_verts[0] = (sprite_batch_vertex_data){{pos.x + -SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, (v2f){local_sprite->bl_coord.x, local_sprite->bl_coord.y}};
+        square_verts[1] = (sprite_batch_vertex_data){{pos.x +  SQUARE_HALF_SIZE, pos.y + -SQUARE_HALF_SIZE, 0.0f}, (v2f){local_sprite->tr_coord.x, local_sprite->bl_coord.y}};
+        square_verts[2] = (sprite_batch_vertex_data){{pos.x +  SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, (v2f){local_sprite->tr_coord.x, local_sprite->tr_coord.y}};
+        square_verts[3] = (sprite_batch_vertex_data){{pos.x + -SQUARE_HALF_SIZE, pos.y +  SQUARE_HALF_SIZE, 0.0f}, (v2f){local_sprite->bl_coord.x, local_sprite->tr_coord.y}};
     }
     else
     {

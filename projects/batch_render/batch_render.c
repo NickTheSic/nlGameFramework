@@ -138,7 +138,7 @@ batch_render batch = {0};
 mesh triangle;
 mesh square;
 
-vertex_data vertices[] = 
+vertex_data triangle_verts[] = 
 {
     {{-0.5f, -0.5f, 1.0f}, {1.0f, 0.5f, 0.8f, 1.0f}},
     {{ 0.5f, -0.5f, 1.0f}, {1.0f, 0.5f, 0.8f, 1.0f}},
@@ -166,7 +166,7 @@ void app_specific_init(void)
 {
     init_batch_renderer(&batch, 30, 30);
 
-    generate_mesh_using_vertices_and_indices(&triangle, vertices, 3, square_indices, 3);
+    generate_mesh_using_vertices_and_indices(&triangle, triangle_verts, 3, square_indices, 3);
     generate_mesh_using_vertices_and_indices(&square, square_verts, 4, square_indices, 6);
     
     shader_program = create_shader_program(vert_shader_code, fragment_shader_code);

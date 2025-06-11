@@ -3,7 +3,7 @@
 #include "sprite_sheet.h"
 
 global_variable unsigned int sp    = {0};
-global_variable sprite_batch batch = {0};
+global_variable sprite_batch g_batch = {0};
 global_variable unsigned int img   = {0};
 
 global_variable unsigned int loc_view_mat = {0};
@@ -13,7 +13,7 @@ global_variable camera main_cam = {0};
 
 internal_function void winsizecbk(int width, int height)
 {
-    create_orthographic_projection(&main_cam.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
+    create_orthographic_projection(&main_cam.proj_matrix, 0.0f, (float)width, 0.0f, (float)height, -0.1f, 100.f);
     set_uniform_mat4x4f(loc_proj_mat, &main_cam.proj_matrix.m11);
 }
 
@@ -32,7 +32,7 @@ void app_specific_init(void)
     create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,0.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,0.0f});
     set_uniform_mat4x4f(loc_view_mat, &main_cam.view_matrix.m11);
 
-    init_batch(&batch, 3);
+    init_batch(&g_batch, 3);
     //init_sprite_sheet();
     //img = load_image("data/test_sprite.png");
 }
@@ -45,22 +45,22 @@ void app_specific_update(double dt)
 void app_specific_render()
 {
     use_shader_program(sp);
-    begin_render_batch(&batch);
-    add_to_render_batch(&batch, (v2f){200.f, 30.f});
-    add_to_render_batch(&batch, (v2f){600.f, 120.f});
+    begin_render_batch(&g_batch);
+    add_to_render_batch(&g_batch, (v2f){200.f, 30.f});
+    add_to_render_batch(&g_batch, (v2f){600.f, 120.f});
 
     const v2i mouse_posi = get_mouse_position_from_system();
     v2f mouse_pos = (v2f){(float)mouse_posi.x, (float)mouse_posi.y};
     project_mouse_to_camera(&main_cam, &mouse_pos);
 
-    add_to_render_batch(&batch, mouse_pos);
+    add_to_render_batch(&g_batch, mouse_pos);
 
-    end_render_batch(&batch);
+    end_render_batch(&g_batch);
 }
 
 void app_specific_cleanup()
 {
-    free_batch(&batch);
+    free_batch(&g_batch);
     //free_sprite_sheet();
 }
 
