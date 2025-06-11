@@ -18,10 +18,8 @@ unsigned char button_is_held(button_value_type button);
 unsigned char button_was_pressed(button_value_type button);
 unsigned char button_was_released(button_value_type button);
 
-
 // To print the current state of pressed and released
 void debug_test_controller(void);
-
 
 #ifdef __cplusplus
 }

@@ -1,7 +1,7 @@
 #include "sprite_sheet.h"
 
 #define STBI_ONLY_PNG
-#include "third_party/main_stb_image.h" // Whoops! Need to include third party stb image but psp had its own version of the header
+#include "third_party/stb_image.h" // Whoops! Need to include third party stb image but psp had its own version of the header
 
 global_variable sprite_sheet sheet = {0};
 

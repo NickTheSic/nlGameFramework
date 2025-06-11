@@ -1,7 +1,7 @@
 #include "../nl_sprite_renderer.h"
 #include <private/gl/nl_gl.h>
 #include <private/nl_shader.h>
-#include <third_party/main_stb_image.h>
+#include <third_party/stb_image.h>
 #include <math.h>
 #include <string.h>//memcopy
 

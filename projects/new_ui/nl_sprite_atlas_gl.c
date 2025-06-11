@@ -3,7 +3,7 @@
 #include "private/gl/nl_gl.h"
 #include "private/nl_shader.h"
 #define STBI_ONLY_PNG
-#include <third_party/main_stb_image.h>
+#include <third_party/stb_image.h>
 
 #define SPRITE_ATLAS_WIDTH  32
 #define SPRITE_ATLAS_HEIGHT 64

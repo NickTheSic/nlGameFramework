@@ -7,7 +7,6 @@
 extern "C" {
 #endif
 
-
 struct mesh;
 
 typedef struct file_contents file_contents;

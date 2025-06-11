@@ -7,7 +7,6 @@
 extern "C" {
 #endif
 
-
 #define NL_MOUSE_BUTTON_LEFT 0
 #define NL_MOUSE_BUTTON_RIGHT 1
 #define NL_MOUSE_BUTTON_MIDDLE 2

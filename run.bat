@@ -18,16 +18,5 @@ IF %1==web (
     goto end
 )
 
-
-:: TODO: Don't run in emulator, setup the calls to debug on system
-IF %1==psp (
-    IF "%2"=="" (
-        echo need to specify game to run
-        goto end
-    )
-    call "%PPSSPP_EMULATOR%" -v _build\psp\%2\EBOOT.PBP
-    goto end
-)
-
 :end
 @echo on
