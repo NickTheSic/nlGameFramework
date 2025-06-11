@@ -1,5 +1,4 @@
 #include "nl_lib.h"
-
 #include <private/win32/nl_win32_include.h>
 
 global_variable float highest_fps = -1.0f;
