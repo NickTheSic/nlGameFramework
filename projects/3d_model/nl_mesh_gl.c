@@ -1,6 +1,8 @@
 #include "nl_mesh.h"
 #include "private/gl/nl_gl.h"
 
+// Here to fix a warning about undefined function
+#include "math.h"
 
 internal_function void parse_vertices_indices(const file_contents *const content, int*const vertices, int*const indices, int*const face_value_count)
 {
@@ -125,10 +127,10 @@ void load_mesh_from_file(const char* const file, mesh* const mesh)
                 vd0->color.r = colour_shift;
                 colour_shift += 0.1912354f;
                 vd0->color.g = colour_shift;
-                colour_shift += 0.11244212;
+                colour_shift += 0.11244212f;
                 vd0->color.b = colour_shift;
                 if (colour_shift - 0.5f < 0)
-                    colour_shift += 0.326;
+                    colour_shift += 0.326f;
                 vd0->color.a = 1.0f;
 
                 if (colour_shift > 1.0f) colour_shift -= 1.0f;

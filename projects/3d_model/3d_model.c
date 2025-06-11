@@ -26,7 +26,7 @@ unsigned int transformLoc = 0;
 
 void _recalculate_camera()
 {
-    create_orthographic_projection(&matrix, -camera_bounds, camera_bounds, -camera_bounds, camera_bounds, -0.1, 100);
+    create_orthographic_projection(&matrix, -camera_bounds, camera_bounds, -camera_bounds, camera_bounds, -0.1f, 100.0f);
 }
 
 void app_specific_init(void)
@@ -67,7 +67,7 @@ void app_specific_update(double dt)
         set_depth_test_enabled(1);
     }
 
-    camera_bounds += get_mouse_scroll_this_frame() * dt;
+    camera_bounds += get_mouse_scroll_this_frame() * (float)dt;
     if (get_mouse_scroll_this_frame() != 0)
     {
         _recalculate_camera();
