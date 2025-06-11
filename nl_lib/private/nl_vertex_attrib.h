@@ -16,7 +16,7 @@ struct vertex_atrribute_info
     int value_count;
     int type;
     int normalized;
-    // size_t size -> assumed from call to function
+    // size_t size; -> assumed from call to function
     size_t offset; // not sure to use size_t for offset of or const void* for actual function
 };
 

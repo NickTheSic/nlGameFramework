@@ -1,6 +1,22 @@
 
+Pong:
+- Need shape Rendering
+- Text rendering for score
+- Basic collision
+- Basic UI to select 1 or 2 players
+- Could network it for the fun of it
+- keyboard input
 
+Snake: 
+- Basic shapes or Sprite Rendering 
+- more of a grid based movement, no physics style collision
+- keyboard input
 
+Peggle:
+- physics System
+- could render just shapes
+- score
+- mouse & keyboard input
 
 
 /** Missed game jams below, with an idea that I could use for any game at any time **/
