@@ -13,7 +13,7 @@ static unsigned int worldMat = {0};
 
 void winsizecbk(int width, int height)
 {
-    create_orthographic_projection(&ui_camera.view_matrix, 0, width, 0, height, -0.1f, 100.f);
+    create_orthographic_projection(&ui_camera.view_matrix, 0.f, (float)width, 0.f, (float)height, -0.1f, 100.f);
     unsigned int viewMat = glGetUniformLocation(shader_program, "uViewMat");
     glUniformMatrix4fv(viewMat, 1, GL_FALSE, &ui_camera.view_matrix.m11);
 }
@@ -45,7 +45,7 @@ void app_specific_init(void)
     worldMat = glGetUniformLocation(shader_program, "uWorldMat");
 
     initialize_camera_to_identity(&ui_camera);
-    pfn_window_size_callback = &winsizecbk;
+    set_window_size_callback(&winsizecbk);
 
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
@@ -86,14 +86,13 @@ void app_specific_render()
     matrix_for_ui(&square_center);
 
     v2i cur_mouse_pos = get_mouse_position_from_system();
-    v3f scale = {0.1,0.1,0.1};
-    v3f rot = {0};
-    v3f trans = {cur_mouse_pos.x, cur_mouse_pos.y, 0};
+    v3f scale = {0.1f,0.1f,0.1f};
+    v3f rot = {0.f, 0.f, 0.f};
+    v3f trans = {(float)cur_mouse_pos.x, (float)cur_mouse_pos.y, 0.f};
     mat4x4f mat = {0};
     create_identity_matrix(&mat);
     create_srt_matrix(&mat, scale, rot, trans);
 
-    unsigned int worldMat = glGetUniformLocation(shader_program, "uWorldMat");
     glUniformMatrix4fv(worldMat, 1, GL_FALSE, &mat.m11);
 
     render_single_mesh(&mouse.m);
