@@ -5,7 +5,6 @@
 extern "C" {
 #endif
 
-
 // TODO: Consider moving this header into a renderer specific sub folder
 // This is very much GL renderer specific
 
@@ -13,12 +12,6 @@ extern "C" {
 #define NL_SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"
 
 #elif defined _WIN32
-#define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
-
-#elif defined (__linux__)
-#define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
-
-#elif defined (__SWITCH__)
 #define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
 
 #elif defined (NOT_YET_IMPLEMENTED)

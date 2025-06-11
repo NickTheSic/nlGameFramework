@@ -17,7 +17,7 @@ global_variable camera main_cam = {0};
 
 internal_function void winsizecbk(int width, int height)
 {
-    create_orthographic_projection(&main_cam.proj_matrix, 0, width, 0, height, -0.1f, 100.f);
+    create_orthographic_projection(&main_cam.proj_matrix, 0.0f, (float)width, 0.0f, (float)height, -0.1f, 100.f);
     set_projection_matrix(&main_cam.proj_matrix.m11);
 }
 
@@ -49,8 +49,8 @@ void app_specific_update(double dt)
 {
     NL_UNUSED(dt);
 
-    player_pos.x += get_movement_x() * dt * player_speed;
-    player_pos.y += get_movement_y() * dt * player_speed;
+    player_pos.x += get_movement_x() * (float)dt * player_speed;
+    player_pos.y += get_movement_y() * (float)dt * player_speed;
 }
 
 void app_specific_render(void)
