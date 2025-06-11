@@ -13,13 +13,23 @@ Snake:
 - more of a grid based movement, no physics style collision
 - keyboard input
 - basic audio
+- more complex: specify the next item to get
 
 Peggle:
-- physics System
-- could render just shapes
+- physics System; 
+--  maybe just balls hitting balls but ball could hit square blocks and roll
+- could render just shapes, sprites for more complex
 - score
 - mouse & keyboard input
 - basic audio
+
+Top Down Racer:
+- physics
+- keyboard input
+- sprites
+- sound
+- text and UI
+- AI 
 
 
 /** Missed game jams below, with an idea that I could use for any game at any time **/
