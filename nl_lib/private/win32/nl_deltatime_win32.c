@@ -2,7 +2,7 @@
 
 #include "nl_win32_include.h"
 
-global_variable double previous_time = 0.0;
+global_variable double global_previous_time = 0.0;
 
 internal_function double get_system_time()
 {
@@ -19,14 +19,14 @@ internal_function double get_system_time()
 
 void init_delta_time()
 {
-    previous_time = get_system_time();
+    global_previous_time = get_system_time();
 }
 
 double get_frame_delta_time()
 {
     double time_seconds = get_system_time();
-    double dt = time_seconds - previous_time;
-    previous_time = time_seconds;   
+    double dt = time_seconds - global_previous_time;
+    global_previous_time = time_seconds;   
 
     return dt;
 }
