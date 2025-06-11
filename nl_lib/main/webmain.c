@@ -1,7 +1,6 @@
 #include "nl_lib.h"
-
+#include "private/nl_platform.h"
 #include <emscripten.h>
-#include <time.h>
 
 EM_JS(bool, verify_site, (), {
     if (document.location.host == 'html-classic.itch.zone' || document.location.host == 'localhost:6931'){
