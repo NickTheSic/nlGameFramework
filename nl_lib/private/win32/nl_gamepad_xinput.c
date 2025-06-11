@@ -1,5 +1,4 @@
 #include "../nl_gamepad.h"
-#include "private/nl_controller_state_defines.h"
 #include <xinput.h>
 
 typedef struct gamepad_button_state gamepad_button_state;
