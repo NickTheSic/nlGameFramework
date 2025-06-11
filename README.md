@@ -1,3 +1,6 @@
+# An Old Idea
+Here lies some old work, an idea I had to port a project to the PSP.  I plan to remove it but I want to keep a reference to it still.  So here lies an old idea
+
 # NL LIB
 The 5th iteration of my own game development framework. (Yes, I have done this 5 times!)  This is for me to learn the lower level systems and libraries that go into developing a game. This is not a useable framework for most people at the current iteration; it can draw basic sprites and play basic audio but that is about all.
 
