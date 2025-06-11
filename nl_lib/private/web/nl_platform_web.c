@@ -4,7 +4,7 @@
 
 int platform_init(void)
 {
-    if (!initialize_window(800,600, "Sandbox Mode"))
+    if (!initialize_window(1280,800, "Sandbox Mode"))
     {
         NL_LOG("Failed to initialize window");
         return 0;

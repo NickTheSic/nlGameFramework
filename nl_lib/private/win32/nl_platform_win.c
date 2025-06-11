@@ -3,7 +3,7 @@
 
 int platform_init(void)
 {
-    if (!initialize_window(800,600, "Sandbox Mode"))
+    if (!initialize_window(1280,800, "Sandbox Mode"))
     {
         NL_LOG("Failed to initialize window");
         return 0;
@@ -28,7 +28,7 @@ int platform_init(void)
     }
 
     //init_random_number_generator(time(NULL));
-    init_random_number_generator(80);
+    init_random_number_generator(80); NL_LOG("Not using random number as Seed");
     init_delta_time();
 
     return 1;
