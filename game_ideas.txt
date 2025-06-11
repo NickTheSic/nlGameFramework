@@ -3,17 +3,7 @@
 
 
 
-/** All of the below are missed jams... **/
-
-
-https://itch.io/jam/mini-jame-gam-40: March 7th 2025 -> March 9th 2025
-https://itch.io/jam/untitled-game-jam-104: Jan 9th 2025 -> Jan 19th 2025
-https://itch.io/jam/boss-rush-jam-2025: Jan 2nd 2025 -> Feb 2nd 2025
-Remake Champion of the Crypt?
-https://itch.io/jam/wmj2024: Dec 27th 2024 -> Dec 30th 2024
-https://itch.io/jam/untitled-game-jam-103: Dec 19 2024 -> Dec 29 2024
-https://itch.io/jam/mini-jam-174-defense: Dec 19c 2024 -> Dev 22 2024
-
+/** Missed game jams below, with an idea that I could use for any game at any time **/
 
 
 https://itch.io/jam/mini-jame-gam-40:
@@ -27,24 +17,18 @@ Game Framework needs:
     UI Buttons. Need to click to open or close
     UI System: Need to show UI on screen infront of the game
 
-https://itch.io/jam/gigajam2: ENDED
+https://itch.io/jam/gigajam2:
 Main Themes: Elemental Power; Mystical Creatures; Lost Realms
 Secondary Themes: Origin of Power; Dimensional Conflict; Harmony; Dual Energy; Temporal Flow; Fragments
 A pokemon/spectrobes clone.
 Mystical Creatures with Elemental Power. All creatures have a base engery but can use fragments to add a dual energy
 Dimensional Conflict between lot Realms? One contains the origin of Power
 
-https://itch.io/jam/micro-jam-029: ENDED
-Time to make a rogue like based around poison of some sort?
-
-https://itch.io/jam/retrogamejam2024: Ended
-Make a retro game, (with homebrew support!?)
-
-https://itch.io/jam/1-button-jam-2024: ENDED **
+https://itch.io/jam/1-button-jam-2024:
 You are a spider, swinging on a web trail. 
 You can press space to lunge forward. 
 The goal could be to get as many bugs as you can before you reach the ground
 
-https://itch.io/jam/indie-dev-game-jam-5: ENDED
+https://itch.io/jam/indie-dev-game-jam-5:
 You are a fish your goal is to eat as many things before finding the secret lure
 if you are big enough you can catch and eat the fisherman instead.
