@@ -5,7 +5,6 @@
 #include "private/nl_camera.h"
 #include "private/nl_colour.h"
 #include "private/nl_debug.h"
-#include "private/nl_deltatime.h" // used by main
 #include "private/nl_fileio.h"
 #include "private/nl_gamepad.h"
 #include "private/nl_input.h"

@@ -1,4 +1,8 @@
 
+Breakout:
+- Shape Rendering
+- Basic Collision
+
 Pong:
 - Need shape Rendering
 - Text rendering for score
@@ -22,6 +26,7 @@ Peggle:
 - score
 - mouse & keyboard input
 - basic audio
+
 
 Top Down Racer:
 - physics

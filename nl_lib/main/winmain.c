@@ -1,6 +1,7 @@
 #include "nl_lib.h"
 #include <private/win32/nl_win32_include.h>
-#include "private/nl_platform.h" // does not need to be in the nl_lib file as only main will use it
+#include "private/nl_deltatime.h" // Only needed by main UNLESS we stop passing DT around and do it more like unity
+#include "private/nl_platform.h" // Only main will use it, and it is just a simple function to initialize the platform
 
 
 global_variable float highest_fps = -1.0f;

@@ -1,5 +1,6 @@
 #include "nl_lib.h"
-#include "private/nl_platform.h"
+#include "private/nl_deltatime.h" // Game does use this, just uses DT we pass it
+#include "private/nl_platform.h"  // Contains platform agnostic calls.
 #include <emscripten.h>
 
 EM_JS(bool, verify_site, (), {
@@ -72,6 +73,7 @@ int main(int count, char** args)
 
     emscripten_set_main_loop(run, 0, 1);
     // I don't believe that functions after this are called
+    // According to the documentation we should not be closing 
 
     app_specific_cleanup();
     platform_cleanup();
