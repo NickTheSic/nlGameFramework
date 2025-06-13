@@ -6,7 +6,11 @@ IF NOT EXIST "_build/win32/%1" (mkdir "_build/win32/%1")
 pushd _build\win32\%1
 
 set libs=User32.lib OpenGl32.lib gdi32.lib ole32.lib
-set flags=/Od /EHa /Zi /std:c11 /W4 /WX /wd5105
+:: 5105 - in windows.h  
+:: 4244 - float to int conversions
+:: 4018 - signed unsigned mismatch
+:: 4305 - truncation from double to float
+set flags=/Od /EHa /Zi /std:c11 /W4 /WX /wd5105 /wd4244 /wd4018 /wd4305
 
 set includes=/I../../../nl_lib /I../../../projects/%1
 
