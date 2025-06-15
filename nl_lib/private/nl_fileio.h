@@ -25,7 +25,7 @@ void load_from_binary_file(const char* const filename, unsigned int size, char* 
 void load_mesh_from_file(const char* const file, struct mesh* const mesh);
 
 // returns a pointer to the first '.' found 
-const char* find_file_type_from_name(const char* const filename);
+const char* const find_file_type_from_name(const char* const filename);
 
 
 #ifdef __cplusplus

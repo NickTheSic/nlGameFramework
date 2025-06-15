@@ -3,17 +3,6 @@
 #include "nl_graphics.h"
 #include "grid.h"
 
-#ifdef PSP
-#include <pspctrl.h>
-#define key_right PSP_CTRL_RIGHT
-#define key_left PSP_CTRL_LEFT
-#define key_down PSP_CTRL_DOWN
-#define key_up PSP_CTRL_UP
-
-#define key_is_held(b) is_button_pressed(0, b)
-
-#endif
-
 global_variable batch2d* batch = {0};
 
 global_variable camera main_cam = {0};
@@ -146,10 +135,5 @@ void app_specific_cleanup()
     free_batch(&batch);
 }
 
-#ifdef PSP
-#include "platforms/nl_graphics_psp.c"
-#else
 #include "platforms/nl_graphics_gl.c"
-#endif
-
 #include "grid.c"
