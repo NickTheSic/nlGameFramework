@@ -2,6 +2,7 @@
 Breakout:
 - Shape Rendering
 - Basic Collision
+- Text/UI Rendering for points?
 
 Pong:
 - Need shape Rendering
@@ -27,6 +28,20 @@ Peggle:
 - mouse & keyboard input
 - basic audio
 
+Tetris:
+- Shape Rendering
+- Score Rendering
+- Randomization
+- Grid based
+
+Shapez/Miner (Auto miner game, make good use of 'equipment' and planning)
+- Shape rendering
+- Grid based logic
+-- Cluster based resource 
+-- Placing and handling
+- Conveyer belt logic
+--- Handle thousands of things??? Or optimize the stuff off screen? 
+--- Able to limit items to grid space, each thing moves in jumps
 
 Top Down Racer:
 - physics
@@ -36,6 +51,16 @@ Top Down Racer:
 - text and UI
 - AI 
 
+
+Kirby's Airride
+Kirby's Airride but instead of Karts you build a battle robot in an area and using preset pieces to fight
+
+Everything is either AI controlled or controlled by you
+- Lakeview cabin style puzzle game
+- Sprite Render
+- Collision
+- Object Interactions...
+- Lots of stuff, later game idea
 
 /** Missed game jams below, with an idea that I could use for any game at any time **/
 
