@@ -1,3 +1,7 @@
+TODO: Now that I have a linux machine maybe I figure out some way to test on linux...
+Emscripten it is I guess
+
+/*** Generic Game Ideas to Further Development of this framework ***/
 
 Breakout:
 - Shape Rendering
@@ -51,9 +55,13 @@ Top Down Racer:
 - text and UI
 - AI 
 
-
-Kirby's Airride
-Kirby's Airride but instead of Karts you build a battle robot in an area and using preset pieces to fight
+Bot Battling Game:
+- Twisted Metal / Kirby's Air Ride style
+-- Arena based Kart game.  Battle friends, get power ups.
+-- Probably not in this engine..
+- Multiplayer
+- Physics
+- Pretty much all the basic stuff for a game plus more for multiplayer.
 
 Everything is either AI controlled or controlled by you
 - Lakeview cabin style puzzle game
@@ -62,7 +70,37 @@ Everything is either AI controlled or controlled by you
 - Object Interactions...
 - Lots of stuff, later game idea
 
-/** Missed game jams below, with an idea that I could use for any game at any time **/
+
+/*** Game Jams ***/
+
+https://itch.io/jam/animatronic-nightmare:  Maybe join a team and make a little horror game
+
+https://itch.io/jam/cfac-x-micro-2: Probably too soon; but mirco jam is one I have heard of before
+
+https://itch.io/jam/mini-jam-192-overflow:  
+Done a mini jam before, maybe I won't have time
+Overflow makes me think of water or liquid - not sure where the game might be
+Building a dam?  Removing water from a place
+
+https://itch.io/jam/untitled-game-jam-115: Heard of the jam before.  Probably can't use this framework as is at the moment
+
+https://itch.io/jam/portfolio-builders-jam-week-35 & https://itch.io/jam/portfolio-builders-jam-week-36: 
+Could be another weekly game jam? 
+Could be fun to meet weekly goals
+Could update off itch things too?
+
+https://itch.io/jam/uplifting-game-jam-for-artists-cash-prizes-doubled: 
+Seemed a little more narrative driven, if only cus it needs to be 'uplifting'
+Could help force me into text rendering and text handling?
+Might actually be good, would need to update UI too; if only for drawing a box to show text in
+But I wanted to look into localization stuff on my own.  Maybe a narrative game would help
+
+https://itch.io/jam/unpolished-jam-2-75-prize-pool:
+Could be more chill? 
+Make a quick project to see how it feels to work with my framework after so long?
+
+
+/*** Missed game jams below, with an idea that I could use for any game at any time ***/
 
 
 https://itch.io/jam/mini-jame-gam-40:
