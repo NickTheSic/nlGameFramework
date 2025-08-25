@@ -70,10 +70,33 @@ Everything is either AI controlled or controlled by you
 - Object Interactions...
 - Lots of stuff, later game idea
 
+Lakeview Cabin style Puzzle game:
+- Sprites
+- Physics
+- Movement
+- Game logic
+-- Timers
+-- Triggers
+
 
 /*** Game Jams ***/
 
 https://itch.io/jam/animatronic-nightmare:  Maybe join a team and make a little horror game
+- A game about setting up the store the night before?
+-- You unpack the animatronics, put em together and put them on stage.
+--- Maybe their eyes open and close, fingers move, etc... Creepy stuff
+-- You unpack the tables and chairs and set them up
+-- You see the animatronics off stage, maybe they change the layout too
+-- You could put the bottles on the shelf and they mess with you
+-- Ends with them putting you in the last box?
+--- What is Needed?
+--- - Mouse Interactions
+--- - Gameplay Logic for moving items out of grid and put together
+--- -- Maybe put same colour together, until sprites and then 3d models
+--- - Scene chaning?
+
+https://itch.io/jam/diversion-summer-jam-2025: 
+- Try new Version Control; maybe win money?
 
 https://itch.io/jam/cfac-x-micro-2: Probably too soon; but mirco jam is one I have heard of before
 
