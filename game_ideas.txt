@@ -94,6 +94,7 @@ https://itch.io/jam/animatronic-nightmare:  Maybe join a team and make a little 
 --- - Gameplay Logic for moving items out of grid and put together
 --- -- Maybe put same colour together, until sprites and then 3d models
 --- - Scene chaning?
+--- - 3D animation!  (And 2D)
 
 https://itch.io/jam/diversion-summer-jam-2025: 
 - Try new Version Control; maybe win money?
