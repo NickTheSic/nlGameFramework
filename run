@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ $1 == "web" ] 
+then
+    emrun ./_build/web/$2/index.html
+fi
