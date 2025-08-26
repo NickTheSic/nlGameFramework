@@ -1,6 +1,7 @@
 #include "../nl_graphics.h"
 #include "private/gl/nl_gl.h"
 #include "private/nl_shader.h"
+#include "string.h"
 
 #include "../grid.h"
 

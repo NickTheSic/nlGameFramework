@@ -3,6 +3,7 @@
 #include "private/nl_shader.h"
 #include <third_party/stb_image.h>
 #include <math.h>
+#include <string.h>
 
 struct sprite_vertex_data
 {

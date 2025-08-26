@@ -87,7 +87,7 @@ void app_specific_update(double dt)
     if (mouse_button_was_pressed(NL_MOUSE_BUTTON_LEFT))
     {
         value = get_value_at_coords(&grid_, grid_coords.x, grid_coords.y);
-        value = (++value)%4;
+        value = ((++value)%4);
         set_value_at_coord(&grid_, grid_coords.x, grid_coords.y, value);
     }
 
