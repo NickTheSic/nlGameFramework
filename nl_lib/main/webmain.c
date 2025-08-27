@@ -1,6 +1,6 @@
 #include "nl_lib.h"
 #include "private/nl_deltatime.h" // Game does use this, just uses DT we pass it
-#include "private/nl_platform.h"  // Contains platform agnostic calls.
+#include "private/nl_platform.h"  // Platform Init and Cleanup
 #include <emscripten.h>
 
 EM_JS(bool, verify_site, (), {
@@ -23,7 +23,8 @@ internal_function void run()
 {
     poll_events();
     update_input_frame_state();
-    udpate_gamepad();
+    // TODO: Not needed as there won't be a gamepad on web
+    //udpate_gamepad();
     
     double dt = get_frame_delta_time();
 

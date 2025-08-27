@@ -7,10 +7,15 @@ fi
 
 if [ "$1" == "web" ]
 then 
-    ./build_scripts/build_web.sh $2 $3
+    ./build_scripts/build_web.sh $2
 fi
 
 if [ "$1" == "tux" ]
 then
     ./build_scripts/build_tux.sh $2
+fi
+
+if [ "$1" == "wintux" ]
+then
+    ./build_scripts/build_wintux.sh $2
 fi

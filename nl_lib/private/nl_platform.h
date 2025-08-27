@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+// Note: Not really needed if I have platform specific main files
 
 int platform_init(void);
 void platform_cleanup(void);
