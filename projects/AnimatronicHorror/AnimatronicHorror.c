@@ -1,0 +1,68 @@
+#include "nl_lib.h"
+
+/**** ABOUT ****
+
+Game about Unpacking Boxes and putting together the animatronics for your fun kids place!
+Made for https://itch.io/jam/animatronic-nightmare
+
+Required:
+    Mouse Interaction
+        Z Order the packing peanuts so you click in order
+        Move the packing peanuts to a trash bin
+        Find animatronic pieces
+            Slot them into the right spot
+            Trash em
+            Animatronic eyes open or fingers move
+                Animations
+    
+    Physics
+        Handle moving Items to trash
+        Lock into place the right peices
+
+    Rendering
+        ZOrdering the packing peanuts so they appear in the order you move em
+        Mybe box opening for each box
+        Animatronics should be spooky, maybe the eyes open or arms move
+
+    Goal:
+        Arcade Style:
+            Move peanuts get points
+            Put together Animatronic, get points
+            Trash animatronic piece lose points
+            put colours together for bonus points?
+            Timer
+
+        Putting Place Together:
+            Night before
+            Gotta work hard to setup animatronics
+            Setup chairs and layout
+
+
+    Horror:
+        Animatronics move while unpacking?
+        Maybe they sneak away while being put together
+
+        They could reorganize the layout
+        When time runs out they pack you into a box?
+
+*/
+
+void app_specific_init(void)
+{
+
+}
+
+void app_specific_update(double dt)
+{
+    NL_UNUSED(dt);
+}
+
+void app_specific_render(void)
+{
+
+}
+
+void app_specific_cleanup(void)
+{
+    
+}

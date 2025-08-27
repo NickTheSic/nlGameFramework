@@ -4,6 +4,7 @@
 #include <emscripten.h>
 
 EM_JS(bool, verify_site, (), {
+    // TODO: Check if I can specify it only running on MY itch io account
     if (document.location.host == 'html-classic.itch.zone' || document.location.host == 'localhost:6931'){
         return true;
     }
@@ -72,8 +73,11 @@ int main(int count, char** args)
     app_specific_init();
 
     emscripten_set_main_loop(run, 0, 1);
+
+
     // I don't believe that functions after this are called
-    // According to the documentation we should not be closing 
+    // According to the documentation we should not be closing
+    // Adding them here anyway as a just in case cus this is how I am used to coding
 
     app_specific_cleanup();
     platform_cleanup();
