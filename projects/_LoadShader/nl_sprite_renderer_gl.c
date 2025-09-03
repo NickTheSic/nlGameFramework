@@ -27,32 +27,6 @@ unsigned int current_texture_x_loaded = {0};
 float texture_height;
 float texture_width;
 
-global_variable const char* vertex_shader_code =
-NL_SHADER_VERSION_HEADER
-"layout (location = 0) in vec3 aPos;                                   \n"
-"layout (location = 1) in vec2 aUV_coord;                              \n"
-"layout (location = 2) in vec4 aCol;                                   \n"
-"uniform mat4 uModelMat;                                               \n"
-"uniform mat4 uViewMat;                                                \n"
-"uniform mat4 uProjMat;                                                \n"
-"out vec2 uv_coords;                                                   \n"
-"out vec4 oCol;                                                        \n"
-"void main() {                                                         \n"
-"   gl_Position = uProjMat * uViewMat * uModelMat * vec4(aPos,1.0);    \n"
-"   uv_coords = aUV_coord;                                             \n"
-"   oCol = aCol;                                                       \n"
-"}                                                                     \0";
-
-global_variable const char* fragment_shader_code =
-NL_SHADER_VERSION_HEADER
-"out vec4 FragColor;                                        \n"
-"in vec2 uv_coords;                                         \n"
-"in vec4 oCol;                                              \n"
-"uniform sampler2D sprite_texture;                          \n"
-"void main() {                                              \n"
-"    FragColor = texture(sprite_texture,uv_coords) * oCol;  \n"
-"}                                                          \0";
-
 global_variable unsigned int shader_program = {0};
 global_variable unsigned int u_model_loc = {0};
 global_variable unsigned int u_view_mat = {0};
@@ -102,7 +76,13 @@ internal_function void init_sprite_atlas()
 
 void init_sprite_renderer(void)
 {
-    shader_program = create_shader_program(vertex_shader_code, fragment_shader_code);
+    file_contents vert_shader_file = {0};
+    file_contents frag_shader_file = {0};
+    
+    read_entire_file("data/sprite_renderer.vs", &vert_shader_file);
+    read_entire_file("data/sprite_renderer.fs", &frag_shader_file);
+    
+    shader_program = create_shader_program(vert_shader_file.content, frag_shader_file.content);
     use_shader_program(shader_program);
 
     u_model_loc = get_uniform_loc(shader_program, "uModelMat");

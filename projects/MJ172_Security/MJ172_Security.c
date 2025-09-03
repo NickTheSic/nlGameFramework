@@ -313,10 +313,4 @@ void app_specific_cleanup(void)
     free_simple_sprite(&money);
 }
 
-#if defined (PSP)
-#include "nl_sprite_renderer_psp.c"
-
-#else
 #include "nl_sprite_renderer_gl.c"
-
-#endif
