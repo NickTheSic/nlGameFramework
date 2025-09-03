@@ -86,6 +86,20 @@ v2i get_screen_size()
 	return (result);
 }
 
+void set_screen_size(int width, int height)
+{
+	emscripten_set_canvas_element_size("#canvas", width, height);
+	if (pfn_window_size_callback)
+	{
+		pfn_window_size_callback(width, height);
+	}
+}
+
+void set_screen_size_v2i(v2i new_size)
+{
+	set_screen_size(new_size.x, new_size.y);
+}
+
 int initialize_window(int width, int height, const char* title)
 {
     emscripten_set_window_title(title);

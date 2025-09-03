@@ -310,6 +310,17 @@ v2i get_screen_size()
 	return (v2i){rect.right - rect.left, rect.bottom - rect.top};
 }
 
+void set_screen_size(int width, int height)
+{
+	NL_UNUSED(width); NL_UNUSED(height);
+	NL_UNIMPLEMENTED_FUNC;
+}
+
+void set_screen_size(v2i new_size)
+{
+	set_screen_size(new_size.x, new_size.y);
+}
+
 void set_window_title(const char* title)
 {
 	SetWindowTextA(g_window.window, title);
