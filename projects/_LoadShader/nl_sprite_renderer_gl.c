@@ -57,7 +57,7 @@ internal_function void init_sprite_atlas()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    // TODO:  MMake generic, don't hard code
+    // TODO:  Make generic, don't hard code
     unsigned int x_size = 32*5;
     unsigned int y_size = 64;
 
@@ -75,7 +75,37 @@ internal_function void init_sprite_atlas()
     texture_width  = (float)x_size;
 }
 
-void init_sprite_renderer(void)
+char* parse_shader_file(const char* const shader_file_path)
+{   
+    file_contents shader_file = {0};
+    read_entire_file(shader_file_path, &shader_file);
+
+    char* file_contents = (char*)memory_allocate(sizeof(char)*shader_file.size);
+
+    for (int i=0;i<shader_file.size;++i)
+    {
+        file_contents[i] = shader_file.content[i];
+    }
+
+    clear_file_read(&shader_file);
+
+    return file_contents;
+}
+
+unsigned int create_and_load_shader_program_from_disk(const char* const vert_shader_file_path, const char* const frag_shader_file_path)
+{
+    char* vert_shader = parse_shader_file(vert_shader_file_path);
+    char* frag_shader = parse_shader_file(frag_shader_file_path);
+    
+    unsigned int shader_program = create_shader_program(vert_shader, frag_shader);
+
+    memory_free(vert_shader);
+    memory_free(frag_shader);
+
+    return shader_program;
+}
+
+void _old_init_sprite_renderer(void)
 {
     file_contents vert_shader_file = {0};
     file_contents frag_shader_file = {0};
@@ -83,7 +113,22 @@ void init_sprite_renderer(void)
     read_entire_file("data/sprite_renderer.vs", &vert_shader_file);
     read_entire_file("data/sprite_renderer.fs", &frag_shader_file);
     
-    shader_program = create_shader_program(vert_shader_file.content, frag_shader_file.content);
+    shader_program = create_shader_program((char*)vert_shader_file.content, (char*)frag_shader_file.content);
+    use_shader_program(shader_program);
+
+    clear_file_read(&vert_shader_file);
+    clear_file_read(&frag_shader_file);
+
+    u_model_loc = get_uniform_loc(shader_program, "uModelMat");
+    u_view_mat = get_uniform_loc(shader_program, "uViewMat");
+    u_proj_mat = get_uniform_loc(shader_program, "uProjMat");
+
+    init_sprite_atlas();
+}
+
+void init_sprite_renderer(void)
+{   
+    shader_program = create_and_load_shader_program_from_disk("data/sprite_renderer.vs", "data/sprite_renderer.fs");
     use_shader_program(shader_program);
 
     u_model_loc = get_uniform_loc(shader_program, "uModelMat");

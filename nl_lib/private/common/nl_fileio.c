@@ -15,11 +15,6 @@ void fopen_s(FILE** file, const char* filename, const char* descript)
 #define strtok_s strtok_r
 #endif
 
-#if defined(GEKKO) || defined(PSP)
-// The following fails and suggests_sscanf_r which I cannot seem to find online
-#define sscanf_s sscanf 
-#endif
-
 void read_entire_file(const char* filename, file_contents* const contents)
 {
     FILE* fp = {0};
