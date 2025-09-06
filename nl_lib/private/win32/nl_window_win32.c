@@ -316,7 +316,7 @@ void set_screen_size(int width, int height)
 	NL_UNIMPLEMENTED_FUNC;
 }
 
-void set_screen_size(v2i new_size)
+void set_screen_size_v2i(v2i new_size)
 {
 	set_screen_size(new_size.x, new_size.y);
 }

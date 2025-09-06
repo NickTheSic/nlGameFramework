@@ -97,12 +97,12 @@ unsigned int create_and_load_shader_program_from_disk(const char* const vert_sha
     char* vert_shader = parse_shader_file(vert_shader_file_path);
     char* frag_shader = parse_shader_file(frag_shader_file_path);
     
-    unsigned int shader_program = create_shader_program(vert_shader, frag_shader);
+    unsigned int parsed_shader_program = create_shader_program(vert_shader, frag_shader);
 
     memory_free(vert_shader);
     memory_free(frag_shader);
 
-    return shader_program;
+    return parsed_shader_program;
 }
 
 void _old_init_sprite_renderer(void)
