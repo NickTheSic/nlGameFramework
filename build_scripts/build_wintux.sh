@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 mkdir "_build/win32/%1"
 pushd "_build/win32/%1"

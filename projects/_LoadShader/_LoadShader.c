@@ -9,10 +9,7 @@
 global_variable camera main_cam = {0};
 
 nl_sprite man = {0};
-nl_sprite money = {0};
-
 v2f man_pos = {0};
-v2f money_pos = {0};
 
 internal_function void winsizecbk(int width, int height)
 {
@@ -24,9 +21,6 @@ internal_function void generate_game_sprites(void)
 {
     load_texture_for_sprite(&man, "data/man.png");
     generate_rectangle_simple_sprite(&man, 32, 64);
-
-    load_texture_for_sprite(&money, "data/money.png");
-    generate_rectangle_simple_sprite(&money, 32, 32);
 }
 
 void app_specific_init(void)
@@ -56,14 +50,6 @@ void app_specific_render(void)
 
     create_identity_matrix(&model);
     {
-        model.m41 = money_pos.x;
-        model.m42 = money_pos.y;
-        set_model_matrix(&model);
-        render_single_simple_sprite(&money);
-    }
-
-    create_identity_matrix(&model);
-    {
         model.m41 = man_pos.x;
         model.m42 = man_pos.y;
         set_model_matrix(&model);
@@ -74,7 +60,6 @@ void app_specific_render(void)
 void app_specific_cleanup(void)
 {
     free_simple_sprite(&man);
-    free_simple_sprite(&money);
 }
 
 #include "nl_sprite_renderer_gl.c"
