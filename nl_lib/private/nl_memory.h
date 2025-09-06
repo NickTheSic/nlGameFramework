@@ -15,12 +15,7 @@ void memory_free(void* memory);
 
 void basic_memory_leak_check(void); //Used in debug + by main
 
-#if 1
-#define memory_allocate(s) _memory_allocate(s);
-#else 
 #define memory_allocate(s) _memory_allocate(s); NL_LOG("memory allocated: %s %d", __FILE__, __LINE__);
-#endif
-
 
 #ifdef __cplusplus
 }

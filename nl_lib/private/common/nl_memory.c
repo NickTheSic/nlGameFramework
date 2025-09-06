@@ -12,12 +12,7 @@ void *_memory_allocate(size_t size)
     void* memory = (void*)malloc(size);
     if (memory == 0)
     {
-        // Could make better - Should not riddle the code with these test defines
-        #ifdef __PSX__
-        NL_LOG("Unable to allocate enough memory");
-        #else
         NL_LOG("Unable to allocate memory of size %zi", size);
-        #endif
         return 0;
     }
 

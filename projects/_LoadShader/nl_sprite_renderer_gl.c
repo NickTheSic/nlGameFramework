@@ -80,12 +80,14 @@ char* parse_shader_file(const char* const shader_file_path)
     file_contents shader_file = {0};
     read_entire_file(shader_file_path, &shader_file);
 
-    char* file_contents = (char*)memory_allocate(sizeof(char)*shader_file.size);
+    const size_t file_size = sizeof(unsigned char) * shader_file.size + 1;
+    unsigned char* file_contents = (unsigned char*)memory_allocate(file_size);
 
     for (int i=0;i<shader_file.size;++i)
     {
         file_contents[i] = shader_file.content[i];
     }
+    file_contents[file_size] = 0;
 
     clear_file_read(&shader_file);
 
@@ -103,27 +105,6 @@ unsigned int create_and_load_shader_program_from_disk(const char* const vert_sha
     memory_free(frag_shader);
 
     return parsed_shader_program;
-}
-
-void _old_init_sprite_renderer(void)
-{
-    file_contents vert_shader_file = {0};
-    file_contents frag_shader_file = {0};
-    
-    read_entire_file("data/sprite_renderer.vs", &vert_shader_file);
-    read_entire_file("data/sprite_renderer.fs", &frag_shader_file);
-    
-    shader_program = create_shader_program((char*)vert_shader_file.content, (char*)frag_shader_file.content);
-    use_shader_program(shader_program);
-
-    clear_file_read(&vert_shader_file);
-    clear_file_read(&frag_shader_file);
-
-    u_model_loc = get_uniform_loc(shader_program, "uModelMat");
-    u_view_mat = get_uniform_loc(shader_program, "uViewMat");
-    u_proj_mat = get_uniform_loc(shader_program, "uProjMat");
-
-    init_sprite_atlas();
 }
 
 void init_sprite_renderer(void)
