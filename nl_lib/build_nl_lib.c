@@ -12,6 +12,8 @@
 #else
 #warning Incomplete Library for this platform. Using null platform
 
+#include "main/nullmain.c"
+
 #include "private/common/nl_camera.c"
 #include "private/common/nl_fileio.c"
 #include "private/common/nl_input.c"

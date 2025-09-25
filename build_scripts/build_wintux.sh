@@ -4,7 +4,7 @@ mkdir -p "_build/win32/$1"
 pushd "_build/win32/$1"
 
 
-libs="User32.lib OpenGl32.lib gdi32.lib ole32.lib"
+libs="-lUser32 -lOpenGl32 -lgdi32 -lole32"
 
 flags="/Od /EHa /Zi /std:c11 /W4 /WX /wd5105 /wd4244 /wd4018 /wd4305"
 
