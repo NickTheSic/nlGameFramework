@@ -4,6 +4,7 @@
 // So I can include the windows header under the same circumstances always
 #define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
+#define COBJMACROS
 
 #include <windows.h>
 #include <windowsx.h>

@@ -13,10 +13,10 @@ extern void app_specific_render(void);
 extern void app_specific_cleanup(void);
 
 
-int wWinMain(
+int WinMain(
     HINSTANCE hInstance,
     HINSTANCE hPrevInstance,
-    LPWSTR     lpCmdLine,
+    LPSTR     lpCmdLine,
     int       nShowCmd
 )
 {
