@@ -5,8 +5,7 @@
 extern "C" {
 #endif
 
-#define MAX_SOUND_BUFFERS 4
-
+#define MAX_SOUND_BUFFERS 4 //* Could move to a 'config' header for per project setup
 #define NL_INVALID_SOUND 65530 // Arbitrary number that will probably be ever higher than the sounds that you can use at once
 
 int init_audio_system(void); 

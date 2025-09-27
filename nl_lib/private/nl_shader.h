@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-// TODO: Consider moving this header into a renderer specific sub folder
+//*Consider moving this header into a renderer specific sub folder
 // This is very much GL renderer specific
 
 #if defined __EMSCRIPTEN__
@@ -13,9 +13,6 @@ extern "C" {
 
 #elif defined _WIN32
 #define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
-
-#elif defined (NOT_YET_IMPLEMENTED)
-#define NL_SHADER_VERSION_HEADER //define it as nothing to compile
 
 #else
 #warning Shader is not defined for this platform
