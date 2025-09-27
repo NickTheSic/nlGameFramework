@@ -5,6 +5,11 @@ then
     emrun ./_build/web/$2/index.html
 fi
 
+if [ $1 == "wintux" ] 
+then
+    wine _build/win32/$2/a.exe
+fi
+
 if [ $1 == "sdl" ] 
 then
     ./_build/sdltux/$2/$2
