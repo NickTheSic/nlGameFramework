@@ -35,11 +35,14 @@ struct xaudio_audio_system
 }; 
 global_variable xaudio_audio_system *local_xaudio_system = 0;
 
-// These don't seem required to compile but will be useful in the future
+// void* pBufferContext is the pContext that is in the XAUDIO2_BUFFER
 void OnBufferEnd(IXAudio2VoiceCallback* This, void* pBufferContext) 
 {
-    NL_UNUSED(This); NL_UNUSED(pBufferContext);
-    NL_LOG("On XAudio Buffer End");
+    NL_UNUSED(This);
+
+    xaudio_loaded_sound* const voice = (xaudio_loaded_sound*)pBufferContext;
+    voice->is_playing = 0;
+    NL_LOG("XAudio::BufferEnd: pBufferContext is playing: %d", voice->is_playing);
 }
 
 void OnStreamEnd(IXAudio2VoiceCallback* This) 
@@ -64,14 +67,17 @@ void OnVoiceProcessingPassStart(IXAudio2VoiceCallback* This, UINT32 SamplesRequi
 
 void OnBufferStart(IXAudio2VoiceCallback* This, void* pBufferContext) 
 {
-    NL_UNUSED(This); NL_UNUSED(pBufferContext);
-    NL_LOG("On XAudio Buffer Start");
+    NL_UNUSED(This);
+    
+    xaudio_loaded_sound* const voice = (xaudio_loaded_sound*)pBufferContext;
+    voice->is_playing = 1;
+    NL_LOG("XAudio::BufferStart: pBufferContext is playing: %d", voice->is_playing);
 }
 
 void OnLoopEnd(IXAudio2VoiceCallback* This, void* pBufferContext) 
 {
     NL_UNUSED(This); NL_UNUSED(pBufferContext);
-    NL_LOG("On XAudio Buffer Start");
+    NL_LOG("On XAudio On Loop End");
 }
 
 // Might be the most important of the callbacks!
@@ -281,22 +287,21 @@ void play_sound(unsigned int sound)
         return;
     }
 
-    // TODO: Not sure how to tell the sound that it is no longer playing!
-    //if (xaudio_loaded_sound[sound].is_playing == 1)
-    //{
-    //    NL_LOG("Sound is already playing! Not playing again at this time");
-    //    return;
-    //}
-
-    NL_LOG("Trying to play sound: %d", sound);
-
     xaudio_loaded_sound* const voice = &local_xaudio_system->loaded_sounds[sound];
+    if (voice->is_playing == 1)
+    {
+        NL_LOG("Sound is already playing! Not playing again at this time");
+        return;
+    }
+    voice->is_playing = 1;
+
     XAUDIO2_BUFFER* const buffer = &local_xaudio_system->xaudio_buffers[sound];
     IXAudio2SourceVoice* const source = local_xaudio_system->xaudio_voices[sound];
 
 	buffer->AudioBytes = voice->size;
 	buffer->pAudioData = voice->data;
 	buffer->Flags = XAUDIO2_END_OF_STREAM;
+    buffer->pContext = voice;
 
 	//NOTE: Submit Source Buffer queues the audio to be streamed
     IXAudio2SourceVoice_SubmitSourceBuffer(source, buffer, NULL);
@@ -318,17 +323,13 @@ void set_sound_to_loop(unsigned int sound)
 
 void set_sfx_volume(float volume)
 {
-    NL_UNUSED(volume);
     NL_UNIMPLEMENTED_FUNC
-
     local_xaudio_system->current_volumes.sfx = volume * local_xaudio_system->current_volumes.master;
 }
 
 void set_music_volume(float volume)
 {
-    NL_UNUSED(volume);
     NL_UNIMPLEMENTED_FUNC
-
     local_xaudio_system->current_volumes.music = volume * local_xaudio_system->current_volumes.master;
 }
 
@@ -336,7 +337,7 @@ void set_master_volume(float volume)
 {
     if (volume > 1.0f)
     {
-        NL_LOG("AUDIO: I plan to pass in the values 0 -> 1 for volume. If this is greater then I am diving by 100 by default");
+        NL_LOG("AUDIO: I plan to pass in the values 0 -> 1 for volume. If this is greater then I am dividing by 100 by default");
         volume /= 100.0f;
     }
 
