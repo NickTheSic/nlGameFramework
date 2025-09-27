@@ -11,12 +11,7 @@ int main(int count, char** args)
 {
     NL_UNUSED(count);NL_UNUSED(args);
 
-    if (platform_init() == 0)
-    {
-        NL_LOG("Failed to initialize platform layer");
-        return -1;
-    }
-
+    platform_init();
     set_background_colour_4f(0.5f,0.5f,0.5f,1.0f);
     app_specific_init();
 
@@ -27,6 +22,8 @@ int main(int count, char** args)
     
         const double dt = get_frame_delta_time();
         app_specific_update(dt);
+
+        NL_LOG("DT: %f", dt);
 
         begin_render_frame();
         app_specific_render();

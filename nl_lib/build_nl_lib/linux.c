@@ -9,10 +9,11 @@
 
 #include "third_party/stb_image.c"
 
+#include "private/linux/nl_deltatime_linux.c"
+#include "private/linux/nl_platform_linux.c"
+
 #include "private/null/nl_audio_null.c"
-#include "private/null/nl_deltatime_null.c"
 #include "private/null/nl_gamepad_null.c"
-#include "private/null/nl_platform_null.c"
 #include "private/null/nl_renderer_null.c"
 #include "private/null/nl_shader_null.c"
 #include "private/null/nl_vertex_attrib_null.c"
