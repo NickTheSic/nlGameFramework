@@ -4,6 +4,16 @@
 
 #include <string.h>
 
+/*
+    * New TODOs
+    Now that I know that the pBufferContext in the xAudioCallbacks is the pContext value in the struct
+    I can now do more in-depth things with this system; 
+    Including:
+    - the ability to find and use the next available buffer so sounds can overlap if needed
+    - Handle the sounds as I have where only one ever plays at once
+
+*/
+
 // Thanks to https://github.com/tsherif/xaudio2-c-demo/ for the code reference using C instead of C++ (MIT License as of 2024-12-29 0:10)
 typedef struct xaudio_loaded_sound xaudio_loaded_sound;
 struct xaudio_loaded_sound
@@ -36,6 +46,7 @@ struct xaudio_audio_system
 global_variable xaudio_audio_system *local_xaudio_system = 0;
 
 // void* pBufferContext is the pContext that is in the XAUDIO2_BUFFER
+// Super useful to know
 void OnBufferEnd(IXAudio2VoiceCallback* This, void* pBufferContext) 
 {
     NL_UNUSED(This);
