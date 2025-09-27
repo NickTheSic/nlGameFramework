@@ -9,9 +9,7 @@
 #include <windows.h>
 #include <windowsx.h>
 
-#if 1
 #include <xaudio2.h>
-#endif
 
 #undef far
 #undef near

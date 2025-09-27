@@ -43,9 +43,8 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		case WM_SIZE:
 		{
-			int width = LOWORD(lParam);
-			int height = HIWORD(lParam);
-			NL_LOG("New Width: %i Height: %i", width, height);
+			const int width = LOWORD(lParam);
+			const int height = HIWORD(lParam);
 			set_viewport_size(width, height);
 			
 			if (pfn_window_size_callback != 0)
@@ -91,8 +90,6 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 		case WM_MOUSEWHEEL:
 		{
 			short mouse_delta = GET_WHEEL_DELTA_WPARAM(wParam);
-			//short modifier = GET_KEYSTATE_WPARAM(wParam);
-
 			add_mouse_scroll(mouse_delta);
 		} break;
 
@@ -113,7 +110,6 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 void poll_events(void)
 {
     MSG msg = {0};
-    //while (PeekMessage(&msg, g_window.window, 0, 0, PM_REMOVE) != 0)
     while (PeekMessage(&msg, 0, 0, 0, PM_REMOVE) != 0)
     {
         TranslateMessage(&msg);
@@ -298,7 +294,6 @@ void window_swap_buffers()
 void window_request_close()
 {
 	NL_LOG("Requesting window Close");
-	//PostQuitMessage(WM_QUIT);
 	SendMessage(g_window.window, WM_CLOSE, 0, 0);
 }
 
