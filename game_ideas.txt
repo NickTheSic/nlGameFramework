@@ -1,6 +1,3 @@
-TODO: Now that I have a linux machine maybe I figure out some way to test on linux...
-Emscripten it is I guess
-
 /*** Generic Game Ideas to Further Development of this framework ***/
 
 Breakout:
@@ -79,6 +76,7 @@ Lakeview Cabin style Puzzle game:
 -- Triggers
 
 
+
 /*** Game Jams ***/
 
 https://itch.io/jam/animatronic-nightmare:  Maybe join a team and make a little horror game
@@ -98,10 +96,7 @@ https://itch.io/jam/animatronic-nightmare:  Maybe join a team and make a little 
 
 
 
-
 /*** Missed game jams below, with an idea that I could use for any game at any time ***/
-
-
 
 https://itch.io/jam/palette-cleanser-jam: Could have been a cooler, simpler project to get back into things
 
@@ -131,9 +126,6 @@ But I wanted to look into localization stuff on my own.  Maybe a narrative game 
 https://itch.io/jam/unpolished-jam-2-75-prize-pool:
 Could be more chill? 
 Make a quick project to see how it feels to work with my framework after so long?
-
-
-
 
 https://itch.io/jam/mini-jame-gam-40:
 Theme: Annoying Ads
