@@ -7,7 +7,7 @@ fi
 
 if [ $1 == "wintux" ] 
 then
-    wine _build/win32/$2/a.exe
+    wine _build/win32/$2/$2.exe
 fi
 
 if [ $1 == "tux" ] 

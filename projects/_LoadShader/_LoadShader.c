@@ -2,10 +2,6 @@
 #include "nl_sprite_renderer.h"
 #include <private/nl_physics2d.h>
 
-#if PLATFORM_CONSOLE
-#include <private/nl_keys_to_controller.h>
-#endif
-
 global_variable camera main_cam = {0};
 
 nl_sprite man = {0};
