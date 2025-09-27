@@ -55,7 +55,7 @@ PFNGLBUFFERSUBDATAPROC glBufferSubData;
 
 int initialize_gl()
 {
-#define LOAD_GL_EXTENSION(type, fn) fn = (type)wglGetProcAddress(#fn); if (fn == 0){NL_LOG("Failed to get Proc Address for %s Error: %d", #fn, GetLastError()); return 0;} 
+#define LOAD_GL_EXTENSION(type, fn) fn = (type)wglGetProcAddress(#fn); if (fn == 0){NL_LOG("Failed to get Proc Address for %s Error: %d", #fn, (int)GetLastError()); return 0;} 
     {
         LOAD_GL_EXTENSION(PFNGLATTACHSHADERPROC, glAttachShader);
         LOAD_GL_EXTENSION(PFNGLBINDBUFFERPROC, glBindBuffer);
