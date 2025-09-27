@@ -23,8 +23,6 @@ int main(int count, char** args)
         const double dt = get_frame_delta_time();
         app_specific_update(dt);
 
-        NL_LOG("DT: %f", dt);
-
         begin_render_frame();
         app_specific_render();
         end_render_frame();

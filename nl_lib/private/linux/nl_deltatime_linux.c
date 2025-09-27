@@ -8,6 +8,7 @@ global_variable unsigned int prev_ticks = 0;
 void init_delta_time()
 {
     gettimeofday(&start, NULL);
+    NL_LOG("start: ", start.tv_usec*1000);
 }
 
 double get_frame_delta_time()
