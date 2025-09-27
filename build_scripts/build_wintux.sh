@@ -6,12 +6,12 @@ pushd "_build/win32/$1"
 
 libs="-luser32 -lopengl32 -lgdi32 -lole32 -lxaudio2_9"
 
-flags="/Od /EHa /Zi /std:c11 /W4 /WX /wd5105 /wd4244 /wd4018 /wd4305"
+flags="-Wall -Wextra -g --static"
 
 includes="-I../../../nl_lib -I../../../projects/$1 -I/usr/x86_64-w64-mingw32/include"
 
 FILES="../../../nl_lib/build_nl_lib.c ../../../projects/$1/$1.c"
 
-x86_64-w64-mingw32-gcc $EXTRA_FLAGS_WIN $includes $FILES $libs 
+x86_64-w64-mingw32-gcc $EXTRA_FLAGS_WIN $flags $includes $FILES $libs
 
 popd
