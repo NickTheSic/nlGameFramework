@@ -15,11 +15,6 @@ then
     ./build_scripts/build_tux.sh $2
 fi
 
-if [ "$1" == "sdl" ]
-then
-    ./build_scripts/build_sdl.sh $2
-fi
-
 if [ "$1" == "wintux" ]
 then
     ./build_scripts/build_wintux.sh $2
