@@ -24,7 +24,7 @@ typedef unsigned short button_value_type;
 #define NL_GAMEPAD_Y                ((button_value_type)(0x0D))// ((0x8000)) //xinput y
 
 // NO CONTROLLER in a browser... at least not that I know of
-// Possible that there is a Web HID or Web USB that could work.  Should just be  
+// Possible that there is a Web HID or Web USB that could work.
 #elif defined(__EMSCRIPTEN__)
 typedef char button_value_type;
 #define NL_GAMEPAD_DPAD_LEFT	((button_value_type)0)

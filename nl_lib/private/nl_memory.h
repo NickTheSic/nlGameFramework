@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-// TODO: This was a wrapper around malloc and free so I could make my own memory allocator
+// TODO: This was a wrapper around malloc and free so I could make my own memory allocator in the future
 // Maybe I want to consider VirtualAlloc on windows and do the Handmade Hero stuff?
 
 #include <stddef.h>

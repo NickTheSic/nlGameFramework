@@ -5,6 +5,9 @@
 extern "C" {
 #endif
 
+//  So I can use the non _s versions of functions for windows
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #define NL_LOG(m,...) fprintf(stdout, m,##__VA_ARGS__); fprintf(stdout, "\n");
 

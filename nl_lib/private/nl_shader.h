@@ -16,12 +16,11 @@ extern "C" {
 
 #else
 #warning Shader is not defined for this platform
-#define NL_SHADER_VERSION_HEADER //define it as nothing to compile
+#define NL_SHADER_VERSION_HEADER 
 
 #endif
 
 
-//create_shader_program(common_vert_shader_code , common_fragment_shader_code);
 unsigned int create_shader_program(const char* vertex_shader_code, const char* fragment_shader_code);
 void use_shader_program(unsigned int shader_program);
 void free_shader_program(unsigned int shader_program);
