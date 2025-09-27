@@ -11,6 +11,9 @@
     Including:
     - the ability to find and use the next available buffer so sounds can overlap if needed
     - Handle the sounds as I have where only one ever plays at once
+    - Streaming audio from disk? 
+        https://learn.microsoft.com/en-us/windows/win32/xaudio2/streaming-audio-data
+        Could allow for 'pikmin' style changes by setting audio flags to trigger different tracks to play next
 
 */
 
