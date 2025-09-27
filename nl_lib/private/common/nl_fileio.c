@@ -6,14 +6,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#if !defined (_WIN32) 
-#define strtok_s strtok_r
-#endif
-
 void read_entire_file(const char* filename, file_contents* const contents)
 {
-    FILE* fp = {0};
-    fp = fopen(filename, "rb");
+    FILE* fp = fopen(filename, "rb");
 
     if (fp)
     {
@@ -49,8 +44,7 @@ void clear_file_read(file_contents* const content)
 
 void save_to_binary_file(const char* const filename, unsigned int size, char* const contents)
 {
-    FILE* fp = {0};
-    fp = fopen(filename, "wb");
+    FILE* fp = fopen(filename, "wb");
 
     if (fp)
     {
@@ -61,8 +55,7 @@ void save_to_binary_file(const char* const filename, unsigned int size, char* co
 
 void load_from_binary_file(const char* const filename, unsigned int size, char* const dest)
 {
-    FILE* fp = {0};
-    fp = fopen(filename, "rb");
+    FILE* fp = fopen(filename, "rb");
     
     if (fp)
     {
