@@ -6,6 +6,9 @@
 #elif defined(__EMSCRIPTEN__)
 #include "build_nl_lib/emscripten.c"
 
+#elif defined(linux)
+#include "build_nl_lib/linux.c"
+
 // TODO: Could add SDL for a blanket just works implementation?  Maybe Raylib?
 //       At the moment it is for the purpose of adding a linux build for testing on my linux machine
 
