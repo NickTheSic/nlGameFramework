@@ -94,6 +94,11 @@ void app_specific_render()
 void app_specific_cleanup(void)
 {
     ui_cleanup();
+
+    free_mesh(&center_square.m);
+    free_mesh(&square_ur.m);
+    free_mesh(&square_bl.m);
+    free_mesh(&mouse_pointer.m);
 }
 
 #include "nl_ui.c"

@@ -35,7 +35,6 @@ void app_specific_render()
     };
 
     v2i mouse_pos = get_mouse_position_from_system();
-
     const ui_element elem2 = {
         {0.0f,0.5f,0.2f, 1.0f},
         {(float)mouse_pos.x, (float)mouse_pos.y},

@@ -73,7 +73,7 @@ void update_ui_screen_size(ui_renderer* const ui_renderer, int width, int height
     create_orthographic_projection(&mat, 0.f, (float)width, 0.f, (float)height, -0.1f, 100.f);
 
     use_shader_program(ui_renderer->shader_program);
-    unsigned int viewMat = glGetUniformLocation(ui_renderer->shader_program, "uViewMat");
+    unsigned int viewMat = glGetUniformLocation(ui_renderer->shader_program, VIEW_MATRIX_UNIFORM_NAME);
     glUniformMatrix4fv(viewMat, 1, GL_FALSE, &mat.m11);
 }
 
@@ -154,8 +154,8 @@ void add_element_to_render_batch(ui_renderer* const batch, const ui_element *con
     v2i screen_size = get_screen_size();
     const float half_w = screen_size.x/2.0f;
     const float half_h = screen_size.y/2.0f;
-    pos.x += (half_w) + (elem->anchor.x * half_w);
-    pos.y += (half_h) + (elem->anchor.y * half_h);
+    //pos.x += (half_w) + (elem->anchor.x * half_w);
+    //pos.y += (half_h) + (elem->anchor.y * half_h);
 
     const colourf col = elem->color;
     const v2f size = elem->size;

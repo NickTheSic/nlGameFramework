@@ -41,9 +41,9 @@ int ui_init()
     nl_ui_data.shader_data.shader_program = create_shader_program(nl_ui_vert_shader_code, nl_ui_fragment_shader_code);
     use_shader_program(nl_ui_data.shader_data.shader_program);
     NL_LOG("Shader Program: %d", nl_ui_data.shader_data.shader_program);
-    nl_ui_data.shader_data.u_view_matrix = glGetUniformLocation(nl_ui_data.shader_data.shader_program, "uViewMat");
+    nl_ui_data.shader_data.u_view_matrix = glGetUniformLocation(nl_ui_data.shader_data.shader_program, VIEW_MATRIX_UNIFORM_NAME);
     NL_LOG("View Matrix Loc: %d", nl_ui_data.shader_data.u_view_matrix)
-    nl_ui_data.shader_data.u_world_matrix = glGetUniformLocation(nl_ui_data.shader_data.shader_program, "uWorldMat");
+    nl_ui_data.shader_data.u_world_matrix = glGetUniformLocation(nl_ui_data.shader_data.shader_program, WORLD_MATRIX_UNIFORM_NAME);
     NL_LOG("World Matrix Loc: %d", nl_ui_data.shader_data.u_world_matrix)
 
     initialize_camera_to_identity(&nl_ui_data.ui_camera);

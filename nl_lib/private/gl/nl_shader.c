@@ -2,6 +2,9 @@
 #include "../nl_debug.h"
 #include "nl_gl.h"
 
+const char* VIEW_MATRIX_UNIFORM_NAME = "uViewMat";
+const char* WORLD_MATRIX_UNIFORM_NAME = "uWorldMat";
+
 const char* common_vert_shader_code =
 NL_SHADER_VERSION_HEADER
 "layout (location = 0) in vec3 aPos;                   \n"

@@ -21,6 +21,10 @@ extern "C" {
 #endif
 
 
+extern const char* VIEW_MATRIX_UNIFORM_NAME;
+extern const char* WORLD_MATRIX_UNIFORM_NAME;
+
+
 unsigned int create_shader_program(const char* vertex_shader_code, const char* fragment_shader_code);
 void use_shader_program(unsigned int shader_program);
 void free_shader_program(unsigned int shader_program);
