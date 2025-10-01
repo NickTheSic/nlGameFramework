@@ -24,6 +24,8 @@ extern "C" {
 #define QUOTE_STR(name) #name // turn the value passed in into a string
 #define VALUE_TO_STR(name) QUOTE_STR(name) // Use this as for some reason the above doesn't work on its own
 
+#define DEBUG_RANDOM_BACKGROUND_COLOUR set_background_colour_4f(random_float_in_range(0.0f,1.0f),random_float_in_range(0.0f,1.0f),random_float_in_range(0.0f,1.0f),1.0f);
+
 #ifdef __cplusplus
 }
 #endif

@@ -1,0 +1,9 @@
+Next Steps:
+
+Consolodate UI Projects into one
+    - Batch Render Images
+    - Batch Text
+    - Anchor Points
+    - Can update the UI as I need in the future
+        - Dynamic Sized Boxes
+

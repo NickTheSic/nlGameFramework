@@ -1,8 +1,50 @@
-#include "nl_ui_renderer.h"
 #include "private/gl/nl_gl.h"
 #include "private/nl_shader.h"
 
 #include "string.h" //memcpy, memset
+
+
+#define UI_MAX_BATCH_COUNT 10
+
+typedef struct ui_element ui_element;
+struct ui_element
+{
+    colourf color;
+    v2f pos;
+    v2f size;
+    v2f anchor;
+    float rot;
+};
+
+typedef struct ui_vertex_data ui_vertex_data;
+struct ui_vertex_data
+{
+    v2f pos;
+    colourf color;
+};
+
+typedef struct ui_renderer ui_renderer;
+struct ui_renderer
+{
+    unsigned int shader_program;
+
+    unsigned int vao;
+    unsigned int vbo;
+    unsigned int ebo;
+
+    unsigned int current_count;
+
+    ui_vertex_data vertices[UI_MAX_BATCH_COUNT];
+    // If I want indices for font rendering I need to add it
+    // I'll decide when the time comes though 
+};
+
+void init_ui_renderer(ui_renderer* const ui_renderer);
+void cleanup_ui_renderer(ui_renderer* const ui_renderer);
+void update_ui_screen_size(ui_renderer* const ui_renderer, int width, int height);
+void add_element_to_render_batch(ui_renderer* const batch, const ui_element *const elem);
+void begin_ui_render_batch(ui_renderer* const ui_renderer);
+void end_ui_render(ui_renderer* const ui_renderer);
 
 static const char* ui_vert_shader_code =
 NL_SHADER_VERSION_HEADER
@@ -107,8 +149,14 @@ void add_element_to_render_batch(ui_renderer* const batch, const ui_element *con
     }
 
     const unsigned int current_idx = batch->current_count * 4;
+    
+    v2f pos = elem->pos;
+    v2i screen_size = get_screen_size();
+    const float half_w = screen_size.x/2.0f;
+    const float half_h = screen_size.y/2.0f;
+    pos.x += (half_w) + (elem->anchor.x * half_w);
+    pos.y += (half_h) + (elem->anchor.y * half_h);
 
-    const v2f pos = elem->pos;
     const colourf col = elem->color;
     const v2f size = elem->size;
     const ui_vertex_data square_verts[] =
