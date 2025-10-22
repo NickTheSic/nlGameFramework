@@ -27,14 +27,9 @@ static unsigned int square_indices[] =
 typedef struct ui_element ui_element;
 struct ui_element
 {
-    transform2d transform;
-    v2f anchor;
-    mesh m;
+    v2f pos;
+    v2f size;
 };
-
-//! Temporary
-void initialize_object(ui_element* o, v2f anchor);
-//!
 
 //* Could move this sort of class into the shader itself?
 typedef struct nl_ui_shader nl_ui_shader;
