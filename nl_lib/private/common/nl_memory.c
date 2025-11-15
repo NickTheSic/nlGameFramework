@@ -5,18 +5,61 @@
 #include <stdio.h>
 #include <memory.h>
 
-global_variable int _BASIC_MEMORY_COUNTER = {0};
 
-void *_memory_allocate(size_t size)
+global_variable size_t _ESTIMATED_USED_MEMORY = {0};
+
+
+#if 1 //DEBUG
+
+internal_function void* internal_allocate_memory(size_t size)
 {
-    void* memory = (void*)malloc(size);
+    size_t* memory = (size_t*)malloc(sizeof(size_t)+size);
     if (memory == 0)
     {
         NL_LOG("Unable to allocate memory of size %zi", size);
         return 0;
     }
 
-    ++_BASIC_MEMORY_COUNTER;
+    _ESTIMATED_USED_MEMORY+=size;
+    *memory = size;
+
+    return (void*)((size_t)memory+sizeof(size_t));
+}
+
+internal_function void* internal_free_memory(void* ptr)
+{
+    size_t* real_ptr = (size_t*)(ptr-sizeof(size_t));
+
+    size_t size = real_ptr[0];
+    _ESTIMATED_USED_MEMORY-=size;
+
+    free(real_ptr);
+}
+
+size_t DEBUG_GetEstimatedMemoryUsage()
+{
+    return _ESTIMATED_USED_MEMORY;
+}
+#else
+internal_function void* internal_allocate_memory(size_t size)
+{
+    void* memory = (void*)malloc(size);
+
+    if (memory == 0)
+    {
+        NL_LOG("Unable to allocate memory of size %zi", size);
+        return 0;
+    }
+
+    return memory;
+}
+size_t DEBUG_GetEstimatedMemoryUsage(){ return 0; }
+#define internal_free_memory(ptr) free(ptr);
+#endif
+
+void *_memory_allocate(size_t size)
+{
+    void* memory = (void*)internal_allocate_memory(size);
 
     memset(memory, 0, size);
     return memory;
@@ -25,23 +68,17 @@ void *_memory_allocate(size_t size)
 // maybe a void** to be able to set it to 0 here too?
 void memory_free(void* memory)
 {
-    free(memory);
-
-    --_BASIC_MEMORY_COUNTER;
+    internal_free_memory(memory);
 }
 
 void basic_memory_leak_check(void)
 {
-    if (_BASIC_MEMORY_COUNTER > 0)
+    if (_ESTIMATED_USED_MEMORY == 0)
     {
-        NL_LOG("More memory allocations than frees: %d", _BASIC_MEMORY_COUNTER);
-    }
-    else if (_BASIC_MEMORY_COUNTER < 0)
-    {
-        NL_LOG("More memory frees than allocations: %d", _BASIC_MEMORY_COUNTER);
+        NL_LOG("No Memory Leak Detected");
     }
     else
     {
-        NL_LOG("No leaks detected");
+        NL_LOG("Memory Leak! Leaked Memory Amount: %zi", _ESTIMATED_USED_MEMORY);
     }
 }
