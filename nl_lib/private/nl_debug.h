@@ -5,6 +5,9 @@
 extern "C" {
 #endif
 
+
+#define NL_DEBUG_ENABLED 1
+
 //  So I can use the non _s versions of functions for windows
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -12,10 +15,6 @@ extern "C" {
 #define NL_LOG(m,...) fprintf(stdout, m,##__VA_ARGS__); fprintf(stdout, "\n");
 
 #define DO_ONCE(thing) {static int doonce = 1; if (doonce){ doonce = 0; thing; }}
-
-#define NL_UNIMPLEMENTED_FUNC DO_ONCE(NL_LOG("Unimplemented Function %s in %s", __FUNCTION__, __FILE__););
-#define NL_DEPRECATED_FUNC(replace) DO_ONCE(NL_LOG("Deprecated Function %s in %s, replace with %s", __FUNCTION__, __FILE__, replace););
-#define NL_UNUSED(x) (void)(x); DO_ONCE(NL_LOG("variable %s is not being used in %s", #x, __FUNCTION__););
 
 #define internal_function static inline
 #define global_variable static
@@ -25,6 +24,17 @@ extern "C" {
 #define VALUE_TO_STR(name) QUOTE_STR(name) // Use this as for some reason the above doesn't work on its own
 
 #define DEBUG_RANDOM_BACKGROUND_COLOUR set_background_colour_4f(random_float_in_range(0.0f,1.0f),random_float_in_range(0.0f,1.0f),random_float_in_range(0.0f,1.0f),1.0f);
+
+#if NL_DEBUG_ENABLED
+# define NL_UNIMPLEMENTED_FUNC DO_ONCE(NL_LOG("Unimplemented Function %s in %s", __FUNCTION__, __FILE__););
+# define NL_DEPRECATED_FUNC(replace) DO_ONCE(NL_LOG("Deprecated Function %s in %s, replace with %s", __FUNCTION__, __FILE__, replace););
+# define NL_UNUSED(x) (void)(x); DO_ONCE(NL_LOG("variable %s is not being used in %s", #x, __FUNCTION__););
+#else
+# define NL_UNIMPLEMENTED_FUNC
+# define NL_DEPRECATED_FUNC(replace)
+# define NL_UNUSED(x) (void)(x);
+#endif
+
 
 #ifdef __cplusplus
 }

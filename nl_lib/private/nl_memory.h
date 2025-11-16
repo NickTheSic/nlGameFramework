@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+
 // TODO: This was a wrapper around malloc and free so I could make my own memory allocator in the future
 // Maybe I want to consider VirtualAlloc on windows and do the Handmade Hero stuff?
 
@@ -16,6 +17,13 @@ void memory_free(void* memory);
 void basic_memory_leak_check(void); //Used in debug + by main
 
 #define memory_allocate(s) _memory_allocate(s); NL_LOG("memory allocated: %s %d", __FILE__, __LINE__);
+
+#if NL_DEBUG_ENABLED
+# define memory_allocate(s) _memory_allocate(s); NL_LOG("memory allocated: %s %d", __FILE__, __LINE__);
+#else
+# define memory_allocate(s) _memory_allocate(s);
+#endif
+
 
 #ifdef __cplusplus
 }

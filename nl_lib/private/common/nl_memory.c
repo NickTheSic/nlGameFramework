@@ -9,10 +9,10 @@
 global_variable size_t _ESTIMATED_USED_MEMORY = {0};
 
 
-#if 1 //DEBUG
-
+#if NL_DEBUG_ENABLED
 internal_function void* internal_allocate_memory(size_t size)
 {
+    NL_LOG("Debug Memory Allocated");
     size_t* memory = (size_t*)malloc(sizeof(size_t)+size);
     if (memory == 0)
     {
@@ -35,11 +35,6 @@ internal_function void* internal_free_memory(void* ptr)
 
     free(real_ptr);
 }
-
-size_t DEBUG_GetEstimatedMemoryUsage()
-{
-    return _ESTIMATED_USED_MEMORY;
-}
 #else
 internal_function void* internal_allocate_memory(size_t size)
 {
@@ -53,7 +48,6 @@ internal_function void* internal_allocate_memory(size_t size)
 
     return memory;
 }
-size_t DEBUG_GetEstimatedMemoryUsage(){ return 0; }
 #define internal_free_memory(ptr) free(ptr);
 #endif
 
