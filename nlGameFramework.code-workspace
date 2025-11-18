@@ -1,0 +1,14 @@
+{
+    "folders":[
+        {
+            "name": "nlGameFramework",
+            "path": "."
+        },
+    ],
+    "settings": {
+		"typescript.tsc.autoDetect": "off"
+	},
+	"extensions": {
+		"recommendations": []
+	}
+}

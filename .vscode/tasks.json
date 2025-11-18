@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks":[
+        {
+			"label": "_ProjectTemplate WinTux",
+			"group": "build",
+			"command": "./build",
+			"args": [
+				"wintux",
+				"_ProjectTemplate",
+			],
+			//"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+			//	"cwd": "/home/nick/Storage/UnrealEngine/UE4.26"
+			}
+		},
+    ]
+}

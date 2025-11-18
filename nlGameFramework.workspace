@@ -1,0 +1,16 @@
+<!-- 
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Workspace Name="nl_framework" SWTLW="Yes">
+  <WorkspaceParserPaths>
+    <Include Path="./nl_lib" />
+ </WorkspaceParserPaths>
+  <VirtualDirectory Name="Test">
+    <Project Name="nl_lib" Path="." Active="No" />
+  </VirtualDirectory>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="no">
+      <Project Name="nl_framework" ConfigName="Debug" />
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>
+-->
