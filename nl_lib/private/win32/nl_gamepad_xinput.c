@@ -219,8 +219,6 @@ unsigned char button_is_held(button_value_type button)
     return win_controller.buttons[button].held;
 }
 
-// TODO: Verify this comment... It seems like I am handling held above and this pressed is correct
-// Incorrectly setup - Controller only handles if it is held, this wants to know if it was pressed this frame
 unsigned char button_was_pressed(button_value_type button)
 {
     return win_controller.buttons[button].pressed;
@@ -231,9 +229,38 @@ unsigned char button_was_released(button_value_type button)
     return win_controller.buttons[button].released;
 }
 
+/*
+    float left_trigger, right_trigger;
+    float left_x_axis, left_y_axis;
+    float right_x_axis, right_y_axis;
+*/
+
+float get_right_trigger(void)
+{
+    return win_controller.right_trigger;
+}
+
+float get_left_trigger(void)
+{
+    return win_controller.left_trigger;
+}
+
+v2f get_left_stick(void)
+{
+    return (v2f){win_controller.left_x_axis, win_controller.left_y_axis};
+}
+
+v2f get_right_stick(void)
+{
+    return (v2f){win_controller.right_x_axis, win_controller.right_y_axis};
+}
+
 #define PRINT_BUTTON_PRESS_RELEASE(button)\
 {if (button_was_pressed(button)){NL_LOG(#button" pressed");}\
 else if (button_was_released(button)){NL_LOG(#button" released");}}
+
+#define PRINT_TRIGGER_VALUE(func)\
+{const float trigger=func; if (trigger>0.0f){NL_LOG(#func": %f", trigger);}}
 
 void debug_test_controller(void)
 {
@@ -251,4 +278,7 @@ void debug_test_controller(void)
     PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_B           );
     PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_X           );
     PRINT_BUTTON_PRESS_RELEASE(NL_GAMEPAD_Y           );
+    
+    PRINT_TRIGGER_VALUE(get_right_trigger());
+    PRINT_TRIGGER_VALUE(get_left_trigger());
 }

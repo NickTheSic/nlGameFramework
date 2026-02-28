@@ -9,6 +9,10 @@ extern "C" {
 // operator overloading is nicer looking
 // v3 = v1 + v2 compared to v3 = v2f_add(v1, v2);
 
+// Note: Should the vectors be in their own header
+// Specifically as I don't need to include my math header if I don't need the functions
+// The use case was inculding nl_math in nl_gamepad so I can use v2f
+
 typedef struct v2i v2i;
 struct v2i
 {
