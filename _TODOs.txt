@@ -7,3 +7,4 @@ Consolodate UI Projects into one
     - Can update the UI as I need in the future
         - Dynamic Sized Boxes
 
+Make reusable rendering object.  So I can batch render sprites and UI with some core code.

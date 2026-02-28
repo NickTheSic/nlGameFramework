@@ -11,10 +11,10 @@ NL_SHADER_VERSION_HEADER
 "const vec2 pos[] = vec2[4](vec2(-0.5,  0.5),vec2(-0.5, -0.5),vec2(0.5,   0.5),vec2(0.5,  -0.5));\n"
 "void main() {                                         \n"
 "vec2 offset = pos[gl_VertexID];\n"
-" gl_Position = uViewMat * vec4(aPos.x + (offset.x * aSize.x) ,
-                            aPos.y + (offset.y * aSize.y) ,
-                            0.0,
-                            1.0);"
+" gl_Position = uViewMat * vec4(aPos.x + (offset.x * aSize.x) ,"
+"                            aPos.y + (offset.y * aSize.y) ,"
+                            "0.0,"
+                            "1.0);"
 "}                                                     \0";
 
 global_variable const char* nl_ui_fragment_shader_code =
