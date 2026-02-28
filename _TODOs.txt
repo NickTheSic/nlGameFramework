@@ -1,5 +1,7 @@
 Next Steps:
 
+Cleanup projects!  I want fewer projects to look through while I try to get this going again :) For myself of course
+
 Consolodate UI Projects into one
     - Batch Render Images
     - Batch Text

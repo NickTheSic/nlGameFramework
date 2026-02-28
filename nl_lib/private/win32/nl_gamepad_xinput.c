@@ -30,10 +30,10 @@ struct win_gamepad
             gamepad_button_state dpad_right;
             gamepad_button_state start;
             gamepad_button_state select;
-            gamepad_button_state left_stick;
-            gamepad_button_state right_stick; 
             gamepad_button_state left_shoulder;
             gamepad_button_state right_shoulder;
+            gamepad_button_state left_stick;
+            gamepad_button_state right_stick; 
             gamepad_button_state a;
             gamepad_button_state b;
             gamepad_button_state x;
@@ -81,10 +81,12 @@ int init_gamepad_system(void)
             {
                 NL_LOG("Using xinput 9_1_0");
             }
-        } else {
+        } else 
+        {
             NL_LOG("Using xinput1_3");
         }
-    } else {
+    } else 
+    {
         NL_LOG("Using xinput1_4");
     }
 
@@ -217,6 +219,7 @@ unsigned char button_is_held(button_value_type button)
     return win_controller.buttons[button].held;
 }
 
+// TODO: Verify this comment... It seems like I am handling held above and this pressed is correct
 // Incorrectly setup - Controller only handles if it is held, this wants to know if it was pressed this frame
 unsigned char button_was_pressed(button_value_type button)
 {
@@ -230,7 +233,7 @@ unsigned char button_was_released(button_value_type button)
 
 #define PRINT_BUTTON_PRESS_RELEASE(button)\
 {if (button_was_pressed(button)){NL_LOG(#button" pressed");}\
-else if (button_was_released(button)){NL_LOG(#button" pressed");}}
+else if (button_was_released(button)){NL_LOG(#button" released");}}
 
 void debug_test_controller(void)
 {
