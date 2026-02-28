@@ -1,5 +1,6 @@
 #include "batch2d.h"
 #include "private/gl/nl_gl.h"
+#include <string.h> //memcpy right?
 
 #include "grid.h"
 
