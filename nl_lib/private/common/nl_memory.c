@@ -26,7 +26,7 @@ internal_function void* internal_allocate_memory(size_t size)
     return (void*)((size_t)memory+sizeof(size_t));
 }
 
-internal_function void* internal_free_memory(void* ptr)
+internal_function void internal_free_memory(void* ptr)
 {
     size_t* real_ptr = (size_t*)(ptr-sizeof(size_t));
 
