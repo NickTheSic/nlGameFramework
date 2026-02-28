@@ -22,7 +22,9 @@ global_variable input_key_state mouse_button_states[NL_MOUSE_BUTTON_COUNT];
 global_variable int input_mouse_scroll_delta = 0;
 global_variable int input_mouse_scroll = 0;
 
-global_variable v2i input_mouse_position = {0};
+global_variable v2i input_mouse_position = {0,0};
+global_variable v2i input_mouse_move_delta = {0,0};
+global_variable v2i input_mouse_movement = {0,0};
 
 void update_input_frame_state(void)
 {
@@ -71,6 +73,10 @@ void update_input_frame_state(void)
 
     input_mouse_scroll = input_mouse_scroll_delta;
     input_mouse_scroll_delta = 0;
+    
+    input_mouse_movement = input_mouse_move_delta;
+    input_mouse_move_delta.x = 0;
+    input_mouse_move_delta.y = 0;
 }
 
 
@@ -153,6 +159,9 @@ int get_mouse_scroll_this_frame(void)
 
 void set_mouse_position_from_system(int x, int y)
 {
+    input_mouse_move_delta.x = x - input_mouse_position.x;
+    input_mouse_move_delta.y = y - input_mouse_position.y;
+
     input_mouse_position.x = x;
     input_mouse_position.y = y;
 }
@@ -160,4 +169,9 @@ void set_mouse_position_from_system(int x, int y)
 v2i get_mouse_position_from_system(void)
 {
     return input_mouse_position;
+}
+
+v2i get_mouse_movement_this_frame(void)
+{
+    return input_mouse_movement;
 }

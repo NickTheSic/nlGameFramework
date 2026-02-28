@@ -85,6 +85,9 @@ v2f   v2f_add(const v2f lhs, const v2f rhs);
 v2f   v2f_normalize(const v2f vec);
 v2f   v2f_cross(const v2f lhs, const v2f rhs);
 
+int v2i_length_squared(const v2i vec);
+v2i v2i_add(const v2i lhs, const v2i rhs);
+
 void  v2i_mat4_transfrom(v2i* const lhs, const mat4x4f* const mat);
 void  v2f_mat4_transform(v2f* const lhs, const mat4x4f* const mat);
 

@@ -405,6 +405,19 @@ v2f v2f_normalize(const v2f vec)
     return result;
 }
 
+int v2i_length_squared(const v2i vec)
+{
+    return (vec.x * vec.x) + (vec.y * vec.y);
+}
+
+v2i v2i_add(const v2i lhs, const v2i rhs)
+{
+    v2i result = {0};
+    result.x = lhs.x + rhs.x;
+    result.y = lhs.y + rhs.y;
+    return result;
+}
+
 void v2i_mat4_transfrom(v2i* const lhs, const mat4x4f* const mat)
 {
     v2i temp = {0};

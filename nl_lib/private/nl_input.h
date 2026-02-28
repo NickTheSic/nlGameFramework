@@ -36,7 +36,7 @@ int get_mouse_scroll_this_frame(void);
 
 void set_mouse_position_from_system(int x, int y);
 v2i get_mouse_position_from_system(void);
-
+v2i get_mouse_movement_this_frame(void);
 
 #ifdef __cplusplus
 }

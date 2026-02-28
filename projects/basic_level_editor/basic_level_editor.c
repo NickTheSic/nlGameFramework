@@ -26,7 +26,7 @@ internal_function void winsizecbk(int width, int height)
 
 void camera_controls(float dt)
 {
-    char bIsDirty = 0;
+    unsigned char bIsDirty = 0;
 
     if (key_is_held(key_right))
     {
@@ -50,7 +50,16 @@ void camera_controls(float dt)
         bIsDirty = 1;
     }
 
-    if (bIsDirty > 0)
+    if (mouse_button_is_held(NL_MOUSE_BUTTON_RIGHT))
+    {
+        v2i movement = get_mouse_movement_this_frame();
+        camera_pos_x += movement.x;
+        camera_pos_y += movement.y;
+
+        bIsDirty = 1;
+    }
+
+    if (0 < bIsDirty)
     {
         create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){camera_pos_x,camera_pos_y,0.0f});
         set_uniform_mat4x4f(loc_view_mat, &main_cam.view_matrix.m11);
