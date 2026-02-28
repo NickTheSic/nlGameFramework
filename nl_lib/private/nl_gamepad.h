@@ -8,6 +8,9 @@
 extern "C" {
 #endif
 
+// Might as well define the variable here.  
+// Maybe in the future the player can modify it
+global_variable float default_stick_dead_zone = 0.01;
 
 int init_gamepad_system(void);
 void cleanup_gamepad_system(void);

@@ -161,8 +161,23 @@ void udpate_gamepad(void)
         UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(x, XINPUT_GAMEPAD_X);
         UPDATE_XINPUT_GAMEPAD_BUTTON_STATE(y, XINPUT_GAMEPAD_Y);
 
-        win_controller.left_trigger   = (float)pad->bLeftTrigger / 255.f;
-        win_controller.right_trigger  = (float)pad->bRightTrigger / 255.f;
+        if (pad->bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
+        {
+            win_controller.left_trigger  = (float)pad->bLeftTrigger / 255.f;
+        }
+        else
+        {
+            win_controller.left_trigger = 0;
+        }
+
+        if (pad->bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
+        {
+            win_controller.right_trigger  = (float)pad->bRightTrigger / 255.f;
+        }
+        else
+        {
+            win_controller.right_trigger = 0;
+        }
 
         if (pad->sThumbLX < 0)
         {
@@ -255,12 +270,16 @@ v2f get_right_stick(void)
     return (v2f){win_controller.right_x_axis, win_controller.right_y_axis};
 }
 
+
 #define PRINT_BUTTON_PRESS_RELEASE(button)\
 {if (button_was_pressed(button)){NL_LOG(#button" pressed");}\
 else if (button_was_released(button)){NL_LOG(#button" released");}}
 
 #define PRINT_TRIGGER_VALUE(func)\
 {const float trigger=func; if (trigger>0.0f){NL_LOG(#func": %f", trigger);}}
+
+#define PRINT_STICK_VALUE(func)\
+{const v2f stick=func; if (v2f_length_squared(stick) > default_stick_dead_zone){NL_LOG(#func".x: %f - y: %f", stick.x, stick.y);}}
 
 void debug_test_controller(void)
 {
@@ -281,4 +300,7 @@ void debug_test_controller(void)
     
     PRINT_TRIGGER_VALUE(get_right_trigger());
     PRINT_TRIGGER_VALUE(get_left_trigger());
+    
+    PRINT_STICK_VALUE(get_left_stick());
+    PRINT_STICK_VALUE(get_right_stick());
 }
