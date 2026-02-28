@@ -13,6 +13,7 @@ global_variable size_t _ESTIMATED_USED_MEMORY = {0};
 internal_function void* internal_allocate_memory(size_t size)
 {
     NL_LOG("Debug Memory Allocated");
+
     size_t* memory = (size_t*)malloc(sizeof(size_t)+size);
     if (memory == 0)
     {
