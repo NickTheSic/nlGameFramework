@@ -1,6 +1,7 @@
 Next Steps:
 
 Cleanup projects!  I want fewer projects to look through while I try to get this going again :) For myself of course
+    - this could include make a better way to build the projects so I can hide important test projects inside of a file
 
 Consolodate UI Projects into one
     - Batch Render Images
@@ -10,3 +11,4 @@ Consolodate UI Projects into one
         - Dynamic Sized Boxes
 
 Make reusable rendering object.  So I can batch render sprites and UI with some core code.
+    - might also include a common camera setup too

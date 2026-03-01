@@ -33,6 +33,15 @@ void camera_controls(float dt, camera* const cam)
         bIsDirty = 1;
     }
 
+    if (mouse_button_is_held(NL_MOUSE_BUTTON_RIGHT))
+    {
+        v2i movement = get_mouse_movement_this_frame();
+        camera_pos_x += movement.x;
+        camera_pos_y += movement.y;
+
+        bIsDirty = 1;
+    }
+
     if (bIsDirty > 0)
     {
         create_srt_matrix(&cam->view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){camera_pos_x,camera_pos_y,0.0f});

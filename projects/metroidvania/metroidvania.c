@@ -1,9 +1,5 @@
 #include "nl_lib.h"
 
-#if PLATFORM_CONSOLE
-#include "private/nl_keys_to_controller.h"
-#endif
-
 #include "metroidvania.h"
 #include "camera_control.h"
 #include "private/nl_physics2d.h"
@@ -74,9 +70,4 @@ void app_specific_cleanup(void)
 
 #include "camera_control.c"
 #include "player.c"
-
-#ifdef PSP
-#include "platform/nl_sprite_renderer_psp.c"
-#else
 #include "platform/nl_sprite_renderer_gl.c"
-#endif
