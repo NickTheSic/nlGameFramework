@@ -50,8 +50,12 @@ internal_function void move_player(GameObject* player, v2f movement, double dt)
     v2f world_pos = TheGame->Player.transform.position;
     v2f x_check = world_pos;
     v2f y_check = world_pos;
-    x_check.x += 16*movement.x;
-    y_check.y += 16*movement.y;
+    
+    if (movement.x > 0.0f) x_check.x += 16;
+    if (movement.x < 0.0f) x_check.x -= 16;
+
+    if (movement.y > 0.0f) y_check.y+= 16;
+    if (movement.y < 0.0f) y_check.y-= 16;
 
     v2i x_coords = world_to_grid_coords(&TheGame->grid, x_check);
     v2i y_coords = world_to_grid_coords(&TheGame->grid, y_check);
@@ -125,9 +129,6 @@ void app_specific_init(void)
             0,1,1,1,1,0
         };
         init_grid(&TheGame->grid, 6,5, g);
-        //save_to_binary_file("TEST_GRID", sizeof(Grid), (char*)&TheGame->grid);
-        //load_from_binary_file("TEST_GRID", sizeof(Grid), (char*)&TheGame->grid);
-        //make_grid_meshes(&TheGame->grid);
     }
 }
 
