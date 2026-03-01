@@ -53,7 +53,6 @@ Top Down Racer:
 - AI 
 
 Bot Battling Game:
-- Twisted Metal / Kirby's Air Ride style
 -- Arena based Kart game.  Battle friends, get power ups.
 -- Probably not in this engine..
 - Multiplayer
@@ -79,6 +78,10 @@ Lakeview Cabin style Puzzle game:
 
 /*** Game Jams ***/
 
+
+
+/*** Missed game jams below, with an idea that I could use for any game at any time ***/
+
 https://itch.io/jam/animatronic-nightmare:  Maybe join a team and make a little horror game
 - A game about setting up the store the night before?
 -- You unpack the animatronics, put em together and put them on stage.
@@ -93,10 +96,6 @@ https://itch.io/jam/animatronic-nightmare:  Maybe join a team and make a little 
 --- -- Maybe put same colour together, until sprites and then 3d models
 --- - Scene chaning?
 --- - 3D animation!  (And 2D)
-
-
-
-/*** Missed game jams below, with an idea that I could use for any game at any time ***/
 
 https://itch.io/jam/palette-cleanser-jam: Could have been a cooler, simpler project to get back into things
 
