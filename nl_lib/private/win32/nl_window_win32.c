@@ -67,6 +67,13 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 			set_key_state_up(k);
 		} break;
 
+		case WM_CHAR:
+		{
+			// TODO: This may handle text input
+			// wParam is the char code of the key
+			NL_LOG("%c", (char)wParam);
+		} break;
+
 		case WM_LBUTTONDOWN:
 		{
 			set_mouse_button_down(NL_MOUSE_BUTTON_LEFT);

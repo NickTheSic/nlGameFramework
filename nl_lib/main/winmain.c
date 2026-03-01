@@ -41,9 +41,9 @@ int WinMain(
 
         // debug FPS
         {
-            static float TimedLoop;
-        	static int frameCount;
-        	static float fps;
+            local_persist float TimedLoop;
+        	local_persist int frameCount;
+        	local_persist float fps;
 
         	TimedLoop += (float)(dt);
         	if (TimedLoop >= 1.f)
