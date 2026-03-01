@@ -71,7 +71,8 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 			// TODO: This may handle text input
 			// wParam is the char code of the key
-			NL_LOG("%c", (char)wParam);
+			
+			// NL_LOG("%c", (char)wParam);
 		} break;
 
 		case WM_LBUTTONDOWN:
