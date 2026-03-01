@@ -15,32 +15,34 @@ global_variable float camera_pos_y = 0.f;
 global_variable v2f mouse_pos = {0};
 global_variable v2i grid_coords = {0};
 
-typedef struct basic_square basic_square;
-struct basic_square
-{
-    v2f pos;
-    float size;
-};
-
 global_variable float square_size = 50.0f;
 #define square_grid_length 5
 #define grid_size square_grid_length*square_grid_length
-basic_square squares[grid_size] = {0};
-basic_square *selected_square = 0;
+v2f squares[grid_size] = {0};
+v2f *selected_square = 0;
 
-void init_square_grid(void)
+internal_function void init_square_grid(void)
 {
     for (int y = 0; y < square_grid_length; ++y)
     {
         for (int x = 0; x < square_grid_length; ++x)
         {
             const int idx = y * square_grid_length + x;
-            basic_square* const local_square = &squares[idx];
-            local_square->pos.x = (float)(x * square_size);
-            local_square->pos.y = (float)(y * square_size);
-            local_square->size = square_size;
+            v2f* const local_square = &squares[idx];
+            local_square->x = (float)(x * square_size);
+            local_square->y = (float)(y * square_size);
         }
     }
+}
+
+internal_function void save_layout(void)
+{
+    save_to_binary_file("test_one.nl_layout", sizeof(squares), (char*)squares);
+}
+
+internal_function void load_layout(void)
+{
+    load_from_binary_file("test_one.nl_layout", sizeof(squares), (char*)squares);
 }
 
 internal_function void winsizecbk(int width, int height)
@@ -109,7 +111,7 @@ void app_specific_init(void)
     init_batch(&batch, 3);
 }
 
-static inline int is_mouse_in_square_bounds(v2f point, v2f pos, float sz)
+internal_function int is_mouse_in_square_bounds(v2f point, v2f pos, float sz)
 {
     if (point.x < pos.x || point.x > pos.x+sz) return 0;
     if (point.y < pos.y || point.y > pos.y+sz) return 0;
@@ -129,7 +131,7 @@ void app_specific_update(double dt)
     {
         for (int i = 0; i < grid_size; ++i)
         {
-            if (is_mouse_in_square_bounds(mouse_pos, squares[i].pos, square_size))
+            if (is_mouse_in_square_bounds(mouse_pos, squares[i], square_size))
             {
                 selected_square = &squares[i];
                 break;
@@ -145,10 +147,18 @@ void app_specific_update(double dt)
     if (0 != selected_square)
     {
         v2i movement = get_mouse_movement_this_frame();
-        selected_square->pos.x += (float)movement.x;
-        selected_square->pos.y += (float)movement.y;
+        selected_square->x += (float)movement.x;
+        selected_square->y += (float)movement.y;
     }
 
+    if (key_was_pressed(key_s))
+    {
+        save_layout();
+    }
+    if (key_was_pressed(key_d))
+    {
+        load_layout();
+    }
 }
 
 void app_specific_render()
@@ -163,7 +173,7 @@ void app_specific_render()
 
     for (int i = 0; i < grid_size; ++i)
     {
-        add_to_render_batch(&batch, squares[i].pos, COLOURS[i%4], squares[i].size);
+        add_to_render_batch(&batch, squares[i], COLOURS[i%4], square_size);
     }
 
     add_to_render_batch(&batch, mouse_pos, COLOUR_BLUE, 5.0f);
