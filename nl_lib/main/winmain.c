@@ -3,12 +3,10 @@
 #include "private/nl_deltatime.h" // Only needed by main UNLESS we stop passing DT around and do it more like unity
 #include "private/nl_platform.h" // Only main will use it, and it is just a simple function to initialize the platform
 
-typedef struct win_fps_stats win_fps_stats
-{
-    float highest_fps = -1.0f;
-    float lowest_fps = 54028234663.000000f; // a really big number higher than the average fps I have ever seen
-};
-global_variable win_fps_stats fps_stats;
+
+float highest_fps = -1.0f;
+float lowest_fps = 54028234663.000000f; // a really big number higher than the average fps I have ever seen
+
 
 extern void app_specific_init(void);
 extern void app_specific_update(double dt);
@@ -55,8 +53,8 @@ int WinMain(
         		TimedLoop -= 1.f;
         		frameCount = 0;
 
-                fps_stats.highest_fps = fps_stats.highest_fps > fps ? fps_stats.highest_fps : fps;
-                fps_stats.lowest_fps = fps_stats.lowest_fps < fps ? fps_stats.lowest_fps : fps;
+                highest_fps = highest_fps > fps ? highest_fps : fps;
+                lowest_fps = lowest_fps < fps ? lowest_fps : fps;
 
                 char c[50];
                 sprintf_s(c, 50, "FPS: %f\n", fps);
@@ -81,8 +79,8 @@ int WinMain(
     app_specific_cleanup();
     platform_cleanup();
 
-    NL_LOG("Highest FPS Reached: %f", fps_stats.highest_fps);
-    NL_LOG("Lowest FPS Reached: %f" , fps_stats.lowest_fps );
+    NL_LOG("Highest FPS Reached: %f", highest_fps);
+    NL_LOG("Lowest FPS Reached: %f" , lowest_fps );
 
     return 0;
 }

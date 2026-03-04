@@ -4,7 +4,7 @@ pushd $1
 
 touch $1.c
 
-printf "#include "nl_lib.h"
+printf "#include \"nl_lib.h\"
 
 
 void app_specific_init(void)
