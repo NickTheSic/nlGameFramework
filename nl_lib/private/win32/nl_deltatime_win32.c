@@ -9,6 +9,7 @@ internal_function double get_system_time()
     unsigned __int64 freq;
     unsigned __int64 time;
 
+    // TODO: Could just get this freq on init since it shouldn't change
     QueryPerformanceFrequency( (LARGE_INTEGER*)&freq);
     QueryPerformanceCounter( (LARGE_INTEGER*)&time);
 
