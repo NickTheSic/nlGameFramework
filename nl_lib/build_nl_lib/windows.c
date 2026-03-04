@@ -20,3 +20,7 @@
 #include "private/win32/nl_gamepad_xinput.c"
 #include "private/win32/nl_platform_win.c"
 #include "private/win32/nl_window_win32.c"
+
+#if NL_DEBUG_ENABLED
+#include "private/win32/nl_scope_timer_win.c"
+#endif

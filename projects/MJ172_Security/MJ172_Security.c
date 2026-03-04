@@ -171,6 +171,8 @@ internal_function void collision_test(void)
 
 void app_specific_init(void)
 {
+    SCOPE_TIMER("Init");
+
     init_sprite_renderer();
 
     generate_game_sprites();

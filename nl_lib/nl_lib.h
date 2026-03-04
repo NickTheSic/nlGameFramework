@@ -1,6 +1,8 @@
 #ifndef __NL_LIB_H__
 #define __NL_LIB_H__
 
+#include "private/nl_scope_timer.h"
+
 #include "private/nl_audio.h"
 #include "private/nl_camera.h"
 #include "private/nl_colour.h"
