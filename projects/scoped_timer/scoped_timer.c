@@ -4,6 +4,7 @@ typedef struct scope_end scope_end;
 struct scope_end
 {
     const char* name;
+    
 };
 
 void on_end_scope(scope_end* const se)
@@ -17,7 +18,7 @@ scope_end scope_##__LINE__ __attribute__((cleanup(on_end_scope))) = {label};
 void app_specific_init(void)
 {
     SCOPED_TEST("Called Begin");
-    
+
     {
         SCOPED_TEST("Nest 1");
         {
