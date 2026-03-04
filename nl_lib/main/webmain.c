@@ -23,12 +23,11 @@ internal_function void run()
 {
     poll_events();
     update_input_frame_state();
-    // TODO: Not needed as there won't be a gamepad on web
-    //udpate_gamepad();
     
     double dt = get_frame_delta_time();
 
     // Debug
+#if NL_DEBUG_ENABLED
     {
         local_persist float TimedLoop;
     	local_persist int frameCount;
@@ -47,6 +46,7 @@ internal_function void run()
     	}
     	frameCount++;
     }
+#endif
 
     app_specific_update(dt);
 

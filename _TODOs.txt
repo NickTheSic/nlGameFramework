@@ -1,3 +1,5 @@
+In Progress: A new new UI and Sprites project. This will consolodate the other projects and allow me a rendering framework that should work I guess!
+
 Next Steps:
 
 Cleanup projects!  I want fewer projects to look through while I try to get this going again :) For myself of course
