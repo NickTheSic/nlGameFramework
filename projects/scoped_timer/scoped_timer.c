@@ -2,8 +2,6 @@
 
 #include "private/win32/nl_win32_include.h"
 
-// TODO: Add an actual timer to the scope timer and thn
-
 typedef struct scope_timer scope_timer;
 struct scope_timer
 {
