@@ -26,6 +26,7 @@ struct colourf
     float NL_COLOUR_STRUCT_LAYOUT;
 };
 
+// NOTE: The following assume a RGBA layout
 #define COLOUR_RED (colour){255,0,0,255}
 #define COLOURF_RED (colourf){1.f,0.f,0.f,1.f}
 

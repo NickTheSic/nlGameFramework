@@ -39,6 +39,9 @@ typedef char button_value_type;
 #define NL_GAMEPAD_X			((button_value_type)0)
 #define NL_GAMEPAD_Y			((button_value_type)0)
 #define NL_GAMEPAD_START	    ((button_value_type)0)
+#define NL_GAMEPAD_LEFT_THUMB   ((button_value_type)0)
+#define NL_GAMEPAD_RIGHT_THUMB  ((button_value_type)0)
+
 
 #else
 #warning No controller input bindings setup
@@ -56,6 +59,8 @@ typedef char button_value_type;
 #define NL_GAMEPAD_X			((button_value_type)0)
 #define NL_GAMEPAD_Y			((button_value_type)0)
 #define NL_GAMEPAD_START	    ((button_value_type)0)
+#define NL_GAMEPAD_LEFT_THUMB   ((button_value_type)0)
+#define NL_GAMEPAD_RIGHT_THUMB  ((button_value_type)0)
 #endif
 
 #endif//__NL_CONTROLLER_BUTTONS_H__

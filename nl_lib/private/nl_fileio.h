@@ -7,7 +7,9 @@
 extern "C" {
 #endif
 
-struct mesh; //* Need to define what my meshes are it seems
+
+//* Need to define what my meshes are it seems. Not super sure if this will stay consistent either
+struct mesh; 
 
 typedef struct file_contents file_contents;
 struct file_contents
