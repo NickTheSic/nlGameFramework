@@ -1,4 +1,0 @@
-#ifndef __NL_REQUEST_WEB_COMMON_H__
-#define __NL_REQUEST_WEB_COMMON_H__
-
-#endif//__NL_REQUEST_WEB_COMMON_H__
