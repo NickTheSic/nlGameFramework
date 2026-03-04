@@ -1,33 +1,34 @@
 #include "nl_lib.h"
 
-typedef struct scope_end scope_end;
-struct scope_end
+// TODO: Add an actual timer to the scope timer and thn
+
+typedef struct scope_timer scope_timer;
+struct scope_timer
 {
     const char* name;
-    
 };
 
-void on_end_scope(scope_end* const se)
+void end_scope_timer(scope_timer* const st)
 {
-    NL_LOG("%s", se->name);
+    NL_LOG("%s", st->name);
 }
 
-#define SCOPED_TEST(label) \
-scope_end scope_##__LINE__ __attribute__((cleanup(on_end_scope))) = {label};
+#define SCOPED_TIMER(label) \
+scope_timer scope_##__LINE__ __attribute__((cleanup(end_scope_timer))) = {label};
 
 void app_specific_init(void)
 {
-    SCOPED_TEST("Called Begin");
+    SCOPED_TIMER("Called Begin");
 
     {
-        SCOPED_TEST("Nest 1");
+        SCOPED_TIMER("Nest 1");
         {
-            SCOPED_TEST("Nest 2");
+            SCOPED_TIMER("Nest 2");
         }
     }
     
     {
-        SCOPED_TEST("Nest 3");
+        SCOPED_TIMER("Nest 3");
     }
 }
 
