@@ -18,8 +18,6 @@ void app_specific_init(void)
         return;
     }
 
-    int width, height, line;
-
     clear_file_read(&font);
 }
 

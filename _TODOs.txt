@@ -1,4 +1,7 @@
+
+In Progress: Font Rendering~
 In Progress: A new new UI and Sprites project. This will consolodate the other projects and allow me a rendering framework that should work I guess!
+
 
 Next Steps:
 
@@ -16,3 +19,4 @@ Need text rendering for some basic UI editor style stuff I want to make for fun
 
 Make reusable rendering object.  So I can batch render sprites and UI with some core code.
     - might also include a common camera setup too
+    
