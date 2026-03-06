@@ -9,6 +9,7 @@
 #include "private/common/nl_random.c"
 
 #include "third_party/stb_image.c"
+#include "third_party/stb_truetype.c"
 
 #include "private/gl/nl_gl_web.c"
 #include "private/gl/nl_renderer_gl_common.c"

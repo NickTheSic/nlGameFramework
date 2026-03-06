@@ -4,12 +4,6 @@
 
 #define PI 3.14159f
 
-#if defined(__GBA__) || defined(__PSX__)
-#define sqrtf(x) x
-#define sinf(x) x
-#define cosf(x) x
-#endif
-
 void create_identity_matrix(mat4x4f* const mat)
 {
     memset(mat, 0, sizeof(mat4x4f));

@@ -19,7 +19,10 @@
 #include "private/common/nl_math.c"
 #include "private/common/nl_memory.c"
 #include "private/common/nl_random.c"
+
 #include "third_party/stb_image.c"
+#include "third_party/stb_truetype.c"
+
 #include "private/null/nl_audio_null.c"
 #include "private/null/nl_deltatime_null.c"
 #include "private/null/nl_gamepad_null.c"
