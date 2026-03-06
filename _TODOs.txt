@@ -20,3 +20,7 @@ Need text rendering for some basic UI editor style stuff I want to make for fun
 Make reusable rendering object.  So I can batch render sprites and UI with some core code.
     - might also include a common camera setup too
     
+
+Cleanup:
+    If I add more third party libraries it might be good to put them in sub folders
+    
