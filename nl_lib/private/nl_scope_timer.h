@@ -16,9 +16,18 @@ struct debug_scope_timer
 double debug_get_system_time();
 void debug_end_scope_timer(debug_scope_timer* const st);
 
+#if defined(__EMSCRIPTEN__)
+
 #define SCOPE_TIMER(label) \
-debug_scope_timer scope_##__LINE__ __attribute__((cleanup(debug_end_scope_timer))) = {label};\
+debug_scope_timer scope_##__LINE__ __attribute__((cleanup(debug_end_scope_timer))) = {label,debug_get_system_time()};
+
+#else
+
+#define SCOPE_TIMER(label) \
+debug_scope_timer scope_##__LINE__ __attribute__((cleanup(debug_end_scope_timer))) = {label,debug_get_system_time()};\
 scope_##__LINE__.ms = debug_get_system_time();
+
+#endif //EMSCRIPTEN
 
 #else
 #define SCOPE_TIMER(label)

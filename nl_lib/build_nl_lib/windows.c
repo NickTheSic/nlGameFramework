@@ -7,8 +7,8 @@
 #include "private/common/nl_memory.c"
 #include "private/common/nl_random.c"
 
-#include "third_party/stb_image.c"
-#include "third_party/stb_truetype.c"
+#include "third_party/stb/stb_image.c"
+#include "third_party/stb/stb_truetype.c"
 
 #include "private/gl/nl_gl_win32.c"
 #include "private/gl/nl_renderer_gl_common.c"

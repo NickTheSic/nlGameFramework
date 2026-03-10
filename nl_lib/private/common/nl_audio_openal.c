@@ -7,8 +7,8 @@
 
 #include <string.h> // for strcmp
 
-#include <third_party/al.h>
-#include <third_party/alc.h>
+#include <third_party/AL/al.h>
+#include <third_party/AL/alc.h>
 
 typedef struct audio_system audio_system;
 struct audio_system

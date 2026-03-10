@@ -18,6 +18,16 @@ void app_specific_init(void)
         return;
     }
 
+    int atlas_width = 0;
+    int atlas_height = 0;
+    //33: ! to 126: ~ (127 is DEL)
+    for (unsigned char c = 33; c < 127; c++)
+    {
+        int ax;
+	    int lsb;
+        stbtt_GetCodepointHMetrics(&info, word[i], &ax, &lsb);
+    }
+
     clear_file_read(&font);
 }
 
