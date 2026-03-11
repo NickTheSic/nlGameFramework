@@ -29,7 +29,7 @@ internal_function void* internal_allocate_memory(size_t size)
 
 internal_function void internal_free_memory(void* ptr)
 {
-    size_t* real_ptr = (size_t*)(ptr-sizeof(size_t));
+    size_t* real_ptr = (size_t*)((char*)ptr-sizeof(size_t));
 
     size_t size = real_ptr[0];
     _ESTIMATED_USED_MEMORY-=size;
