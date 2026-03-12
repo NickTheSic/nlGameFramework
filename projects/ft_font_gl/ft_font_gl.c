@@ -3,35 +3,18 @@
 #include "private/gl/nl_gl.h"
 #include <stddef.h>
 
-#include "nl_mesh.h"
+#include "nl_sprite_renderer.h"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
-typedef struct GlyphData GlyphData;
-
-struct GlyphData
-{
-        v2i size;
-        v2i bearing;
-        float xoffset;        // works for ascii characters
-        unsigned int advance; // works for ascii characters
-};
-
-GlyphData Glyphs[128-33] = {0};
-
-float  DivAtlasWidth = 0;
-float DivAtlasHeight = 0;
 unsigned int FontTexture = 0;
 
-global_variable mesh full = {0};
+global_variable nl_sprite full = {0};
 
 global_variable camera main_cam = {0};
 
 internal_function void winsizecbk(int width, int height)
 {
     create_orthographic_projection(&main_cam.proj_matrix, 0.f, (float)width, 0.f, (float)height, -0.1f, 100.f);
-    set_projection_matrix(&main_cam.proj_matrix.m11);
+    set_projection_matrix(&main_cam.proj_matrix);
 }
 
 
@@ -171,4 +154,4 @@ void app_specific_cleanup(void)
 
 }
 
-#include "nl_mesh_gl.c"
+#include "nl_sprite_renderer_gl.c"
