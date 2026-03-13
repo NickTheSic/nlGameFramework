@@ -1,9 +1,24 @@
 /*** Generic Game Ideas to Further Development of this framework ***/
 
+Snake: 
+- Basic shapes or Sprite Rendering 
+- more of a grid based movement, no physics style collision
+- keyboard input
+- basic audio
+- more complex: specify the next item to get
+
 Breakout:
 - Shape Rendering
 - Basic Collision
 - Text/UI Rendering for points?
+
+Peggle:
+- physics System; 
+--  maybe just balls hitting balls but ball could hit square blocks and roll
+- could render just shapes, sprites for more complex
+- score
+- mouse & keyboard input
+- basic audio
 
 Pong:
 - Need shape Rendering
@@ -14,35 +29,18 @@ Pong:
 - keyboard input
 - basic audio
 
-Snake: 
-- Basic shapes or Sprite Rendering 
-- more of a grid based movement, no physics style collision
-- keyboard input
-- basic audio
-- more complex: specify the next item to get
-
-Peggle:
-- physics System; 
---  maybe just balls hitting balls but ball could hit square blocks and roll
-- could render just shapes, sprites for more complex
-- score
-- mouse & keyboard input
-- basic audio
-
 Tetris:
 - Shape Rendering
 - Score Rendering
 - Randomization
 - Grid based
 
-Shapez/Miner (Auto miner game, make good use of 'equipment' and planning)
-- Shape rendering
-- Grid based logic
--- Cluster based resource 
--- Placing and handling
-- Conveyer belt logic
---- Handle thousands of things??? Or optimize the stuff off screen? 
---- Able to limit items to grid space, each thing moves in jumps
+Classic JRPG Style game:
+- grid based overworld
+- Menu system for battles
+- text for story
+- Interactions
+- shop system
 
 Top Down Racer:
 - physics
@@ -52,20 +50,6 @@ Top Down Racer:
 - text and UI
 - AI 
 
-Bot Battling Game:
--- Arena based Kart game.  Battle friends, get power ups.
--- Probably not in this engine..
-- Multiplayer
-- Physics
-- Pretty much all the basic stuff for a game plus more for multiplayer.
-
-Everything is either AI controlled or controlled by you
-- Lakeview cabin style puzzle game
-- Sprite Render
-- Collision
-- Object Interactions...
-- Lots of stuff, later game idea
-
 Lakeview Cabin style Puzzle game:
 - Sprites
 - Physics
@@ -74,12 +58,21 @@ Lakeview Cabin style Puzzle game:
 -- Timers
 -- Triggers
 
-Class JRPG Style game:
-- grid based overworld
-- Menu system for battles
-- text for story
-- Interactions
-- shop system
+Everything is either AI controlled or controlled by you
+- Lakeview cabin style puzzle game
+- Sprite Render
+- Collision
+- Object Interactions...
+- Lots of stuff, later game idea
+
+Shapez/Miner (Auto miner game, make good use of 'equipment' and planning)
+- Shape rendering
+- Grid based logic
+-- Cluster based resource 
+-- Placing and handling
+- Conveyer belt logic
+--- Handle thousands of things??? Or optimize the stuff off screen? 
+--- Able to limit items to grid space, each thing moves in jumps
 
 
 /*** Game Jams ***/
