@@ -6,6 +6,7 @@ IF NOT EXIST "_build/win32/%1" (mkdir "_build/win32/%1")
 pushd _build\win32\%1
 
 set libs=User32.lib OpenGl32.lib gdi32.lib ole32.lib freetype.lib
+
 :: 5105 - in windows.h  
 :: 4244 - float to int conversions
 :: 4018 - signed unsigned mismatch

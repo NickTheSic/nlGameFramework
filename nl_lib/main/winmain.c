@@ -13,7 +13,11 @@ extern void app_specific_update(double dt);
 extern void app_specific_render(void);
 extern void app_specific_cleanup(void);
 
-
+#if 1
+int main(int arg_count, char** args)
+{
+    NL_UNUSED(arg_count); NL_UNUSED(args);
+#else
 int WinMain(
     HINSTANCE hInstance,
     HINSTANCE hPrevInstance,
@@ -23,7 +27,7 @@ int WinMain(
 {
     NL_UNUSED(hInstance);NL_UNUSED(hPrevInstance);
     NL_UNUSED(lpCmdLine);NL_UNUSED(nShowCmd);
-
+#endif
     if (platform_init() == 0)
     {
         NL_LOG("Failed to initialize platform layer");
