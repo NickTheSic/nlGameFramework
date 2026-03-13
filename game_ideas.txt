@@ -74,6 +74,12 @@ Lakeview Cabin style Puzzle game:
 -- Timers
 -- Triggers
 
+Class JRPG Style game:
+- grid based overworld
+- Menu system for battles
+- text for story
+- Interactions
+- shop system
 
 
 /*** Game Jams ***/
