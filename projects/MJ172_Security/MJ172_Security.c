@@ -55,27 +55,27 @@ internal_function void winsizecbk(int width, int height)
 
 internal_function void load_game_sfx(void)
 {
-    coin_pickup_sfx = load_sound_file("data/sfx/coinPickup.wav");
-    laser_hit_sfx = load_sound_file("data/sfx/laserHit.wav");
-    run_start_sfx = load_sound_file("data/sfx/run.wav");
-    sneak_bgm = load_sound_file("data/sfx/SneakySong.wav");
+    coin_pickup_sfx = load_sound_file("coinPickup.wav");
+    laser_hit_sfx = load_sound_file("laserHit.wav");
+    run_start_sfx = load_sound_file("run.wav");
+    sneak_bgm = load_sound_file("SneakySong.wav");
 }
 
 internal_function void generate_game_sprites(void)
 {
-    load_texture_for_sprite(&laser_base, "data/images/laser_stop.png");
+    load_texture_for_sprite(&laser_base, "laser_stop.png");
     generate_rectangle_simple_sprite(&laser_base, 32, 16);
 
-    load_texture_for_sprite(&laser_top, "data/images/laser_top.png");
+    load_texture_for_sprite(&laser_top, "laser_top.png");
     generate_rectangle_simple_sprite(&laser_top, 32, 16);
 
-    load_texture_for_sprite(&laser_beam, "data/images/ground.png");
+    load_texture_for_sprite(&laser_beam, "ground.png");
     generate_rectangle_simple_sprite(&laser_beam, 32, LASER_DISTANCE);
 
-    load_texture_for_sprite(&man, "data/images/man.png");
+    load_texture_for_sprite(&man, "man.png");
     generate_rectangle_simple_sprite(&man, 32, 64);
 
-    load_texture_for_sprite(&money, "data/images/money.png");
+    load_texture_for_sprite(&money, "money.png");
     generate_rectangle_simple_sprite(&money, 32, 32);
 }
 

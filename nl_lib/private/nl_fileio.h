@@ -24,6 +24,8 @@ void load_from_binary_file(const char* const filename, unsigned int size, char* 
 // returns a pointer to the first '.' found 
 const char* find_file_type_from_name(const char* const filename);
 
+// helper for joining shader name to data/shaders to consolodate the string names I use
+void load_shader_from_data(const char* filename, file_contents* const contents);
 
 #ifdef __cplusplus
 }

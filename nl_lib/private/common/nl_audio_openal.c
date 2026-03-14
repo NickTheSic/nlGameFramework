@@ -57,7 +57,7 @@ internal_function ALuint load_wav_sound(const char* filename)
     }
 
     file_contents sound_file = {0};
-    read_entire_file(filename, &sound_file);
+    load_sound_from_data(filename, &sound_file);
     if (sound_file.size == 0)
     {
         NL_LOG("Unable to open sound file: %s", filename);

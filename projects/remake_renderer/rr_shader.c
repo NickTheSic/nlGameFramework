@@ -7,7 +7,7 @@ unsigned int rr_create_shader_program(void)
 {
     {
         file_contents vs_shader = {0};
-        read_entire_file("data/shaders/rr_shader.vs", &vs_shader);
+        load_shader_from_data("rr_shader.vs", &vs_shader);
         
         rr_vertex_shader_program = glCreateShader(GL_VERTEX_SHADER);
         glShaderSource(rr_vertex_shader_program, 1, (const char**)&vs_shader.content, NULL);
@@ -27,7 +27,7 @@ unsigned int rr_create_shader_program(void)
     
     {
         file_contents fs_shader = {0};
-        read_entire_file("data/shaders/rr_shader.fs", &fs_shader);
+        load_shader_from_data("rr_shader.fs", &fs_shader);
 
         rr_fragment_shader_program = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(rr_fragment_shader_program, 1, (const char**)&fs_shader.content, NULL);

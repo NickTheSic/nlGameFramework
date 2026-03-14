@@ -227,8 +227,11 @@ void load_texture_for_sprite(nl_sprite* const sprite, const char* filename)
 {
     stbi_set_flip_vertically_on_load(1);
 
+    char path[11+23+4] = "data/images/";
+    strcat(path, filename);
+
     int x, y, channel;
-    unsigned char * data = stbi_load(filename, &x, &y, &channel, 4);
+    unsigned char * data = stbi_load(path, &x, &y, &channel, 4);
 
     glTexSubImage2D(GL_TEXTURE_2D, 0,
                     current_texture_x_loaded, 0,

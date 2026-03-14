@@ -80,3 +80,41 @@ const char* find_file_type_from_name(const char* const filename)
 
     return file_type;
 }
+
+#if 1
+#define DBUG_STR_JOIN_LOG NL_LOG("NL_FILEIO: Joining string path as: %s", path);
+#else
+#define DBUG_STR_JOIN_LOG(path)
+#endif
+
+// NOTE: The following functions provide a unique use case for
+// Finding the file extension and then loading as "data/EXT/filename"
+// Would require a named data dir for each.  (March 14/2026)
+
+// NOTE: the path size is:
+// 1. the length of the starting string
+// 2. Estimated max size for my own asset
+// 3. possible file ext length
+
+// Entirely overcomplicated! I still need to add the file ext 
+
+void load_sound_from_data(const char* filename, file_contents* const contents)
+{
+    char path[9+23+4] = "data/sfx/";
+    strcat(path, filename);
+
+    DBUG_STR_JOIN_LOG
+
+    read_entire_file(path, contents);
+}
+
+void load_shader_from_data(const char* filename, file_contents* const contents)
+{
+    char path[13+22+3] = "data/shaders/";
+    strcat(path, filename);
+
+    DBUG_STR_JOIN_LOG
+
+    read_entire_file(path, contents);
+}
+
