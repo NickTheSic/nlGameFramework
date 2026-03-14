@@ -25,11 +25,8 @@ internal_function void load_sprites()
 {
     init_sprite_renderer();
 
-    load_texture_for_sprite(&fish, "data/fish.png");
+    load_texture_for_sprite(&fish, "data/images/fish.png");
     generate_rectangle_simple_sprite(&fish, player_size.x, player_size.y);
-
-    load_texture_for_sprite(&bait, "data/bait.png");
-    generate_rectangle_simple_sprite(&bait, 32, 32);
 }
 
 void app_specific_init(void)
@@ -68,7 +65,6 @@ void app_specific_render(void)
 void app_specific_cleanup(void)
 {
     free_simple_sprite(&fish);
-    free_simple_sprite(&bait);
 }
 
 #include "movement.c"

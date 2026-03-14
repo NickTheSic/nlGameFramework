@@ -1,29 +1,18 @@
 #include "private/gl/nl_gl.h"
 
-
-const char* rr_vertex_shader_code = 
-"#version 330 core\n" 
-"layout (location = 0) in vec3 aPos;\n"
-"void main() {\n"
-"  gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
-
-const char* rr_fragment_shader_code =
-"#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main(){\n"
-"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-"}\0";
-
 unsigned int rr_vertex_shader_program = 0;
 unsigned int rr_fragment_shader_program = 0;
 
 unsigned int rr_create_shader_program(void)
 {
-    rr_vertex_shader_program = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(rr_vertex_shader_program, 1, &rr_vertex_shader_code, NULL);
-    glCompileShader(rr_vertex_shader_program);
     {
+        file_contents vs_shader = {0};
+        read_entire_file("data/shaders/rr_shader.vs", &vs_shader);
+        
+        rr_vertex_shader_program = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(rr_vertex_shader_program, 1, (const char**)&vs_shader.content, NULL);
+        glCompileShader(rr_vertex_shader_program);
+        
         int success = 0;
         char info[512];
         glGetShaderiv(rr_vertex_shader_program, GL_COMPILE_STATUS, &success);
@@ -32,12 +21,18 @@ unsigned int rr_create_shader_program(void)
             glGetShaderInfoLog(rr_vertex_shader_program, 512, NULL, info);
             NL_LOG("Vertex Shader Compilation failed: %s", info);
         }
+        
+        clear_file_read(&vs_shader);
     }
     
-    rr_fragment_shader_program = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(rr_fragment_shader_program, 1, &rr_fragment_shader_code, NULL);
-    glCompileShader(rr_fragment_shader_program);
     {
+        file_contents fs_shader = {0};
+        read_entire_file("data/shaders/rr_shader.fs", &fs_shader);
+
+        rr_fragment_shader_program = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(rr_fragment_shader_program, 1, (const char**)&fs_shader.content, NULL);
+        glCompileShader(rr_fragment_shader_program);
+    
         int success = 0;
         char info[512];
         glGetShaderiv(rr_fragment_shader_program, GL_COMPILE_STATUS, &success);
@@ -46,6 +41,8 @@ unsigned int rr_create_shader_program(void)
             glGetShaderInfoLog(rr_fragment_shader_program, 512, NULL, info);
             NL_LOG("Fragment Shader Compilation failed: %s", info);
         }
+
+        clear_file_read(&fs_shader);
     }
 
     unsigned int local_shader_program = glCreateProgram();

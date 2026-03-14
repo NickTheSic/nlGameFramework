@@ -13,9 +13,9 @@ void init_gameobject(game_object* const object, float width, float height, v2f s
 
 void player_init(game_object* const _player)
 {
-    jump_sound = load_sound_file("data/run.wav");
+    jump_sound = load_sound_file("data/sfx/run.wav");
 
-    init_gameobject(_player, PLAYER_WIDTH, PLAYER_WIDTH, (v2f){100.f,100.f}, "data/thing.png");
+    init_gameobject(_player, PLAYER_WIDTH, PLAYER_WIDTH, (v2f){100.f,100.f}, "data/images/thing.png");
 }
 
 void player_update(double dt, game_object* const _player, player_controller* const _controller)
