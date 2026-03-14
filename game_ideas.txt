@@ -6,11 +6,17 @@ Snake:
 - keyboard input
 - basic audio
 - more complex: specify the next item to get
+- don't really need a dynamic array but maybe pointer linked tail
+- restarting game
+- random locations
+- screen boarder or looping?
 
 Breakout:
 - Shape Rendering
 - Basic Collision
 - Text/UI Rendering for points?
+- restart layout, 
+- maybe multiple layouts that load off disk
 
 Peggle:
 - physics System; 
