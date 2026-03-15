@@ -1,6 +1,6 @@
 #include "nl_lib.h"
 #include "private/gl/nl_gl.h"
-
+#include "third_party/stb/stb_image.h"
 
 float vertices[] = {
      0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
@@ -16,6 +16,7 @@ unsigned int indices[] = {
 unsigned int VAO = 0;
 unsigned int VBO = 0;
 unsigned int EBO = 0;
+unsigned int TextureID = 0;
 
 unsigned int rr_shader_program = 0;
 
@@ -31,6 +32,35 @@ void app_specific_init(void)
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    
+    glGenTextures(1, &TextureID);
+    glBindTexture(GL_TEXTURE_2D, TextureID);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);	
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    int width, height, channels;
+    unsigned char* data = stbi_load("data/images/fish.png", &width, &height, &channels, 0);
+
+    if (data)
+    {
+        glTexImage2D(
+            GL_TEXTURE_2D,
+            0, 
+            GL_RGBA, 
+            width, height, 
+            0, 
+            GL_RGBA, 
+            GL_UNSIGNED_BYTE, 
+            data
+        );
+    }
+
+    stbi_image_free(data);
+
 
     rr_shader_program = load_shader_from_files("rr_shader.vs", "rr_shader.fs");
     
@@ -72,8 +102,13 @@ void app_specific_update(double dt)
 void app_specific_render(void)
 {
     glUseProgram(rr_shader_program);
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, TextureID);
+   
     glBindVertexArray(VAO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+   
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
