@@ -34,6 +34,34 @@ void read_entire_file(const char* filename, file_contents* const contents)
     }
 }
 
+void read_entire_text_file(const char* const filename, file_contents* const contents)
+{
+    FILE* fp = fopen(filename, "r");
+
+    if (fp)
+    {
+        fseek(fp, 0, SEEK_END); // seek to end of file
+        size_t file_size = ftell(fp); // get current file pointer
+        fseek(fp, 0, SEEK_SET);
+
+        contents->size = file_size;
+        contents->content = (unsigned char*)memory_allocate(sizeof(char) * file_size);
+        if (contents->content)
+        {
+            fread(contents->content, file_size, 1, fp);
+        }
+        else 
+        {
+            NL_LOG("NL_FILEIO: Could not allocate memory for Contents");
+        }
+        fclose(fp);
+    }
+    else
+    {
+        NL_LOG("NL_FILEIO: Failed to open file %s", filename);
+    }
+}
+
 void clear_file_read(file_contents* const content)
 {
     memory_free(content->content);
@@ -115,6 +143,6 @@ void load_shader_from_data(const char* filename, file_contents* const contents)
 
     DBUG_STR_JOIN_LOG
 
-    read_entire_file(path, contents);
+    read_entire_text_file(path, contents);
 }
 

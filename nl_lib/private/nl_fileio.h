@@ -15,8 +15,11 @@ struct file_contents
     unsigned char* content;
 };
 
+// binary
 void read_entire_file(const char* const filename, file_contents* const contents);
 void clear_file_read(file_contents* const content);
+
+void read_entire_text_file(const char* const filename, file_contents* const contents);
 
 void save_to_binary_file(const char* const filename, unsigned int size, char* const content);
 void load_from_binary_file(const char* const filename, unsigned int size, char* const dest);
