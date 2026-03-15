@@ -16,7 +16,7 @@ extern "C" {
 #include <stdio.h>
 #define NL_LOG(m,...) fprintf(stdout, m,##__VA_ARGS__); fprintf(stdout, "\n");
 
-#define DO_ONCE(thing) {static int doonce = 1; if (doonce){ doonce = 0; thing; }}
+#define DO_ONCE(thing) {static int local_do_once = 1; if (local_do_once){ local_do_once = 0; thing; }}
 
 #define internal_function static inline
 #define global_variable static
