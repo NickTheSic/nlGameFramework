@@ -18,10 +18,14 @@ Breakout:
 - restart layout, 
 - maybe multiple layouts that load off disk
 
+Collecting Type game:
+- Objects fall from top of screen and you need to move to catch them
+
 Peggle:
 - physics System; 
 --  maybe just balls hitting balls but ball could hit square blocks and roll
 - could render just shapes, sprites for more complex
+-- A Cirlce mesh could assist in physics? Like a physics mesh.
 - score
 - mouse & keyboard input
 - basic audio
