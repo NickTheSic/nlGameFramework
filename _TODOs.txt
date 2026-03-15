@@ -1,11 +1,11 @@
 
-In Progress: Font Rendering~
-In Progress: A new new UI and Sprites project. This will consolodate the other projects and allow me a rendering framework that should work I guess!
+
+In Progress: Remaking a renderer so I have a refresher of OpenGL
 
 
 Next Steps:
 
-Cleanup projects!  I want fewer projects to look through while I try to get this going again :) For myself of course
+Cleanup projects!  I want fewer projects to look through while I try to get this going again
     - this could include make a better way to build the projects so I can hide important test projects inside of a file
 
 Consolodate UI Projects into one
@@ -19,8 +19,4 @@ Need text rendering for some basic UI editor style stuff I want to make for fun
 
 Make reusable rendering object.  So I can batch render sprites and UI with some core code.
     - might also include a common camera setup too
-    
-
-Cleanup:
-    If I add more third party libraries it might be good to put them in sub folders
     
