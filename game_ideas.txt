@@ -28,6 +28,9 @@ Peggle:
 
 Pong:
 - Need shape Rendering
+-- I am doing sprite and text rendering; maybe I add line/shape for this?
+--- I want to now test the linker removing any unused function?  I know I saw it somewhere.  
+--- Would mangle the exe to remove any uncalled function to save on size.  Super side quest
 - Text rendering for score
 - Basic collision
 - Basic UI to select 1 or 2 players
@@ -64,13 +67,6 @@ Lakeview Cabin style Puzzle game:
 -- Timers
 -- Triggers
 
-Everything is either AI controlled or controlled by you
-- Lakeview cabin style puzzle game
-- Sprite Render
-- Collision
-- Object Interactions...
-- Lots of stuff, later game idea
-
 Shapez/Miner (Auto miner game, make good use of 'equipment' and planning)
 - Shape rendering
 - Grid based logic
@@ -82,6 +78,10 @@ Shapez/Miner (Auto miner game, make good use of 'equipment' and planning)
 
 
 /*** Game Jams ***/
+Recurring: 
+    Untitled Jam
+    Portfolio Builders Jam
+    Mini Jam
 
 
 
@@ -102,35 +102,6 @@ https://itch.io/jam/animatronic-nightmare:  Maybe join a team and make a little 
 --- - Scene chaning?
 --- - 3D animation!  (And 2D)
 
-https://itch.io/jam/palette-cleanser-jam: Could have been a cooler, simpler project to get back into things
-
-https://itch.io/jam/diversion-summer-jam-2025: 
-- Try new Version Control; maybe win money?
-
-https://itch.io/jam/cfac-x-micro-2: Probably too soon; but mirco jam is one I have heard of before
-
-https://itch.io/jam/mini-jam-192-overflow:  
-Done a mini jam before, maybe I won't have time
-Overflow makes me think of water or liquid - not sure where the game might be
-Building a dam?  Removing water from a place
-
-https://itch.io/jam/untitled-game-jam-115: Heard of the jam before.  Probably can't use this framework as is at the moment
-
-https://itch.io/jam/portfolio-builders-jam-week-35 & https://itch.io/jam/portfolio-builders-jam-week-36: 
-Could be another weekly game jam? 
-Could be fun to meet weekly goals
-Could update off itch things too?
-
-https://itch.io/jam/uplifting-game-jam-for-artists-cash-prizes-doubled: 
-Seemed a little more narrative driven, if only cus it needs to be 'uplifting'
-Could help force me into text rendering and text handling?
-Might actually be good, would need to update UI too; if only for drawing a box to show text in
-But I wanted to look into localization stuff on my own.  Maybe a narrative game would help
-
-https://itch.io/jam/unpolished-jam-2-75-prize-pool:
-Could be more chill? 
-Make a quick project to see how it feels to work with my framework after so long?
-
 https://itch.io/jam/mini-jame-gam-40:
 Theme: Annoying Ads
 Special Object: Turrent
@@ -141,11 +112,13 @@ Game Framework needs:
     Text Rendering Possibly. Could get away with just different Images
     UI Buttons. Need to click to open or close
     UI System: Need to show UI on screen infront of the game
+    - The close button could have been in each corner? Or anywhere?
+    - Would just be annoying if anything actually popp'd up or if you got taken away from the game
 
 https://itch.io/jam/gigajam2:
 Main Themes: Elemental Power; Mystical Creatures; Lost Realms
 Secondary Themes: Origin of Power; Dimensional Conflict; Harmony; Dual Energy; Temporal Flow; Fragments
-A pokemon/spectrobes clone.
+A monster collecting game.
 Mystical Creatures with Elemental Power. All creatures have a base engery but can use fragments to add a dual energy
 Dimensional Conflict between lot Realms? One contains the origin of Power
 
