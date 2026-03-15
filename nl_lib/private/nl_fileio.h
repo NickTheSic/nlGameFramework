@@ -26,6 +26,7 @@ const char* find_file_type_from_name(const char* const filename);
 
 // helper for joining shader name to data/shaders to consolodate the string names I use
 void load_shader_from_data(const char* filename, file_contents* const contents);
+void load_sound_from_data(const char* filename, file_contents* const contents);
 
 #ifdef __cplusplus
 }

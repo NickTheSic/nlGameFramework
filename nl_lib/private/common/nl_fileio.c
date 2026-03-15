@@ -24,13 +24,13 @@ void read_entire_file(const char* filename, file_contents* const contents)
         }
         else 
         {
-            NL_LOG("Could not allocate memory for Contents");
+            NL_LOG("NL_FILEIO: Could not allocate memory for Contents");
         }
         fclose(fp);
     }
     else
     {
-        NL_LOG("Failed to open file %s", filename);
+        NL_LOG("NL_FILEIO: Failed to open file %s", filename);
     }
 }
 
