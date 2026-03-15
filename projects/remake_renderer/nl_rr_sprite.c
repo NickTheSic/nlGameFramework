@@ -46,7 +46,7 @@ void create_simple_rr_sprite(const char* filename, nl_rr_sprite* const rr_sprite
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rr_sprite->EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-
+    // Need to bind this items here.  each attribute takes is managed by a VBO
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
