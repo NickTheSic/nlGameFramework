@@ -33,7 +33,7 @@ void app_specific_init(void)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    rr_shader_program = rr_create_shader_program();
+    rr_shader_program =  load_shader_from_files("rr_shader.vs", "rr_shader.fs");
     
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);

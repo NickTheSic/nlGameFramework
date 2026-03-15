@@ -48,7 +48,7 @@ internal_function unsigned int compile_shader_source(int type, const char* code)
     return shader;
 }
 
-unsigned int create_shader_program(const char* vertex_shader_code, const char* fragment_shader_code)
+unsigned int create_shader_program(const char* const vertex_shader_code, const char* const fragment_shader_code)
 {
     unsigned int vertex_shader = compile_shader_source(GL_VERTEX_SHADER, vertex_shader_code);
     if (vertex_shader == 0)
@@ -76,6 +76,24 @@ unsigned int create_shader_program(const char* vertex_shader_code, const char* f
     return local_shader_program; 
 }
 
+unsigned int load_shader_from_files(const char* vertex_shader_filename, const char* fragment_shader_filename)
+{
+    unsigned int shader_program_result = 0;
+
+    file_contents vs_content = {0};
+    file_contents fs_content = {0};
+
+    load_shader_from_data(vertex_shader_filename, &vs_content);
+    load_shader_from_data(fragment_shader_filename, &fs_content);
+
+    shader_program_result = create_shader_program((const char*)vs_content.content, (const char*)fs_content.content);
+
+    clear_file_read(&vs_content);
+    clear_file_read(&fs_content);
+
+    return shader_program_result;
+}
+
 void use_shader_program(unsigned int shader_program)
 {
     glUseProgram(shader_program);
@@ -96,7 +114,7 @@ unsigned int get_uniform_loc(unsigned int program, const char* name)
     return glGetUniformLocation(program, name);
 }
 
-void set_uniform_mat4x4f(unsigned int loc, const float* mat)
+void set_uniform_mat4x4f(unsigned int loc, const float* const mat)
 {
     glUniformMatrix4fv(loc, 1, GL_FALSE, mat);
 }
