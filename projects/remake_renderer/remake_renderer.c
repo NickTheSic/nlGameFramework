@@ -3,10 +3,10 @@
 
 
 float vertices[] = {
-     0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-     0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-    -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
-    -0.5f,  0.5f, 0.0f, 0.8f, 0.2f, 0.8f,
+     0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+     0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+    -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+    -0.5f,  0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 0.0f, 1.0f 
 };
 unsigned int indices[] = {
     0, 1, 3,
@@ -16,6 +16,7 @@ unsigned int indices[] = {
 unsigned int VAO = 0;
 unsigned int VBO = 0;
 unsigned int EBO = 0;
+
 unsigned int rr_shader_program = 0;
 
 void app_specific_init(void)
@@ -33,11 +34,14 @@ void app_specific_init(void)
 
     rr_shader_program = load_shader_from_files("rr_shader.vs", "rr_shader.fs");
     
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(3*sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(3*sizeof(float)));
     glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
+    glEnableVertexAttribArray(2);
 
     glUseProgram(rr_shader_program);
 

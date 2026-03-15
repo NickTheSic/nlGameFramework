@@ -86,7 +86,7 @@ unsigned int load_shader_from_files(const char* vertex_shader_filename, const ch
     load_shader_from_data(vertex_shader_filename, &vs_content);
     load_shader_from_data(fragment_shader_filename, &fs_content);
 
-    shader_program_result = create_shader_program((const char*)vs_content.content, (const char*)fs_content.content);
+    shader_program_result = create_shader_program((char*)vs_content.content, (char*)fs_content.content);
 
     clear_file_read(&vs_content);
     clear_file_read(&fs_content);
