@@ -44,11 +44,16 @@ void read_entire_text_file(const char* const filename, file_contents* const cont
         size_t file_size = ftell(fp); // get current file pointer
         fseek(fp, 0, SEEK_SET);
 
+        // add 1 for the null terminated end of file
+        file_size += 1;
+
         contents->size = file_size;
         contents->content = (unsigned char*)memory_allocate(sizeof(char) * file_size);
         if (contents->content)
         {
-            fread(contents->content, file_size, 1, fp);
+            // Don't actually read the file size since that may be out of scope
+            fread(contents->content, file_size-1, 1, fp);
+            contents->content[file_size-1] = '\0';
         }
         else 
         {
