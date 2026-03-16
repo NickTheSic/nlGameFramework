@@ -31,6 +31,7 @@ void create_simple_rr_sprite(const char* filename, nl_rr_sprite* const rr_sprite
     glBindVertexArray(rr_sprite->VAO);
     glBindBuffer(GL_ARRAY_BUFFER, rr_sprite->VBO);
 
+    // So the sprites are different sizes
     local_persist int test;
     if (0 == test)
     {
