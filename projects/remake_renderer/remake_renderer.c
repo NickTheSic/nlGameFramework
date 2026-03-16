@@ -1,7 +1,4 @@
 #include "nl_lib.h"
-#include "private/gl/nl_gl.h"
-#include "third_party/stb/stb_image.h"
-
 #include "nl_rr_sprite.h"
 
 nl_rr_sprite SPRITE = {0};
@@ -15,35 +12,17 @@ void app_specific_init(void)
     create_simple_rr_sprite("data/images/thing.png", &TWO);
 
     rr_shader_program = load_shader_from_files("rr_shader.vs", "rr_shader.fs");
-    glUseProgram(rr_shader_program);
-
-    glClearColor(0.2f,0.3f,0.8f,1.0f);
+    use_shader_program(rr_shader_program);
 }
 
 void app_specific_update(double dt)
 {
-    local_persist int triggered;
-    local_persist float timer;
-    timer += dt;
-
-    if (timer > 2.0f)
-    {
-        timer -= 2.0f;
-        if (!triggered){
-            triggered = 1;
-            set_wireframe_rendering();
-        }
-        else
-        {
-            triggered = 0;
-            set_fill_rendering();
-        }
-    }
+    NL_UNUSED(dt);
 }
 
 void app_specific_render(void)
 {
-    glUseProgram(rr_shader_program);
+    use_shader_program(rr_shader_program);
     
     render_simple_rr_sprite(&SPRITE);
     render_simple_rr_sprite(&TWO);
@@ -51,7 +30,10 @@ void app_specific_render(void)
 
 void app_specific_cleanup(void)
 {
+    free_simple_rr_sprite(&SPRITE);
+    free_simple_rr_sprite(&TWO);
 
+    free_shader_program(rr_shader_program);
 }
 
 

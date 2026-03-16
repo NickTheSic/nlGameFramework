@@ -1,5 +1,6 @@
 #include "nl_rr_sprite.h"
 #include "private/gl/nl_gl.h"
+#include "third_party/stb/stb_image.h"
 
 float vertices1[] = {
     -0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
@@ -7,7 +8,6 @@ float vertices1[] = {
      0.3f,  0.3f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
     -0.3f,  0.3f, 0.0f, 0.8f, 0.2f, 0.8f, 0.0f, 1.0f,
 };
-
 
 float vertices2[] = {
     -0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
@@ -65,8 +65,9 @@ void create_simple_rr_sprite(const char* filename, nl_rr_sprite* const rr_sprite
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    int width, height, channels;
+
     stbi_set_flip_vertically_on_load(1);
+    int width, height, channels;
     unsigned char* data = stbi_load(filename, &width, &height, &channels, 0);
 
     if (data)
@@ -110,4 +111,14 @@ void render_simple_rr_sprite(nl_rr_sprite* const spr)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindVertexArray(0);
+}
+
+void free_simple_rr_sprite(nl_rr_sprite* const sprite)
+{
+    glDeleteBuffers(1, &sprite->EBO);
+    glDeleteBuffers(1, &sprite->VBO);
+    glDeleteVertexArrays(1, &sprite->VAO);
+    glDeleteTextures(1, &sprite->TextureID);
+
+    sprite->EBO = sprite->VBO = sprite->VAO = sprite->TextureID = 0;
 }

@@ -12,5 +12,6 @@ struct nl_rr_sprite
 
 void create_simple_rr_sprite(const char* filename, nl_rr_sprite* const sprite);
 void render_simple_rr_sprite(nl_rr_sprite* const spr);
+void free_simple_rr_sprite(nl_rr_sprite* const sprite);
 
 #endif//__NL_RR_SPRITE_H__
