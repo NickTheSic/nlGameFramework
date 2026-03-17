@@ -115,13 +115,6 @@ const char* find_file_type_from_name(const char* const filename)
 }
 
 
-#if 1
-#define NL_DEBUG_STR_JOIN_LOG NL_LOG("NL_FILEIO: Joining string path as: %s", path);
-#define NL_DEBUG_VERIFY_STR_LENGTH(str1, str2, max) {if (strlen(str1)+strlen(str2)>max){NL_LOG("NL_FILEIO: String size of joined string is greater than the max!"); return;}}
-#else
-#define NL_DEBUG_STR_JOIN_LOG(path)
-#define NL_DEBUG_VERIFY_STR_LENGTH
-#endif
 
 // NOTE: The following functions provide a unique use case for
 // Finding the file extension and then loading as "data/EXT/filename"
@@ -133,6 +126,14 @@ const char* find_file_type_from_name(const char* const filename)
 // 3. possible file ext length
 
 // Entirely overcomplicated! I still need to add the file ext 
+
+#if 1
+#define NL_DEBUG_STR_JOIN_LOG NL_LOG("NL_FILEIO: Joining string path as: %s", path);
+#define NL_DEBUG_VERIFY_STR_LENGTH(str1, str2, max) {if (strlen(str1)+strlen(str2)>max){NL_LOG("NL_FILEIO: String size of joined string is greater than the max!"); return;}}
+#else
+#define NL_DEBUG_STR_JOIN_LOG(path)
+#define NL_DEBUG_VERIFY_STR_LENGTH // This causes a crash at this time, which would be nice to avoid but at least I leave a log message so I can find it!
+#endif
 
 #define PATH_JOIN_BUFFER_SIZE 64
 
