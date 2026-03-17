@@ -36,6 +36,19 @@ internal_function void internal_free_memory(void* ptr)
 
     free(real_ptr);
 }
+
+void _basic_memory_leak_check(void)
+{
+    if (_ESTIMATED_USED_MEMORY == 0)
+    {
+        NL_LOG("No Memory Leak Detected");
+    }
+    else
+    {
+        NL_LOG("Memory Leak! Leaked Memory Amount: %zi", _ESTIMATED_USED_MEMORY);
+    }
+}
+
 #else
 internal_function void* internal_allocate_memory(size_t size)
 {
@@ -55,7 +68,6 @@ internal_function void* internal_allocate_memory(size_t size)
 void *_memory_allocate(size_t size)
 {
     void* memory = (void*)internal_allocate_memory(size);
-
     memset(memory, 0, size);
     return memory;
 }
@@ -64,16 +76,4 @@ void *_memory_allocate(size_t size)
 void memory_free(void* memory)
 {
     internal_free_memory(memory);
-}
-
-void basic_memory_leak_check(void)
-{
-    if (_ESTIMATED_USED_MEMORY == 0)
-    {
-        NL_LOG("No Memory Leak Detected");
-    }
-    else
-    {
-        NL_LOG("Memory Leak! Leaked Memory Amount: %zi", _ESTIMATED_USED_MEMORY);
-    }
 }

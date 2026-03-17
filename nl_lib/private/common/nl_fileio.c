@@ -114,11 +114,7 @@ const char* find_file_type_from_name(const char* const filename)
     return file_type;
 }
 
-#if 1
-#define DBUG_STR_JOIN_LOG NL_LOG("NL_FILEIO: Joining string path as: %s", path);
-#else
-#define DBUG_STR_JOIN_LOG(path)
-#endif
+
 
 // NOTE: The following functions provide a unique use case for
 // Finding the file extension and then loading as "data/EXT/filename"
@@ -131,23 +127,44 @@ const char* find_file_type_from_name(const char* const filename)
 
 // Entirely overcomplicated! I still need to add the file ext 
 
+//NOTE: March 2026: Debug verify string length may crash the program but at least I have it show in the log before hand!
+
+#if NL_DEBUG_ENABLED
+#define NL_DEBUG_STR_JOIN_LOG(); NL_LOG("NL_FILEIO: Joining string path as: %s", path);
+#define NL_DEBUG_VERIFY_STR_LENGTH(str1, str2, max); {if (strlen(str1)+strlen(str2)>max){NL_LOG("NL_FILEIO: String size of joined string is greater than the max!: %s", str1); return;}}
+#else
+#define NL_DEBUG_STR_JOIN_LOG(path);
+#define NL_DEBUG_VERIFY_STR_LENGTH(str1, str2, max);
+#endif
+
+#define NL_PATH_JOIN_BUFFER_SIZE 64
+
 void load_sound_from_data(const char* filename, file_contents* const contents)
 {
-    char path[9+23+4] = "data/sfx/";
-    strcat(path, filename);
+    char path[NL_PATH_JOIN_BUFFER_SIZE] = "data/sfx/";
 
-    DBUG_STR_JOIN_LOG
+    NL_DEBUG_VERIFY_STR_LENGTH(filename, path, NL_PATH_JOIN_BUFFER_SIZE);
+    
+    strcat(path, filename);
+    NL_DEBUG_STR_JOIN_LOG();
 
     read_entire_file(path, contents);
 }
 
 void load_shader_from_data(const char* filename, file_contents* const contents)
 {
-    char path[13+22+3] = "data/shaders/";
-    strcat(path, filename);
+    char path[NL_PATH_JOIN_BUFFER_SIZE] = "data/shaders/";
 
-    DBUG_STR_JOIN_LOG
+    NL_DEBUG_VERIFY_STR_LENGTH(filename, path, NL_PATH_JOIN_BUFFER_SIZE);
+
+    strcat(path, filename);
+    NL_DEBUG_STR_JOIN_LOG();
 
     read_entire_text_file(path, contents);
 }
 
+// I doubt I would use this elsewhere but this seems like a good practice to undef it
+
+#undef NL_DEBUG_STR_JOIN_LOG
+#undef NL_DEBUG_VERIFY_STR_LENGTH
+#undef NL_PATH_JOIN_BUFFER_SIZE
