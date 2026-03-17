@@ -31,7 +31,7 @@ void app_specific_render()
         {20.0f,80.0f},
         {30.0f, 20.0f},
         {0.0f,0.0f},
-        {0.0f} 
+        (0.0f) 
     };
 
     v2i mouse_pos = get_mouse_position_from_system();
@@ -40,7 +40,7 @@ void app_specific_render()
         {(float)mouse_pos.x, (float)mouse_pos.y},
         {5.0f, 5.0f},
         {0.0f,0.0f},
-        {0.0f} 
+        (0.0f)
     };
 
     add_element_to_render_batch(&ui_batch, &elem1);
