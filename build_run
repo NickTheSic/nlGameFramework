@@ -1,9 +1,22 @@
 #!/usr/bin/env bash
 
-./build_scripts/build_wintux.sh  $1
+if [ "$1" == "web" ]
+then 
+    ./build_scripts/build_web.sh $2
 
-if [ $? -eq 0 ]
+    if [ $? -eq 0 ]
+    then
+        emrun ./_build/web/$2/index.html
+    fi
+fi
+
+if [ "$1" == "wintux" ]
 then
-    wine _build/win32/$1/$1.exe
+    ./build_scripts/build_wintux.sh $2
+
+    if [ $? -eq 0 ]
+    then
+        wine _build/win32/$2/$2.exe
+    fi
 fi
 

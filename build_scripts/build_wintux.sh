@@ -10,4 +10,8 @@ FILES="../../../nl_lib/build_nl_lib.c ../../../projects/$1/$1.c"
 
 x86_64-w64-mingw32-gcc $flags $includes $FILES $libs -o $1.exe
 
+compile_status=$?
+
 popd
+
+(exit $compile_status)
