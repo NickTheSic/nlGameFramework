@@ -12,7 +12,6 @@ void app_specific_init(void)
     create_simple_rr_sprite("thing.png", &TWO);
 
     rr_shader_program = load_shader_from_files("rr_shader.vs", "rr_shader.fs");
-    use_shader_program(rr_shader_program);
 }
 
 void app_specific_update(double dt)
