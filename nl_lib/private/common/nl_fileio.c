@@ -135,13 +135,13 @@ const char* find_file_type_from_name(const char* const filename)
 #define NL_DEBUG_VERIFY_STR_LENGTH // This causes a crash at this time, which would be nice to avoid but at least I leave a log message so I can find it!
 #endif
 
-#define PATH_JOIN_BUFFER_SIZE 64
+#define NL_PATH_JOIN_BUFFER_SIZE 64
 
 void load_sound_from_data(const char* filename, file_contents* const contents)
 {
-    char path[PATH_JOIN_BUFFER_SIZE] = "data/sfx/";
+    char path[NL_PATH_JOIN_BUFFER_SIZE] = "data/sfx/";
 
-    NL_DEBUG_VERIFY_STR_LENGTH(filename, path, PATH_JOIN_BUFFER_SIZE);
+    NL_DEBUG_VERIFY_STR_LENGTH(filename, path, NL_PATH_JOIN_BUFFER_SIZE);
     
     strcat(path, filename);
     NL_DEBUG_STR_JOIN_LOG
@@ -151,9 +151,9 @@ void load_sound_from_data(const char* filename, file_contents* const contents)
 
 void load_shader_from_data(const char* filename, file_contents* const contents)
 {
-    char path[PATH_JOIN_BUFFER_SIZE] = "data/shaders/";
+    char path[NL_PATH_JOIN_BUFFER_SIZE] = "data/shaders/";
 
-    NL_DEBUG_VERIFY_STR_LENGTH(filename, path, PATH_JOIN_BUFFER_SIZE);
+    NL_DEBUG_VERIFY_STR_LENGTH(filename, path, NL_PATH_JOIN_BUFFER_SIZE);
 
     strcat(path, filename);
     NL_DEBUG_STR_JOIN_LOG
@@ -165,3 +165,4 @@ void load_shader_from_data(const char* filename, file_contents* const contents)
 
 #undef NL_DEBUG_STR_JOIN_LOG
 #undef NL_DEBUG_VERIFY_STR_LENGTH
+#undef NL_PATH_JOIN_BUFFER_SIZE
