@@ -2,21 +2,21 @@
 #include "private/gl/nl_gl.h"
 #include "third_party/stb/stb_image.h"
 
-float vertices1[] = {
+global_variable float vertices1[] = {
     -0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
      0.3f, -0.3f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
      0.3f,  0.3f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
     -0.3f,  0.3f, 0.0f, 0.8f, 0.2f, 0.8f, 0.0f, 1.0f,
 };
 
-float vertices2[] = {
+global_variable float vertices2[] = {
     -0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
      0.7f, -0.7f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
      0.7f,  0.7f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
     -0.7f,  0.7f, 0.0f, 0.8f, 0.2f, 0.8f, 0.0f, 1.0f,
 };
 
-unsigned int indices[] = {
+global_variable unsigned int indices[] = {
     0, 1, 3,
     1, 2, 3
 };
@@ -66,10 +66,13 @@ void create_simple_rr_sprite(const char* filename, nl_rr_sprite* const rr_sprite
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
+    
+    char path[64] = "data/images/";
+    strcat(path, filename);
 
     stbi_set_flip_vertically_on_load(1);
     int width, height, channels;
-    unsigned char* data = stbi_load(filename, &width, &height, &channels, 0);
+    unsigned char* data = stbi_load(path, &width, &height, &channels, 0);
 
     if (data)
     {
