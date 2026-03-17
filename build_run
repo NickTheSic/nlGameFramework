@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+./build_scripts/build_wintux.sh  $1
+
+if [ $? -eq 0 ]
+then
+    wine _build/win32/$1/$1.exe
+fi
+

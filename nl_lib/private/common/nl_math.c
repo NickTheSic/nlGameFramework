@@ -334,7 +334,7 @@ v3f v3f_add(const v3f lhs, const v3f rhs)
 v3f v3f_normalize(const v3f vec)
 {
     v3f result = {0};
-    float len = v3f_length_squared(vec);
+    float len = v3f_length(vec);
 
     if (len != 0)
     {
