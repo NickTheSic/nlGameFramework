@@ -127,12 +127,14 @@ const char* find_file_type_from_name(const char* const filename)
 
 // Entirely overcomplicated! I still need to add the file ext 
 
-#if 1
-#define NL_DEBUG_STR_JOIN_LOG NL_LOG("NL_FILEIO: Joining string path as: %s", path);
-#define NL_DEBUG_VERIFY_STR_LENGTH(str1, str2, max) {if (strlen(str1)+strlen(str2)>max){NL_LOG("NL_FILEIO: String size of joined string is greater than the max!"); return;}}
+//NOTE: March 2026: Debug verify string length may crash the program but at least I have it show in the log before hand!
+
+#if NL_DEBUG_ENABLED
+#define NL_DEBUG_STR_JOIN_LOG(); NL_LOG("NL_FILEIO: Joining string path as: %s", path);
+#define NL_DEBUG_VERIFY_STR_LENGTH(str1, str2, max); {if (strlen(str1)+strlen(str2)>max){NL_LOG("NL_FILEIO: String size of joined string is greater than the max!: %s", str1); return;}}
 #else
-#define NL_DEBUG_STR_JOIN_LOG(path)
-#define NL_DEBUG_VERIFY_STR_LENGTH // This causes a crash at this time, which would be nice to avoid but at least I leave a log message so I can find it!
+#define NL_DEBUG_STR_JOIN_LOG(path);
+#define NL_DEBUG_VERIFY_STR_LENGTH(str1, str2, max);
 #endif
 
 #define NL_PATH_JOIN_BUFFER_SIZE 64
@@ -144,7 +146,7 @@ void load_sound_from_data(const char* filename, file_contents* const contents)
     NL_DEBUG_VERIFY_STR_LENGTH(filename, path, NL_PATH_JOIN_BUFFER_SIZE);
     
     strcat(path, filename);
-    NL_DEBUG_STR_JOIN_LOG
+    NL_DEBUG_STR_JOIN_LOG();
 
     read_entire_file(path, contents);
 }
@@ -156,7 +158,7 @@ void load_shader_from_data(const char* filename, file_contents* const contents)
     NL_DEBUG_VERIFY_STR_LENGTH(filename, path, NL_PATH_JOIN_BUFFER_SIZE);
 
     strcat(path, filename);
-    NL_DEBUG_STR_JOIN_LOG
+    NL_DEBUG_STR_JOIN_LOG();
 
     read_entire_text_file(path, contents);
 }

@@ -11,17 +11,17 @@ extern "C" {
 
 #include <stddef.h>
 
+
 void *_memory_allocate(size_t size);
 void memory_free(void* memory);
 
-void basic_memory_leak_check(void); //Used in debug + by main
-
-#define memory_allocate(s) _memory_allocate(s); NL_LOG("memory allocated: %s %d", __FILE__, __LINE__);
-
 #if NL_DEBUG_ENABLED
 # define memory_allocate(s) _memory_allocate(s); NL_LOG("memory allocated: %s %d", __FILE__, __LINE__);
+void _basic_memory_leak_check(void); //Used in debug + by main
+#define basic_memory_leak_check() _basic_memory_leak_check();
 #else
 # define memory_allocate(s) _memory_allocate(s);
+#define basic_memory_leak_check()
 #endif
 
 

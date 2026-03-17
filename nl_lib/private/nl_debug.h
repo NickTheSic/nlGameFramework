@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 
-#define NL_DEBUG_ENABLED 1  // Temporary Solution: It is hard coded on or off here instead of a Config.h per project or a compiler flag
+#define NL_DEBUG_ENABLED 0  // Temporary Solution: It is hard coded on or off here instead of a Config.h per project or a compiler flag
 
 
 //  So I can use the non _s versions of functions for windows
