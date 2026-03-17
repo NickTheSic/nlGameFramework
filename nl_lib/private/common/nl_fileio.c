@@ -161,3 +161,7 @@ void load_shader_from_data(const char* filename, file_contents* const contents)
     read_entire_text_file(path, contents);
 }
 
+// I doubt I would use this elsewhere but this seems like a good practice to undef it
+
+#undef NL_DEBUG_STR_JOIN_LOG
+#undef NL_DEBUG_VERIFY_STR_LENGTH
