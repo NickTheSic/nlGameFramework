@@ -19,3 +19,14 @@ if [ "$1" == "wintux" ]
 then
     ./build_scripts/build_wintux.sh $2
 fi
+
+if [ "$1" == "wintuxlib" ]
+then
+    libs="-luser32 -lopengl32 -lgdi32 -lole32 -lxaudio2_9 -Lnl_lib/libs -lfreetype"
+    flags="-g -O0 --static -c"
+    includes="-Inl_lib -I/usr/x86_64-w64-mingw32/include -Inl_lib/third_party/freetype/include"
+    FILES="nl_lib/build_nl_lib.c"
+
+    x86_64-w64-mingw32-gcc $flags $includes $FILES $libs -o nl_lib.o
+    x86_64-w64-mingw32-ar rcs libnl_lib.a nl_lib.o
+fi

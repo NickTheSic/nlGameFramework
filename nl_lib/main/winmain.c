@@ -1,5 +1,6 @@
 #include "nl_lib.h"
 #include <private/win32/nl_win32_include.h>
+#include "private/nl_debug.h"
 #include "private/nl_deltatime.h" // Only needed by main UNLESS we stop passing DT around and do it more like unity
 #include "private/nl_platform.h" // Only main will use it, and it is just a simple function to initialize the platform
 
@@ -13,7 +14,7 @@ extern void app_specific_update(double dt);
 extern void app_specific_render(void);
 extern void app_specific_cleanup(void);
 
-#if 1
+#if NL_DEBUG_ENABLED
 int main(int arg_count, char** args)
 {
     NL_UNUSED(arg_count); NL_UNUSED(args);
