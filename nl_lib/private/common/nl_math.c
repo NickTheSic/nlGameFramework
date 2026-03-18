@@ -83,7 +83,7 @@ internal_function void scale_matrix_1f(mat4x4f* const mat, float scale)
 }
 #endif
 
-internal_function void rotate_matrix(mat4x4f* const mat, float angle, float x, float y, float z)
+void rotate_matrix(mat4x4f* const mat, float angle, float x, float y, float z)
 {
     float magnitude = sqrtf((x*x)+(y*y)+(z*z));
 
