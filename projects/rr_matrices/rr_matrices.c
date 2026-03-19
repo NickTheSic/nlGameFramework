@@ -8,13 +8,23 @@ camera main_camera = {0};
 
 unsigned int rr_shader_program = 0;
 
+char bCameraUse = 0;
+
 internal_function void winsizecbk(int width, int height)
 {
     float aspect = (float)width / (float)height;
 
     unsigned int projection_loc = get_uniform_loc(rr_shader_program, "uProjection");
-    create_orthographic_projection(&main_camera.proj_matrix, -aspect, aspect, -1, 1, -1.1f, 10.f);
-    //create_perspective_projection(&main_camera.proj_matrix, 45.f, (float)width / (float)height, -1.f, 100.f);
+
+    if (bCameraUse)
+    {
+        NL_LOG("Orthographic projection");
+        create_orthographic_projection(&main_camera.proj_matrix, -aspect, aspect, -1, 1, 0.f, 10.f);
+    } else {
+        NL_LOG("PerspectiveProjection");
+        create_perspective_projection(&main_camera.proj_matrix, 90.f, (float)width / (float)height, -1.f, 100.f);
+    }
+
     set_uniform_mat4x4f(projection_loc, &main_camera.proj_matrix.m11);
 }
 
@@ -40,6 +50,13 @@ void app_specific_init(void)
 void app_specific_update(double dt)
 {
     rotate_matrix(&TWO.transform, 75.f * dt, 0.8f, 0.5f, 1.f);
+
+    if (mouse_button_was_pressed(NL_MOUSE_BUTTON_LEFT))
+    {
+        bCameraUse = !bCameraUse;
+        v2i screen_size = get_screen_size();
+        winsizecbk(screen_size.x, screen_size.y);
+    }
 }
 
 void app_specific_render(void)
