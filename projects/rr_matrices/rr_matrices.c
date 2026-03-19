@@ -9,21 +9,19 @@ camera main_camera = {0};
 unsigned int rr_shader_program = 0;
 
 char bCameraUse = 0;
-float camera_distance = 35.0f;
+v3f camera_position = {0.0f, 0.0f, 35.f};
 
 internal_function void winsizecbk(int width, int height)
 {
     float aspect = (float)width / (float)height;
-
     unsigned int projection_loc = get_uniform_loc(rr_shader_program, "uProjection");
 
-    if (bCameraUse)
-    {
-        NL_LOG("Orthographic projection");
-        create_orthographic_projection(&main_camera.proj_matrix, -aspect*camera_distance, aspect*camera_distance, -camera_distance, camera_distance, 0.f, 100.f);
-    } else {
-        NL_LOG("PerspectiveProjection");
-        create_perspective_projection(&main_camera.proj_matrix, 90.f, (float)width / (float)height, -1.f, 100.f);
+    if (bCameraUse) {
+        const int w_size = aspect*camera_position.z;
+        create_orthographic_projection(&main_camera.proj_matrix, -w_size, w_size, -camera_position.z, camera_position.z, 0.f, 100.f);
+    } 
+    else {
+        create_perspective_projection(&main_camera.proj_matrix, 90.f, aspect, -1.f, 100.f);
     }
 
     set_uniform_mat4x4f(projection_loc, &main_camera.proj_matrix.m11);
@@ -46,7 +44,7 @@ void app_specific_init(void)
     winsizecbk(screen_size.x, screen_size.y);
 
     unsigned int view_loc = get_uniform_loc(rr_shader_program, "uViewMatrix");
-    create_srt_matrix(&main_camera.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,camera_distance});
+    create_srt_matrix(&main_camera.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, camera_position);
     set_uniform_mat4x4f(view_loc, &main_camera.view_matrix.m11);
 }
 
@@ -57,6 +55,57 @@ void app_specific_update(double dt)
     if (mouse_button_was_pressed(NL_MOUSE_BUTTON_LEFT))
     {
         bCameraUse = !bCameraUse;
+        v2i screen_size = get_screen_size();
+        winsizecbk(screen_size.x, screen_size.y);
+    }
+
+    char bTransformDirty = 0;
+
+    int move_delta = get_mouse_scroll_this_frame();
+    if (0 != move_delta)
+    {
+        camera_position.z +=  4.0f * -move_delta * dt;
+        bTransformDirty = 1;
+    }
+
+    if (mouse_button_is_held(NL_MOUSE_BUTTON_RIGHT))
+    {
+        int move_delta = get_mouse_movement_this_frame().y;
+        if (0 != move_delta)
+        {
+            camera_position.z +=  220.0f * move_delta * dt;
+            bTransformDirty = 1;
+        }
+    }
+
+    if (key_is_held(key_w))
+    {
+        camera_position.y -= 120.f * dt;
+        bTransformDirty = 1;
+    }
+    else if (key_is_held(key_s))
+    {
+        camera_position.y += 120.f * dt;
+        bTransformDirty = 1;
+    }
+
+    if (key_is_held(key_d))
+    {
+        camera_position.x -= 120.f * dt;
+        bTransformDirty = 1;
+    }
+    else if (key_is_held(key_a))
+    {
+        camera_position.x += 120.f * dt;
+        bTransformDirty = 1;
+    }
+
+    if (bTransformDirty)
+    {
+        unsigned int view_loc = get_uniform_loc(rr_shader_program, "uViewMatrix");
+        create_srt_matrix(&main_camera.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, camera_position);
+        set_uniform_mat4x4f(view_loc, &main_camera.view_matrix.m11);
+
         v2i screen_size = get_screen_size();
         winsizecbk(screen_size.x, screen_size.y);
     }
