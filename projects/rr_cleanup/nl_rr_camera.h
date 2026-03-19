@@ -25,5 +25,7 @@ void update_camera_view_from_size_callback(nl_rr_camera* const camera, float asp
 
 void project_mouse_to_camera_view(const nl_rr_camera* const cam, v2f* const mouse_pos_on_screen);
 
+void setup_camera_matrices(nl_rr_camera* const camera);
+
 
 #endif//__NL_RR_CAMERA_H__

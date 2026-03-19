@@ -14,9 +14,6 @@ internal_function void winsizecbk(int width, int height)
     float aspect = (float)width / (float)height;
     
     update_camera_view_from_size_callback(&main_camera, aspect);
-    
-    unsigned int projection_loc = get_uniform_loc(rr_shader_program, "uProjection");
-    set_uniform_mat4x4f(projection_loc, &main_camera.proj_matrix.m11);
 }
 
 void app_specific_init(void)
@@ -37,9 +34,7 @@ void app_specific_init(void)
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
 
-    unsigned int view_loc = get_uniform_loc(rr_shader_program, "uViewMatrix");
-    create_srt_matrix(&main_camera.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, main_camera.position);
-    set_uniform_mat4x4f(view_loc, &main_camera.view_matrix.m11);
+    setup_camera_matrices(&main_camera);
 }
 
 void app_specific_update(double dt)
@@ -91,21 +86,12 @@ void app_specific_update(double dt)
         main_camera.position.x += 120.f * dt;
         main_camera.transform_dirty = 1;
     }
-
-    if (main_camera.transform_dirty)
-    {
-        unsigned int view_loc = get_uniform_loc(rr_shader_program, "uViewMatrix");
-        create_srt_matrix(&main_camera.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, main_camera.position);
-        set_uniform_mat4x4f(view_loc, &main_camera.view_matrix.m11);
-
-        v2i screen_size = get_screen_size();
-        winsizecbk(screen_size.x, screen_size.y);
-    }
 }
 
 void app_specific_render(void)
 {
     use_shader_program(rr_shader_program);
+    setup_camera_matrices(&main_camera);
     
     render_simple_rr_sprite(&SPRITE);
     render_simple_rr_sprite(&TWO);

@@ -37,6 +37,8 @@ void initialize_rr_camera_to_default(nl_rr_camera* const camera)
 
 void update_camera_view_from_size_callback(nl_rr_camera* const camera, float aspect_ratio)
 {
+    camera->transform_dirty = 1;
+    
     if (0 == camera->is_perspective) 
     {
         const float camera_z = camera->position.z;
@@ -58,5 +60,22 @@ void project_mouse_to_camera_view(const nl_rr_camera* const camera, v2f* const m
     invert_matrix_4x4_glm(&camera->view_matrix, &inverse);
 
     v2f_mat4_transform(mouse_pos_on_screen, &inverse);
+}
+
+void setup_camera_matrices(nl_rr_camera* const camera)
+{
+    if (0 == camera->transform_dirty)
+    {
+        return;
+    }
+    camera->transform_dirty = 0;
+
+    unsigned int view_loc = get_uniform_loc(rr_shader_program, "uViewMatrix");
+    unsigned int proj_loc = get_uniform_loc(rr_shader_program, "uProjection");
+    
+    create_srt_matrix(&camera->view_matrix, camera->scale, camera->rotation, camera->position);
+    
+    set_uniform_mat4x4f(proj_loc, &camera->proj_matrix.m11);
+    set_uniform_mat4x4f(view_loc, &camera->view_matrix.m11);
 }
 
