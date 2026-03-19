@@ -9,10 +9,11 @@ out vec3 outColour;
 out vec2 outTexCoord;
 
 uniform mat4 uModelTransform;
+uniform mat4 uProjection;
 
 void main() 
 {
-    gl_Position = uModelTransform * vec4(aPos.x, aPos.y, aPos.z, 1.0);
+    gl_Position = uProjection * uModelTransform * vec4(aPos.x, aPos.y, aPos.z, 1.0);
 
     outColour = aColour;
     outTexCoord = aTexCoord;

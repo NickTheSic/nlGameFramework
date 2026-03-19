@@ -20,11 +20,6 @@ extern "C" {
 
 #endif
 
-// Deprecate these as well?  Not general framework use
-extern const char* VIEW_MATRIX_UNIFORM_NAME;
-extern const char* WORLD_MATRIX_UNIFORM_NAME;
-
-
 unsigned int create_shader_program(const char* const vertex_shader_code, const char* const fragment_shader_code);
 void use_shader_program(unsigned int shader_program);
 void free_shader_program(unsigned int shader_program);
@@ -33,14 +28,8 @@ unsigned int create_common_shader_program(void);
 unsigned int load_shader_from_files(const char* vertex_shader_filename, const char* fragment_shader_filename);
 
 unsigned int get_uniform_loc(unsigned int program, const char* name);
-void set_uniform_mat4x4f(unsigned int loc, const float* const mat);
-
-
-
-// Deprecated March 14 2026??  I don't know if I need to continue using this
-const char* get_common_vertex_shader_code(void);
-const char* get_common_fragment_shader_code(void);
-
+//NOTE: Should use the shader program instead of assuming it is bound already
+void set_uniform_mat4x4f(unsigned int loc, const float* const mat); 
 
 #ifdef __cplusplus
 }

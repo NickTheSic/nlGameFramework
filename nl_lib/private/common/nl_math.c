@@ -67,7 +67,7 @@ internal_function void scale_matrix_3f(mat4x4f* const mat, v3f scale)
     mat->m13 *= scale.z; mat->m23 *= scale.z; mat->m33 *= scale.z; mat->m43 *= scale.z;
 }
 
-internal_function void scale_matrix_2f(mat4x4f* const mat, v2f scale)
+void scale_matrix_2f(mat4x4f* const mat, v2f scale)
 {
     mat->m11 *= scale.x; mat->m21 *= scale.x; mat->m31 *= scale.x; mat->m41 *= scale.x;
     mat->m12 *= scale.y; mat->m22 *= scale.y; mat->m32 *= scale.y; mat->m42 *= scale.y;
@@ -129,7 +129,7 @@ internal_function void translate_matrix(mat4x4f* const mat, v3f pos)
     mat->m43 += pos.z;
 }
 
-internal_function void translate_matrix2f(mat4x4f* const mat, v2f pos)
+void translate_matrix2f(mat4x4f* const mat, v2f pos)
 {
     mat->m41 += pos.x;
     mat->m42 += pos.y;

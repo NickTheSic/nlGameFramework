@@ -65,6 +65,8 @@ void create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const
 void create_srt_matrix_from_transform2d(mat4x4f* const mat, transform2d transform);
 
 void rotate_matrix(mat4x4f* const mat, float angle, float x, float y, float z);
+void scale_matrix_2f(mat4x4f* const mat, v2f scale);
+void translate_matrix2f(mat4x4f* const mat, v2f pos);
 
 void matrix_to_matrix_multiplication(mat4x4f* const result, mat4x4f* const o);
 int invert_matrix_4x4(const mat4x4f* const original, mat4x4f* const inverse);

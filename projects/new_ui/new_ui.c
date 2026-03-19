@@ -21,7 +21,7 @@ void app_specific_init(void)
     init_ui_renderer();
     initialize_sprite_atlas();
 
-    man.texture_id = load_sprite("data/man.png");
+    man.texture_id = load_sprite("data/images/man.png");
     generate_rectangle_simple_sprite(&man, 32, 64);
     
     set_window_size_callback(&winsizecbk);
