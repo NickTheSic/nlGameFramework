@@ -1,19 +1,20 @@
 #include "nl_rr_sprite.h"
 #include "private/gl/nl_gl.h"
 #include "third_party/stb/stb_image.h"
+#include <string.h>
 
-global_variable float vertices1[] = {
-    -0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-     0.3f, -0.3f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-     0.3f,  0.3f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-    -0.3f,  0.3f, 0.0f, 0.8f, 0.2f, 0.8f, 0.0f, 1.0f,
+global_variable nl_rr_vertex_data vertices1[] = {
+    {{-0.3f, -0.3f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
+    {{ 0.3f, -0.3f, 0.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}},
+    {{ 0.3f,  0.3f, 0.0f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}},
+    {{-0.3f,  0.3f, 0.0f}, {0.8f, 0.2f, 0.8f}, {0.0f, 1.0f}},
 };
 
-global_variable float vertices2[] = {
-    -0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-     0.7f, -0.7f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-     0.7f,  0.7f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-    -0.7f,  0.7f, 0.0f, 0.8f, 0.2f, 0.8f, 0.0f, 1.0f,
+global_variable nl_rr_vertex_data vertices2[] = {
+    {{-0.7f, -0.7f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
+    {{ 0.7f, -0.7f, 0.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}},
+    {{ 0.7f,  0.7f, 0.0f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}},
+    {{-0.7f,  0.7f, 0.0f}, {0.8f, 0.2f, 0.8f}, {0.0f, 1.0f}},
 };
 
 global_variable unsigned int indices[] = {
@@ -48,13 +49,13 @@ void create_simple_rr_sprite(const char* filename, nl_rr_sprite* const rr_sprite
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // Need to bind this items here.  each attribute takes is managed by a VBO
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(nl_rr_vertex_data), (void*)offsetof(nl_rr_vertex_data, position));
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(3*sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(nl_rr_vertex_data), (void*)offsetof(nl_rr_vertex_data, colour));
     glEnableVertexAttribArray(1);
 
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(nl_rr_vertex_data), (void*)offsetof(nl_rr_vertex_data, uv));
     glEnableVertexAttribArray(2);
 
 
@@ -108,9 +109,10 @@ void render_simple_rr_sprite(nl_rr_sprite* const spr)
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, spr->TextureID);
    
+    unsigned int model_loc = get_uniform_loc(rr_shader_program, "uModelTransform");
+    set_uniform_mat4x4f(model_loc, &spr->transform.m11);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, 0);

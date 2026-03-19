@@ -22,4 +22,9 @@
 #define glPolygonMode        glPolygonModeNV
 #endif
 
+// GL ES doesn't have clamp to border but I was using it.  Maybe shouldn't so I can keep feature parity but I already do this sorta thing above
+#ifndef GL_CLAMP_TO_BORDER 
+#define GL_CLAMP_TO_BORDER GL_CLAMP_TO_EDGE
+#endif
+
 #endif //__NL_GL_WEB_H__

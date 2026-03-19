@@ -1,9 +1,19 @@
 #ifndef __NL_RR_SPRITE_H__
 #define __NL_RR_SPRITE_H__
 
+typedef struct nl_rr_vertex_data nl_rr_vertex_data;
+struct nl_rr_vertex_data
+{
+    v3f position;
+    v3f colour;
+    v2f uv;
+};
+
 typedef struct nl_rr_sprite nl_rr_sprite;
 struct nl_rr_sprite
 {
+    mat4x4f transform;
+
     unsigned int VAO;
     unsigned int VBO;
     unsigned int EBO;
