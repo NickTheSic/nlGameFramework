@@ -31,9 +31,11 @@ internal_function void winsizecbk(int width, int height)
 void app_specific_init(void)
 {
     create_simple_rr_sprite("fish.png", &SPRITE);
+    translate_matrix2f(&SPRITE.transform, (v2f){-0.2f,0.3f});
+    
     create_simple_rr_sprite("thing.png", &TWO);
+    scale_matrix_2f(&TWO.transform, (v2f){0.5f,0.5f});
 
-    //translate_matrix2f(&SPRITE.transform, (v2f){430.0f,100.0f});
     //translate_matrix2f(&TWO.transform, (v2f){230.0f,600.0f});
 
     rr_shader_program = load_shader_from_files("rr_shader_matrices.vs", "rr_shader.fs");

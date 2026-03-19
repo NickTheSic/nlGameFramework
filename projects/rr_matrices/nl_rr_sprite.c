@@ -3,18 +3,11 @@
 #include "third_party/stb/stb_image.h"
 #include <string.h>
 
-global_variable nl_rr_vertex_data vertices1[] = {
-    {{-0.3f, -0.3f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
-    {{ 0.3f, -0.3f, -1.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}},
-    {{ 0.3f,  0.3f, -.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}},
-    {{-0.3f,  0.3f, 0.0f}, {0.8f, 0.2f, 0.8f}, {0.0f, 1.0f}},
-};
-
-global_variable nl_rr_vertex_data vertices2[] = {
-    {{-0.7f, -0.7f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
-    {{ 0.7f, -0.7f, 0.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}},
-    {{ 0.7f,  0.7f, 0.0f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}},
-    {{-0.7f,  0.7f, 0.0f}, {0.8f, 0.2f, 0.8f}, {0.0f, 1.0f}},
+global_variable nl_rr_vertex_data vertices[] = {
+    {{-1.0f, -1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
+    {{ 1.0f, -1.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}},
+    {{ 1.0f,  1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}},
+    {{-1.0f,  1.0f, 0.0f}, {0.8f, 0.2f, 0.8f}, {0.0f, 1.0f}},
 };
 
 global_variable unsigned int indices[] = {
@@ -31,20 +24,8 @@ void create_simple_rr_sprite(const char* filename, nl_rr_sprite* const rr_sprite
     
     glBindVertexArray(rr_sprite->VAO);
     glBindBuffer(GL_ARRAY_BUFFER, rr_sprite->VBO);
-
-    // So the sprites are different sizes
-    local_persist int test;
-    if (0 == test)
-    {
-        test = 1;
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_STATIC_DRAW);
-    }
-    else
-    {
-        test = 0;
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices1), vertices1, GL_STATIC_DRAW);
-    }
-
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rr_sprite->EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
