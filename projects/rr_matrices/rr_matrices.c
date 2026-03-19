@@ -9,6 +9,7 @@ camera main_camera = {0};
 unsigned int rr_shader_program = 0;
 
 char bCameraUse = 0;
+float camera_distance = 35.0f;
 
 internal_function void winsizecbk(int width, int height)
 {
@@ -19,7 +20,7 @@ internal_function void winsizecbk(int width, int height)
     if (bCameraUse)
     {
         NL_LOG("Orthographic projection");
-        create_orthographic_projection(&main_camera.proj_matrix, -aspect, aspect, -1, 1, 0.f, 10.f);
+        create_orthographic_projection(&main_camera.proj_matrix, -aspect*camera_distance, aspect*camera_distance, -camera_distance, camera_distance, 0.f, 100.f);
     } else {
         NL_LOG("PerspectiveProjection");
         create_perspective_projection(&main_camera.proj_matrix, 90.f, (float)width / (float)height, -1.f, 100.f);
@@ -36,17 +37,17 @@ void app_specific_init(void)
     create_simple_rr_sprite("thing.png", &TWO);
     scale_matrix_2f(&TWO.transform, (v2f){0.5f,0.5f});
 
-    //translate_matrix2f(&TWO.transform, (v2f){230.0f,600.0f});
-
     rr_shader_program = load_shader_from_files("rr_shader_matrices.vs", "rr_shader.fs");
     use_shader_program(rr_shader_program);
 
     initialize_camera_to_identity(&main_camera);
-
     set_window_size_callback(&winsizecbk);
-
     v2i screen_size = get_screen_size();
     winsizecbk(screen_size.x, screen_size.y);
+
+    unsigned int view_loc = get_uniform_loc(rr_shader_program, "uViewMatrix");
+    create_srt_matrix(&main_camera.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,camera_distance});
+    set_uniform_mat4x4f(view_loc, &main_camera.view_matrix.m11);
 }
 
 void app_specific_update(double dt)

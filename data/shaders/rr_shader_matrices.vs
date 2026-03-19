@@ -10,10 +10,11 @@ out vec2 outTexCoord;
 
 uniform mat4 uModelTransform;
 uniform mat4 uProjection;
+uniform mat4 uViewMatrix;
 
 void main() 
 {
-    gl_Position = uProjection * uModelTransform * vec4(aPos.x, aPos.y, aPos.z, 1.0);
+    gl_Position = uProjection * uViewMatrix * uModelTransform * vec4(aPos.x, aPos.y, aPos.z, 1.0);
 
     outColour = aColour;
     outTexCoord = aTexCoord;
