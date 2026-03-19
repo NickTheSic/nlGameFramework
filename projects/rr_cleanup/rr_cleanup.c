@@ -53,13 +53,11 @@ void app_specific_update(double dt)
         winsizecbk(screen_size.x, screen_size.y);
     }
 
-    unsigned char bTransformDirty = 0;
-
     int move_delta = get_mouse_scroll_this_frame();
     if (0 != move_delta)
     {
         main_camera.position.z +=  4.0f * -move_delta * dt;
-        bTransformDirty = 1;
+        main_camera.transform_dirty = 1;
     }
 
     if (mouse_button_is_held(NL_MOUSE_BUTTON_RIGHT))
@@ -68,33 +66,33 @@ void app_specific_update(double dt)
         if (0 != move_delta)
         {
             main_camera.position.z +=  220.0f * move_delta * dt;
-            bTransformDirty = 1;
+            main_camera.transform_dirty = 1;
         }
     }
 
     if (key_is_held(key_w))
     {
         main_camera.position.y -= 120.f * dt;
-        bTransformDirty = 1;
+        main_camera.transform_dirty = 1;
     }
     else if (key_is_held(key_s))
     {
         main_camera.position.y += 120.f * dt;
-        bTransformDirty = 1;
+        main_camera.transform_dirty = 1;
     }
 
     if (key_is_held(key_d))
     {
         main_camera.position.x -= 120.f * dt;
-        bTransformDirty = 1;
+        main_camera.transform_dirty = 1;
     }
     else if (key_is_held(key_a))
     {
         main_camera.position.x += 120.f * dt;
-        bTransformDirty = 1;
+        main_camera.transform_dirty = 1;
     }
 
-    if (bTransformDirty)
+    if (main_camera.transform_dirty)
     {
         unsigned int view_loc = get_uniform_loc(rr_shader_program, "uViewMatrix");
         create_srt_matrix(&main_camera.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, main_camera.position);
