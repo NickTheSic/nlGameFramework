@@ -60,6 +60,19 @@ void create_orthographic_projection(mat4x4f* const mat, float left, float right,
     mat->m44 = 1;
 }
 
+void create_perspective_projection(mat4x4f* const mat, float fov, float aspect, float near_z, float far_z)
+{
+    // using GLMs Zero to One Left Hand. LHZO
+    const float tanhalffov = tan(fov * 0.5f);
+    
+    mat->m11 = 1.0f / (aspect * tanhalffov);
+    mat->m22 = 1.0f / tanhalffov;
+    mat->m33 = far_z / (far_z-near_z);
+    mat->m34 = 1;
+    mat->m43 = -(far_z * near_z)/ (far_z - near_z);
+    
+}
+
 internal_function void scale_matrix_3f(mat4x4f* const mat, v3f scale)
 {
     mat->m11 *= scale.x; mat->m21 *= scale.x; mat->m31 *= scale.x; mat->m41 *= scale.x;

@@ -59,6 +59,7 @@ struct mat4x4f
 
 void create_identity_matrix(mat4x4f* const mat);
 void create_orthographic_projection(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z);
+void create_perspective_projection(mat4x4f* const mat, float fov, float aspect, float near_z, float far_z);
 void create_fustrum(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z);
 
 void create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const v3f translation);

@@ -100,7 +100,7 @@ void create_simple_rr_sprite(const char* filename, nl_rr_sprite* const rr_sprite
     glBindVertexArray(0);
 
     create_identity_matrix(&rr_sprite->transform);
-    scale_matrix_2f(&rr_sprite->transform, (v2f){100.0f,100.0f});
+    //scale_matrix_2f(&rr_sprite->transform, (v2f){100.0f,100.0f});
 }
 
 void render_simple_rr_sprite(nl_rr_sprite* const spr)
