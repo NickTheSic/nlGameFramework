@@ -113,11 +113,11 @@ void rotate_matrix(mat4x4f* const mat, float angle, float x, float y, float z)
         float xy = x*y;
         float yz = y*z;
         float zx = z*x;
-        float sin_angle = sinf(angle * PI/180.0f);
+        float sin_angle = sinf(angle * DEG_TO_RAD);
         float xs = x * sin_angle;
         float ys = y * sin_angle;
         float zs = z * sin_angle;
-        float cos_angle = cosf(angle * PI/180.0f);
+        float cos_angle = cosf(angle * DEG_TO_RAD);
         float one_sub_cos = 1.0f - cos_angle;
 
         mat4x4f rot = {0};
@@ -291,8 +291,8 @@ int invert_matrix_4x4_glm(const mat4x4f* const og, mat4x4f* const inverse)
 
 internal_function void rotate2d_roll(mat4x4f* const mat, float angle)
 {
-    float sin_angle = sinf(angle * PI/180.0f);
-    float cos_angle = cosf(angle * PI/180.0f);
+    float sin_angle = sinf(angle * DEG_TO_RAD);
+    float cos_angle = cosf(angle * DEG_TO_RAD);
     mat4x4f rot = {0};
     rot.m11 = cos_angle;
     rot.m12 = -sin_angle;
