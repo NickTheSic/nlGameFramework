@@ -77,6 +77,8 @@ void update_camera(nl_rr_camera* const camera, double dt)
         }
     }
 
+    // These controls do not take rotation into account and that is fine for now
+
     if (key_is_held(camera->controls.up))
     {
         main_camera.position.y -= 120.f * dt;
