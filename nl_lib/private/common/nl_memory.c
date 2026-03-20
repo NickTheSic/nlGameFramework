@@ -45,7 +45,7 @@ void _basic_memory_leak_check(void)
     }
     else
     {
-        NL_LOG("Memory Leak! Leaked Memory Amount: %zi", _ESTIMATED_USED_MEMORY);
+        NL_LOG("Memory Leak! Leaked Memory Amount: %zi  bytes", _ESTIMATED_USED_MEMORY);
     }
 }
 
