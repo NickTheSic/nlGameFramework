@@ -48,11 +48,9 @@ void project_mouse_to_camera_view(const nl_rr_camera* const camera, v2f* const m
     v2f_mat4_transform(mouse_pos_on_screen, &inverse);
 }
 
+// I realistically don't need this type of update for general purpose stuff
 void update_camera(nl_rr_camera* const camera, double dt)
 {
-    main_camera.rotation.y += 50 * dt;
-    main_camera.transform_dirty = 1;
-
     if (mouse_button_was_pressed(NL_MOUSE_BUTTON_LEFT))
     {
         main_camera.is_perspective = !main_camera.is_perspective;
