@@ -11,9 +11,9 @@ unsigned int rr_shader_program = 0;
 
 internal_function void winsizecbk(int width, int height)
 {
-    float aspect = (float)width / (float)height;
-    
-    update_camera_view_from_size_callback(&main_camera, aspect);
+    const float aspect = (float)width / (float)height;
+    main_camera.aspect_ratio = aspect;
+    main_camera.transform_dirty = 1;
 }
 
 void app_specific_init(void)
@@ -41,51 +41,7 @@ void app_specific_update(double dt)
 {
     rotate_matrix(&TWO.transform, 75.f * dt, 0.8f, 0.5f, 1.f);
 
-    if (mouse_button_was_pressed(NL_MOUSE_BUTTON_LEFT))
-    {
-        main_camera.is_perspective = !main_camera.is_perspective;
-        v2i screen_size = get_screen_size();
-        winsizecbk(screen_size.x, screen_size.y);
-    }
-
-    int move_delta = get_mouse_scroll_this_frame();
-    if (0 != move_delta)
-    {
-        main_camera.position.z +=  4.0f * -move_delta * dt;
-        main_camera.transform_dirty = 1;
-    }
-
-    if (mouse_button_is_held(NL_MOUSE_BUTTON_RIGHT))
-    {
-        int move_delta = get_mouse_movement_this_frame().y;
-        if (0 != move_delta)
-        {
-            main_camera.position.z +=  220.0f * move_delta * dt;
-            main_camera.transform_dirty = 1;
-        }
-    }
-
-    if (key_is_held(key_w))
-    {
-        main_camera.position.y -= 120.f * dt;
-        main_camera.transform_dirty = 1;
-    }
-    else if (key_is_held(key_s))
-    {
-        main_camera.position.y += 120.f * dt;
-        main_camera.transform_dirty = 1;
-    }
-
-    if (key_is_held(key_d))
-    {
-        main_camera.position.x -= 120.f * dt;
-        main_camera.transform_dirty = 1;
-    }
-    else if (key_is_held(key_a))
-    {
-        main_camera.position.x += 120.f * dt;
-        main_camera.transform_dirty = 1;
-    }
+    update_camera(&main_camera, dt);
 }
 
 void app_specific_render(void)

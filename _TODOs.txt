@@ -1,4 +1,7 @@
 
+Should start with making a game or a few to see how it feels to use before I settle on anything specific
+
+Should update the input in some way so I can have all controls together; Keyboard, mouse and controller should have some common interface?
 
 In Progress: Remaking a renderer so I have a refresher of OpenGL
 
@@ -19,7 +22,6 @@ Need text rendering for some basic UI editor style stuff I want to make for fun
 
 Make reusable rendering object.  So I can batch render sprites and UI with some core code.
     - might also include a common camera setup too
-    
 
 Idea: UI Batching keeps track of the index into the buffer and I only change one portion of the buffer?
         - 3 Elements, if the second is the only one that changes than I only need to update the part of the buffer
