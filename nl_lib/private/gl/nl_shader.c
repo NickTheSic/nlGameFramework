@@ -133,12 +133,7 @@ void set_uniform_mat4x4f(unsigned int loc, const float* const mat)
     glUniformMatrix4fv(loc, 1, GL_FALSE, mat);
 }
 
-const char* get_common_vertex_shader_code(void)
+void set_uniform_v3f(unsigned int loc, const float* const vec)
 {
-    return common_vert_shader_code;
-}
-
-const char* get_common_fragment_shader_code(void)
-{
-    return common_fragment_shader_code;
+    glUniform3fv(loc, 1, vec);
 }

@@ -9,6 +9,8 @@ const vec2 Pos[4] = vec2[4](
 
 const int Indices[6] = int[6](0,2,1,2,0,3);
 
+uniform mat4 ViewMat;
+uniform vec3 CameraPosition;
 out vec2 WorldPos;
 
 void main()
@@ -16,7 +18,10 @@ void main()
     int Index = Indices[gl_VertexID];
     vec4 vPos = vec4(Pos[Index], 0.0, 1.0);
 
-    gl_Position = vPos;
+    vPos.x += CameraPosition.x;
+    vPos.y += CameraPosition.y;
+
+    gl_Position = ViewMat * vPos;
 
     WorldPos = vPos.xy;
 }
