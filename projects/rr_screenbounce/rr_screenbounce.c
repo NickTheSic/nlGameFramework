@@ -10,17 +10,18 @@ nl_rr_camera main_camera = {0};
 int _width;
 int _height;
 
-float speed = 10;
+float speed = 50;
 v2f direction = {1.0f,1.0f};
 
 unsigned int rr_shader_program = 0;
 
 internal_function void winsizecbk(int width, int height)
 {
-    _width = width;
-    _height = height;
-
     const float aspect = (float)width / (float)height;
+    
+    _width  = (float)width/10.f;
+    _height = (float)height/10.f;
+
     main_camera.aspect_ratio = aspect;
     main_camera.transform_dirty = 1;
 }
@@ -50,15 +51,26 @@ void app_specific_update(double dt)
     TWO.position.x += speed * dt * direction.x;
     TWO.position.y += speed * dt * direction.y;
 
-    if (TWO.position.x + TWO.scale.x > _width || TWO.position.x - TWO.scale.x < -_width)
+    // NL_LOG("X: %f", TWO.position.x);
+
+    if (TWO.position.x + TWO.scale.x > _width) 
     {
-        direction.x *= -1.f;
+        direction.x = -1.f;
+    }
+    else if (TWO.position.x - TWO.scale.x < -_width)
+    {
+        direction.x = 1.f;
     }
 
-    if (TWO.position.y + TWO.scale.y > _height || TWO.position.y - TWO.scale.y < -_height)
+    if (TWO.position.y + TWO.scale.y > 60) 
     {
-        direction.y *= -1.f;
+        direction.y = -1.f;
     }
+    else if (TWO.position.y - TWO.scale.y < -60)
+    {
+        direction.y = 1.f;
+    }
+
 
     create_srt_matrix(&TWO.transform, TWO.scale, TWO.rotation, TWO.position);
 
