@@ -4,9 +4,16 @@ out vec4 FragColor;
 
 in vec2 WorldPos;
 
+uniform float GridMinCellSize = 2.0;
 uniform float gGridCellSize = 0.1;
 uniform vec4 gGridColourThick = vec4(0.0,0.0,0.0,1.0);
 uniform vec4 gGridColourThin  = vec4(0.5,0.5,0.5,1.0);
+
+float log10(float x)
+{
+    float f = log(x) / log(10);
+    return f;
+}
 
 float max2(vec2 vec)
 {
@@ -27,9 +34,15 @@ void main()
     float ly = length(dvy);
 
     vec2 dudv = vec2(lx,ly);
+
+    float l = length(dudv);
+
+    float LOD = max(0.0, log10(l*GridMinCellSize/gGridCellSize) + 1.0);
+    float GridLod0 = gGridCellSize * pow(10, floor(LOD));
+
     dudv *= 4;
 
-    vec2 mod_div_dudv = mod(WorldPos.xy, gGridCellSize) / dudv;
+    vec2 mod_div_dudv = mod(WorldPos.xy, GridLod0) / dudv;
     float Lod0a = max2( vec2(1.0) - abs(satv(mod_div_dudv) * 2.0 - vec2(1.0)) );
  
     vec4 Colour = gGridColourThick;

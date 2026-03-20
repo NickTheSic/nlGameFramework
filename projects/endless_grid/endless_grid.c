@@ -13,17 +13,21 @@ v3f camera_position = {0.f,0.f,0.f};
 unsigned int ViewMat;
 unsigned int CameraPosition;
 
+unsigned int zero_quad;
+
 internal_function void winsizecbk(int width, int height)
 {
     float aspect = (float)width / (float)height;
 
-    create_orthographic_projection(&endless_grid_view, -aspect, aspect, -1.0f, 1.0f, 0.f, 100.f);
+    create_orthographic_projection(&endless_grid_view, -1.0f, 1.0f, -aspect, aspect, -10.0f, 1000.0f);
     set_uniform_mat4x4f(ViewMat, &endless_grid_view.m11);
 }
 
 void app_specific_init(void)
 {
     set_window_size_callback(winsizecbk);
+
+    zero_quad = load_shader_from_files("zero_quad.vs", "zero_quad.fs");
 
     endless_grid_shader_program = load_shader_from_files("endless_grid_2d.vs", "endless_grid_2d.fs");
     use_shader_program(endless_grid_shader_program);
@@ -65,6 +69,15 @@ void app_specific_update(double dt)
         bTransformDirty = 1;
     }
 
+    if (key_is_held(key_up))
+    {
+        camera_position.z += dt;
+    }
+    else if (key_is_held(key_down))
+    {
+        camera_position.z -= dt;
+    }
+
     if (bTransformDirty)
     {
         unsigned int CameraPosition = get_uniform_loc(endless_grid_shader_program, "CameraPosition");
@@ -75,6 +88,9 @@ void app_specific_update(double dt)
 void app_specific_render(void)
 {
     use_shader_program(endless_grid_shader_program);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+
+    use_shader_program(zero_quad);
     glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
