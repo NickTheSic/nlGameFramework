@@ -9,7 +9,12 @@ Snake:
 - don't really need a dynamic array but maybe pointer linked tail
 - restarting game
 - random locations
-- screen boarder or looping?
+- screen border or looping?
+
+Jezzball:
+- Free moving Objects
+- grid aligned cubes
+- filling in captured squares and area
 
 Breakout:
 - Shape Rendering
