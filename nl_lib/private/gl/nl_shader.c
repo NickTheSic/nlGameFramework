@@ -70,8 +70,22 @@ unsigned int create_shader_program(const char* const vertex_shader_code, const c
     glAttachShader(local_shader_program, fragment_shader);
     glLinkProgram(local_shader_program);
 
+    int success=0;
+    glGetProgramiv(local_shader_program, GL_LINK_STATUS, &success);
+    if (!success)
+    {
+        char info_log[512];
+        glGetShaderInfoLog(local_shader_program, 512, NULL, info_log);
+        NL_LOG("Error Linking shader: %s\n", info_log);
+        
+        glDeleteShader(vertex_shader);
+        glDeleteShader(fragment_shader);
+
+        return 0;
+    }
+    
     glDeleteShader(vertex_shader);
-    glDeleteShader(fragment_shader); 
+    glDeleteShader(fragment_shader);
 
     return local_shader_program; 
 }

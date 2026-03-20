@@ -17,19 +17,19 @@ unsigned int rr_shader_program = 0;
 
 internal_function void winsizecbk(int width, int height)
 {
-    const float aspect = (float)width / (float)height;
-    
-    _width  = (float)width/10.f;
-    _height = (float)height/10.f;
+    _width  = width;
+    _height = height;
 
-    main_camera.aspect_ratio = aspect;
+    main_camera.width = width;
+    main_camera.height = height;
+
     main_camera.transform_dirty = 1;
 }
 
 void app_specific_init(void)
 {
     create_simple_rr_sprite("thing.png", &TWO);
-    scale_matrix_2f(&TWO.transform, (v2f){0.5f,0.5f});
+    TWO.scale = (v3f){300.f,30.f, 0.0f};
 
     rr_shader_program = load_shader_from_files("rr_shader_matrices.vs", "rr_shader.fs");
     use_shader_program(rr_shader_program);
@@ -51,13 +51,11 @@ void app_specific_update(double dt)
     TWO.position.x += speed * dt * direction.x;
     TWO.position.y += speed * dt * direction.y;
 
-    // NL_LOG("X: %f", TWO.position.x);
-
     if (TWO.position.x + TWO.scale.x > _width) 
     {
         direction.x = -1.f;
     }
-    else if (TWO.position.x - TWO.scale.x < -_width)
+    else if (TWO.position.x - TWO.scale.x < 0)
     {
         direction.x = 1.f;
     }
@@ -70,7 +68,6 @@ void app_specific_update(double dt)
     {
         direction.y = 1.f;
     }
-
 
     create_srt_matrix(&TWO.transform, TWO.scale, TWO.rotation, TWO.position);
 

@@ -19,10 +19,9 @@ struct nl_rr_camera
     v3f position;
     v3f scale;
     v3f rotation;
-    
-    float near_z;
-    float far_z;
-    float aspect_ratio;
+
+    float width;
+    float height;
 
     nl_rr_camera_controls controls;
 
