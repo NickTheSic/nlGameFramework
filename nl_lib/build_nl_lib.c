@@ -30,7 +30,6 @@
 #include "private/null/nl_renderer_null.c"
 #include "private/null/nl_scope_timer_null.c"
 #include "private/null/nl_shader_null.c"
-#include "private/null/nl_vertex_attrib_null.c"
 #include "private/null/nl_window_null.c"
 
 #endif // Platform
