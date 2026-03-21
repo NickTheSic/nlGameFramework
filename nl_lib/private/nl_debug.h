@@ -31,13 +31,22 @@ extern "C" {
 #define DEBUG_RANDOM_BACKGROUND_COLOUR set_background_colour_4f(random_float_in_range(0.0f,1.0f),random_float_in_range(0.0f,1.0f),random_float_in_range(0.0f,1.0f),1.0f);
 
 #if NL_DEBUG_ENABLED
+
+# ifdef _WIN32
+#  define NL_DEBUG_BREAK __debugbreak()
+# else
+#  define NL_DEBUG_BREAK
+# endif
+
 # define NL_UNIMPLEMENTED_FUNC DO_ONCE(NL_LOG("Unimplemented Function %s in %s", __FUNCTION__, __FILE__););
 # define NL_DEPRECATED_FUNC(replace) DO_ONCE(NL_LOG("Deprecated Function %s in %s, replace with %s", __FUNCTION__, __FILE__, replace););
 # define NL_UNUSED(x) (void)(x); DO_ONCE(NL_LOG("variable %s is not being used in %s", #x, __FUNCTION__););
+# define NL_ASSERT(x, m,...) {if(!(x)){NL_LOG(m,##__VA_ARGS__); NL_DEBUG_BREAK;}}
 #else
 # define NL_UNIMPLEMENTED_FUNC
 # define NL_DEPRECATED_FUNC(replace)
 # define NL_UNUSED(x) (void)(x);
+# define NL_ASSERT(x)
 #endif
 
 
