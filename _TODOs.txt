@@ -22,6 +22,9 @@ Work on a game to know if it feels right to use!
 
 Refactor / Cleanup / Reorganize
 
+- Could put my scripts into Scipt folder, like dev utility scripts
+- Publish scripts require 7z and butler to push to itch
+
 
 /////////////////////////////////////////////////////////////////
 //                     Things to Look Into!                    //
