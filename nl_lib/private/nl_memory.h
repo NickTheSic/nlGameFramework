@@ -11,6 +11,11 @@ extern "C" {
 // TODO: This was a wrapper around malloc and free so I could make my own memory allocator in the future
 // Maybe I want to consider VirtualAlloc on windows and do the Handmade Hero stuff?
 
+// verbose names? Just in case? 
+#define KB(x) ((unsigned long long)1024*x)
+#define MB(x) ((unsigned long long)1024*KB(x))
+#define GB(x) ((unsigned long long)1024*MB(x))
+
 
 typedef struct nl_bump_allocator nl_bump_allocator;
 struct nl_bump_allocator
@@ -26,9 +31,10 @@ void free_bump_allocator(nl_bump_allocator* allocator);
 char* bump_alloc(nl_bump_allocator* allocator, size_t size);
 
 // create a global transient allocator located in nl_memory.c
-//void create_global_transient_bump_allocator(size_t capacity);
-//// this will auto flush the global transient bump allocator!  Nothing is safe
-//void *global_transient_bump_allocate(size_t size);
+void create_global_transient_bump_allocator(size_t capacity);
+void free_global_transient_bump_allocator();
+// this will auto flush the global transient bump allocator!  Nothing is safe
+void *global_transient_bump_allocate(size_t size);
 
 
 void *_memory_allocate(size_t size);

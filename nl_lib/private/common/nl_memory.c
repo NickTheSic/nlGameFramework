@@ -81,7 +81,6 @@ void memory_free(void* memory)
     internal_free_memory(memory);
 }
 
-
 void make_bump_allocator(nl_bump_allocator* allocator, size_t capacity)
 {
     allocator->memory = (char*)memory_allocate(capacity); // calls malloc and sets to 0
@@ -110,6 +109,7 @@ void free_bump_allocator(nl_bump_allocator* allocator)
     allocator->memory = 0;
 }
 
+//TODO: Memory align the allocation
 char* bump_alloc(nl_bump_allocator* allocator, size_t size)
 {
     if (allocator->used + size > allocator->capacity)
@@ -125,3 +125,38 @@ char* bump_alloc(nl_bump_allocator* allocator, size_t size)
     return chunk;
 }
 
+global_variable nl_bump_allocator global_transient_bump_allocator;
+
+void create_global_transient_bump_allocator(size_t capacity)
+{
+    make_bump_allocator(&global_transient_bump_allocator, capacity);
+}
+
+void *global_transient_bump_allocate(size_t size)
+{
+    if (size > global_transient_bump_allocator.capacity)
+    {
+        // NOTE: Is this a good idea?
+        NL_LOG("NL_MEMORY: Transient bump allocator requesting size %d when capacity is %d", size, global_transient_bump_allocator.capacity);
+        free_bump_allocator(&global_transient_bump_allocator);
+        make_bump_allocator(&global_transient_bump_allocator, size);
+        NL_LOG("NL_MEMORY: Transient bump allocator resized to size %d. capacity is %d", size, global_transient_bump_allocator.capacity);
+    }
+
+    if (global_transient_bump_allocator.used + size > global_transient_bump_allocator.capacity)
+    {
+        NL_LOG("NL_MEMORY: Global transient bump allocator was full!  Flushing");
+        flush_bump_allocator(&global_transient_bump_allocator);
+    }
+
+    char* chunk = global_transient_bump_allocator.memory + global_transient_bump_allocator.used;
+
+    global_transient_bump_allocator.used += size;
+
+    return chunk;
+}
+
+void free_global_transient_bump_allocator()
+{
+    free_bump_allocator(&global_transient_bump_allocator);
+}
