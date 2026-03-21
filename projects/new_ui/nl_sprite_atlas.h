@@ -28,6 +28,6 @@ void cleanup_sprite_atlas(void);
 sprite_handle load_sprite(const char* name);
 
 void bind_sprite_atlas_texture(void);
-const texture_data get_texture_for_handle(sprite_handle handle);
+texture_data get_texture_for_handle(sprite_handle handle);
 
 #endif//__NL_SPRITE_ATLAS_H__

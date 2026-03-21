@@ -105,7 +105,7 @@ void bind_sprite_atlas_texture(void)
     glBindTexture(GL_TEXTURE_2D, sprite_atlas.texture_id);
 }
 
-const texture_data get_texture_for_handle(sprite_handle handle)
+texture_data get_texture_for_handle(sprite_handle handle)
 {
     return sprite_atlas.textures[handle];
 }
