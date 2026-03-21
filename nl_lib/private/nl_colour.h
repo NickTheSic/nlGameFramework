@@ -27,16 +27,16 @@ struct colourf
 };
 
 // NOTE: The following assume a RGBA layout
-#define COLOUR_RED (colour){255,0,0,255}
+#define COLOUR_RED (colour){.r=255,.g=0,.b=0,.a=255}
 #define COLOURF_RED (colourf){1.f,0.f,0.f,1.f}
 
-#define COLOUR_GREEN (colour){0,255,0,255}
+#define COLOUR_GREEN (colour){.r=0,.g=255,.b=0,.a=255}
 #define COLOURF_GREEN (colourf){0.f,1.f,0.f,1.f}
 
-#define COLOUR_BLUE (colour){0,0,255,255}
+#define COLOUR_BLUE (colour){.r=0,.g=0,.b=255,.a=255}
 #define COLOURF_BLUE (colourf){0.f,0.f,1.f,1.f}
 
-#define COLOUR_WHITE (colour){255,255,255,255}
+#define COLOUR_WHITE (colour){.r=255,.g=255,.b=255,.a=255}
 #define COLOURF_WHITE (colourf){1.f,1.f,1.f,1.f}
 
 #endif//__NL_COLOUR_H__

@@ -13,7 +13,6 @@ global_variable float camera_pos_x = 0.f;
 global_variable float camera_pos_y = 0.f;
 
 global_variable v2f mouse_pos = {0};
-global_variable v2i grid_coords = {0};
 
 global_variable float square_size = 50.0f;
 #define square_grid_length 5

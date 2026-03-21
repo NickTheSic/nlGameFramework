@@ -16,8 +16,6 @@ unsigned int zero_quad;
 
 internal_function void winsizecbk(int width, int height)
 {
-    float aspect = (float)width / (float)height;
-
     float _w = width/2.f;
     float _h = height/2.f;
 

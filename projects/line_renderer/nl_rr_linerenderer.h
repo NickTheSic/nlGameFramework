@@ -17,9 +17,9 @@ struct nl_rr_linerenderer
     int max_vertices;
     int num_vertices;
 
-    int vao;
-    int vbo;
-    int shader;
+    unsigned int vao;
+    unsigned int vbo;
+    unsigned int shader;
 };
 
 void init_line_renderer(nl_rr_linerenderer* const renderer);
