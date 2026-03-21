@@ -7,5 +7,5 @@ fi
 
 if [ "$1" == "html" ]
 then 
-    ./publish_scripts/publish_html.sh $2
+    ./scripts/publish_html.sh $2
 fi

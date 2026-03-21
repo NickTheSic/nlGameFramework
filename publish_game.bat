@@ -14,12 +14,12 @@ IF "%2"=="" (
 :: This is what I do while participating in game jams so I don't have to leave my editor 
 
 IF /I %1==win (
-call "publish_scripts/publish_win" %2
+call "scripts/publish_win" %2
 goto publish_success
 )
 
 IF /I %1==html (
-call "publish_scripts/publish_html" %2
+call "scripts/publish_html" %2
 goto publish_success
 )
 

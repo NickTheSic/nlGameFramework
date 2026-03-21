@@ -3,7 +3,7 @@
 DATA="--preload-file data"
 
 includes="-Inl_lib -Iprojects/$1"
-shell_file="--shell-file build_scripts/MinimalShell.html"
+shell_file="--shell-file scripts/MinimalShell.html"
 flags="-Wall -Wextra -sWASM=1 -sALLOW_MEMORY_GROWTH=1 -sMAX_WEBGL_VERSION=2 -sMIN_WEBGL_VERSION=2 -sFULL_ES3 -sFULL_ES2"
 
 dist_flags="-g"

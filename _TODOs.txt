@@ -23,10 +23,10 @@ Work on a game to know if it feels right to use!
 Refactor / Cleanup / Reorganize
 
 - My platform layer is still an abstraction layer, platform init calls all the other inits. I could make them the same or remove it
-- Could put my scripts into Scipt folder, like dev utility scripts
 - Publish scripts require 7z and butler to push to itch
 - This file, game ideas could be in sub folder
 - Maybe look into building wintux and adding the exe icon
+- MinimalShell for emscripten is in scripts but it could be in res? 
 
 - Refactor code for using Transient Bump Allocator?  
     - It seemed like a great idea but when I load an audio file I keep it compared to a shader that I free after compiling

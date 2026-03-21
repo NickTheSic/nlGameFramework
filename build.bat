@@ -13,12 +13,12 @@ IF "%2"=="" (
 IF NOT EXIST _build/NUL mkdir _build
 
 IF /I %1==win (
-    call "build_scripts/build_win.bat" %2
+    call "scripts/build_win.bat" %2
     goto compile_hit
 )
 
 IF /I %1==web (
-    call "build_scripts/build_web" %2 
+    call "scripts/build_web" %2 
     @echo off
     goto compile_hit
 )
