@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void read_entire_file(const char* filename, file_contents* const contents)
+void read_entire_file(const char* filename, file_contents* const contents, nl_bump_allocator* const allocator)
 {
     FILE* fp = fopen(filename, "rb");
 
@@ -16,7 +16,7 @@ void read_entire_file(const char* filename, file_contents* const contents)
         fseek(fp, 0, SEEK_SET);
 
         contents->size = file_size;
-        contents->content = (unsigned char*)memory_allocate(sizeof(char) * file_size + 1);
+        contents->content = (unsigned char*)bump_alloc(allocator, sizeof(char) * file_size + 1);
         if (contents->content)
         {
             fread(contents->content, file_size, 1, fp);
@@ -36,7 +36,7 @@ void read_entire_file(const char* filename, file_contents* const contents)
 
 void clear_file_read(file_contents* const content)
 {
-    memory_free(content->content);
+    //memory_free(content->content);
     
     content->size = 0;
     content->content = 0;
@@ -106,7 +106,7 @@ const char* find_file_type_from_name(const char* const filename)
 
 #define NL_PATH_JOIN_BUFFER_SIZE 64
 
-void load_sound_from_data(const char* filename, file_contents* const contents)
+void load_sound_from_data(const char* filename, file_contents* const contents, nl_bump_allocator* const allocator)
 {
     char path[NL_PATH_JOIN_BUFFER_SIZE] = "data/sfx/";
 
@@ -115,10 +115,10 @@ void load_sound_from_data(const char* filename, file_contents* const contents)
     strcat(path, filename);
     NL_DEBUG_STR_JOIN_LOG();
 
-    read_entire_file(path, contents);
+    read_entire_file(path, contents, allocator);
 }
 
-void load_shader_from_data(const char* filename, file_contents* const contents)
+void load_shader_from_data(const char* filename, file_contents* const contents, nl_bump_allocator* const allocator)
 {
     char path[NL_PATH_JOIN_BUFFER_SIZE] = "data/shaders/";
 
@@ -127,7 +127,7 @@ void load_shader_from_data(const char* filename, file_contents* const contents)
     strcat(path, filename);
     NL_DEBUG_STR_JOIN_LOG();
 
-    read_entire_file(path, contents);
+    read_entire_file(path, contents, allocator);
 }
 
 // I doubt I would use this elsewhere but this seems like a good practice to undef it

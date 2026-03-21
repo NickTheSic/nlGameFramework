@@ -126,3 +126,30 @@ char* bump_alloc(nl_bump_allocator* allocator, size_t size)
 
     return chunk;
 }
+
+global_variable nl_bump_allocator global_transient_bump_allocator;
+global_variable nl_bump_allocator global_temporary_bump_allocator;
+
+void initialize_global_bump_allocators(size_t transient, size_t temporary)
+{
+    NL_LOG("Allocating global bump allocators! %zu transient bufffer and %zu temporary", transient, temporary);
+
+    make_bump_allocator(&global_transient_bump_allocator, transient);
+    make_bump_allocator(&global_temporary_bump_allocator, temporary);
+}
+
+void free_global_bump_allocators()
+{
+    free_bump_allocator(&global_transient_bump_allocator);
+    free_bump_allocator(&global_temporary_bump_allocator);
+}
+
+nl_bump_allocator* get_transient_bump_allocator()
+{
+    return &global_transient_bump_allocator;
+}
+
+nl_bump_allocator* get_temporary_bump_allocator()
+{
+    return &global_temporary_bump_allocator;
+}

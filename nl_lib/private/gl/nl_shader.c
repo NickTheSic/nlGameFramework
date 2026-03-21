@@ -71,13 +71,14 @@ unsigned int load_shader_from_files(const char* vertex_shader_filename, const ch
     file_contents vs_content = {0};
     file_contents fs_content = {0};
 
-    load_shader_from_data(vertex_shader_filename, &vs_content);
-    load_shader_from_data(fragment_shader_filename, &fs_content);
+    load_shader_from_data(vertex_shader_filename, &vs_content, get_temporary_bump_allocator());
+    load_shader_from_data(fragment_shader_filename, &fs_content, get_temporary_bump_allocator());
 
     shader_program_result = create_shader_program((char*)vs_content.content, (char*)fs_content.content);
 
     clear_file_read(&vs_content);
     clear_file_read(&fs_content);
+    flush_bump_allocator(get_temporary_bump_allocator());
 
     return shader_program_result;
 }

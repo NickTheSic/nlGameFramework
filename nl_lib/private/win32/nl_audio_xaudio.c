@@ -130,7 +130,7 @@ int init_audio_system(void)
 	    NL_LOG("CoInitialize returned S_Failed but this can be caused by a previous call to the function so I am continuing execution of init_audio");
     }
 
-    local_xaudio_system = (xaudio_audio_system*)memory_allocate(sizeof(xaudio_audio_system));
+    local_xaudio_system = (xaudio_audio_system*)bump_alloc(get_transient_bump_allocator(), sizeof(xaudio_audio_system));
     if (0 == local_xaudio_system)
     {
         NL_LOG("Unable to allocate space for the local xaudio system");
@@ -178,11 +178,6 @@ void cleanup_audio_system(void)
 
     for (int i = 0; i < MAX_SOUND_BUFFERS; ++i)
     {
-        if (local_xaudio_system->loaded_sounds[i].data != 0)
-        {
-            memory_free(local_xaudio_system->loaded_sounds[i].data);
-        }
-
         if (local_xaudio_system->xaudio_voices[i] != 0)
         {
             IXAudio2SourceVoice_DestroyVoice(local_xaudio_system->xaudio_voices[i]);
@@ -198,7 +193,6 @@ void cleanup_audio_system(void)
 	{
 		IXAudio2_Release(local_xaudio_system->xaudio_engine);
 	}
-    memory_free(local_xaudio_system);
 
 	CoUninitialize();
 }
@@ -213,7 +207,7 @@ internal_function unsigned int load_wav_sound(const char* filename)
     }
 
     file_contents sound_file = {0};
-    load_sound_from_data(filename, &sound_file);
+    load_sound_from_data(filename, &sound_file, get_temporary_bump_allocator());
     if (sound_file.size == 0)
     {
         NL_LOG("Unable to find sound file: %s", filename);
@@ -225,11 +219,12 @@ internal_function unsigned int load_wav_sound(const char* filename)
     wav_file_header* const header = (wav_file_header* const)(sound_file.content);
     xaudio_loaded_sound* const sound = &local_xaudio_system->loaded_sounds[current_voice];
 
-    sound->data = memory_allocate(header->data_size);
+    sound->data = bump_alloc(get_transient_bump_allocator(), header->data_size);
     if (!sound->data)
     {
     	NL_LOG("unable to allocate data for xaudio sound %s", filename);
         clear_file_read(&sound_file);
+        flush_bump_allocator(get_temporary_bump_allocator());
         return NL_INVALID_SOUND;
     }
     
@@ -245,6 +240,7 @@ internal_function unsigned int load_wav_sound(const char* filename)
     sound->format.cbSize          = 0;                      /* The count in bytes of the size of*/
 
     clear_file_read(&sound_file);
+    flush_bump_allocator(get_temporary_bump_allocator());
 
     HRESULT source_result = IXAudio2_CreateSourceVoice
     (

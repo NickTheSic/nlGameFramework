@@ -129,10 +129,10 @@ internal_function void generate_simple_sprite_using_vertices_and_indices(nl_spri
     const size_t vertices_data_size = sizeof(sprite_vertex_data) * vertice_count;
     const size_t indice_data_size = indice_count * sizeof(unsigned int);
 
-    simple_sprite->vertices = (sprite_vertex_data*)memory_allocate(vertices_data_size);
+    simple_sprite->vertices = (sprite_vertex_data*)bump_alloc(get_transient_bump_allocator(), vertices_data_size);
     memcpy(simple_sprite->vertices, vertices, vertices_data_size);
 
-    simple_sprite->indices = (unsigned int*)memory_allocate(indice_data_size);
+    simple_sprite->indices = (unsigned int*)bump_alloc(get_transient_bump_allocator(), indice_data_size);
     memcpy(simple_sprite->indices, indices, indice_data_size);
 
     simple_sprite->vertice_count = vertice_count;
