@@ -5,7 +5,6 @@
 //https://www.youtube.com/watch?v=RqrkVmj-ntM
 
 unsigned int endless_grid_shader_program;
-unsigned int endless_grid_vao;
 
 // a reason to have a global camera and a scale, rotation and position separate?
 mat4x4f endless_grid_view;
@@ -19,7 +18,11 @@ internal_function void winsizecbk(int width, int height)
 {
     float aspect = (float)width / (float)height;
 
-    create_orthographic_projection(&endless_grid_view, -1.0f, 1.0f, -aspect, aspect, -10.0f, 1000.0f);
+    float _w = width/2.f;
+    float _h = height/2.f;
+
+    use_shader_program(endless_grid_shader_program);
+    create_orthographic_projection(&endless_grid_view, -_w, _w, -_h, _h, -10.0f, 1000.0f);
     set_uniform_mat4x4f(ViewMat, &endless_grid_view.m11);
 }
 
@@ -80,6 +83,7 @@ void app_specific_update(double dt)
 
     if (bTransformDirty)
     {
+        use_shader_program(endless_grid_shader_program);
         unsigned int CameraPosition = get_uniform_loc(endless_grid_shader_program, "CameraPosition");
         set_uniform_v3f(CameraPosition, &camera_position.x);
     }
@@ -96,5 +100,4 @@ void app_specific_render(void)
 
 void app_specific_cleanup(void)
 {
-    glDeleteVertexArrays(1, &endless_grid_vao);
 }
