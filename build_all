@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+
+build()
+{
+    ./build wintux $1
+    if [ $? -ne 0 ]
+    then
+        exit "1"
+    fi
+}
+
+build basic_editor
+build endless_grid
+build line_renderer
+build metroidvania
+build MJ172_Security
+build new_ui
+build remake_renderer
+build rr_matrices
+

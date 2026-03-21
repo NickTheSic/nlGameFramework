@@ -1,7 +1,6 @@
 #include <private/nl_fileio.h>
 #include <private/nl_memory.h>
 #include <private/nl_debug.h>
-#include <private/nl_vertex_data.h>
 
 #include <stdio.h>
 #include <string.h>

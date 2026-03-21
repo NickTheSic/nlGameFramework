@@ -14,7 +14,6 @@
 #include "private/gl/nl_renderer_gl_common.c"
 #include "private/gl/nl_renderer_gl_win32.c"
 #include "private/gl/nl_shader.c"
-#include "private/gl/nl_vertex_attrib_gl.c"
 
 #include "private/win32/nl_audio_xaudio.c"
 #include "private/win32/nl_deltatime_win32.c"
