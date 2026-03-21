@@ -28,6 +28,10 @@ Refactor / Cleanup / Reorganize
 - This file, game ideas could be in sub folder
 - Maybe look into building wintux and adding the exe icon
 
+- Refactor code for using Transient Bump Allocator?  
+    - It seemed like a great idea but when I load an audio file I keep it compared to a shader that I free after compiling
+    - Probably should look into arena allocations and figure this out if I want to keep it
+
 
 /////////////////////////////////////////////////////////////////
 //                     Things to Look Into!                    //
@@ -63,19 +67,6 @@ struct Mesh
     int indice_count;
     int vertice_count;
 };
-
-
-Idea: Bump allocator for transient/temporary storage.  
-      Reduce memory allocations on things I allocate and free within a short period, such as shaders, images 
-      Originally saw this in Cakez77 Celeste Remake; probably more info out there
-
-struct BumpAllocator
-{
-    size_t capacity;
-    size_t used;
-    char* memory;
-};
-
 
 Do I really want to do a dll and hot reloading?  I am firmly in the NO side right now since I am still figuring things out
 
