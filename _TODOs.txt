@@ -24,6 +24,8 @@ Refactor / Cleanup / Reorganize
 
 - Could put my scripts into Scipt folder, like dev utility scripts
 - Publish scripts require 7z and butler to push to itch
+- This file, game ideas could be in sub folder
+- Maybe look into building wintux and adding the exe icon
 
 
 /////////////////////////////////////////////////////////////////
