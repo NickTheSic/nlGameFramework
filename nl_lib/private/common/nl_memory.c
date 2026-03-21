@@ -109,10 +109,12 @@ void free_bump_allocator(nl_bump_allocator* allocator)
     allocator->memory = 0;
 }
 
-//TODO: Memory align the allocation
 char* bump_alloc(nl_bump_allocator* allocator, size_t size)
 {
-    if (allocator->used + size > allocator->capacity)
+    // Basic alignedment to an 16 bit boundary?  I have to figure out if this is good or not
+    size_t aligned_size = (size+15) & ~15;
+
+    if (allocator->used + aligned_size > allocator->capacity)
     {
         NL_LOG("Bump Allocator: Unable to allocate we are full");
         return 0;
@@ -120,7 +122,7 @@ char* bump_alloc(nl_bump_allocator* allocator, size_t size)
 
     char* chunk = allocator->memory + allocator->used;
 
-    allocator->used += size;
+    allocator->used += aligned_size;
 
     return chunk;
 }

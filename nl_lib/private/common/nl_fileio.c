@@ -16,43 +16,11 @@ void read_entire_file(const char* filename, file_contents* const contents)
         fseek(fp, 0, SEEK_SET);
 
         contents->size = file_size;
-        contents->content = (unsigned char*)memory_allocate(sizeof(char) * file_size);
+        contents->content = (unsigned char*)memory_allocate(sizeof(char) * file_size + 1);
         if (contents->content)
         {
             fread(contents->content, file_size, 1, fp);
-        }
-        else 
-        {
-            NL_LOG("NL_FILEIO: Could not allocate memory for Contents");
-        }
-        fclose(fp);
-    }
-    else
-    {
-        NL_LOG("NL_FILEIO: Failed to open file %s", filename);
-    }
-}
-
-void read_entire_text_file(const char* const filename, file_contents* const contents)
-{
-    FILE* fp = fopen(filename, "r");
-
-    if (fp)
-    {
-        fseek(fp, 0, SEEK_END); // seek to end of file
-        size_t file_size = ftell(fp); // get current file pointer
-        fseek(fp, 0, SEEK_SET);
-
-        // add 1 for the null terminated end of file
-        file_size += 1;
-
-        contents->size = file_size;
-        contents->content = (unsigned char*)memory_allocate(sizeof(char) * file_size);
-        if (contents->content)
-        {
-            // Don't actually read the file size since that may be out of scope
-            fread(contents->content, file_size-1, 1, fp);
-            contents->content[file_size-1] = '\0';
+            contents->content[file_size] = 0;
         }
         else 
         {
@@ -80,7 +48,7 @@ void save_to_binary_file(const char* const filename, unsigned int size, char* co
 
     if (fp)
     {
-        fwrite(contents, 1, size, fp);
+        fwrite(contents, size, 1, fp);
         fclose(fp);
     }
 }
@@ -91,7 +59,7 @@ void load_from_binary_file(const char* const filename, unsigned int size, char* 
     
     if (fp)
     {
-        fread(dest, 1, size, fp);
+        fread(dest, size, 1, fp);
         fclose(fp);
     }
 }
@@ -159,7 +127,7 @@ void load_shader_from_data(const char* filename, file_contents* const contents)
     strcat(path, filename);
     NL_DEBUG_STR_JOIN_LOG();
 
-    read_entire_text_file(path, contents);
+    read_entire_file(path, contents);
 }
 
 // I doubt I would use this elsewhere but this seems like a good practice to undef it

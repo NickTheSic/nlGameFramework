@@ -21,9 +21,9 @@ extern "C" {
 typedef struct nl_bump_allocator nl_bump_allocator;
 struct nl_bump_allocator
 {
+    char* memory;
     size_t capacity;
     size_t used;
-    char* memory;
 };
 
 void make_bump_allocator(nl_bump_allocator* allocator, size_t capacity);
