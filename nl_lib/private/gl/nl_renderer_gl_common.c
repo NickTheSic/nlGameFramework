@@ -13,6 +13,10 @@ int initialize_renderer_subsystem()
     glEnable( GL_BLEND );
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    //NOTE: The following makes my sprites not show as they overlap on the Z, both being 0
+    //glEnable(GL_DEPTH_TEST);
+    //glDepthFunc(GL_LESS);
+
     return 1;
 }
 

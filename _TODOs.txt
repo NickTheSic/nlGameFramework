@@ -1,29 +1,75 @@
 
-Should start with making a game or a few to see how it feels to use before I settle on anything specific
+/////////////////////////////////////////////////////////////////
+//                       In Progress                           //
+/////////////////////////////////////////////////////////////////
 
-Should update the input in some way so I can have all controls together; Keyboard, mouse and controller should have some common interface?
+Immediate: Endless Grid, Sprite Rendering, Camera updates
+Purpose: See grid and have reference, need sprites for games
+Want to consolodate a camera system.  If I chose only 2D maybe I can streamline stuff
 
-In Progress: Remaking a renderer so I have a refresher of OpenGL
+
+/////////////////////////////////////////////////////////////////
+//                   Needs to be done                          //
+/////////////////////////////////////////////////////////////////
+
+Work on a game to know if it feels right to use!
+
+'Effecient' Sprite rendering
+    - Batching together draw calls
+    - puting images together in a spritesheet
 
 
-Next Steps:
 
-Cleanup projects!  I want fewer projects to look through while I try to get this going again
-    - this could include make a better way to build the projects so I can hide important test projects inside of a file
+Refactor / Cleanup / Reorganize
 
-Consolodate UI Projects into one
-    - Batch Render Images
-    - Batch Text
-    - Anchor Points
-    - Can update the UI as I need in the future
-        - Dynamic Sized Boxes
 
-Need text rendering for some basic UI editor style stuff I want to make for fun
+/////////////////////////////////////////////////////////////////
+//                     Things to Look Into!                    //
+/////////////////////////////////////////////////////////////////
 
-Make reusable rendering object.  So I can batch render sprites and UI with some core code.
-    - might also include a common camera setup too
+Open GL Depth Testing:
+    - Can always draw my UI after my Game, and debug stuff in between
 
-Idea: UI Batching keeps track of the index into the buffer and I only change one portion of the buffer?
-        - 3 Elements, if the second is the only one that changes than I only need to update the part of the buffer
+How important PixelFormatDescriptor is:
+    - I have a 31 bit Depth, 1 bit stencil buffer.  I saw a 24 Bit depth, and 8 bit Alpha in a Cakez77 video
+
+The importance of cleaning up the 'library' to remove old, deprecated or unused functionality
+    rewrite main files?  
+    - Do I consolodate down to 1 main function or keep it as is
+    - If I keep it as is, what functions are important to the 'game'
+
+
+
+/////////////////////////////////////////////////////////////////
+//             Things to Consider Implementing                 //
+/////////////////////////////////////////////////////////////////
 
 Idea: Allocate 1 memory block per object and let other pointers index into the main block.  Reduces the amount of allocations!
+        Use Case: Mesh Struct where Indices and Positions can be part of 1 object
+        From the Jonothan Blow introduction for a new language where he shows this as an example saying @joint_memory would be a neat concept
+
+struct Mesh
+{
+    void *memory; // Maybe a char*
+    vector3 *positions; // points to memory
+    unsigned int *indices; // points to memory after the positions
+
+    int indice_count;
+    int vertice_count;
+};
+
+
+Idea: Bump allocator for transient/temporary storage.  
+      Reduce memory allocations on things I allocate and free within a short period, such as shaders, images 
+      Originally saw this in Cakez77 Celeste Remake; probably more info out there
+
+struct BumpAllocator
+{
+    size_t capacity;
+    size_t used;
+    char* memory;
+};
+
+
+Do I really want to do a dll and hot reloading?  I am firmly in the NO side right now since I am still figuring things out
+
