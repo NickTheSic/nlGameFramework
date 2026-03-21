@@ -5,7 +5,6 @@
 #include "private/nl_debug.h"
 #include "private/nl_scope_timer.h"
 
-
 #include "private/nl_audio.h"
 #include "private/nl_camera.h"
 #include "private/nl_colour.h"
