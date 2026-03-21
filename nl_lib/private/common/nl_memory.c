@@ -6,10 +6,10 @@
 #include <memory.h>
 
 
+#if NL_DEBUG_ENABLED
+
 global_variable size_t _ESTIMATED_USED_MEMORY = {0};
 
-
-#if NL_DEBUG_ENABLED
 internal_function void* internal_allocate_memory(size_t size)
 {
     NL_LOG("Debug Memory Allocated");
@@ -50,6 +50,7 @@ void _basic_memory_leak_check(void)
 }
 
 #else
+
 internal_function void* internal_allocate_memory(size_t size)
 {
     void* memory = (void*)malloc(size);
@@ -62,7 +63,9 @@ internal_function void* internal_allocate_memory(size_t size)
 
     return memory;
 }
-#define internal_free_memory(ptr) free(ptr);
+
+# define internal_free_memory(ptr) free(ptr);
+
 #endif
 
 void *_memory_allocate(size_t size)

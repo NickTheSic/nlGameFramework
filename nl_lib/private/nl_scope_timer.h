@@ -3,7 +3,7 @@
 
 #include "nl_debug.h"
 
-// NOTE: __attribute(__cleanup(func)) is not available with the MSVC compiler
+// NOTE: __attribute(__cleanup(func)) is not available with the MSVC compiler (apprently; should test)
 
 #if NL_DEBUG_ENABLED
 typedef struct debug_scope_timer debug_scope_timer;
