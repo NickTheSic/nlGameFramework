@@ -1,7 +1,5 @@
 #version 450 core
-#ifdef GL_ES
-precision mediump float;
-#endif
+
 
 const vec2 Pos[4] = vec2[4](
     vec2(-1.0, -1.0),

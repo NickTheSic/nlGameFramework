@@ -2,32 +2,6 @@
 #include "../nl_debug.h"
 #include "nl_gl.h"
 
-const char* VIEW_MATRIX_UNIFORM_NAME = "uViewMat";
-const char* WORLD_MATRIX_UNIFORM_NAME = "uWorldMat";
-
-const char* common_vert_shader_code =
-NL_SHADER_VERSION_HEADER
-"layout (location = 0) in vec3 aPos;                   \n"
-"layout (location = 1) in vec4 aColor;                 \n"
-"uniform mat4 uWorldMat;                               \n"
-"uniform mat4 uViewMat;                                \n"
-"uniform mat4 uProjMat;                                \n"
-"out vec4 oColor;                                      \n"
-"void main() {                                         \n"
-"   vec4 worldPos = uWorldMat * vec4(aPos, 1.0);       \n"
-"   vec4 viewPos = uViewMat * worldPos;                \n"
-"   gl_Position = uProjMat * viewPos;                  \n"
-"   oColor = aColor;                                   \n"
-"}                                                     \0";
-
-const char* common_fragment_shader_code =
-NL_SHADER_VERSION_HEADER
-"out vec4 FragColor;                                   \n"
-"in vec4 oColor;                                       \n"
-"void main() {                                         \n"
-"    FragColor = oColor;                               \n"
-"}                                                     \0";
-
 internal_function unsigned int compile_shader_source(int type, const char* code)
 {
     unsigned int shader = glCreateShader(type);
@@ -116,11 +90,6 @@ void use_shader_program(unsigned int shader_program)
 void free_shader_program(unsigned int shader_program)
 {
     glDeleteProgram(shader_program);
-}
-
-unsigned int create_common_shader_program()
-{
-    return create_shader_program(common_vert_shader_code, common_fragment_shader_code);
 }
 
 unsigned int get_uniform_loc(unsigned int program, const char* name)

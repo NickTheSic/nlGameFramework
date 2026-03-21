@@ -15,7 +15,6 @@
 #include "private/gl/nl_renderer_gl_common.c"
 #include "private/gl/nl_renderer_gl_web.c"
 #include "private/gl/nl_shader.c"
-#include "private/gl/nl_vertex_attrib_gl.c"
 
 #include "private/web/nl_window_web.c"
 #include "private/web/nl_deltatime_web.c"

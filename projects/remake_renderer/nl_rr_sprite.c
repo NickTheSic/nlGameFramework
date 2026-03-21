@@ -2,6 +2,8 @@
 #include "private/gl/nl_gl.h"
 #include "third_party/stb/stb_image.h"
 
+#include <string.h>
+
 global_variable float vertices1[] = {
     -0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
      0.3f, -0.3f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,

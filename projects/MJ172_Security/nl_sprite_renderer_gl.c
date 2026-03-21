@@ -6,6 +6,15 @@
 #include <math.h>
 #include <string.h>
 
+
+#warning "Hard coded shaders in this file"
+
+#if defined __EMSCRIPTEN__
+# define NL_SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"
+#elif defined _WIN32
+# define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
+#endif
+
 struct sprite_vertex_data
 {
     v3f pos;

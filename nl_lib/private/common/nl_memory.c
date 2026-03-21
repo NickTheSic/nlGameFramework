@@ -137,10 +137,10 @@ void *global_transient_bump_allocate(size_t size)
     if (size > global_transient_bump_allocator.capacity)
     {
         // NOTE: Is this a good idea?
-        NL_LOG("NL_MEMORY: Transient bump allocator requesting size %d when capacity is %d", size, global_transient_bump_allocator.capacity);
+        NL_LOG("NL_MEMORY: Transient bump allocator requesting size %zu when capacity is %zu", size, global_transient_bump_allocator.capacity);
         free_bump_allocator(&global_transient_bump_allocator);
         make_bump_allocator(&global_transient_bump_allocator, size);
-        NL_LOG("NL_MEMORY: Transient bump allocator resized to size %d. capacity is %d", size, global_transient_bump_allocator.capacity);
+        NL_LOG("NL_MEMORY: Transient bump allocator resized to size %zu. capacity is %zu", size, global_transient_bump_allocator.capacity);
     }
 
     if (global_transient_bump_allocator.used + size > global_transient_bump_allocator.capacity)

@@ -1,4 +1,5 @@
 #version 450 core
+
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -6,11 +7,6 @@ precision mediump float;
 out vec4 FragColor;
 
 in vec2 WorldPos;
-
-uniform float GridMinCellSize = 2.0;
-uniform float gGridCellSize = 0.1;
-uniform vec4 gGridColourThick = vec4(0.0,0.0,0.0,1.0);
-uniform vec4 gGridColourThin  = vec4(0.5,0.5,0.5,1.0);
 
 float log10(float x)
 {
@@ -31,6 +27,11 @@ vec2 satv(vec2 x)
 
 void main()
 {
+    float GridMinCellSize = 2.0;
+    float gGridCellSize = 0.1;
+    vec4 gGridColourThick = vec4(0.0,0.0,0.0,1.0);
+    vec4 gGridColourThin  = vec4(0.5,0.5,0.5,1.0);
+
     vec2 dvx = vec2(dFdx(WorldPos.x),dFdy(WorldPos.x));
     vec2 dvy = vec2(dFdx(WorldPos.y),dFdy(WorldPos.y));
     float lx = length(dvx);

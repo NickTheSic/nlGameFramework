@@ -2,7 +2,14 @@
 #define __NL_BATCH2D_H__
 
 #include <private/nl_colour.h>
-#include <private/nl_shader.h>
+
+#warning "Hard coded shaders in this file"
+
+#if defined __EMSCRIPTEN__
+# define NL_SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"
+#elif defined _WIN32
+# define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
+#endif
 
 static const char* batch_vert_shader_code =
 NL_SHADER_VERSION_HEADER
