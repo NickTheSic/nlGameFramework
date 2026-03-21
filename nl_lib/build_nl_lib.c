@@ -23,13 +23,6 @@
 #include "third_party/stb/stb_image.c"
 #include "third_party/stb/stb_truetype.c"
 
-#include "private/null/nl_audio_null.c"
-#include "private/null/nl_deltatime_null.c"
-#include "private/null/nl_gamepad_null.c"
-#include "private/null/nl_platform_null.c"
-#include "private/null/nl_renderer_null.c"
-#include "private/null/nl_scope_timer_null.c"
-#include "private/null/nl_shader_null.c"
-#include "private/null/nl_window_null.c"
+#include "private/null/nl_null.c"
 
 #endif // Platform

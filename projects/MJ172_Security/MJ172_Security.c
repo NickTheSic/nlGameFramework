@@ -1,6 +1,6 @@
 #include "nl_lib.h"
 #include "nl_sprite_renderer.h"
-#include <private/nl_physics2d.h>
+#include <nl_physics2d.h>
 
 global_variable camera main_cam = {0};
 

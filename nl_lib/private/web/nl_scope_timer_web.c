@@ -7,7 +7,7 @@
 
 double debug_get_system_time()
 {
-    return emscripten_performance_now();
+    return emscripten_performance_now() * 0.001;
 }
 
 void debug_end_scope_timer(debug_scope_timer* const st)

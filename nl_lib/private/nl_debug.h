@@ -7,6 +7,9 @@ extern "C" {
 #endif
 
 
+// TODO: Coloured loggin, cus why not
+
+
 #define NL_DEBUG_ENABLED 1  // Temporary Solution: It is hard coded on or off here instead of a Config.h per project or a compiler flag
 
 

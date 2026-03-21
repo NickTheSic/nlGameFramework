@@ -4,8 +4,6 @@
 
 int platform_init(void)
 {
-    create_global_transient_bump_allocator(KB(500));
-
     if (!initialize_window(1280,800, "Sandbox Mode"))
     {
         NL_LOG("Failed to initialize window");
@@ -33,6 +31,5 @@ int platform_init(void)
 void platform_cleanup(void)
 {
     cleanup_audio_system();
-    free_global_transient_bump_allocator();
     basic_memory_leak_check();
 }

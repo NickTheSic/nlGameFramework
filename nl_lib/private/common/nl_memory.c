@@ -124,39 +124,3 @@ char* bump_alloc(nl_bump_allocator* allocator, size_t size)
 
     return chunk;
 }
-
-global_variable nl_bump_allocator global_transient_bump_allocator;
-
-void create_global_transient_bump_allocator(size_t capacity)
-{
-    make_bump_allocator(&global_transient_bump_allocator, capacity);
-}
-
-void *global_transient_bump_allocate(size_t size)
-{
-    if (size > global_transient_bump_allocator.capacity)
-    {
-        // NOTE: Is this a good idea?
-        NL_LOG("NL_MEMORY: Transient bump allocator requesting size %zu when capacity is %zu", size, global_transient_bump_allocator.capacity);
-        free_bump_allocator(&global_transient_bump_allocator);
-        make_bump_allocator(&global_transient_bump_allocator, size);
-        NL_LOG("NL_MEMORY: Transient bump allocator resized to size %zu. capacity is %zu", size, global_transient_bump_allocator.capacity);
-    }
-
-    if (global_transient_bump_allocator.used + size > global_transient_bump_allocator.capacity)
-    {
-        NL_LOG("NL_MEMORY: Global transient bump allocator was full!  Flushing");
-        flush_bump_allocator(&global_transient_bump_allocator);
-    }
-
-    char* chunk = global_transient_bump_allocator.memory + global_transient_bump_allocator.used;
-
-    global_transient_bump_allocator.used += size;
-
-    return chunk;
-}
-
-void free_global_transient_bump_allocator()
-{
-    free_bump_allocator(&global_transient_bump_allocator);
-}

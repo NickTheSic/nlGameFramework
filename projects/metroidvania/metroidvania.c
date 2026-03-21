@@ -2,7 +2,7 @@
 
 #include "metroidvania.h"
 #include "camera_control.h"
-#include "private/nl_physics2d.h"
+#include "nl_physics2d.h"
 
 internal_function void winsizecbk(int width, int height)
 {
