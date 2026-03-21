@@ -1,4 +1,7 @@
 #version 450 core
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 out vec4 FragColor;
 
