@@ -14,8 +14,8 @@ unsigned int load_shader_from_files(const char* vertex_shader_filename, const ch
 unsigned int get_uniform_loc(unsigned int program, const char* name);
 
 //NOTE: Should use the shader program instead of assuming it is bound already
-void set_uniform_mat4x4f(unsigned int loc, const float* const mat); 
-void set_uniform_v3f(unsigned int loc, const float* const vec);
+void set_uniform_mat4x4f(unsigned int shader, unsigned int loc, const float* const mat); 
+void set_uniform_v3f(unsigned int shader, unsigned int loc, const float* const vec);
 
 #ifdef __cplusplus
 }

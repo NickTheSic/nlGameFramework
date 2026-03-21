@@ -54,19 +54,19 @@ global_variable unsigned int u_proj_mat = {0};
 void set_model_matrix(mat4x4f*const mat)
 {
     use_shader_program(shader_program);
-    set_uniform_mat4x4f(u_model_loc, &mat->m11);
+    set_uniform_mat4x4f(shader_program, u_model_loc, &mat->m11);
 }
 
 void set_view_matrix(mat4x4f*const mat)
 {
     use_shader_program(shader_program);
-    set_uniform_mat4x4f(u_view_mat, &mat->m11);
+    set_uniform_mat4x4f(shader_program, u_view_mat, &mat->m11);
 }
 
 void set_projection_matrix(mat4x4f*const mat)
 {
     use_shader_program(shader_program);
-    set_uniform_mat4x4f(u_proj_mat, &mat->m11);
+    set_uniform_mat4x4f(shader_program, u_proj_mat, &mat->m11);
 }
 
 void init_sprite_renderer(void)

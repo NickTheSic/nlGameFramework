@@ -97,12 +97,14 @@ unsigned int get_uniform_loc(unsigned int program, const char* name)
     return glGetUniformLocation(program, name);
 }
 
-void set_uniform_mat4x4f(unsigned int loc, const float* const mat)
+void set_uniform_mat4x4f(unsigned int shader, unsigned int loc, const float* const mat)
 {
+    glUseProgram(shader);
     glUniformMatrix4fv(loc, 1, GL_FALSE, mat);
 }
 
-void set_uniform_v3f(unsigned int loc, const float* const vec)
+void set_uniform_v3f(unsigned int shader, unsigned int loc, const float* const vec)
 {
+    glUseProgram(shader);
     glUniform3fv(loc, 1, vec);
 }

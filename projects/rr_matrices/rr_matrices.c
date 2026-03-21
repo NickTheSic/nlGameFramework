@@ -24,7 +24,7 @@ internal_function void winsizecbk(int width, int height)
         create_perspective_projection(&main_camera.proj_matrix, 90.f, aspect, -1.f, 100.f);
     }
 
-    set_uniform_mat4x4f(projection_loc, &main_camera.proj_matrix.m11);
+    set_uniform_mat4x4f(rr_shader_program, projection_loc, &main_camera.proj_matrix.m11);
 }
 
 void app_specific_init(void)
@@ -45,7 +45,7 @@ void app_specific_init(void)
 
     unsigned int view_loc = get_uniform_loc(rr_shader_program, "uViewMatrix");
     create_srt_matrix(&main_camera.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, camera_position);
-    set_uniform_mat4x4f(view_loc, &main_camera.view_matrix.m11);
+    set_uniform_mat4x4f(rr_shader_program, view_loc, &main_camera.view_matrix.m11);
 }
 
 void app_specific_update(double dt)
@@ -104,7 +104,7 @@ void app_specific_update(double dt)
     {
         unsigned int view_loc = get_uniform_loc(rr_shader_program, "uViewMatrix");
         create_srt_matrix(&main_camera.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, camera_position);
-        set_uniform_mat4x4f(view_loc, &main_camera.view_matrix.m11);
+        set_uniform_mat4x4f(rr_shader_program, view_loc, &main_camera.view_matrix.m11);
 
         v2i screen_size = get_screen_size();
         winsizecbk(screen_size.x, screen_size.y);

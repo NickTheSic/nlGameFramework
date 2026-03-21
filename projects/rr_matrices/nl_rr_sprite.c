@@ -92,9 +92,10 @@ void render_simple_rr_sprite(nl_rr_sprite* const spr)
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, spr->TextureID);
-   
+    
+    // NOTE: the shader program is technically compiled in  the project! I just include this file under it
     unsigned int model_loc = get_uniform_loc(rr_shader_program, "uModelTransform");
-    set_uniform_mat4x4f(model_loc, &spr->transform.m11);
+    set_uniform_mat4x4f(rr_shader_program, model_loc, &spr->transform.m11);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

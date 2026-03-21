@@ -125,7 +125,7 @@ void setup_camera_matrices(nl_rr_camera* const camera)
         create_perspective_projection(&camera->proj_matrix, 90.f, camera->aspect_ratio, camera->near_z, camera->far_z);
     }
     
-    set_uniform_mat4x4f(proj_loc, &camera->proj_matrix.m11);
-    set_uniform_mat4x4f(view_loc, &camera->view_matrix.m11);
+    set_uniform_mat4x4f(rr_shader_program, proj_loc, &camera->proj_matrix.m11);
+    set_uniform_mat4x4f(rr_shader_program, view_loc, &camera->view_matrix.m11);
 }
 

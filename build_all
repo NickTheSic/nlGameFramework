@@ -4,7 +4,11 @@
 build()
 {
     ./build wintux $1
-    ./build web $1
+
+    if [ -n "${EMSDK}" ]
+    then 
+        ./build web $1 
+    fi
 }
 
 build basic_editor

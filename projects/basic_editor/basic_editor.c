@@ -48,7 +48,7 @@ internal_function void load_layout(void)
 internal_function void winsizecbk(int width, int height)
 {
     create_orthographic_projection(&main_cam.proj_matrix, 0.f, (float)width, 0.f, (float)height, -0.1f, 100.f);
-    set_uniform_mat4x4f(loc_proj_mat, &main_cam.proj_matrix.m11);
+    set_uniform_mat4x4f(sp, loc_proj_mat, &main_cam.proj_matrix.m11);
 }
 
 void camera_controls(float dt)
@@ -89,7 +89,7 @@ void camera_controls(float dt)
     if (0 < bIsDirty)
     {
         create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,1.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){camera_pos_x,camera_pos_y,0.0f});
-        set_uniform_mat4x4f(loc_view_mat, &main_cam.view_matrix.m11);
+        set_uniform_mat4x4f(sp, loc_view_mat, &main_cam.view_matrix.m11);
     }
 }
 
@@ -105,7 +105,7 @@ void app_specific_init(void)
     winsizecbk(screen_size.x, screen_size.y);
 
     create_srt_matrix(&main_cam.view_matrix, (v3f){1.0f,1.0f,0.0f}, (v3f){0.0f,0.0f,0.0f}, (v3f){0.0f,0.0f,0.0f});
-    set_uniform_mat4x4f(loc_view_mat, &main_cam.view_matrix.m11);
+    set_uniform_mat4x4f(sp, loc_view_mat, &main_cam.view_matrix.m11);
 
     init_square_grid();
     init_batch(&batch, 3);

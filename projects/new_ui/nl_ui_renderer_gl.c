@@ -66,7 +66,7 @@ void set_screen_dimensions(int x, int y)
     create_orthographic_projection(&viewport, 0.f, (float)x, 0.f, (float)y, -0.1f, 100.f);
 
     use_shader_program(ui_renderer.shader_program);
-    set_uniform_mat4x4f(loc_projection_matrix, &viewport.m11);
+    set_uniform_mat4x4f(ui_renderer.shader_program, loc_projection_matrix, &viewport.m11);
 }
 
 void init_ui_renderer(void)
