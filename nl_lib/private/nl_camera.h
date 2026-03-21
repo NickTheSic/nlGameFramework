@@ -6,6 +6,13 @@
 extern "C" {
 #endif
 
+typedef struct orthographic_camera_2d orthographic_camera_2d;
+struct orthographic_camera_2d
+{
+    v2f dimensions;
+    v2f position;
+    float zoom;
+};
 
 typedef struct camera camera;
 struct camera

@@ -3,36 +3,6 @@
 
 #include <private/nl_colour.h>
 
-#warning "Hard coded shaders in this file"
-
-#if defined __EMSCRIPTEN__
-# define NL_SHADER_VERSION_HEADER "#version 300 es \n precision mediump float; \n"
-#elif defined _WIN32
-# define NL_SHADER_VERSION_HEADER  "#version 330 core\n"
-#endif
-
-static const char* batch_vert_shader_code =
-NL_SHADER_VERSION_HEADER
-"layout (location = 0) in vec3 aPos;                   \n"
-"layout (location = 1) in vec4 aCol;                   \n"
-"uniform mat4 uViewMat;                                \n"
-"uniform mat4 uProjMat;                                \n"
-"out vec4 oColour;                                     \n"
-"void main() {                                         \n"
-"   vec4 viewPos = vec4(aPos, 1.0);                    \n"
-"   gl_Position = uProjMat * uViewMat * viewPos;       \n"
-"   oColour = aCol;                                    \n"
-"}                                                     \0";
-
-static const char* sprite_frag_shader_code = 
-NL_SHADER_VERSION_HEADER
-"out vec4 FragColor;                     \n"
-"in vec4 oColour;                        \n"
-"uniform sampler2D text;                 \n"
-"void main(){                            \n"
-"FragColor = oColour;                    \n"
-"}                                       \0";
-
 typedef struct batch_vertex_data batch_vertex_data;
 struct batch_vertex_data
 {

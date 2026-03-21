@@ -94,7 +94,7 @@ void camera_controls(float dt)
 
 void app_specific_init(void)
 {
-    sp = create_shader_program(batch_vert_shader_code, sprite_frag_shader_code);
+    sp = load_shader_from_files("batch2d.vs", "colour_.fs");
     use_shader_program(sp);
     loc_view_mat = get_uniform_loc(sp, "uViewMat");
     loc_proj_mat = get_uniform_loc(sp, "uProjMat");
