@@ -1,7 +1,7 @@
 #include "nl_lib.h"
 #include "private/gl/nl_gl.h"
 
-#include "endless_grid.h"
+#include "endless_grid_2d.h"
 
 //https://www.youtube.com/watch?v=RqrkVmj-ntM
 
@@ -18,20 +18,17 @@ internal_function void winsizecbk(int width, int height)
     float _h = (float)height/2.f;
 
     create_orthographic_projection(&endless_grid_view, camera_position.x - _w, camera_position.x + _w, camera_position.y - _h, camera_position.y + _h, -10.0f, 10.0f);
-    set_uniform_mat4x4f(egd.shader_program, egd.view_mat_loc, &endless_grid_view.m11);
-    set_uniform_2f(egd.shader_program, egd.screen_size_loc, width, height);
+    //set_uniform_mat4x4f(egd.shader_program, egd.view_mat_loc, &endless_grid_view.m11);
+    set_endless_grid_view_matrix(&egd, &endless_grid_view);
+    set_endless_grid_screen_sizef(&egd, width, height);
 }
 
 void app_specific_init(void)
 {
     set_window_size_callback(winsizecbk);
 
-    egd.shader_program = load_shader_from_files("endless_grid_2d.vs", "endless_grid_2d.fs");
-    egd.view_mat_loc = get_uniform_loc(egd.shader_program, "ViewMat");
-    egd.screen_size_loc = get_uniform_loc(egd.shader_program, "ScreenSize");
-    egd.camera_pos_loc = get_uniform_loc(egd.shader_program, "CameraPosition");
-
-    set_uniform_v3f(egd.shader_program, egd.camera_pos_loc, &camera_position.x);
+    init_endless_grid(&egd);
+    set_endless_grid_camera_position(&egd, camera_position);
 
     v2i screen = get_screen_size();
     winsizecbk(screen.x, screen.y);
@@ -44,23 +41,23 @@ void app_specific_update(double dt)
 
     if (key_is_held(key_w))
     {
-        camera_position.y -= speed;
+        camera_position.y += speed;
         bTransformDirty = 1;
     }
     else if (key_is_held(key_s))
     {
-        camera_position.y += speed;
+        camera_position.y -= speed;
         bTransformDirty = 1;
     }
 
     if (key_is_held(key_d))
     {
-        camera_position.x -= speed;
+        camera_position.x += speed;
         bTransformDirty = 1;
     }
     else if (key_is_held(key_a))
     {
-        camera_position.x += speed;
+        camera_position.x -= speed;
         bTransformDirty = 1;
     }
 
@@ -75,7 +72,7 @@ void app_specific_update(double dt)
 
     if (bTransformDirty)
     {
-        set_uniform_v3f(egd.shader_program, egd.camera_pos_loc, &camera_position.x);
+        set_endless_grid_camera_position(&egd, camera_position);
         
         v2i screen = get_screen_size();
         winsizecbk(screen.x, screen.y);        
@@ -90,3 +87,5 @@ void app_specific_render(void)
 void app_specific_cleanup(void)
 {
 }
+
+#include "endless_grid_2d.c"

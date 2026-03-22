@@ -112,6 +112,8 @@ void set_uniform_v3f(unsigned int shader, unsigned int loc, const float* const v
 
 void set_uniform_2f(unsigned int shader, unsigned int loc, float f1, float f2)
 {
+    DO_ONCE( NL_LOG("NL_SHADER: set_uniform_2f: might not be the most efficient way set a 2fv in a shader"); );
+
     glUseProgram(shader);
     v2f vec = {f1,f2};
     glUniform2fv(loc, 1, &vec.x);
