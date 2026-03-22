@@ -3,9 +3,7 @@
 //                       In Progress                           //
 /////////////////////////////////////////////////////////////////
 
-Immediate: Endless Grid, Sprite Rendering, Camera updates
-Purpose: See grid and have reference, need sprites for games
-Want to consolodate a camera system.  If I chose only 2D maybe I can streamline stuff
+Endless grid looks endless; now I need to draw the grid behind sprites
 
 
 /////////////////////////////////////////////////////////////////
@@ -18,6 +16,11 @@ Work on a game to know if it feels right to use!
     - Batching together draw calls
     - puting images together in a spritesheet
 
+
+One person called their renderer a Canvas
+- It handled sprites and debug lines.  
+- I like the name Canvas.  Kinda a global thing that you can draw to and could draw anything to
+- Sounds like I could have a game Canvas, UI canvas.  To encapsulate the camera instead of a game and ui camera
 
 
 Refactor / Cleanup / Reorganize
@@ -67,6 +70,21 @@ struct Mesh
     int indice_count;
     int vertice_count;
 };
+With a bump/areana allocator I give it to memory so positions and indices are together?
+
 
 Do I really want to do a dll and hot reloading?  I am firmly in the NO side right now since I am still figuring things out
+-- DLL would allow for an "Editor" dll that could contain a FBO, or other render target, that the game runs inside of.
+--- I do think it would be cool to have the:           Game
+                                                APP <
+                                                       Editor -> Game
+
+
+
+Returning pointers instead of passing them in as objects?
+- Specifically during allocation
+- might require a larger rewrite
+- Now lifetime objects are more heap than stack allocated?
+-- Would be fine if I am using the arena style allocator
+
 
