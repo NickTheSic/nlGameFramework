@@ -204,8 +204,8 @@ void render_single_sprite_colour(nl_sprite* const sprite, colour col)
 
 void free_simple_sprite(nl_sprite* const simple_sprite)
 {
-    memory_free(simple_sprite->vertices);
-    memory_free(simple_sprite->indices);
+    //memory_free(simple_sprite->vertices);
+    //memory_free(simple_sprite->indices);
 
     // gl free buffers here
     glDeleteBuffers(1, &simple_sprite->EBO);

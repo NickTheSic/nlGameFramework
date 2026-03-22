@@ -186,7 +186,7 @@ void cleanup_audio_system(void)
 
         if (local_audio_system->buffers != 0)
         {
-            memory_free(local_audio_system->buffers);
+            (local_audio_system->buffers);
         }
 
         if (local_audio_system->sounds  != 0)

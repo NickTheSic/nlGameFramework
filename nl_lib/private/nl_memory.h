@@ -31,10 +31,15 @@ void flush_bump_allocator(nl_bump_allocator* allocator);
 void free_bump_allocator(nl_bump_allocator* allocator);
 char* bump_alloc(nl_bump_allocator* allocator, size_t size);
 
+
+// I don't like this but it works well enough I think
 void initialize_global_bump_allocators(size_t transient, size_t temporary);
 void free_global_bump_allocators();
-nl_bump_allocator* get_transient_bump_allocator();
-nl_bump_allocator* get_temporary_bump_allocator();
+nl_bump_allocator* get_transient_bump_allocator(); 
+nl_bump_allocator* get_temporary_bump_allocator(); // Buffer for loaded files pretty much
+// NOTE: Could make Systems bump allocator for important things?
+//       Transient could be for holding loaded things?
+
 
 void *_memory_allocate(size_t size);
 void memory_free(void* memory);

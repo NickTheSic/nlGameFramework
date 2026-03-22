@@ -9,6 +9,8 @@
 #if NL_DEBUG_ENABLED
 
 global_variable size_t _ESTIMATED_USED_MEMORY = {0};
+global_variable size_t _MallocCalls = {0};
+global_variable size_t _FreeCalls = {0};
 
 internal_function void* internal_allocate_memory(size_t size)
 {
@@ -23,8 +25,9 @@ internal_function void* internal_allocate_memory(size_t size)
 
     _ESTIMATED_USED_MEMORY+=size;
     *memory = size;
+    ++_MallocCalls;
 
-    return (void*)((size_t)memory+sizeof(size_t));
+    return (void*)((size_t*)memory+sizeof(size_t));
 }
 
 internal_function void internal_free_memory(void* ptr)
@@ -33,6 +36,7 @@ internal_function void internal_free_memory(void* ptr)
 
     size_t size = real_ptr[0];
     _ESTIMATED_USED_MEMORY-=size;
+    ++_FreeCalls;
 
     free(real_ptr);
 }
@@ -41,11 +45,12 @@ void _basic_memory_leak_check(void)
 {
     if (_ESTIMATED_USED_MEMORY == 0)
     {
-        NL_LOG("No Memory Leak Detected");
+        NL_LOG("No Memory Leak Detected in %zu allocs and %zu frees", _MallocCalls, _FreeCalls);
     }
     else
     {
-        NL_LOG("Memory Leak! Leaked Memory Amount: %zi  bytes", _ESTIMATED_USED_MEMORY);
+        NL_LOG("Memory Leak! Leaked Memory Amount: %zu bytes", _ESTIMATED_USED_MEMORY);
+        NL_LOG("Used %zu malloc calls and %zu frees", _MallocCalls, _FreeCalls);
     }
 }
 
@@ -80,6 +85,8 @@ void memory_free(void* memory)
 {
     internal_free_memory(memory);
 }
+
+
 
 void make_bump_allocator(nl_bump_allocator* allocator, size_t capacity)
 {
@@ -126,6 +133,7 @@ char* bump_alloc(nl_bump_allocator* allocator, size_t size)
 
     return chunk;
 }
+
 
 global_variable nl_bump_allocator global_transient_bump_allocator;
 global_variable nl_bump_allocator global_temporary_bump_allocator;
