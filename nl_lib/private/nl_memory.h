@@ -17,7 +17,10 @@ extern "C" {
 #define GB(x) ((unsigned long long)1024*MB(x))
 
 
-// Note: Look into arena allocator as well
+// Note: Look into arena allocator as well probably the same name!
+// Can RESERVE a large chunk of memory and COMMIT when needed, the DECOMMIT when unused
+// Someone called it a scratch arena and using 2 scratch areana per thread to handle arbitrary function depth and
+
 typedef struct nl_bump_allocator nl_bump_allocator;
 struct nl_bump_allocator
 {
@@ -37,8 +40,9 @@ void initialize_global_bump_allocators(size_t transient, size_t temporary);
 void free_global_bump_allocators();
 nl_bump_allocator* get_transient_bump_allocator(); 
 nl_bump_allocator* get_temporary_bump_allocator(); // Buffer for loaded files pretty much
-// NOTE: Could make Systems bump allocator for important things?
-//       Transient could be for holding loaded things? Per Scene things?
+// NOTE: Could make Systems bump allocator for different things
+//       - some one mentioned Scratch, and I called it temporary
+//       - Handle the per 'scene' lifetime, per game life time
 
 
 void *_memory_allocate(size_t size);
@@ -50,12 +54,12 @@ void _basic_memory_leak_check(void); //Used in debug + by main
 # define memory_allocate(s) _memory_allocate(s); NL_LOG("memory allocated: %s %d", __FILE__, __LINE__);
 # define basic_memory_leak_check() _basic_memory_leak_check();
 
-#else
+#else //NOT NL_DEBUG_ENABLED
 
 # define memory_allocate(s) _memory_allocate(s);
 # define basic_memory_leak_check()
 
-#endif
+#endif//NL_DEBUG_ENABLED
 
 
 #ifdef __cplusplus
