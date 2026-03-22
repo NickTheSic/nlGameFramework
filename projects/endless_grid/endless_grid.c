@@ -13,15 +13,16 @@ unsigned int ViewMat;
 unsigned int CameraPosition;
 
 unsigned int zero_quad;
+unsigned int zq_view;
 
 internal_function void winsizecbk(int width, int height)
 {
-    float _w = width/2.f;
-    float _h = height/2.f;
+    float _w = (float)width/2.f;
+    float _h = (float)height/2.f;
 
-    use_shader_program(endless_grid_shader_program);
-    create_orthographic_projection(&endless_grid_view, -_w, _w, -_h, _h, -10.0f, 1000.0f);
+    create_orthographic_projection(&endless_grid_view, camera_position.x - _w, camera_position.x + _w, camera_position.y - _h, camera_position.y + _h, -10.0f, 10.0f);
     set_uniform_mat4x4f(endless_grid_shader_program, ViewMat, &endless_grid_view.m11);
+    set_uniform_mat4x4f(zero_quad, zq_view, &endless_grid_view.m11);
 }
 
 void app_specific_init(void)
@@ -29,19 +30,19 @@ void app_specific_init(void)
     set_window_size_callback(winsizecbk);
 
     zero_quad = load_shader_from_files("zero_quad.vs", "zero_quad.fs");
+    zq_view = get_uniform_loc(zero_quad, "ViewMat");
 
     endless_grid_shader_program = load_shader_from_files("endless_grid_2d.vs", "endless_grid_2d.fs");
     use_shader_program(endless_grid_shader_program);
-    
-    v2i screen = get_screen_size();
-    const float aspect = (float)screen.x/(float)screen.y;
-    create_orthographic_projection(&endless_grid_view, -aspect, aspect, -1.0f, 1.0f, 0.0f, 10.0f);
     
     ViewMat = get_uniform_loc(endless_grid_shader_program, "ViewMat");
     set_uniform_mat4x4f(endless_grid_shader_program, ViewMat, &endless_grid_view.m11);
 
     CameraPosition = get_uniform_loc(endless_grid_shader_program, "CameraPosition");
     set_uniform_v3f(endless_grid_shader_program, CameraPosition, &camera_position.x);
+
+    v2i screen = get_screen_size();
+    winsizecbk(screen.x, screen.y);
 }
 
 void app_specific_update(double dt)
@@ -81,9 +82,11 @@ void app_specific_update(double dt)
 
     if (bTransformDirty)
     {
-        use_shader_program(endless_grid_shader_program);
         unsigned int CameraPosition = get_uniform_loc(endless_grid_shader_program, "CameraPosition");
         set_uniform_v3f(endless_grid_shader_program, CameraPosition, &camera_position.x);
+        
+        v2i screen = get_screen_size();
+        winsizecbk(screen.x, screen.y);        
     }
 }
 

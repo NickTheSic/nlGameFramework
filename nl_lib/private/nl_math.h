@@ -35,15 +35,6 @@ struct v4f
     float x,y,z,w;
 };
 
-typedef struct transform2d transform2d;
-struct transform2d
-{
-    v2f position;
-    v2f size;
-    float rotation;
-};
-void initialize_transform2d(transform2d* const t);
-
 typedef struct mat4x4f mat4x4f;
 struct mat4x4f
 {

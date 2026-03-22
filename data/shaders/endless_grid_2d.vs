@@ -19,7 +19,7 @@ out vec2 WorldPos;
 void main()
 {
     int Index = Indices[gl_VertexID];
-    vec4 vPos = vec4(Pos[Index], 0.0, 1.0) * GridSize;
+    vec3 vPos = vec3(Pos[Index], 0.0) * GridSize;
 
     vPos.x += CameraPosition.x;
     vPos.y += CameraPosition.y;

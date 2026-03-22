@@ -38,7 +38,7 @@ void free_global_bump_allocators();
 nl_bump_allocator* get_transient_bump_allocator(); 
 nl_bump_allocator* get_temporary_bump_allocator(); // Buffer for loaded files pretty much
 // NOTE: Could make Systems bump allocator for important things?
-//       Transient could be for holding loaded things?
+//       Transient could be for holding loaded things? Per Scene things?
 
 
 void *_memory_allocate(size_t size);

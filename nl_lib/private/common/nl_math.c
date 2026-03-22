@@ -361,9 +361,10 @@ v3f v3f_normalize(const v3f vec)
 
 v3f v3f_cross(const v3f lhs, const v3f rhs)
 {
-    NL_UNIMPLEMENTED_FUNC;
-    (void)lhs; (void)rhs;
     v3f result = {0};
+    result.x = lhs.y*rhs.z - lhs.z*rhs.y;
+    result.y = lhs.z*rhs.x - lhs.x*rhs.z;
+    result.z = lhs.x*rhs.y - lhs.y*rhs.x;
     return (result);
 }   
 
@@ -447,11 +448,4 @@ void v2f_mat4_transform(v2f* const lhs, const mat4x4f* const mat)
     temp.y = ((mat->m21 * lhs->x) + (mat->m22 * lhs->y) + mat->m24) * w;
 
     *lhs = temp;
-}
-
-void initialize_transform2d(transform2d* const t)
-{
-    t->position = (v2f){0,0};
-    t->size = (v2f){1,1};
-    t->rotation = 0.0f;
 }
