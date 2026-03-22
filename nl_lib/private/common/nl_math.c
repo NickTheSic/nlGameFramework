@@ -303,13 +303,13 @@ internal_function void rotate2d_roll(mat4x4f* const mat, float angle)
 }
 
 
-void create_srt_matrix_from_transform2d(mat4x4f* const mat, transform2d transform)
-{
-    scale_matrix_2f(mat, transform.size);
-    rotate2d_roll(mat, transform.rotation);
-    //rotate_matrix(mat, transform.rotation, 0,0,1); //roll
-    translate_matrix2f(mat, transform.position);
-}
+// void create_srt_matrix_from_transform2d(mat4x4f* const mat, transform2d transform)
+// {
+//     scale_matrix_2f(mat, transform.size);
+//     rotate2d_roll(mat, transform.rotation);
+//     //rotate_matrix(mat, transform.rotation, 0,0,1); //roll
+//     translate_matrix2f(mat, transform.position);
+// }
 
 float v3f_length_squared(const v3f vec)
 {

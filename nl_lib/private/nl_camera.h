@@ -11,7 +11,6 @@ struct orthographic_camera_2d
 {
     v2f dimensions;
     v2f position;
-    float zoom;
 };
 
 typedef struct camera camera;
@@ -22,7 +21,6 @@ struct camera
 };
 
 void initialize_camera_to_identity(camera* const cam);
-
 void project_mouse_to_camera(camera* const cam, v2f* mouse_pos_on_screen);
 
 

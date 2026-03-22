@@ -48,36 +48,37 @@ void app_specific_init(void)
 void app_specific_update(double dt)
 {
     unsigned char bTransformDirty = 0;
+    const float speed = 50.f * dt;
 
     if (key_is_held(key_w))
     {
-        camera_position.y -= dt;
+        camera_position.y -= speed;
         bTransformDirty = 1;
     }
     else if (key_is_held(key_s))
     {
-        camera_position.y += dt;
+        camera_position.y += speed;
         bTransformDirty = 1;
     }
 
     if (key_is_held(key_d))
     {
-        camera_position.x -= dt;
+        camera_position.x -= speed;
         bTransformDirty = 1;
     }
     else if (key_is_held(key_a))
     {
-        camera_position.x += dt;
+        camera_position.x += speed;
         bTransformDirty = 1;
     }
 
     if (key_is_held(key_up))
     {
-        camera_position.z += dt;
+        camera_position.z += speed;
     }
     else if (key_is_held(key_down))
     {
-        camera_position.z -= dt;
+        camera_position.z -= speed;
     }
 
     if (bTransformDirty)

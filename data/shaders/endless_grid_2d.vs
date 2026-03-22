@@ -12,7 +12,7 @@ const int Indices[6] = int[6](0,2,1,2,0,3);
 
 uniform mat4 ViewMat;
 uniform vec3 CameraPosition;
-uniform float GridSize = 2.0;
+uniform float GridSize = 600.0;
 
 out vec2 WorldPos;
 
@@ -24,7 +24,7 @@ void main()
     vPos.x += CameraPosition.x;
     vPos.y += CameraPosition.y;
 
-    gl_Position = ViewMat * vPos;
+    gl_Position = ViewMat * vec4(vPos,1.0);
 
     WorldPos = vPos.xy;
 }

@@ -50,7 +50,6 @@ void create_perspective_projection(mat4x4f* const mat, float fov, float aspect, 
 void create_fustrum(mat4x4f* const mat, float left, float right, float bottom, float top, float near_z, float far_z);
 
 void create_srt_matrix(mat4x4f* const mat, const v3f scale, const v3f rot, const v3f translation);
-void create_srt_matrix_from_transform2d(mat4x4f* const mat, transform2d transform);
 
 void rotate_matrix(mat4x4f* const mat, float angle, float x, float y, float z);
 void scale_matrix_2f(mat4x4f* const mat, v2f scale);
