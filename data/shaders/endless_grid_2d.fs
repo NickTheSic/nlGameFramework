@@ -29,8 +29,11 @@ void main()
 {
     float GridMinCellSize = 5.0;
     float gGridCellSize = 0.5;
-    vec4 gGridColourThick = vec4(0.0,0.0,0.0,1.0);
-    vec4 gGridColourThin  = vec4(0.5,0.5,0.5,1.0);
+
+    float delta_x = clamp(WorldPos.x*0.005, 0.0f, 0.5);
+    float delta_y = clamp(WorldPos.y*0.005, 0.0f, 0.5);
+
+    vec4 gGridColourThick = vec4(delta_x,0.0,delta_y,1.0);
 
     vec2 dvx = vec2(dFdx(WorldPos.x),dFdy(WorldPos.x));
     vec2 dvy = vec2(dFdx(WorldPos.y),dFdy(WorldPos.y));
