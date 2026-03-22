@@ -14,19 +14,19 @@ global_variable size_t _FreeCalls = {0};
 
 internal_function void* internal_allocate_memory(size_t size)
 {
-    NL_LOG("Debug Memory Allocated");
+    NL_LOG("NL_MEMORY: Debug Memory Allocated");
 
     size_t* memory = (size_t*)malloc(sizeof(size_t)+size);
     if (memory == 0)
     {
-        NL_LOG("Unable to allocate memory of size %zi", size);
+        NL_LOG("NL_MEMORY: Unable to allocate memory of size %zi", size);
         return 0;
     }
 
     _ESTIMATED_USED_MEMORY+=size;
     *memory = size;
 
-    NL_LOG("Memory[0]: %zu", memory[0]);
+    NL_LOG("NL_MEMORY: Memory[0]: %zu", memory[0]);
 
     ++_MallocCalls;
 
@@ -38,7 +38,7 @@ internal_function void internal_free_memory(void* ptr)
     size_t* real_ptr = (size_t*)((size_t*)ptr-sizeof(size_t));
 
     size_t size = real_ptr[0];
-    NL_LOG("Freeing size %zu", size);
+    NL_LOG("NL_MEMORY: Freeing memory of size %zu", size);
 
     _ESTIMATED_USED_MEMORY-=size;
     ++_FreeCalls;
@@ -50,12 +50,12 @@ void _basic_memory_leak_check(void)
 {
     if (_ESTIMATED_USED_MEMORY == 0)
     {
-        NL_LOG("No Memory Leak Detected in %zu allocs and %zu frees", _MallocCalls, _FreeCalls);
+        NL_LOG("NL_MEMORY: No Memory Leak Detected in %zu allocs and %zu frees", _MallocCalls, _FreeCalls);
     }
     else
     {
-        NL_LOG("Memory Leak! Leaked Memory Amount: %zu bytes", _ESTIMATED_USED_MEMORY);
-        NL_LOG("Used %zu malloc calls and %zu frees", _MallocCalls, _FreeCalls);
+        NL_LOG("NL_MEMORY: Memory Leak! Leaked Memory Amount: %zu bytes", _ESTIMATED_USED_MEMORY);
+        NL_LOG("NL_MEMORY: Used %zu malloc calls and %zu frees", _MallocCalls, _FreeCalls);
     }
 }
 
@@ -67,7 +67,7 @@ internal_function void* internal_allocate_memory(size_t size)
 
     if (memory == 0)
     {
-        NL_LOG("Unable to allocate memory of size %zi", size);
+        NL_LOG("NL_MEMORY: Unable to allocate memory of size %zi", size);
         return 0;
     }
 
@@ -95,13 +95,13 @@ void memory_free(void* memory)
 
 void make_bump_allocator(nl_bump_allocator* allocator, size_t capacity)
 {
-    NL_ASSERT(0==allocator->memory,"Bump memory already allocated");
+    NL_ASSERT(0==allocator->memory,"NL_MEMORY: Bump memory already allocated");
 
     allocator->memory = (char*)memory_allocate(capacity); // calls malloc and sets to 0
 
     if (!allocator->memory)
     {
-        NL_LOG("Bump Allocator: Failed to allocate memory.");
+        NL_LOG("NL_MEMORY: Failed to allocate memory.");
         return;
     }
 
@@ -116,7 +116,6 @@ void flush_bump_allocator(nl_bump_allocator* allocator)
 
 void free_bump_allocator(nl_bump_allocator* allocator)
 {
-    NL_LOG("Freeing bump Allocator");
     allocator->used = 0;
     
     memory_free(allocator->memory);
@@ -132,7 +131,7 @@ char* bump_alloc(nl_bump_allocator* allocator, size_t size)
 
     if (allocator->used + aligned_size > allocator->capacity)
     {
-        NL_LOG("Bump Allocator: Unable to allocate we are full");
+        NL_LOG("NL_MEMORY: Unable to allocate we are full");
         return 0;
     }
 
@@ -149,7 +148,7 @@ nl_bump_allocator global_temporary_bump_allocator;
 
 void initialize_global_bump_allocators(size_t transient, size_t temporary)
 {
-    NL_LOG("Allocating global bump allocators! %zu transient bufffer and %zu temporary", transient, temporary);
+    NL_LOG("NL_MEMORY: Allocating global bump allocators! %zu transient bufffer and %zu temporary", transient, temporary);
 
     make_bump_allocator(&global_transient_bump_allocator, transient);
     make_bump_allocator(&global_temporary_bump_allocator, temporary);

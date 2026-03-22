@@ -50,8 +50,8 @@ void create_orthographic_projection(mat4x4f* const mat, float left, float right,
     mat->m22 = 2.0f/delta_y;
     mat->m21 = mat->m23 = mat->m24 = 0.0f;
     
-    mat->m33 = -2.0f/delta_z; DO_ONCE(NL_LOG("Orthographic Project is Right Handed"));
-    //mat->m33 = 2.0f/delta_z; DO_ONCE(NL_LOG("Orthographic Project is Left Handed"));
+    mat->m33 = -2.0f/delta_z; DO_ONCE(NL_LOG("NL_MATH: Orthographic Project is Right Handed"));
+    //mat->m33 = 2.0f/delta_z; DO_ONCE(NL_LOG(NL_MATH: Orthographic Project is Left Handed"));
     mat->m31 = mat->m32 = mat->m34 = 0.0f;
     
     mat->m41 = -(right + left) / delta_x;
