@@ -30,8 +30,8 @@ void main()
     float GridMinCellSize = 5.0;
     float gGridCellSize = 0.5;
 
-    float delta_x = clamp(WorldPos.x*0.005, 0.0f, 0.5);
-    float delta_y = clamp(WorldPos.y*0.005, 0.0f, 0.5);
+    float delta_x = clamp(tan(WorldPos.x*0.001), 0.0f, 0.5);
+    float delta_y = clamp(tan(WorldPos.y*0.001), 0.0f, 0.5);
 
     vec4 gGridColourThick = vec4(delta_x,0.0,delta_y,1.0);
 

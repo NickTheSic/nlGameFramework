@@ -37,7 +37,7 @@ void app_specific_init(void)
 void app_specific_update(double dt)
 {
     unsigned char bTransformDirty = 0;
-    const float speed = 80.f * dt;
+    const float speed = 180.f * dt;
 
     if (key_is_held(key_w))
     {
