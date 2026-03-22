@@ -109,3 +109,10 @@ void set_uniform_v3f(unsigned int shader, unsigned int loc, const float* const v
     glUseProgram(shader);
     glUniform3fv(loc, 1, vec);
 }
+
+void set_uniform_2f(unsigned int shader, unsigned int loc, float f1, float f2)
+{
+    glUseProgram(shader);
+    v2f vec = {f1,f2};
+    glUniform2fv(loc, 1, &vec.x);
+}

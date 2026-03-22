@@ -16,6 +16,7 @@ unsigned int get_uniform_loc(unsigned int program, const char* name);
 //NOTE: Should use the shader program instead of assuming it is bound already
 void set_uniform_mat4x4f(unsigned int shader, unsigned int loc, const float* const mat); 
 void set_uniform_v3f(unsigned int shader, unsigned int loc, const float* const vec);
+void set_uniform_2f(unsigned int shader, unsigned int loc, float f1, float f2);
 
 #ifdef __cplusplus
 }

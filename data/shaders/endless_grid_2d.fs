@@ -27,8 +27,8 @@ vec2 satv(vec2 x)
 
 void main()
 {
-    float GridMinCellSize = 2.0;
-    float gGridCellSize = 0.1;
+    float GridMinCellSize = 5.0;
+    float gGridCellSize = 0.5;
     vec4 gGridColourThick = vec4(0.0,0.0,0.0,1.0);
     vec4 gGridColourThin  = vec4(0.5,0.5,0.5,1.0);
 
