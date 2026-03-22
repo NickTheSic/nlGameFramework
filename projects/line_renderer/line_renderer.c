@@ -7,6 +7,7 @@ nl_rr_linerenderer line_renderer = {0};
 
 v3f positions[50] = {0};
 int current_pos = 0;
+int max_positions = 0;
 
 void app_specific_init(void)
 {
@@ -32,13 +33,20 @@ void app_specific_update(double dt)
         NL_LOG("Mouse X: %i Y: %i After X: %f, Y %f", mouse.x, mouse.y, storage.x, storage.y);
 
         current_pos++;
+        if (current_pos >= 50)
+        {
+            current_pos -= 50;
+        }
+
+        max_positions++;
+        if (max_positions>50) {max_positions = 50;}
     }
 }
 
 void app_specific_render(void)
 {
     begin_linerender_draw(&line_renderer);
-    add_linerender_line(&line_renderer, positions, current_pos);
+    add_linerender_line(&line_renderer, positions, max_positions);
     end_linerender_draw(&line_renderer);
 }
 

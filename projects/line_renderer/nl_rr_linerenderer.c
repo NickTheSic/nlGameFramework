@@ -9,7 +9,7 @@ void init_line_renderer(nl_rr_linerenderer* const renderer)
 
     const size_t vertices_memory = renderer->max_vertices*sizeof(nl_linerenderer_vertexdata);
     
-    renderer->vertices = memory_allocate(vertices_memory);
+    renderer->vertices = (nl_linerenderer_vertexdata*)bump_alloc(get_transient_bump_allocator(), vertices_memory);
 
     renderer->shader = load_shader_from_files("lines_shader.vs", "lines_shader.fs");
     use_shader_program(renderer->shader);
@@ -37,6 +37,9 @@ void free_line_renderer(nl_rr_linerenderer* const renderer)
 internal_function void flush_line_renderer(nl_rr_linerenderer* const renderer)
 {
     glBufferSubData(GL_ARRAY_BUFFER, 0, renderer->num_vertices*sizeof(v3f), renderer->vertices);
+    //glDrawArrays(GL_LINE_STRIP, 0, renderer->num_vertices); //Strips are pretty cool
+    //glDrawArrays(GL_LINE_LOOP, 0, renderer->num_vertices);
+    
     glDrawArrays(GL_LINES, 0, renderer->num_vertices);
 
     renderer->num_vertices = 0;
@@ -51,6 +54,15 @@ void begin_linerender_draw(nl_rr_linerenderer* const renderer)
 
 void add_linerender_line(nl_rr_linerenderer* const renderer, v3f* points, int num_points)
 {
+    if (renderer->max_vertices < num_points)
+    {
+        DO_ONCE(NL_LOG("Drawing above the max num in one go!"));
+
+        add_linerender_line(renderer, points, renderer->max_vertices);
+        points = points + renderer->max_vertices;
+        num_points -= renderer->max_vertices;
+    }
+
     if (renderer->num_vertices + num_points >= renderer->max_vertices)
     {
         flush_line_renderer(renderer);
