@@ -34,11 +34,7 @@ void app_specific_update(double dt)
 void app_specific_render(void)
 {
     begin_linerender_draw(&line_renderer);
-
-
     add_linerender_line(&line_renderer, positions, current_pos);
-
-
     end_linerender_draw(&line_renderer);
 }
 
