@@ -25,6 +25,9 @@ internal_function void* internal_allocate_memory(size_t size)
 
     _ESTIMATED_USED_MEMORY+=size;
     *memory = size;
+
+    NL_LOG("Memory[0]: %zu", memory[0]);
+
     ++_MallocCalls;
 
     return (void*)((size_t*)memory+sizeof(size_t));
@@ -32,9 +35,11 @@ internal_function void* internal_allocate_memory(size_t size)
 
 internal_function void internal_free_memory(void* ptr)
 {
-    size_t* real_ptr = (size_t*)((char*)ptr-sizeof(size_t));
+    size_t* real_ptr = (size_t*)((size_t*)ptr-sizeof(size_t));
 
     size_t size = real_ptr[0];
+    NL_LOG("Freeing size %zu", size);
+
     _ESTIMATED_USED_MEMORY-=size;
     ++_FreeCalls;
 
@@ -90,6 +95,8 @@ void memory_free(void* memory)
 
 void make_bump_allocator(nl_bump_allocator* allocator, size_t capacity)
 {
+    NL_ASSERT(0==allocator->memory,"Bump memory already allocated");
+
     allocator->memory = (char*)memory_allocate(capacity); // calls malloc and sets to 0
 
     if (!allocator->memory)
@@ -109,10 +116,12 @@ void flush_bump_allocator(nl_bump_allocator* allocator)
 
 void free_bump_allocator(nl_bump_allocator* allocator)
 {
-    allocator->used = allocator->capacity = 0;
+    NL_LOG("Freeing bump Allocator");
+    allocator->used = 0;
     
     memory_free(allocator->memory);
-
+    
+    allocator->capacity = 0;
     allocator->memory = 0;
 }
 
@@ -135,8 +144,8 @@ char* bump_alloc(nl_bump_allocator* allocator, size_t size)
 }
 
 
-global_variable nl_bump_allocator global_transient_bump_allocator;
-global_variable nl_bump_allocator global_temporary_bump_allocator;
+nl_bump_allocator global_transient_bump_allocator;
+nl_bump_allocator global_temporary_bump_allocator;
 
 void initialize_global_bump_allocators(size_t transient, size_t temporary)
 {

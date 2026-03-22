@@ -40,5 +40,4 @@ void platform_cleanup(void)
 {
     cleanup_audio_system();
     free_global_bump_allocators();
-    basic_memory_leak_check();
 }

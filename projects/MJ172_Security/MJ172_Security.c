@@ -106,9 +106,6 @@ internal_function void generate_game_laser_beams(void)
         lasers[i].laser_active = (unsigned char)random_int_in_range(0,3);
         lasers[i].beam_active = get_laser_beam_showing(&lasers[i]);
 
-        NL_LOG("Laser %d active: %d", i, (int)lasers[i].laser_active);
-        NL_LOG("Laser %d beam active: %d", i, (int)lasers[i].beam_active);
-
         if (lasers[i].laser_active)
         {furthest_active_laser = i;}
     }
@@ -167,8 +164,6 @@ internal_function void collision_test(void)
 
 void app_specific_init(void)
 {
-    SCOPE_TIMER("Init");
-
     init_sprite_renderer();
 
     generate_game_sprites();
@@ -211,7 +206,6 @@ void app_specific_update(double dt)
             if (lasers[i].laser_active)
             {
                 lasers[i].beam_active = get_laser_beam_showing(&lasers[i]);
-                NL_LOG("Laser %d beam active: %d", i, (int)lasers[i].beam_active);
             }
         }
     }

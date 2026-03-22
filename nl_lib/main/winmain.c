@@ -84,6 +84,8 @@ int WinMain(
     app_specific_cleanup();
     platform_cleanup();
 
+    basic_memory_leak_check();
+
     NL_LOG("Highest FPS Reached: %f", highest_fps);
     NL_LOG("Lowest FPS Reached: %f" , lowest_fps );
 
