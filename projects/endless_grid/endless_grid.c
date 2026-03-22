@@ -18,7 +18,6 @@ internal_function void winsizecbk(int width, int height)
     float _h = (float)height/2.f;
 
     create_orthographic_projection(&endless_grid_view, camera_position.x - _w, camera_position.x + _w, camera_position.y - _h, camera_position.y + _h, -10.0f, 10.0f);
-    //set_uniform_mat4x4f(egd.shader_program, egd.view_mat_loc, &endless_grid_view.m11);
     set_endless_grid_view_matrix(&egd, &endless_grid_view);
     set_endless_grid_screen_sizef(&egd, width, height);
 }
