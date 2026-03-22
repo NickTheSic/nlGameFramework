@@ -5,7 +5,7 @@
 
 nl_rr_linerenderer line_renderer = {0};
 
-v3f positions[50];
+v3f positions[50] = {0};
 int current_pos = 0;
 
 void app_specific_init(void)
@@ -22,10 +22,14 @@ void app_specific_update(double dt)
         v2i mouse = get_mouse_position_from_system();
         v2i screen = get_screen_size();
 
-        NL_LOG("Mouse X: %i Y: %i Screen X: %i, Y %i", mouse.x, mouse.y, screen.x, screen.y);
-
-        positions[current_pos].x = (float)mouse.x / (float)screen.x;
-        positions[current_pos].y = (float)mouse.y / (float)screen.y;
+        float half_w = (float)screen.x * 0.5f;
+        float half_h = (float)screen.y * 0.5f;
+        
+        positions[current_pos].x = ((float)mouse.x-half_w)/half_w;
+        positions[current_pos].y = ((float)mouse.y-half_h)/half_h;
+        v3f storage = positions[current_pos];
+        
+        NL_LOG("Mouse X: %i Y: %i After X: %f, Y %f", mouse.x, mouse.y, storage.x, storage.y);
 
         current_pos++;
     }
