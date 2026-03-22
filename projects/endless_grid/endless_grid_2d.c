@@ -1,5 +1,7 @@
 #include "endless_grid_2d.h"
-#include "private/gl/nl_gl.h"
+#include "private/gl/nl_gl.h" // Only used for glDrawArrays!
+                              // This _could_ be hidden away by a different function call
+                              
 
 void init_endless_grid(endless_grid_data* endless_grid)
 {

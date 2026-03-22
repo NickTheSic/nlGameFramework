@@ -88,3 +88,10 @@ Returning pointers instead of passing them in as objects?
 -- Would be fine if I am using the arena style allocator
 
 
+My current (March 2026) shader and renderer sorta hide opengl implementation details.
+Since opengl functions are loaded at runtime, on windows, I could in theory rename them?
+I would then have to do this for web which I just include the headers 
+at this time I only use opengl so I don't need the abstraction exactly
+Will learn more as I create more with this
+
+

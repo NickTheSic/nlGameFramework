@@ -15,7 +15,7 @@ internal_function unsigned int compile_shader_source(int type, const char* code)
     {
         char info_log[512];
         glGetShaderInfoLog(shader, 512, NULL, info_log);
-        NL_LOG("Error Compiling shader: %d\n\t%s\n", type, info_log);
+        NL_LOG("NL_SHADER: Error Compiling shader: %d\n\t%s\n", type, info_log);
         return 0;
     }
 
@@ -27,14 +27,14 @@ unsigned int create_shader_program(const char* const vertex_shader_code, const c
     unsigned int vertex_shader = compile_shader_source(GL_VERTEX_SHADER, vertex_shader_code);
     if (vertex_shader == 0)
     {
-        NL_LOG("Failed to make Vertex Shader"); 
+        NL_LOG("NL_SHADER: Failed to make Vertex Shader"); 
         return 0;
     }
 
     unsigned int fragment_shader = compile_shader_source(GL_FRAGMENT_SHADER, fragment_shader_code);
     if (fragment_shader == 0)
     {
-        NL_LOG("Failed to make Fragment Shader"); 
+        NL_LOG("NL_SHADER: Failed to make Fragment Shader"); 
         glDeleteShader(vertex_shader);
         return 0;
     }
@@ -50,7 +50,7 @@ unsigned int create_shader_program(const char* const vertex_shader_code, const c
     {
         char info_log[512];
         glGetShaderInfoLog(local_shader_program, 512, NULL, info_log);
-        NL_LOG("Error Linking shader: %s\n", info_log);
+        NL_LOG("NL_SHADER: Error Linking shader: %s\n", info_log);
         
         glDeleteShader(vertex_shader);
         glDeleteShader(fragment_shader);
@@ -97,6 +97,8 @@ unsigned int get_uniform_loc(unsigned int program, const char* name)
 {
     return glGetUniformLocation(program, name);
 }
+
+// NOTE: By abstracting away these calls I end up calling glUseProgram each time!
 
 void set_uniform_mat4x4f(unsigned int shader, unsigned int loc, const float* const mat)
 {

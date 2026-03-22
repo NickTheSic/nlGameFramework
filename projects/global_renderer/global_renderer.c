@@ -1,0 +1,72 @@
+#include "nl_lib.h"
+#include "endless_grid_2d.h"
+#include "nl_rr_linerenderer.h"
+
+typedef struct global_renderer global_renderer;
+struct global_renderer
+{
+
+    mat4x4f ortho_view;
+    endless_grid_2d grid;
+    nl_rr_linerenderer line_renderer;
+
+};
+
+global_renderer gRenderer = {0};
+
+
+void app_specific_init(void)
+{
+    v2i screen = {1, 1};//get_screen_size();
+    float sx = (float)screen.x;
+    float sy = (float)screen.y;
+    create_orthographic_projection(&gRenderer.ortho_view, -sx, sx, -sy, sy, 0.0f, 1.0f);
+
+    init_endless_grid(&gRenderer.grid);
+
+    /// this is initialization stuff that could be good to pass into the init?
+    /// I created a render_as function that takes this information in aswell...
+    {
+        set_endless_grid_screen_sizei(&gRenderer.grid, screen.x, screen.y);
+        set_endless_grid_camera_position(&gRenderer.grid, (v3f){0.0f,0.0f,0.0f});
+        set_endless_grid_view_matrix(&gRenderer.grid, &gRenderer.ortho_view);
+    }
+
+    init_line_renderer(&gRenderer.line_renderer);
+}
+
+void app_specific_update(double dt)
+{
+    NL_UNUSED(dt);
+}
+
+void app_specific_render(void)
+{
+    render_endless_grid(&gRenderer.grid);
+
+    begin_linerender_draw(&gRenderer.line_renderer);
+    {
+        v3f points_1[] = {
+            {-1.0f, -1.0f, 0.0f},
+            { 1.0f,  1.0f, 0.0f},
+        };
+        add_linerender_points(&gRenderer.line_renderer, points_1, 2);
+
+        v3f points_2[] = {
+            { 1.0f, -1.0f, 0.0f},
+            {-1.0f,  1.0f, 0.0f},
+        };
+        add_linerender_points_coloured(&gRenderer.line_renderer, points_2, 2, COLOUR_GREEN);
+    }
+    end_linerender_draw(&gRenderer.line_renderer);
+
+}
+
+void app_specific_cleanup(void)
+{
+    free_line_renderer(&gRenderer.line_renderer);
+}
+
+#include "endless_grid_2d.c"
+#include "nl_rr_linerenderer.c"
+

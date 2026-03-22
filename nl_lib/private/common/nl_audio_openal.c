@@ -39,20 +39,20 @@ static void print_audio_device_name(void)
         name = alcGetString(local_audio_system->device, ALC_DEVICE_SPECIFIER);
     }
 
-    NL_LOG("Opened %s for sound", name);
+    NL_LOG("NL_OPENAL: Opened %s for sound", name);
 }
 
 internal_function ALuint load_wav_sound(const char* filename)
 {
     if (local_audio_system == 0)
     {
-        NL_LOG("Audio system isn't initialized cannot load a sound");
+        NL_LOG("NL_OPENAL: Audio system isn't initialized cannot load a sound");
         return NL_INVALID_SOUND;
     }
 
     if (local_audio_system->sounds_loaded >= MAX_SOUND_BUFFERS)
     {
-        NL_LOG("Unable to allocate more sounds for this buffer.  We have reached the max sounds and can't load %s", filename);
+        NL_LOG("NL_OPENAL: Unable to allocate more sounds for this buffer.  We have reached the max sounds and can't load %s", filename);
         return NL_INVALID_SOUND;
     }
 
@@ -60,7 +60,7 @@ internal_function ALuint load_wav_sound(const char* filename)
     load_sound_from_data(filename, &sound_file);
     if (sound_file.size == 0)
     {
-        NL_LOG("Unable to open sound file: %s", filename);
+        NL_LOG("NL_OPENAL: Unable to open sound file: %s", filename);
         return NL_INVALID_SOUND;
     }
 
@@ -89,9 +89,9 @@ internal_function ALuint load_wav_sound(const char* filename)
     }   
     else
     {
-        NL_LOG("Unable to deduce the format of the audio file");
+        NL_LOG("NL_OPENAL: Unable to deduce the format of the audio file");
     }
-    NL_LOG("%s is %d format", filename, format);
+    NL_LOG("NL_OPENAL: %s is %d format", filename, format);
 
     alBufferData(local_audio_system->buffers[local_audio_system->sounds_loaded],
                 format, 
@@ -126,7 +126,7 @@ unsigned int load_sound_file(const char* filename)
         return load_wav_sound(filename);
     }
 
-    NL_LOG("No compatible audio type found for %s", file_type);
+    NL_LOG("NL_OPENAL: No compatible audio type found for %s", file_type);
     return NL_INVALID_SOUND;
 }
 
@@ -136,7 +136,7 @@ int init_audio_system(void)
     
     if (local_audio_system == 0)
     {
-        NL_LOG("Unable to allocate memory for the audio system");
+        NL_LOG("NL_OPENAL: Unable to allocate memory for the audio system");
         return 0;
     }
 
@@ -148,20 +148,20 @@ int init_audio_system(void)
     local_audio_system->device = alcOpenDevice(0);
     if (local_audio_system->device == 0)
     {
-        NL_LOG("Unable to create audio device");
+        NL_LOG("NL_OPENAL: Unable to create audio device");
         return 0;
     }
     
     local_audio_system->context = alcCreateContext(local_audio_system->device, 0);
     if (local_audio_system->context == 0)
     {
-        NL_LOG("Unable to create audio context");
+        NL_LOG("NL_OPENAL: Unable to create audio context");
         return 0;
     }
 
     if (!alcMakeContextCurrent(local_audio_system->context))
     {
-        NL_LOG("Unable to make audio context current");
+        NL_LOG("NL_OPENAL: Unable to make audio context current");
         return 0;
     }
 
@@ -201,7 +201,7 @@ void play_sound(unsigned int sound)
 {
     if (sound == NL_INVALID_SOUND)
     {
-        NL_LOG("Trying to play and Invalid Sound!");
+        NL_LOG("NL_OPENAL: Trying to play and Invalid Sound!");
         return;
     }
     alSourcePlay(sound);
@@ -211,7 +211,7 @@ void set_sound_to_loop(unsigned int sound)
 {
     if (sound == NL_INVALID_SOUND)
     {
-        NL_LOG("Trying to loop and Invalid Sound!");
+        NL_LOG("NL_OPENAL: Trying to loop and Invalid Sound!");
         return;
     }
 
@@ -236,7 +236,7 @@ void set_master_volume(float volume)
     NL_UNIMPLEMENTED_FUNC
     if (1.0f < volume)
     {
-        NL_LOG("AUDIO: I plan to pass in the values 0 -> 1 for volume. If this is greater then I am diving by 100 by default");
+        NL_LOG("NL_OPENAL: I plan to pass in the values 0 -> 1 for volume. If this is greater then I am diving by 100 by default");
         volume /= 100.0f;
     }
 
