@@ -6,6 +6,7 @@
 extern "C" {
 #endif
 
+
 typedef struct orthographic_camera_2d orthographic_camera_2d;
 struct orthographic_camera_2d
 {
@@ -13,10 +14,14 @@ struct orthographic_camera_2d
     v2f position;
 };
 
+
+
+
 typedef struct camera camera;
 struct camera
 {
-    // NOTE: Some programs I get this backwards!
+    // NOTE: Some programs I get this backwards! 
+    // Also for more 3D stuff than I am currently planning on
     mat4x4f view_matrix; // Camera Postion, Orientation and Target
     mat4x4f proj_matrix; // Defines Orthographic or Projection
 };
