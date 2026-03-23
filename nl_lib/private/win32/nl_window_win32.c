@@ -30,14 +30,14 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
     {
 		case WM_CLOSE:
 		{
-			NL_LOG("Close Message");
+			NL_LOG("NL_WINDOW: Close Message");
 			g_window.running = 0;
 			DestroyWindow(window);
 		}break;
 
         case WM_DESTROY:
 		{
-			NL_LOG("Destroy Message");
+			NL_LOG("NL_WINDOW: Destroy Message");
             PostQuitMessage(0);
 		}break;
 
@@ -141,7 +141,7 @@ int initialize_window(int width, int height, const char* title)
         size_t old_length = strlen(title) + 1;
 		if (old_length > 50)
 		{
-			NL_LOG("The length of the title is greater than 50 characters. the wide title only allocated space for 50 characters");
+			NL_LOG("NL_WINDOW: The length of the title is greater than 50 characters. the wide title only allocated space for 50 characters");
 		}
         size_t converted = 0;
         mbstowcs_s(&converted, wide_title, old_length, title, _TRUNCATE);
@@ -169,7 +169,7 @@ int initialize_window(int width, int height, const char* title)
 
     if (!RegisterClassExW(&wc))
     {
-		NL_LOG("Unable to register window class");
+		NL_LOG("NL_WINDOW: Unable to register window class");
         return 0;
     }
 
@@ -189,14 +189,14 @@ int initialize_window(int width, int height, const char* title)
 
     if (g_window.window == 0)
     {
-		NL_LOG("Unable to create window");
+		NL_LOG("NL_WINDOW: Unable to create window");
         return 0;
     }
 
     g_window.device = GetDC(g_window.window);
     if (g_window.device == 0)
     {
-		NL_LOG("Unable to get DC");
+		NL_LOG("NL_WINDOW: Unable to get DC");
         return 0;
     }
 
@@ -230,26 +230,26 @@ int initialize_window(int width, int height, const char* title)
 
 	if (!pixel_format)
 	{
-		NL_LOG("Unable to choose pixel format");
+		NL_LOG("NL_WINDOW: Unable to choose pixel format");
 		return 0;
 	}
 
 	if (!SetPixelFormat(g_window.device, pixel_format, &pfd))
 	{
-		NL_LOG("Unable to set pixel format");
+		NL_LOG("NL_WINDOW: Unable to set pixel format");
         return 0;
 	}
 
 	g_window.context = wglCreateContext(g_window.device);
 	if (g_window.context == 0)
 	{
-		NL_LOG("Unable to create wgl context");
+		NL_LOG("NL_WINDOW: Unable to create wgl context");
 		return 0;
 	}
 
 	if (!wglMakeCurrent(g_window.device, g_window.context))
 	{
-		NL_LOG("Unable for wgl to Make Current device, context");
+		NL_LOG("NL_WINDOW: Unable for wgl to Make Current device, context");
 		return 0;
 	}
 
@@ -265,7 +265,7 @@ int initialize_window(int width, int height, const char* title)
 		char* rendererString;
 		rendererString = (char*)glGetString(GL_RENDERER);
 		if (rendererString) {
-			NL_LOG("%s\n", rendererString);
+			NL_LOG("NL_WINDOW: %s\n", rendererString);
 		}
 	}
 
@@ -301,7 +301,7 @@ void window_swap_buffers()
 
 void window_request_close()
 {
-	NL_LOG("Requesting window Close");
+	NL_LOG("NL_WINDOW: Requesting window Close");
 	SendMessage(g_window.window, WM_CLOSE, 0, 0);
 }
 
