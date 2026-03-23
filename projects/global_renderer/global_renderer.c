@@ -15,16 +15,20 @@ struct global_renderer
 };
 
 global_renderer gRenderer = {0};
+float camera_size = 25.f;
 
 void winsizeclbk(int width, int height)
 {
-    float sx = (float)width  / 2.0;
-    float sy = (float)height / 2.0;
+    float aspect = (float)width / (float)height;
+    float sx = camera_size * aspect;
+    float sy = camera_size;
     create_orthographic_projection(&gRenderer.ortho_view, -sx, sx, -sy, sy, 0.0f, 1.0f);
 
     set_endless_grid_screen_sizei(&gRenderer.grid, width, height);
     set_endless_grid_view_matrix(&gRenderer.grid, &gRenderer.ortho_view);
 
+    // A reason to encasulate the call!  So I can use the shader
+    glUseProgram(gRenderer.line_renderer.shader);
     glUniformMatrix4fv(gRenderer.line_renderer.view_matrix_loc, 1, GL_FALSE, &gRenderer.ortho_view.m11);
 }
 
@@ -32,11 +36,11 @@ void app_specific_init(void)
 {
     set_window_size_callback(winsizeclbk);
     v2i screen = get_screen_size();
-    float sx = (float)screen.x / 2.0;
-    float sy = (float)screen.y / 2.0;
-    create_orthographic_projection(&gRenderer.ortho_view, -sx, sx, -sy, sy, 0.0f, 1.0f);
 
     init_endless_grid(&gRenderer.grid);
+    init_line_renderer(&gRenderer.line_renderer);
+
+    winsizeclbk(screen.x, screen.y);
 
     /// this is initialization stuff that could be good to pass into the init?
     /// I created a render_as function that takes this information in aswell...
@@ -46,9 +50,10 @@ void app_specific_init(void)
         set_endless_grid_view_matrix(&gRenderer.grid, &gRenderer.ortho_view);
     }
 
-    init_line_renderer(&gRenderer.line_renderer);
     {
         // Again, init stuff here. and I don't have the call wrapped
+        // A reason to encasulate the call!  So I can use the shader
+        glUseProgram(gRenderer.line_renderer.shader);
         glUniformMatrix4fv(gRenderer.line_renderer.view_matrix_loc, 1, GL_FALSE, &gRenderer.ortho_view.m11);
     }
 }
@@ -69,8 +74,8 @@ void app_specific_render(void)
     begin_linerender_draw(&gRenderer.line_renderer);
     {
         v2i screen = get_screen_size();
-        float sx = (float)screen.x/4;
-        float sy = (float)screen.y/4;
+        float sx = camera_size;//loat)screen.x/4;
+        float sy = camera_size;//loat)screen.y/4;
 
         v3f points_1[] = {
             {-sx, -sy, 0.0f},
