@@ -14,22 +14,32 @@ struct global_renderer
 
 global_renderer gRenderer = {0};
 
+void winsizeclbk(int width, int height)
+{
+    float sx = (float)width  / 2.0;
+    float sy = (float)height / 2.0;
+    create_orthographic_projection(&gRenderer.ortho_view, -sx, sx, -sy, sy, 0.0f, 1.0f);
+
+    set_endless_grid_screen_sizei(&gRenderer.grid, width, height);
+    set_endless_grid_view_matrix(&gRenderer.grid, &gRenderer.ortho_view);
+}
 
 void app_specific_init(void)
 {
-    v2i screen = {1, 1};//get_screen_size();
-    float sx = (float)screen.x;
-    float sy = (float)screen.y;
+    set_window_size_callback(winsizeclbk);
+    v2i screen = get_screen_size();
+    float sx = (float)screen.x / 2.0;
+    float sy = (float)screen.y / 2.0;
     create_orthographic_projection(&gRenderer.ortho_view, -sx, sx, -sy, sy, 0.0f, 1.0f);
 
-    //init_endless_grid(&gRenderer.grid);
+    init_endless_grid(&gRenderer.grid);
 
     /// this is initialization stuff that could be good to pass into the init?
     /// I created a render_as function that takes this information in aswell...
     {
-        //set_endless_grid_screen_sizei(&gRenderer.grid, screen.x, screen.y);
-        //set_endless_grid_camera_position(&gRenderer.grid, (v3f){0.0f,0.0f,0.0f});
-        //set_endless_grid_view_matrix(&gRenderer.grid, &gRenderer.ortho_view);
+        set_endless_grid_screen_sizei(&gRenderer.grid, screen.x, screen.y);
+        set_endless_grid_camera_position(&gRenderer.grid, (v3f){0.0f,0.0f,0.0f});
+        set_endless_grid_view_matrix(&gRenderer.grid, &gRenderer.ortho_view);
     }
 
     init_line_renderer(&gRenderer.line_renderer);
@@ -42,7 +52,7 @@ void app_specific_update(double dt)
 
 void app_specific_render(void)
 {
-    //render_endless_grid(&gRenderer.grid);
+    render_endless_grid(&gRenderer.grid);
 
     begin_linerender_draw(&gRenderer.line_renderer);
     {

@@ -7,12 +7,14 @@ void init_line_renderer(nl_rr_linerenderer* const renderer)
     renderer->max_vertices = 30;
     renderer->num_vertices = 0;
 
+    glLineWidth(2.0f);
+
     const size_t vertices_memory = renderer->max_vertices*sizeof(nl_linerenderer_vertexdata);
     
     renderer->vertices = (nl_linerenderer_vertexdata*)bump_alloc(get_transient_bump_allocator(), vertices_memory);
 
     renderer->shader = load_shader_from_files("lines_shader.vs", "lines_shader.fs");
-    use_shader_program(renderer->shader);
+    glUseProgram(renderer->shader);
 
     glGenVertexArrays(1, &renderer->vao);
     glBindVertexArray(renderer->vao);
@@ -40,7 +42,7 @@ void free_line_renderer(nl_rr_linerenderer* const renderer)
 
 internal_function void flush_line_renderer(nl_rr_linerenderer* const renderer)
 {
-    glBufferSubData(GL_ARRAY_BUFFER, 0, renderer->num_vertices*sizeof(v3f), renderer->vertices);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, renderer->num_vertices*sizeof(nl_linerenderer_vertexdata), renderer->vertices);
     //glDrawArrays(GL_LINE_STRIP, 0, renderer->num_vertices); //Strips are pretty cool
     //glDrawArrays(GL_LINE_LOOP, 0, renderer->num_vertices);
     glDrawArrays(GL_LINES, 0, renderer->num_vertices);
@@ -50,7 +52,7 @@ internal_function void flush_line_renderer(nl_rr_linerenderer* const renderer)
 
 void begin_linerender_draw(nl_rr_linerenderer* const renderer)
 {
-    use_shader_program(renderer->shader);
+    glUseProgram(renderer->shader);
     glBindVertexArray(renderer->vao);
     glBindBuffer(GL_ARRAY_BUFFER, renderer->vbo);
 }
@@ -100,5 +102,5 @@ void end_linerender_draw(nl_rr_linerenderer* const renderer)
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
-    use_shader_program(0);
+    glUseProgram(0);
 }
