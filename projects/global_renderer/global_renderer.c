@@ -73,7 +73,7 @@ void app_specific_render(void)
 
     begin_linerender_draw(&gRenderer.line_renderer);
     {
-        v2i screen = get_screen_size();
+        //v2i screen = get_screen_size();
         float sx = camera_size;//loat)screen.x/4;
         float sy = camera_size;//loat)screen.y/4;
 

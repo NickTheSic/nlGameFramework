@@ -219,7 +219,7 @@ internal_function unsigned int load_wav_sound(const char* filename)
     wav_file_header* const header = (wav_file_header* const)(sound_file.content);
     xaudio_loaded_sound* const sound = &local_xaudio_system->loaded_sounds[current_voice];
 
-    sound->data = bump_alloc(get_transient_bump_allocator(), header->data_size);
+    sound->data = (unsigned char*)bump_alloc(get_transient_bump_allocator(), header->data_size);
     if (!sound->data)
     {
     	NL_LOG("unable to allocate data for xaudio sound %s", filename);
