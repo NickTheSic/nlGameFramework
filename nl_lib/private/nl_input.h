@@ -7,6 +7,10 @@
 extern "C" {
 #endif
 
+// TODO: Could have a "raw" input that handles mouse, kb and controller
+// Those would then send to a Common input so I can bind mouse, controller and kb using 1 way
+// Then I could specify guessed controlls for "Controller" for web?  Or keys for console?
+
 #define NL_MOUSE_BUTTON_LEFT 0
 #define NL_MOUSE_BUTTON_RIGHT 1
 #define NL_MOUSE_BUTTON_MIDDLE 2
