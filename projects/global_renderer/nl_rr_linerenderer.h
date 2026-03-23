@@ -21,6 +21,7 @@ struct nl_rr_linerenderer
     unsigned int vao;
     unsigned int vbo;
     unsigned int shader;
+    unsigned int view_matrix_loc;
 };
 
 void init_line_renderer(nl_rr_linerenderer* const renderer);

@@ -93,6 +93,8 @@ void free_shader_program(unsigned int shader_program)
     glDeleteProgram(shader_program);
 }
 
+// I don't keep track of the uniforms this is a silly function...
+// Not sure if I should keep using it or stop and wrap the call again if I need it
 unsigned int get_uniform_loc(unsigned int program, const char* name)
 {
     return glGetUniformLocation(program, name);

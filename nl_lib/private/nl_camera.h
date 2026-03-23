@@ -16,6 +16,7 @@ struct orthographic_camera_2d
 typedef struct camera camera;
 struct camera
 {
+    // NOTE: Some programs I get this backwards!
     mat4x4f view_matrix; // Camera Postion, Orientation and Target
     mat4x4f proj_matrix; // Defines Orthographic or Projection
 };

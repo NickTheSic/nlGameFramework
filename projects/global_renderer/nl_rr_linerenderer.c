@@ -7,7 +7,7 @@ void init_line_renderer(nl_rr_linerenderer* const renderer)
     renderer->max_vertices = 30;
     renderer->num_vertices = 0;
 
-    glLineWidth(2.0f);
+    glLineWidth(5.0f); // Just so it is a thicker line by default
 
     const size_t vertices_memory = renderer->max_vertices*sizeof(nl_linerenderer_vertexdata);
     
@@ -15,6 +15,7 @@ void init_line_renderer(nl_rr_linerenderer* const renderer)
 
     renderer->shader = load_shader_from_files("lines_shader.vs", "lines_shader.fs");
     glUseProgram(renderer->shader);
+    renderer->view_matrix_loc = glGetUniformLocation(renderer->shader, "uViewMat");
 
     glGenVertexArrays(1, &renderer->vao);
     glBindVertexArray(renderer->vao);
@@ -44,8 +45,8 @@ internal_function void flush_line_renderer(nl_rr_linerenderer* const renderer)
 {
     glBufferSubData(GL_ARRAY_BUFFER, 0, renderer->num_vertices*sizeof(nl_linerenderer_vertexdata), renderer->vertices);
     //glDrawArrays(GL_LINE_STRIP, 0, renderer->num_vertices); //Strips are pretty cool
-    //glDrawArrays(GL_LINE_LOOP, 0, renderer->num_vertices);
-    glDrawArrays(GL_LINES, 0, renderer->num_vertices);
+    glDrawArrays(GL_LINE_LOOP, 0, renderer->num_vertices);
+    //glDrawArrays(GL_LINES, 0, renderer->num_vertices);
 
     renderer->num_vertices = 0;
 }

@@ -5,8 +5,10 @@ layout (location = 1) in vec4 aColour;
 
 out vec4 fColour;
 
+uniform mat4 uViewMat;
+
 void main()
 {
-    gl_Position = vec4(aPos, 1.0);
+    gl_Position = uViewMat * vec4(aPos, 1.0);
     fColour = aColour;
 }

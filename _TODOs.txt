@@ -57,6 +57,10 @@ The importance of cleaning up the 'library' to remove old, deprecated or unused 
 //             Things to Consider Implementing                 //
 /////////////////////////////////////////////////////////////////
 
+
+OpenGL debug logging: https://wikis.khronos.org/opengl/Debug_Output
+
+
 Idea: Allocate 1 memory block per object and let other pointers index into the main block.  Reduces the amount of allocations!
         Use Case: Mesh Struct where Indices and Positions can be part of 1 object
         From the Jonothan Blow introduction for a new language where he shows this as an example saying @joint_memory would be a neat concept

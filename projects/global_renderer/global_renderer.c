@@ -2,6 +2,8 @@
 #include "endless_grid_2d.h"
 #include "nl_rr_linerenderer.h"
 
+#include "private/gl/nl_gl.h"
+
 typedef struct global_renderer global_renderer;
 struct global_renderer
 {
@@ -22,6 +24,8 @@ void winsizeclbk(int width, int height)
 
     set_endless_grid_screen_sizei(&gRenderer.grid, width, height);
     set_endless_grid_view_matrix(&gRenderer.grid, &gRenderer.ortho_view);
+
+    glUniformMatrix4fv(gRenderer.line_renderer.view_matrix_loc, 1, GL_FALSE, &gRenderer.ortho_view.m11);
 }
 
 void app_specific_init(void)
@@ -43,6 +47,10 @@ void app_specific_init(void)
     }
 
     init_line_renderer(&gRenderer.line_renderer);
+    {
+        // Again, init stuff here. and I don't have the call wrapped
+        glUniformMatrix4fv(gRenderer.line_renderer.view_matrix_loc, 1, GL_FALSE, &gRenderer.ortho_view.m11);
+    }
 }
 
 void app_specific_update(double dt)
@@ -56,21 +64,25 @@ void app_specific_render(void)
 
     begin_linerender_draw(&gRenderer.line_renderer);
     {
+        v2i screen = get_screen_size();
+        float sx = (float)screen.x/2;
+        float sy = (float)screen.y/2;
+
         v3f points_1[] = {
-            {-1.0f, -1.0f, 0.0f},
-            { 1.0f,  1.0f, 0.0f},
+            {-sx, -sy, 0.0f},
+            { sx,  sy, 0.0f},
         };
         add_linerender_points(&gRenderer.line_renderer, points_1, 2);
 
         v3f points_2[] = {
-            { 1.0f, -1.0f, 0.0f},
-            {-1.0f,  1.0f, 0.0f},
+            { sx, -sy, 0.0f},
+            {-sx,  sy, 0.0f},
         };
         add_linerender_points_coloured(&gRenderer.line_renderer, points_2, 2, COLOUR_GREEN);
 
         v3f points_3[] = {
-            {0.0f,-1.0f, 0.0f},
-            {0.0f, 1.0f, 0.0f},
+            {0.0f,-sy, 0.0f},
+            {0.0f, sy, 0.0f},
         };
         add_linerender_points_coloured(&gRenderer.line_renderer, points_3, 2, COLOUR_BLUE);
     }
