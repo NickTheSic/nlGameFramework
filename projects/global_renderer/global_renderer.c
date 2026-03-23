@@ -69,8 +69,8 @@ void app_specific_render(void)
     begin_linerender_draw(&gRenderer.line_renderer);
     {
         v2i screen = get_screen_size();
-        float sx = (float)screen.x/2;
-        float sy = (float)screen.y/2;
+        float sx = (float)screen.x/4;
+        float sy = (float)screen.y/4;
 
         v3f points_1[] = {
             {-sx, -sy, 0.0f},

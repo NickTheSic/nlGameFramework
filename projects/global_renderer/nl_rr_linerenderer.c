@@ -44,9 +44,8 @@ void free_line_renderer(nl_rr_linerenderer* const renderer)
 internal_function void flush_line_renderer(nl_rr_linerenderer* const renderer)
 {
     glBufferSubData(GL_ARRAY_BUFFER, 0, renderer->num_vertices*sizeof(nl_linerenderer_vertexdata), renderer->vertices);
-    //glDrawArrays(GL_LINE_STRIP, 0, renderer->num_vertices); //Strips are pretty cool
-    glDrawArrays(GL_LINE_LOOP, 0, renderer->num_vertices);
-    //glDrawArrays(GL_LINES, 0, renderer->num_vertices);
+    //glDrawArrays(GL_LINE_LOOP, 0, renderer->num_vertices);
+    glDrawArrays(GL_LINES, 0, renderer->num_vertices);
 
     renderer->num_vertices = 0;
 }

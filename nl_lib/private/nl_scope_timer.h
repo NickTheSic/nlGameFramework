@@ -7,6 +7,9 @@
 
 #if NL_DEBUG_ENABLED
 
+// May have full frame time, could Colour/make each timer associate a colour in some sort of a graph
+// Should look up the name and actually check
+
 typedef struct debug_scope_timer debug_scope_timer;
 struct debug_scope_timer
 {
