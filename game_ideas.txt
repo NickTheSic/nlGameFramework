@@ -1,4 +1,5 @@
 /*** Generic Game Ideas to Further Development of this framework ***/
+// I would rather this be a 2D image of sorts like UML
 
 Snake: 
 - Basic shapes or Sprite Rendering 

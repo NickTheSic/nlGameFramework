@@ -99,3 +99,7 @@ at this time I only use opengl so I don't need the abstraction exactly
 Will learn more as I create more with this
 
 
+Could have a RendererInit (RendererTypes) 
+    - Exists all renderers but only creates the ones I plan to use
+    - Get crazy with it and create a renderer when I call _draw_type()
+
