@@ -10,7 +10,7 @@ in vec2 WorldPos;
 
 float log10(float x)
 {
-    float f = log(x) / log(10);
+    float f = log(x) / log(10.0);
     return f;
 }
 
@@ -27,11 +27,11 @@ vec2 satv(vec2 x)
 
 void main()
 {
-    float GridMinCellSize = 5.0;
+    float GridMinCellSize = 15.0;
     float gGridCellSize = 0.5;
 
-    float delta_x = clamp(tan(WorldPos.x*0.001), 0.0f, 0.5);
-    float delta_y = clamp(tan(WorldPos.y*0.001), 0.0f, 0.5);
+    float delta_x = clamp(tan(WorldPos.x*0.01), 0.0f, 0.5);
+    float delta_y = clamp(tan(WorldPos.y*0.01), 0.0f, 0.5);
 
     vec4 gGridColourThick = vec4(delta_x,0.0,delta_y,1.0);
 
