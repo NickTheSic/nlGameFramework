@@ -3,4 +3,6 @@
 
 :: TODO: VISUALSTUDIOPATH should include the year and version too, the rest should be the same
 
+:: TODO - Make sure this value is set in the path
+
 call "%VISUALSTUDIOPATH%\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" x64 
