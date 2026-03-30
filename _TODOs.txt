@@ -3,14 +3,17 @@
 //                       In Progress                           //
 /////////////////////////////////////////////////////////////////
 
-Endless grid looks endless; now I need to draw the grid behind sprites
+Getting a renderer setup going on.  Hopefully it batches sprites, can draw lines and the endless grid
+Polygon rendering with line loops would be nice but would be lots more draw calls
 
+Check if the OpenGL debug logging is working
 
 /////////////////////////////////////////////////////////////////
 //                   Needs to be done                          //
 /////////////////////////////////////////////////////////////////
 
 Work on a game to know if it feels right to use!
+ - I need sprite rendering!
 
 'Effecient' Sprite rendering
     - Batching together draw calls
@@ -27,14 +30,9 @@ Refactor / Cleanup / Reorganize
 
 - My platform layer is still an abstraction layer, platform init calls all the other inits. I could make them the same or remove it
 - Publish scripts require 7z and butler to push to itch
-- This file, game ideas could be in sub folder
-- Maybe look into building wintux and adding the exe icon
+- This file and game ideas could be in sub folder
+- Maybe look into building wintux and adding the exe icon?
 - MinimalShell for emscripten is in scripts but it could be in res? 
-
-- Refactor code for using Transient Bump Allocator?  
-    - It seemed like a great idea but when I load an audio file I keep it compared to a shader that I free after compiling
-    - Probably should look into arena allocations and figure this out if I want to keep it
-
 
 /////////////////////////////////////////////////////////////////
 //                     Things to Look Into!                    //
@@ -58,9 +56,6 @@ The importance of cleaning up the 'library' to remove old, deprecated or unused 
 /////////////////////////////////////////////////////////////////
 
 
-OpenGL debug logging: https://wikis.khronos.org/opengl/Debug_Output
-
-
 Idea: Allocate 1 memory block per object and let other pointers index into the main block.  Reduces the amount of allocations!
         Use Case: Mesh Struct where Indices and Positions can be part of 1 object
         From the Jonothan Blow introduction for a new language where he shows this as an example saying @joint_memory would be a neat concept
@@ -82,7 +77,9 @@ Do I really want to do a dll and hot reloading?  I am firmly in the NO side righ
 --- I do think it would be cool to have the:           Game
                                                 APP <
                                                        Editor -> Game
-
+                    - Having tested out the above in a separate project, it was interesting.  It felt like class/inheritence with extra steps.
+                    - Would need a few defines to define away the editor code from the Game DLL 
+                    - which doesn't matter because the root app wouldn't load the functions
 
 
 Returning pointers instead of passing them in as objects?
@@ -102,4 +99,7 @@ Will learn more as I create more with this
 Could have a RendererInit (RendererTypes) 
     - Exists all renderers but only creates the ones I plan to use
     - Get crazy with it and create a renderer when I call _draw_type()
+        - While it could be interesting I wouldn't want it in the final game; just while testing. 
+        - Even then there is a lot of generic things that could be taken out of a real game but for testing maybe it is good?
+            - Need to know sizes before hand too
 
