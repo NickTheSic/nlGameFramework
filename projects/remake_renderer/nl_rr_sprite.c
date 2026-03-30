@@ -60,6 +60,7 @@ void create_simple_rr_sprite(const char* filename, nl_rr_sprite* const rr_sprite
     glEnableVertexAttribArray(2);
 
 
+    // TEXTURE SETUP BELOW
     glGenTextures(1, &rr_sprite->TextureID);
     glBindTexture(GL_TEXTURE_2D, rr_sprite->TextureID);
 
