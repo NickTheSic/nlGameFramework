@@ -2,6 +2,7 @@
 #include "private/nl_memory.h"
 #include "private/gl/nl_gl.h"
 
+// should be variable I pass in or something instead of global
 #define MAX_SPRITES_FOR_BATCHING 20
 
 void init_sprite_renderer(sprite_renderer *const renderer)
@@ -10,7 +11,8 @@ void init_sprite_renderer(sprite_renderer *const renderer)
     const size_t indice_memory_size = sizeof(unsigned int)*6*MAX_SPRITES_FOR_BATCHING;
     
     renderer->vertices = (sprite_vertex_data*)bump_alloc(get_transient_bump_allocator(), vertice_memory_size);
-    
+    renderer->max_batch_count = MAX_SPRITES_FOR_BATCHING;
+
     //initialize sprite renderer
     glGenVertexArrays(1, &renderer->vao);
     glGenBuffers(1, &renderer->vbo);
@@ -48,28 +50,45 @@ void init_sprite_renderer(sprite_renderer *const renderer)
 
 void free_sprite_renderer(sprite_renderer *const renderer)
 {
-    //free the sprite stuff
+    glDeleteBuffers(1, &renderer->ebo);
+    glDeleteBuffers(1, &renderer->vbo);
+    glDeleteVertexArrays(1, &renderer->vao);
+    glDeleteTextures(1, &renderer->texture_id);
 }
 
 internal_function void flush_sprite_batch(sprite_renderer *const renderer)
 {
     // bind and call glDrawElements
+    glDrawElements(GL_TRIANGLES, renderer->current_batch_count, GL_UNSIGNED_INT, 0);
+    renderer->current_batch_count = 0;
 }
 
 void begin_sprite_batch(sprite_renderer *const renderer)
 {
-    // set shader 
+    glBindVertexArray(renderer->vao);
+    glBindBuffer(GL_ARRAY_BUFFER, renderer->vbo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, renderer->ebo);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, renderer->texture_id);
 }
 
 void end_sprite_batch(sprite_renderer *const renderer)
 {
     flush_sprite_batch(renderer);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindVertexArray(0);
 }
 
 void add_sprite_to_batch(sprite_renderer *const renderer, sprite_data* const sprite)
 {
-    if (0)
+    if (renderer->current_batch_count+1 > renderer->max_batch_count)
     {
         flush_sprite_batch(renderer);
     }
+
+    renderer->current_batch_count+=1;
 }

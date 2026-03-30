@@ -92,9 +92,9 @@ void app_specific_render(void)
     begin_sprite_batch(&gRenderer.sprite_renderer);
     {
         sprite_data spr_d = {0};
-        spr_d.texutre_uv_tr.x = 1.0f;
+        spr_d.texture_uv_tr.x = 1.0f;
         spr_d.texture_uv_tr.y = 1.0f;
-        
+
         add_sprite_to_batch(&gRenderer.sprite_renderer, &spr_d);
     }
     end_sprite_batch(&gRenderer.sprite_renderer);

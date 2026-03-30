@@ -16,8 +16,9 @@ struct sprite_renderer
     //       But that can be a future thing
 
     sprite_vertex_data *vertices;
-    unsigned int max_vertices;
-    unsigned int num_vertices;
+
+    unsigned int max_batch_count;
+    unsigned int current_batch_count;
 
     unsigned int vao, vbo, ebo;
     unsigned int shader;
