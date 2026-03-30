@@ -43,7 +43,7 @@ extern "C" {
 
 # define NL_UNIMPLEMENTED_FUNC DO_ONCE(NL_LOG("Unimplemented Function %s in %s", __FUNCTION__, __FILE__););
 # define NL_DEPRECATED_FUNC(replace) DO_ONCE(NL_LOG("Deprecated Function %s in %s, replace with %s", __FUNCTION__, __FILE__, replace););
-# define NL_UNUSED(x) (void)(x); DO_ONCE(NL_LOG("variable %s is not being used in %s", #x, __FUNCTION__););
+# define NL_UNUSED(x) (void)(x); DO_ONCE(NL_LOG("%s is not being used in %s", #x, __FUNCTION__););
 # define NL_ASSERT(x, m,...) {if(!(x)){NL_LOG(m,##__VA_ARGS__); NL_DEBUG_BREAK();}}
 
 #else //NOT NL_DEBUG_ENABLED
