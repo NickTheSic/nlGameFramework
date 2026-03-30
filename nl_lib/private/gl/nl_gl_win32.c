@@ -53,6 +53,22 @@ PFNGLFRAMEBUFFERRENDERBUFFERPROC glFramebufferRenderbuffer;
 
 PFNGLBUFFERSUBDATAPROC glBufferSubData;
 
+
+typedef void (APIENTRY *DEBUGPROC)(GLenum source,
+    GLenum type,
+    GLuint id,
+    GLenum severity,
+    GLsizei length,
+    const char *message,
+    const void *userParam);
+
+typedef void(APIENTRY* PFNGLDEBUGCALLBACK) (DEBUGPROC, void*);
+
+internal_function void debug_log_callback(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char* message, const void* userParam)
+{
+    NL_LOG("-------Debug GL Log triggered------------");
+}
+
 int initialize_gl()
 {
 #define LOAD_GL_EXTENSION(type, fn) fn = (type)wglGetProcAddress(#fn); if (fn == 0){NL_LOG("NL_GL: Failed to get Proc Address for %s Error: %d", #fn, (int)GetLastError()); return 0;} 
@@ -109,6 +125,15 @@ int initialize_gl()
         LOAD_GL_EXTENSION(PFNGLBUFFERSUBDATAPROC, glBufferSubData);
     }
 #undef LOAD_GL_EXTENSION
+
+    PFNGLDEBUGCALLBACK glDebugMessageCallback = (PFNGLDEBUGCALLBACK)wglGetProcAddress("glDebugMessageCallback"); 
+    if (glDebugMessageCallback != 0)
+    {
+        glDebugMessageCallback(debug_log_callback, 0);
+        glEnable(0x92E0 /*GL_DEBUG_OUTPUT*/);
+        glEnable(0x8242/*GL_DEBUG_OUTPUT_SYNCHRONOUS*/);
+    }
+
 
     return 1;
 }

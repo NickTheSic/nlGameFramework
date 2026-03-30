@@ -41,13 +41,16 @@ void init_sprite_renderer(sprite_renderer *const renderer)
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, renderer->ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indice_memory_size, indices, GL_STATIC_DRAW);
+    flush_bump_allocator(get_temporary_bump_allocator());
     
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(v2f), (void*)offsetof(sprite_vertex_data, pos));
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(v2f), (void*)offsetof(sprite_vertex_data, uv));
     glEnableVertexAttribArray(1);
     
-    flush_bump_allocator(get_temporary_bump_allocator());
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 void free_sprite_renderer(sprite_renderer *const renderer)
