@@ -79,15 +79,15 @@ int init_gamepad_system(void)
             XInputLibrary = LoadLibrary("Xinput9_1_0.dll");
             if (XInputLibrary)
             {
-                NL_LOG("Using xinput 9_1_0");
+                NL_LOG("NL_GAMEPAD: Using xinput 9_1_0");
             }
         } else 
         {
-            NL_LOG("Using xinput1_3");
+            NL_LOG("NL_GAMEPAD: Using xinput1_3");
         }
     } else 
     {
-        NL_LOG("Using xinput1_4");
+        NL_LOG("NL_GAMEPAD: Using xinput1_4");
     }
 
     if (XInputLibrary)
@@ -95,19 +95,19 @@ int init_gamepad_system(void)
         XInputGetState = (x_input_get_state*)GetProcAddress(XInputLibrary, "XInputGetState");
         if (XInputGetState == 0)
         {
-            NL_LOG("Failed to retrive XInputGetState. XInputGetState will use the stub");
+            NL_LOG("NL_GAMEPAD: Failed to retrive XInputGetState. XInputGetState will use the stub");
             XInputGetState = XInputGetStateStub;
         }
         XInputSetState = (x_input_set_state*)GetProcAddress(XInputLibrary, "XInputSetState");
         if (XInputSetState == 0)
         {
-            NL_LOG("Failed to retrive XInputSetState. XInputSetState will use the stub");
+            NL_LOG("NL_GAMEPAD: Failed to retrive XInputSetState. XInputSetState will use the stub");
             XInputSetState = XInputSetStateStub;
         }
     }
     else
     {
-        NL_LOG("XInput was not found on this system.  Unable to initialize gamepad system");
+        NL_LOG("NL_GAMEPAD: XInput was not found on this system.  Unable to initialize gamepad system");
         return 0;
     }
 

@@ -16,7 +16,6 @@ void init_sprite_renderer(sprite_renderer *const renderer)
     renderer->vertices = (sprite_vertex_data*)bump_alloc(get_transient_bump_allocator(), vertice_memory_size);
     renderer->max_batch_count = MAX_SPRITES_FOR_BATCHING;
 
-    //initialize sprite renderer
     glGenVertexArrays(1, &renderer->vao);
     glGenBuffers(1, &renderer->vbo);
     glGenBuffers(1, &renderer->ebo);
@@ -67,7 +66,7 @@ void create_sprite_data(sprite_data* const sprite, const char* asset)
 internal_function void flush_sprite_batch(sprite_renderer *const renderer)
 {
     glBufferSubData(GL_ARRAY_BUFFER, 0, renderer->current_batch_count*sizeof(sprite_vertex_data)*4, renderer->vertices);
-    glDrawElements(GL_TRIANGLES, renderer->current_batch_count, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, renderer->current_batch_count*6, GL_UNSIGNED_INT, 0);
     renderer->current_batch_count = 0;
 }
 
@@ -130,7 +129,7 @@ void add_sprite_to_batch(sprite_renderer *const renderer, sprite_data* const spr
         vd2->uv.y  = sprite->texture_uv_tr.y;
     }
 
-    // setup vertex 3
+    // setup vertex 4
     {
         sprite_vertex_data* vd3 = &renderer->vertices[starting_index+3];
         vd3->pos.x = sprite->pos.x;
