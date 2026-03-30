@@ -43,9 +43,9 @@ void init_sprite_renderer(sprite_renderer *const renderer)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indice_memory_size, indices, GL_STATIC_DRAW);
     flush_bump_allocator(get_temporary_bump_allocator());
     
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(v2f), (void*)offsetof(sprite_vertex_data, pos));
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, pos));
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(v2f), (void*)offsetof(sprite_vertex_data, uv));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(sprite_vertex_data), (void*)offsetof(sprite_vertex_data, uv));
     glEnableVertexAttribArray(1);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -105,7 +105,6 @@ void add_sprite_to_batch(sprite_renderer *const renderer, sprite_data* const spr
 
     const int starting_index = renderer->current_batch_count * 4;
 
-    // setup vertex 1
     {
         sprite_vertex_data* vd0 = &renderer->vertices[starting_index];
         vd0->pos.x = sprite->pos.x;
@@ -114,7 +113,6 @@ void add_sprite_to_batch(sprite_renderer *const renderer, sprite_data* const spr
         vd0->uv.y  = sprite->texture_uv_bl.y;
     }
 
-    // setup vertex 2
     {
         sprite_vertex_data* vd1 = &renderer->vertices[starting_index+1];
         vd1->pos.x = sprite->pos.x + sprite->size.x;
@@ -123,7 +121,6 @@ void add_sprite_to_batch(sprite_renderer *const renderer, sprite_data* const spr
         vd1->uv.y  = sprite->texture_uv_bl.y;
     }
 
-    // setup vertex 3
     {
         sprite_vertex_data* vd2 = &renderer->vertices[starting_index+2];
         vd2->pos.x = sprite->pos.x + sprite->size.x;
@@ -132,7 +129,6 @@ void add_sprite_to_batch(sprite_renderer *const renderer, sprite_data* const spr
         vd2->uv.y  = sprite->texture_uv_tr.y;
     }
 
-    // setup vertex 4
     {
         sprite_vertex_data* vd3 = &renderer->vertices[starting_index+3];
         vd3->pos.x = sprite->pos.x;
