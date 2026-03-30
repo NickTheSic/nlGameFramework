@@ -19,6 +19,8 @@ struct global_renderer
 
 global_renderer gRenderer = {0};
 
+sprite_data my_sprite = {0};
+
 void winsizeclbk(int width, int height)
 {
     if (width >= height)
@@ -54,6 +56,8 @@ void app_specific_init(void)
     init_line_renderer(&gRenderer.line_renderer);
     init_sprite_renderer(&gRenderer.sprite_renderer);
 
+    create_sprite_data(&my_sprite, "thing.png");
+
     winsizeclbk(screen.x, screen.y);
 
     /// this is initialization stuff that could be good to pass into the init?
@@ -87,7 +91,33 @@ void app_specific_render(void)
     // endless_grid(); draw_line(x); draw_sprite(y); draw_line(x)
     // Would be nice to auto switch and I can do so in the future if I feel it is required
 
-    render_endless_grid(&gRenderer.grid);
+    //render_endless_grid(&gRenderer.grid);
+
+    //begin_linerender_draw(&gRenderer.line_renderer);
+    //{
+    //    //v2i screen = get_screen_size();
+    //    float sx = gRenderer.camera_size;//loat)screen.x/4;
+    //    float sy = gRenderer.camera_size;//loat)screen.y/4;
+//
+    //    v3f points_1[] = {
+    //        {-sx, -sy, 0.0f},
+    //        { sx,  sy, 0.0f},
+    //    };
+    //    add_linerender_points(&gRenderer.line_renderer, points_1, 2);
+//
+    //    v3f points_2[] = {
+    //        { sx, -sy, 0.0f},
+    //        {-sx,  sy, 0.0f},
+    //    };
+    //    add_linerender_points_coloured(&gRenderer.line_renderer, points_2, 2, COLOUR_GREEN);
+//
+    //    v3f points_3[] = {
+    //        {0.0f,-sy, 0.0f},
+    //        {0.0f, sy, 0.0f},
+    //    };
+    //    add_linerender_points_coloured(&gRenderer.line_renderer, points_3, 2, COLOUR_BLUE);
+    //}
+    //end_linerender_draw(&gRenderer.line_renderer);
 
     begin_sprite_batch(&gRenderer.sprite_renderer);
     {
@@ -95,36 +125,12 @@ void app_specific_render(void)
         spr_d.texture_uv_tr.x = 1.0f;
         spr_d.texture_uv_tr.y = 1.0f;
 
+        spr_d.pos = (v2f){0.0f,0.0f};
+        spr_d.size = (v2f){0.5f, 0.5f};
+
         add_sprite_to_batch(&gRenderer.sprite_renderer, &spr_d);
     }
     end_sprite_batch(&gRenderer.sprite_renderer);
-
-
-    begin_linerender_draw(&gRenderer.line_renderer);
-    {
-        //v2i screen = get_screen_size();
-        float sx = gRenderer.camera_size;//loat)screen.x/4;
-        float sy = gRenderer.camera_size;//loat)screen.y/4;
-
-        v3f points_1[] = {
-            {-sx, -sy, 0.0f},
-            { sx,  sy, 0.0f},
-        };
-        add_linerender_points(&gRenderer.line_renderer, points_1, 2);
-
-        v3f points_2[] = {
-            { sx, -sy, 0.0f},
-            {-sx,  sy, 0.0f},
-        };
-        add_linerender_points_coloured(&gRenderer.line_renderer, points_2, 2, COLOUR_GREEN);
-
-        v3f points_3[] = {
-            {0.0f,-sy, 0.0f},
-            {0.0f, sy, 0.0f},
-        };
-        add_linerender_points_coloured(&gRenderer.line_renderer, points_3, 2, COLOUR_BLUE);
-    }
-    end_linerender_draw(&gRenderer.line_renderer);
 
 }
 

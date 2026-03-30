@@ -3,10 +3,13 @@
 #include "private/gl/nl_gl.h"
 
 // should be variable I pass in or something instead of global
-#define MAX_SPRITES_FOR_BATCHING 20
+#define MAX_SPRITES_FOR_BATCHING 1
 
 void init_sprite_renderer(sprite_renderer *const renderer)
 {
+    renderer->shader = load_shader_from_files("sprite_2d_00.vs", "sprite_2d_00.fs");
+    glUseProgram(renderer->shader); 
+
     const size_t vertice_memory_size = sizeof(sprite_vertex_data)*4*MAX_SPRITES_FOR_BATCHING;
     const size_t indice_memory_size = sizeof(unsigned int)*6*MAX_SPRITES_FOR_BATCHING;
     
@@ -56,15 +59,22 @@ void free_sprite_renderer(sprite_renderer *const renderer)
     glDeleteTextures(1, &renderer->texture_id);
 }
 
+void create_sprite_data(sprite_data* const sprite, const char* asset)
+{
+    
+}
+
 internal_function void flush_sprite_batch(sprite_renderer *const renderer)
 {
-    // bind and call glDrawElements
+    glBufferSubData(GL_ARRAY_BUFFER, 0, renderer->current_batch_count*sizeof(sprite_vertex_data)*4, renderer->vertices);
     glDrawElements(GL_TRIANGLES, renderer->current_batch_count, GL_UNSIGNED_INT, 0);
     renderer->current_batch_count = 0;
 }
 
 void begin_sprite_batch(sprite_renderer *const renderer)
 {
+    glUseProgram(renderer->shader);
+
     glBindVertexArray(renderer->vao);
     glBindBuffer(GL_ARRAY_BUFFER, renderer->vbo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, renderer->ebo);
@@ -87,7 +97,46 @@ void add_sprite_to_batch(sprite_renderer *const renderer, sprite_data* const spr
 {
     if (renderer->current_batch_count+1 > renderer->max_batch_count)
     {
+        NL_LOG("Adding more sprites to batch than allowed, flushing early");
         flush_sprite_batch(renderer);
+    }
+
+    const int starting_index = renderer->current_batch_count * 4;
+
+    // setup vertex 1
+    {
+        sprite_vertex_data* vd0 = &renderer->vertices[starting_index];
+        vd0->pos.x = sprite->pos.x;
+        vd0->pos.y = sprite->pos.y;
+        vd0->uv.x  = sprite->texture_uv_bl.x;
+        vd0->uv.y  = sprite->texture_uv_bl.y;
+    }
+
+    // setup vertex 2
+    {
+        sprite_vertex_data* vd1 = &renderer->vertices[starting_index+1];
+        vd1->pos.x = sprite->pos.x + sprite->size.x;
+        vd1->pos.y = sprite->pos.y;
+        vd1->uv.x  = sprite->texture_uv_tr.x;
+        vd1->uv.y  = sprite->texture_uv_bl.y;
+    }
+
+    // setup vertex 3
+    {
+        sprite_vertex_data* vd2 = &renderer->vertices[starting_index+2];
+        vd2->pos.x = sprite->pos.x + sprite->size.x;
+        vd2->pos.y = sprite->pos.y + sprite->size.y;
+        vd2->uv.x  = sprite->texture_uv_tr.x;
+        vd2->uv.y  = sprite->texture_uv_tr.y;
+    }
+
+    // setup vertex 3
+    {
+        sprite_vertex_data* vd3 = &renderer->vertices[starting_index+3];
+        vd3->pos.x = sprite->pos.x;
+        vd3->pos.y = sprite->pos.y + sprite->size.y;
+        vd3->uv.x  = sprite->texture_uv_bl.x;
+        vd3->uv.y  = sprite->texture_uv_tr.y;
     }
 
     renderer->current_batch_count+=1;

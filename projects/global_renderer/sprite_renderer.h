@@ -28,20 +28,21 @@ struct sprite_renderer
 typedef struct sprite_data sprite_data;
 struct sprite_data
 {  
-    v2f texutre_uv_bl;
+    v2f texture_uv_bl;
     v2f texture_uv_tr;
 
     v2f size;
-    v2f position;
+    v2f pos;
 };
 
 void init_sprite_renderer(sprite_renderer *const renderer);
 void free_sprite_renderer(sprite_renderer *const renderer);
 
+void create_sprite_data(sprite_data* const sprite, const char* asset);
+
 void begin_sprite_batch(sprite_renderer *const renderer);
 void end_sprite_batch(sprite_renderer *const renderer);
 
 void add_sprite_to_batch(sprite_renderer *const renderer, sprite_data* const sprite);
-void load_sprite_image(const char* name);
 
 #endif//__SPRITE_RENDERER_H__
