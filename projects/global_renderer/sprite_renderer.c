@@ -2,19 +2,16 @@
 #include "private/nl_memory.h"
 #include "private/gl/nl_gl.h"
 
-// should be variable I pass in or something instead of global
-#define MAX_SPRITES_FOR_BATCHING 1
-
-void init_sprite_renderer(sprite_renderer *const renderer)
+void init_sprite_renderer(sprite_renderer *const renderer, unsigned int max_batch_count)
 {
     renderer->shader = load_shader_from_files("sprite_2d_00.vs", "sprite_2d_00.fs");
     glUseProgram(renderer->shader); 
 
-    const size_t vertice_memory_size = sizeof(sprite_vertex_data)*4*MAX_SPRITES_FOR_BATCHING;
-    const size_t indice_memory_size = sizeof(unsigned int)*6*MAX_SPRITES_FOR_BATCHING;
+    const size_t vertice_memory_size = sizeof(sprite_vertex_data)*4*max_batch_count;
+    const size_t indice_memory_size = sizeof(unsigned int)*6*max_batch_count;
     
     renderer->vertices = (sprite_vertex_data*)bump_alloc(get_transient_bump_allocator(), vertice_memory_size);
-    renderer->max_batch_count = MAX_SPRITES_FOR_BATCHING;
+    renderer->max_batch_count = max_batch_count;
 
     glGenVertexArrays(1, &renderer->vao);
     glGenBuffers(1, &renderer->vbo);
@@ -27,7 +24,7 @@ void init_sprite_renderer(sprite_renderer *const renderer)
     unsigned int* indices = (unsigned int*)bump_alloc(get_temporary_bump_allocator(), indice_memory_size);
 
     int indice_offset = 0;
-    for (int i = 0; i < MAX_SPRITES_FOR_BATCHING*6; i +=6)
+    for (int i = 0; i < max_batch_count*6; i +=6)
     {
         indices[i]   = 0+indice_offset;
         indices[i+1] = 1+indice_offset;
@@ -58,12 +55,6 @@ void free_sprite_renderer(sprite_renderer *const renderer)
     glDeleteBuffers(1, &renderer->ebo);
     glDeleteBuffers(1, &renderer->vbo);
     glDeleteVertexArrays(1, &renderer->vao);
-    glDeleteTextures(1, &renderer->texture_id);
-}
-
-void create_sprite_data(sprite_data* const sprite, const char* asset)
-{
-    
 }
 
 internal_function void flush_sprite_batch(sprite_renderer *const renderer)
@@ -80,9 +71,6 @@ void begin_sprite_batch(sprite_renderer *const renderer)
     glBindVertexArray(renderer->vao);
     glBindBuffer(GL_ARRAY_BUFFER, renderer->vbo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, renderer->ebo);
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, renderer->texture_id);
 }
 
 void end_sprite_batch(sprite_renderer *const renderer)
@@ -91,7 +79,6 @@ void end_sprite_batch(sprite_renderer *const renderer)
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindTexture(GL_TEXTURE_2D, 0);
     glBindVertexArray(0);
 }
 

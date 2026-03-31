@@ -24,7 +24,7 @@ struct nl_rr_linerenderer
     unsigned int view_matrix_loc;
 };
 
-void init_line_renderer(nl_rr_linerenderer* const renderer);
+void init_line_renderer(nl_rr_linerenderer* const renderer, unsigned int max_batch_count);
 void free_line_renderer(nl_rr_linerenderer* const renderer);
 
 void begin_linerender_draw(nl_rr_linerenderer* const renderer);

@@ -1,5 +1,10 @@
 /*** Generic Game Ideas to Further Development of this framework ***/
 
+Minesweeper:
+- handle click events
+- draw text, sprites
+- Coloured tiles?
+
 Snake: 
 - Basic shapes or Sprite Rendering 
 - more of a grid based movement, no physics style collision

@@ -14,7 +14,6 @@ struct sprite_renderer
     // NOTE: No indices as all sprites are square, 0,1,3, 1,2,3
     //       Maybe I could use indices for polygonal sprites
     //       But that can be a future thing
-
     sprite_vertex_data *vertices;
 
     unsigned int max_batch_count;
@@ -22,7 +21,6 @@ struct sprite_renderer
 
     unsigned int vao, vbo, ebo;
     unsigned int shader;
-    unsigned int texture_id;
 };
 
 typedef struct sprite_data sprite_data;
@@ -35,10 +33,8 @@ struct sprite_data
     v2f pos;
 };
 
-void init_sprite_renderer(sprite_renderer *const renderer);
+void init_sprite_renderer(sprite_renderer *const renderer, unsigned int max_batch_count);
 void free_sprite_renderer(sprite_renderer *const renderer);
-
-void create_sprite_data(sprite_data* const sprite, const char* asset);
 
 void begin_sprite_batch(sprite_renderer *const renderer);
 void end_sprite_batch(sprite_renderer *const renderer);

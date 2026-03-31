@@ -2,9 +2,9 @@
 #include "private/nl_memory.h"
 #include "private/gl/nl_gl.h"
 
-void init_line_renderer(nl_rr_linerenderer* const renderer)
+void init_line_renderer(nl_rr_linerenderer* const renderer, unsigned int max_batch_count)
 {
-    renderer->max_vertices = 30;
+    renderer->max_vertices = max_batch_count;
     renderer->num_vertices = 0;
 
     glLineWidth(5.0f); // Just so it is a thicker line by default
@@ -68,8 +68,10 @@ void add_linerender_points_coloured(nl_rr_linerenderer* const renderer, v3f* poi
         num_points -= renderer->max_vertices;
     }
 
-    if (renderer->num_vertices + num_points >= renderer->max_vertices)
+    DO_ONCE(NL_LOG("NL_LINERENDERER: Ensure that I don't need >= in my max vertices check"));
+    if (renderer->num_vertices + num_points > renderer->max_vertices)
     {
+        DO_ONCE(NL_LOG("NL_LINERENDERER: number of vertices and points has exceedded max; early flush of buffer"));
         flush_line_renderer(renderer);
     }
 

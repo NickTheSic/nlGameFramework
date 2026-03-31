@@ -2,6 +2,7 @@
 #include "endless_grid_2d.h"
 #include "nl_rr_linerenderer.h"
 #include "sprite_renderer.h"
+#include "nl_sprite_atlas.h"
 
 #include "private/gl/nl_gl.h"
 
@@ -53,10 +54,9 @@ void app_specific_init(void)
     gRenderer.camera_size = 25.0f;
 
     init_endless_grid(&gRenderer.grid);
-    init_line_renderer(&gRenderer.line_renderer);
-    init_sprite_renderer(&gRenderer.sprite_renderer);
+    init_line_renderer(&gRenderer.line_renderer, 6);
+    init_sprite_renderer(&gRenderer.sprite_renderer, 4);
 
-    create_sprite_data(&my_sprite, "thing.png");
 
     winsizeclbk(screen.x, screen.y);
 
@@ -143,3 +143,4 @@ void app_specific_cleanup(void)
 #include "endless_grid_2d.c"
 #include "nl_rr_linerenderer.c"
 #include "sprite_renderer.c"
+#include "nl_sprite_atlas.c"
