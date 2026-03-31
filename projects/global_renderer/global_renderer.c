@@ -1,6 +1,6 @@
 #include "nl_lib.h"
 #include "endless_grid_2d.h"
-#include "nl_rr_linerenderer.h"
+#include "nl_linerenderer.h"
 #include "sprite_renderer.h"
 #include "nl_sprite_atlas.h"
 
@@ -12,7 +12,7 @@ struct global_renderer
 
     mat4x4f ortho_view;
     endless_grid_2d grid;
-    nl_rr_linerenderer line_renderer;
+    nl_linerenderer line_renderer;
     sprite_renderer sprite_renderer;
     float camera_size;
 
@@ -141,6 +141,6 @@ void app_specific_cleanup(void)
 }
 
 #include "endless_grid_2d.c"
-#include "nl_rr_linerenderer.c"
+#include "nl_linerenderer.c"
 #include "sprite_renderer.c"
 #include "nl_sprite_atlas.c"

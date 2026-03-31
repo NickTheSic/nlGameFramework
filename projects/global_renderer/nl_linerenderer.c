@@ -1,8 +1,8 @@
-#include "nl_rr_linerenderer.h"
+#include "nl_linerenderer.h"
 #include "private/nl_memory.h"
 #include "private/gl/nl_gl.h"
 
-void init_line_renderer(nl_rr_linerenderer* const renderer, unsigned int max_batch_count)
+void init_line_renderer(nl_linerenderer* const renderer, unsigned int max_batch_count)
 {
     renderer->max_vertices = max_batch_count;
     renderer->num_vertices = 0;
@@ -34,14 +34,14 @@ void init_line_renderer(nl_rr_linerenderer* const renderer, unsigned int max_bat
     glBindVertexArray(0);
 }
 
-void free_line_renderer(nl_rr_linerenderer* const renderer)
+void free_line_renderer(nl_linerenderer* const renderer)
 {
     glDeleteVertexArrays(1, &renderer->vao);
     glDeleteBuffers(1, &renderer->vbo);
     glDeleteProgram(renderer->shader);
 }
 
-internal_function void flush_line_renderer(nl_rr_linerenderer* const renderer)
+internal_function void flush_line_renderer(nl_linerenderer* const renderer)
 {
     glBufferSubData(GL_ARRAY_BUFFER, 0, renderer->num_vertices*sizeof(nl_linerenderer_vertexdata), renderer->vertices);
     //glDrawArrays(GL_LINE_LOOP, 0, renderer->num_vertices);
@@ -50,14 +50,14 @@ internal_function void flush_line_renderer(nl_rr_linerenderer* const renderer)
     renderer->num_vertices = 0;
 }
 
-void begin_linerender_draw(nl_rr_linerenderer* const renderer)
+void begin_linerender_draw(nl_linerenderer* const renderer)
 {
     glUseProgram(renderer->shader);
     glBindVertexArray(renderer->vao);
     glBindBuffer(GL_ARRAY_BUFFER, renderer->vbo);
 }
 
-void add_linerender_points_coloured(nl_rr_linerenderer* const renderer, v3f* points, int num_points, colour col)
+void add_linerender_points_coloured(nl_linerenderer* const renderer, v3f* points, int num_points, colour col)
 {
     if (renderer->max_vertices < num_points)
     {
@@ -93,12 +93,12 @@ void add_linerender_points_coloured(nl_rr_linerenderer* const renderer, v3f* poi
     renderer->num_vertices += num_points;
 }
 
-void add_linerender_points(nl_rr_linerenderer* const renderer, v3f* points, int num_points)
+void add_linerender_points(nl_linerenderer* const renderer, v3f* points, int num_points)
 {
     add_linerender_points_coloured(renderer, points, num_points, COLOUR_BLACK);
 }
 
-void end_linerender_draw(nl_rr_linerenderer* const renderer)
+void end_linerender_draw(nl_linerenderer* const renderer)
 {
     flush_line_renderer(renderer);
     
