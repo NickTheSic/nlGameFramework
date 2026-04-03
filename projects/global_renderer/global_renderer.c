@@ -24,20 +24,21 @@ sprite_data my_sprite = {0};
 
 void winsizeclbk(int width, int height)
 {
+    float sx = gRenderer.camera_size;
+    float sy = gRenderer.camera_size;
+
     if (width >= height)
     {
         float aspect = (float)width / (float)height;
-        float sx = gRenderer.camera_size * aspect;
-        float sy = gRenderer.camera_size;
-        create_orthographic_projection(&gRenderer.ortho_view, -sx, sx, -sy, sy, 0.0f, 1.0f);
+        sx*=aspect;
     }
     else
     {
         float aspect = (float)height / (float)width;
-        float sx = gRenderer.camera_size;
-        float sy = gRenderer.camera_size*aspect;
-        create_orthographic_projection(&gRenderer.ortho_view, -sx, sx, -sy, sy, 0.0f, 1.0f);
+        sy*=aspect;
     }
+
+    create_orthographic_projection(&gRenderer.ortho_view, -sx, sx, -sy, sy, 0.0f, 1.0f);
 
     set_endless_grid_screen_sizei(&gRenderer.grid, width, height);
     set_endless_grid_view_matrix(&gRenderer.grid, &gRenderer.ortho_view);

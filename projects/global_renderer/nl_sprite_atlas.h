@@ -15,9 +15,7 @@ struct atlas_frame
 typedef struct sprite_atlas sprite_atlas;
 struct sprite_atlas
 {
-    // Not sure if this needs to be a pointer
-    // could just have a max array of like 50?
-    atlas_frame *frames;
+    atlas_frame frames[5];
     unsigned int max_frames;
     unsigned int allocated_frames;
 
