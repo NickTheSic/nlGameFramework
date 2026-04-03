@@ -23,12 +23,11 @@ internal_function void* internal_allocate_memory(size_t size)
         return 0;
     }
 
-    _ESTIMATED_USED_MEMORY+=size;
-    *memory = size;
-
-    NL_LOG("NL_MEMORY: Memory[0]: %zu", memory[0]);
-
     ++_MallocCalls;
+    _ESTIMATED_USED_MEMORY+=size;
+    
+    *memory = size;
+    NL_LOG("NL_MEMORY: Memory[0]: %zu", memory[0]);
 
     return (void*)((size_t*)memory+sizeof(size_t));
 }
@@ -38,11 +37,11 @@ internal_function void internal_free_memory(void* ptr)
     size_t* real_ptr = (size_t*)((size_t*)ptr-sizeof(size_t));
 
     size_t size = real_ptr[0];
-    NL_LOG("NL_MEMORY: Freeing memory of size %zu", size);
-
     _ESTIMATED_USED_MEMORY-=size;
     ++_FreeCalls;
-
+    
+    NL_LOG("NL_MEMORY: Freeing memory of size %zu", size);
+    
     free(real_ptr);
 }
 
