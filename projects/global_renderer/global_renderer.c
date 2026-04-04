@@ -14,6 +14,8 @@ struct global_renderer
     endless_grid_2d grid;
     nl_linerenderer line_renderer;
     sprite_renderer sprite_renderer;
+    sprite_atlas sprite_atlas;
+    sprite_handle my_sprite;
     float camera_size;
 
 };
@@ -43,7 +45,7 @@ void winsizeclbk(int width, int height)
     set_endless_grid_screen_sizei(&gRenderer.grid, width, height);
     set_endless_grid_view_matrix(&gRenderer.grid, &gRenderer.ortho_view);
 
-    // A reason to encapWsulate the call!  So I can use the shader
+    // A reason to encapsulate the call!  So I can use the shader
     glUseProgram(gRenderer.line_renderer.shader);
     glUniformMatrix4fv(gRenderer.line_renderer.view_matrix_loc, 1, GL_FALSE, &gRenderer.ortho_view.m11);
 }
@@ -57,7 +59,9 @@ void app_specific_init(void)
     init_endless_grid(&gRenderer.grid);
     init_line_renderer(&gRenderer.line_renderer, 6);
     init_sprite_renderer(&gRenderer.sprite_renderer, 4);
+    init_sprite_atlas(&gRenderer.sprite_atlas);
 
+    gRenderer.my_sprite = add_sprite_to_atlas(&gRenderer.sprite_atlas, "thing.png");
 
     winsizeclbk(screen.x, screen.y);
 
@@ -122,9 +126,13 @@ void app_specific_render(void)
 
     begin_sprite_batch(&gRenderer.sprite_renderer);
     {
+        atlas_frame fr = {0};
+        get_atlas_frame(&gRenderer.sprite_atlas, gRenderer.my_sprite, &fr);
+
         sprite_data spr_d = {0};
-        spr_d.texture_uv_tr.x = 1.0f;
-        spr_d.texture_uv_tr.y = 1.0f;
+        spr_d.texture_uv_tr = fr.top_right;
+        //spr_d.texture_uv_tr.y = fr.top_right.y;
+        spr_d.texture_uv_bl = fr.bottom_left;
 
         spr_d.pos = (v2f){-.5f, -.5f};
         spr_d.size = (v2f){1.f,1.f};
@@ -137,6 +145,7 @@ void app_specific_render(void)
 
 void app_specific_cleanup(void)
 {
+    free_sprite_atlas(&gRenderer.sprite_atlas);
     free_line_renderer(&gRenderer.line_renderer);
     free_sprite_renderer(&gRenderer.sprite_renderer);
 }

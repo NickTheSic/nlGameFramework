@@ -7,7 +7,7 @@ void init_sprite_atlas(sprite_atlas *atlas)
     // Max frames a parameter
     // atlas width and height also a parameter
     atlas->max_frames = 5; // Allocate with the bump allocator!
-    atlas->current_frames=0;
+    atlas->allocated_frames=0;
     atlas->max_width = 1024;
     atlas->max_height = 1024;
     atlas->current_width = 0;
@@ -27,7 +27,7 @@ sprite_handle add_sprite_to_atlas(sprite_atlas *atlas, const char* name)
     if (atlas->allocated_frames + 1 > atlas->max_frames)
     {
         // TODO: Could realloc the array?
-        NL_LOG("Unable to add sprite since we have reached the max frames...");
+        NL_LOG("NL_SPRITE_ATLAS: Unable to add sprite since we have reached the max frames...");
         return 0;
     }
 
@@ -36,7 +36,12 @@ sprite_handle add_sprite_to_atlas(sprite_atlas *atlas, const char* name)
     // note: Could load all images at once in their own batch?
     // Note: I plan to load each image separate but I could save this info out and make a custom spritesheet class
 
+    const int handle = atlas->allocated_frames;
     atlas->allocated_frames++;
+
+    atlas->frames[handle].top_right = (v2f){1.f,1.f};
+
+    return handle;
 }
 
 void get_atlas_frame(sprite_atlas *atlas, sprite_handle handle, atlas_frame *frame)
@@ -44,5 +49,9 @@ void get_atlas_frame(sprite_atlas *atlas, sprite_handle handle, atlas_frame *fra
     if (handle > atlas->max_frames || handle > atlas->allocated_frames)
     {
         NL_LOG("Unable to get the atlas frame: %u, it is outside the bounds: max %u, made %u", handle, atlas->max_frames, atlas->allocated_frames);
+        frame->top_right = (v2f){1.f,1.f};
+        return;
     }
+
+    *(frame) = atlas->frames[handle];
 }
