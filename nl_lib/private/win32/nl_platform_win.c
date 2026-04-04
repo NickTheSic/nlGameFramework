@@ -30,7 +30,7 @@ int platform_init(void)
     }
 
 #if NL_DEBUG_ENABLED
-    init_random_number_generator(80); NL_LOG("NL_PLATFORM: Not using random number as Seed: 80");
+    init_random_number_generator(80); NL_LOG("NL_PLATFORM: Using 80 as debug random seed");
 #else
     const time_t random_seed = time(NULL);
     init_random_number_generator(random_seed); NL_LOG("NL_PLATFORM: Random Seed: %ld", random_seed);

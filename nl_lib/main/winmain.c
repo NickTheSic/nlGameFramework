@@ -31,7 +31,7 @@ int WinMain(
 #endif
     if (platform_init() == 0)
     {
-        NL_LOG("Failed to initialize platform layer");
+        NL_LOG("NL_MAIN: Failed to initialize platform layer");
     }
 
     set_background_colour_4f(0.5f,0.5f,0.5f,1.0f);
