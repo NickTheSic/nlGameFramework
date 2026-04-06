@@ -14,6 +14,8 @@ Check if the OpenGL debug logging is working
 //                   Needs to be done                          //
 /////////////////////////////////////////////////////////////////
 
+Might be nice to refactor my NL log. For different levels of error and verbosity.  Plus adding a tag of the class / file
+
 Allocate more of the core program on the heap cus I think I might be running out of stack
     - Could also check the stack size too and confirm this theory
 
