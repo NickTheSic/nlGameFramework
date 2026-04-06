@@ -55,6 +55,7 @@ PFNGLBUFFERSUBDATAPROC glBufferSubData;
 
 
 #if NL_DEBUG_ENABLED
+
 typedef void (APIENTRY *DEBUGPROC)(GLenum source,
     GLenum type,
     GLuint id,
@@ -72,9 +73,22 @@ typedef void(APIENTRY* PFNGLDEBUGCALLBACK) (DEBUGPROC, void*);
 #define GL_DEBUG_TYPE_PERFORMANCE 0x8250
 #define GL_DEBUG_TYPE_OTHER 0x8251
 
+#define GL_DEBUG_SEVERITY_HIGH 0x9146
+#define GL_DEBUG_SEVERITY_MEDIUM 0x9147
+#define GL_DEBUG_SEVERITY_LOW 0x9148
+#define GL_DEBUG_SEVERITY_NOTIFICATION 0x826B
+
 internal_function void debug_log_callback(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char* message, const void* userParam)
 {
+    if (id == 131185)
+    {
+        NL_LOG("GL Debug ID Skipped: %i", id);
+        return;
+    }
+
     NL_LOG("-------- Debug GL Log --------");
+    fprintf(stdout, "ID: %i \n", id);
+
     fprintf(stdout, message);
     fprintf(stdout, "\n");
 
@@ -86,6 +100,11 @@ internal_function void debug_log_callback(GLenum source, GLenum type, unsigned i
     switch(severity)
     {
         default: fprintf(stdout, "Severity Not (Yet) Defined"); break;
+
+        case GL_DEBUG_SEVERITY_HIGH: fprintf(stdout, "Severity: High"); break;
+        case GL_DEBUG_SEVERITY_MEDIUM: fprintf(stdout, "Severity: Medium");break;
+        case GL_DEBUG_SEVERITY_LOW: fprintf(stdout, "Severity: Low"); break;
+        case GL_DEBUG_SEVERITY_NOTIFICATION: fprintf(stdout, "Severity: Notification"); break;
     } fprintf(stdout, "\n");
 
     switch(type)
@@ -100,7 +119,7 @@ internal_function void debug_log_callback(GLenum source, GLenum type, unsigned i
         case GL_DEBUG_TYPE_OTHER: fprintf(stdout, "Type Other"); break;
     } fprintf(stdout, "\n");
 
-    fprintf(stdout, "--------  --------\n");
+    fprintf(stdout, "-------- ------------ --------\n\n");
 }
 #endif//NL_DEBUG_ENABLED
 
