@@ -2,6 +2,7 @@
 #ifndef __NL_DEBUG_H__
 #define __NL_DEBUG_H__
 
+// This file does not seem to need this wrapper? It is __just__ defines
 #ifdef __cplusplus
 extern "C" {
 #endif

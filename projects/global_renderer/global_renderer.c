@@ -96,7 +96,9 @@ void app_specific_render(void)
     // endless_grid(); draw_line(x); draw_sprite(y); draw_line(x)
     // Would be nice to auto switch and I can do so in the future if I feel it is required
 
+    
     render_endless_grid(&gRenderer.grid);
+
 
     begin_linerender_draw(&gRenderer.line_renderer);
     {
@@ -123,6 +125,7 @@ void app_specific_render(void)
         add_linerender_points_coloured(&gRenderer.line_renderer, points_3, 2, COLOUR_BLUE);
     }
     end_linerender_draw(&gRenderer.line_renderer);
+
 
     begin_sprite_batch(&gRenderer.sprite_renderer);
     {

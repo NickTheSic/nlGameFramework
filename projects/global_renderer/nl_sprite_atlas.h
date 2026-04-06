@@ -3,7 +3,13 @@
 
 #include "private/nl_math.h"
 
-typedef unsigned int sprite_handle;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef unsigned short sprite_handle;
+#define INVALID_SPRITE_HANDLE ((sprite_handle)65534)
 
 typedef struct atlas_frame atlas_frame;
 struct atlas_frame
@@ -32,5 +38,17 @@ void free_sprite_atlas(sprite_atlas *atlas);
 
 sprite_handle add_sprite_to_atlas(sprite_atlas *atlas, const char* name);
 void get_atlas_frame(sprite_atlas *atlas, sprite_handle handle, atlas_frame *frame);
+
+
+
+// TODO: I could handle loading a premade sprite atlas/sprite sheet
+//       Where I would need to load the texture and then chop it up as it is loaded?
+//       This is where a return value doesn't work exactly...
+//       Unless I pass in an array to fill
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//__NL_SPRITE_ATLAS_H__
