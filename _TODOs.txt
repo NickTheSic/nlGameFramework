@@ -5,6 +5,8 @@
 
 Getting a renderer setup going on.  Hopefully it batches sprites, can draw lines and the endless grid
 Polygon rendering with line loops would be nice but would be lots more draw calls
+    - Draw calls don't matter at this stage of the program!
+    - And it doesn't mater to add the first point last/double up line points .... Now I want to add indices again
 
 Check if the OpenGL debug logging is working
 
@@ -16,7 +18,7 @@ Allocate more of the core program on the heap cus I think I might be running out
     - Could also check the stack size too and confirm this theory
 
 Work on a game to know if it feels right to use!
- - I need sprite rendering!
+    - I need sprite rendering!
 
 'Effecient' Sprite rendering
     - Batching together draw calls
