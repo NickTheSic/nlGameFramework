@@ -54,6 +54,7 @@ PFNGLFRAMEBUFFERRENDERBUFFERPROC glFramebufferRenderbuffer;
 PFNGLBUFFERSUBDATAPROC glBufferSubData;
 
 
+#if NL_DEBUG_ENABLED
 typedef void (APIENTRY *DEBUGPROC)(GLenum source,
     GLenum type,
     GLuint id,
@@ -64,10 +65,45 @@ typedef void (APIENTRY *DEBUGPROC)(GLenum source,
 
 typedef void(APIENTRY* PFNGLDEBUGCALLBACK) (DEBUGPROC, void*);
 
+#define GL_DEBUG_TYPE_ERROR 0x824C
+#define GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR 0x824D
+#define GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR 0x824E
+#define GL_DEBUG_TYPE_PORTABILITY 0x824F
+#define GL_DEBUG_TYPE_PERFORMANCE 0x8250
+#define GL_DEBUG_TYPE_OTHER 0x8251
+
 internal_function void debug_log_callback(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char* message, const void* userParam)
 {
-    NL_LOG("-------Debug GL Log triggered------------");
+    NL_LOG("-------- Debug GL Log --------");
+    fprintf(stdout, message);
+    fprintf(stdout, "\n");
+
+    switch(source)
+    {
+        default: fprintf(stdout, "Source Not (Yet) Defined"); break;
+    } fprintf(stdout, "\n");
+
+    switch(severity)
+    {
+        default: fprintf(stdout, "Severity Not (Yet) Defined"); break;
+    } fprintf(stdout, "\n");
+
+    switch(type)
+    {
+        default: fprintf(stdout, "Type Not (Yet) Defined"); break;
+
+        case GL_DEBUG_TYPE_ERROR: fprintf(stdout, "Type Error"); break;
+        case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: fprintf(stdout, "Type Deprecated Behaviour"); break;
+        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR: fprintf(stdout, "Type Undefined Behaviour"); break;
+        case GL_DEBUG_TYPE_PORTABILITY: fprintf(stdout, "Type Portability"); break;
+        case GL_DEBUG_TYPE_PERFORMANCE: fprintf(stdout, "Type Performance"); break;
+        case GL_DEBUG_TYPE_OTHER: fprintf(stdout, "Type Other"); break;
+    } fprintf(stdout, "\n");
+
+    fprintf(stdout, "--------  --------\n");
 }
+#endif//NL_DEBUG_ENABLED
+
 
 int initialize_gl()
 {
@@ -126,6 +162,7 @@ int initialize_gl()
     }
 #undef LOAD_GL_EXTENSION
 
+#if NL_DEBUG_ENABLED
     PFNGLDEBUGCALLBACK glDebugMessageCallback = (PFNGLDEBUGCALLBACK)wglGetProcAddress("glDebugMessageCallback"); 
     if (glDebugMessageCallback != 0)
     {
@@ -133,7 +170,7 @@ int initialize_gl()
         glEnable(0x92E0 /*GL_DEBUG_OUTPUT*/);
         glEnable(0x8242/*GL_DEBUG_OUTPUT_SYNCHRONOUS*/);
     }
-
+#endif//NL_DEBUG_ENABLED
 
     return 1;
 }

@@ -11,7 +11,6 @@ extern "C" {
 // NL_LOG, NL_TRACE, NL_VERBOSE, 
 // NL_WARNING, NL_ERROR_LOG
 
-
 #define NL_DEBUG_ENABLED 1  // Temporary Solution: It is hard coded on or off here instead of a Config.h per project or a compiler flag
 
 
@@ -19,7 +18,8 @@ extern "C" {
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
-#define NL_LOG(m,...) fprintf(stdout, m,##__VA_ARGS__); fprintf(stdout, "\n");
+#define NL_LOG(m,...) fprintf(stdout, m"\n",##__VA_ARGS__);
+
 
 #define DO_ONCE(thing) {static int local_do_once = 1; if (local_do_once){ local_do_once = 0; thing; }}
 
