@@ -125,7 +125,7 @@ void free_bump_allocator(nl_bump_allocator* allocator)
 
 char* bump_alloc(nl_bump_allocator* allocator, size_t size)
 {
-    // Basic alignedment to an 16 bit boundary?  I have to figure out if this is good or not
+    // Basic alignment to an 16 bit boundary?  I have to figure out if this is good or not
     size_t aligned_size = (size+15) & ~15;
 
     if (allocator->used + aligned_size > allocator->capacity)

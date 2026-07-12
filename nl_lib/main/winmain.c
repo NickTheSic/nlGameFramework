@@ -86,8 +86,8 @@ int WinMain(
 
     basic_memory_leak_check();
 
-    NL_LOG("Highest FPS Reached: %f", highest_fps);
-    NL_LOG("Lowest FPS Reached: %f" , lowest_fps );
+    NL_LOG("NL_MAIN: Highest FPS Reached: %f", highest_fps);
+    NL_LOG("NL_MAIN: Lowest FPS Reached: %f" , lowest_fps );
 
     return 0;
 }

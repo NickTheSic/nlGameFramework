@@ -51,7 +51,7 @@ void memory_free(void* memory);
 #if NL_DEBUG_ENABLED
 
 void _basic_memory_leak_check(void); //Used in debug + by main
-# define memory_allocate(s) _memory_allocate(s); NL_LOG("memory allocated: %s %d", __FILE__, __LINE__);
+# define memory_allocate(s) _memory_allocate(s); NL_LOG("NL_MEMORY: Allocation at %s %d", __FILE__, __LINE__);
 # define basic_memory_leak_check() _basic_memory_leak_check();
 
 #else //NOT NL_DEBUG_ENABLED

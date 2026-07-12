@@ -3,7 +3,8 @@
 Minesweeper:
 - handle click events
 - draw text, sprites
-- Coloured tiles?
+- colour tiles?
+- basic audio
 
 Snake: 
 - Basic shapes or Sprite Rendering 
@@ -11,13 +12,15 @@ Snake:
 - keyboard input
 - basic audio
 - more complex: specify the next item to get
-- don't really need a dynamic array but maybe pointer linked tail
+- don't really need a dynamic array but maybe pointer linked tail. It will have a max size anyway though
 - restarting game
 - random locations
 - screen border or looping?
 
 Jezzball:
 - Free moving Objects
+- handle click events
+-- expands out from the click in the specified direction
 - grid aligned cubes
 - filling in captured squares and area
 
@@ -30,6 +33,9 @@ Breakout:
 
 Collecting Type game:
 - Objects fall from top of screen and you need to move to catch them
+- sprite rendering
+- keyboard handling
+- collision 
 
 Peggle:
 - physics System; 
