@@ -82,6 +82,8 @@ typedef void(APIENTRY* PFNGLDEBUGCALLBACK) (DEBUGPROC, void*);
 
 internal_function void debug_log_callback(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char* message, const void* userParam)
 {
+    NL_UNUSED(userParam); NL_UNUSED(length);
+
     if (id == 131185)
     {
         NL_LOG("GL Debug ID Skipped: %i", id);
