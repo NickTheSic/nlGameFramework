@@ -9,16 +9,27 @@ int main(int count, char** args)
 {
     NL_UNUSED(count);NL_UNUSED(args);
 
-    //Platform Init!
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    GLFWwindow* window = glfwCreateWindow(1280, 800, "My Title", NULL, NULL);
+    glfwMakeContextCurrent(window);
 
     app_specific_init();
 
+    while(!glfwWindowShouldClose(window))
     {
+        glfwSwapBuffers(window);
+        glfwPollEvents();    
+
         app_specific_update(1.0);
         app_specific_render();
     }
 
     app_specific_cleanup();
+    glfwDestroyWindow(window);
 
     return 0;
 }
