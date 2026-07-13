@@ -1,8 +1,11 @@
 #include "nl_lib.h"
 
-//*      Could add SDL for a blanket just works implementation?  Maybe Raylib?
+//*      Could add SDL or GLFW for a blanket just works implementation?  Maybe Raylib?
 
-#if defined(_WIN32)
+#if defined(NL_BUILD_GLFW)
+#include "build_nl_lib/nl_glfw.c"
+
+#elif defined(_WIN32)
 #include "build_nl_lib/windows.c"
 
 #elif defined(__EMSCRIPTEN__)

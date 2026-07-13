@@ -2,8 +2,9 @@
 
 Minesweeper:
 - handle click events
-- draw text, sprites
-- colour tiles?
+-- click to reveal, flood fill reveal after
+- rendering
+-- tiles, numbers, highlights 
 - basic audio
 
 Snake: 

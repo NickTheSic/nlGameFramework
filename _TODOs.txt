@@ -1,4 +1,3 @@
-
 /////////////////////////////////////////////////////////////////
 //                       In Progress                           //
 /////////////////////////////////////////////////////////////////
@@ -9,12 +8,9 @@ Polygon rendering with line loops would be nice but would be lots more draw call
     - And it doesn't mater to add the first point last/double up line points .... Now I want to add indices again
 
 
-
 /////////////////////////////////////////////////////////////////
 //                   Needs to be done                          //
 /////////////////////////////////////////////////////////////////
-
-Might be nice to refactor my NL log. For different levels of error and verbosity.  Plus adding a tag of the class / file
 
 Allocate more of the core program on the heap cus I think I might be running out of stack
     - Could also check the stack size too and confirm this theory
@@ -32,14 +28,20 @@ One person called their renderer a Canvas
 - Sounds like I could have a game Canvas, UI canvas.  To encapsulate the camera instead of a game and ui camera
 
 
-Refactor / Cleanup / Reorganize
+/////////////////////////////////////////////////////////////////
+//                     Nice to have                            //
+/////////////////////////////////////////////////////////////////
 
-- My platform layer is still an abstraction layer, platform init calls all the other inits. I could make them the same or remove it
+Refactor / Cleanup / Reorganize
+- The Platform Main calls the specific init functions, but could directly call the code
+-- Not super important as it keeps code clean
 - Publish scripts require 7z and butler to push to itch
 - This file and game ideas could be in sub folder
 - Maybe look into building wintux and adding the exe icon?
 - MinimalShell for emscripten is in scripts but it could be in res? 
 
+
+Wanted to compile GLFW with a build script but it proved out of my realm on Linux due to needing to generate the wayland headers
 
 
 /////////////////////////////////////////////////////////////////

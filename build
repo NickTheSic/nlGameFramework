@@ -20,6 +20,11 @@ then
     ./scripts/build_wintux.sh $2
 fi
 
+if [ "$1" == "glfwtux" ]
+then
+    ./scripts/build_glfwtux.sh $2
+fi
+
 if [ "$1" == "wintuxlib" ]
 then
     libs="-luser32 -lopengl32 -lgdi32 -lole32 -lxaudio2_9 -Lnl_lib/libs -lfreetype"

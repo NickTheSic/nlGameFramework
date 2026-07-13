@@ -227,13 +227,6 @@ unsigned int get_uniform_loc(unsigned int program, const char* name)
     return 0;
 }
 
-void set_uniform_mat4x4f(unsigned int loc, const float* mat)
-{
-    NL_UNUSED(loc); NL_UNUSED(mat);
-    NL_UNIMPLEMENTED_FUNC;
-}
-
-
 //// Window ////
 // Avoid link errors for null platforms
 PFNWINDOWSIZECALLBACK pfn_window_size_callback;

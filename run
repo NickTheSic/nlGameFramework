@@ -10,6 +10,11 @@ then
     wine _build/win32/$2/$2.exe
 fi
 
+if [ $1 == "glfwtux" ] 
+then
+    ./_build/glfwtux/$2/$2.out
+fi
+
 if [ $1 == "tux" ] 
 then
     ./_build/tux/$2/$2
