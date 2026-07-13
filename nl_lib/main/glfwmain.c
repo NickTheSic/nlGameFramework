@@ -29,7 +29,9 @@ int main(int count, char** args)
     }
 
     app_specific_cleanup();
-    glfwDestroyWindow(window);
 
+    glfwDestroyWindow(window);
+    glfwTerminate();
+    
     return 0;
 }
