@@ -85,7 +85,7 @@ void OnBufferStart(IXAudio2VoiceCallback* This, void* pBufferContext)
     
     xaudio_loaded_sound* const voice = (xaudio_loaded_sound*)pBufferContext;
     voice->is_playing = 1;
-    NL_LOG("NL_XAUDIO->OnBufferStart: is pBufferContext playing : %d", voice->is_playing);
+    NL_LOG("NL_XAUDIO: OnBufferStart is pBufferContext playing : %d", voice->is_playing);
 }
 
 void OnLoopEnd(IXAudio2VoiceCallback* This, void* pBufferContext) 

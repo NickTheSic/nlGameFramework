@@ -30,6 +30,8 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
     {
 		case WM_CLOSE:
 		{
+			//NOTE: Why did I specify Close separate from Destory?
+
 			NL_LOG("NL_WINDOW: Close Message");
 			g_window.running = 0;
 			DestroyWindow(window);
@@ -37,6 +39,8 @@ window_proc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
 
         case WM_DESTROY:
 		{
+			//NOTE: Why did I specify Close separate from Destory? 
+			
 			NL_LOG("NL_WINDOW: Destroy Message");
             PostQuitMessage(0);
 		}break;

@@ -41,19 +41,6 @@ Refactor / Cleanup / Reorganize
 - MinimalShell for emscripten is in scripts but it could be in res? 
 
 
-Wanted to compile GLFW with a build script but it proved out of my realm on Linux due to needing to generate the wayland headers.
-Without adding GLFW and Cmake entirely to the project I may skip it
-
-
-Have NL Organize the outputs.  Could setup something like Unreal has where I could sort by log output
-- not worth while without an editor of sorts, unless I make an output file and grep it or something
-- Have a per system implementation of NL_LOG_X where X is the file prefix?
-
-
-I would like this project to just be my scratch pad for all code, instead of making new repos all the time
-It doesn't make much sense in the current state to add a scratch pad but I want to for the purposes of implementing scripting languages
-
-
 /////////////////////////////////////////////////////////////////
 //                     Things to Look Into!                    //
 /////////////////////////////////////////////////////////////////
@@ -69,6 +56,18 @@ The importance of cleaning up the 'library' to remove old, deprecated or unused 
     - Do I consolodate down to 1 main function or keep it as is
     - If I keep it as is, what functions are important to the 'game'
 
+
+Wanted to compile GLFW with a build script but it proved out of my realm on Linux due to needing to generate the wayland headers.
+Without adding GLFW and Cmake entirely to the project I may skip it
+
+
+Have NL Organize the outputs.  Could setup something like Unreal has where I could sort by log output
+- not worth while without an editor of sorts, unless I make an output file and grep it or something
+- Have a per system implementation of NL_LOG_X where X is the file prefix?
+
+
+I would like this project to just be my scratch pad for all code, instead of making new repos all the time
+It doesn't make much sense in the current state to add a scratch pad but I want to for the purposes of implementing scripting languages
 
 
 /////////////////////////////////////////////////////////////////
