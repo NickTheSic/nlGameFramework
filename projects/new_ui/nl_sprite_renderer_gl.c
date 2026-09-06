@@ -87,7 +87,7 @@ internal_function void generate_simple_sprite_using_vertices_and_indices(nl_spri
     const size_t vertices_data_size = sizeof(sprite_vertex_data) * vertice_count;
     const size_t indice_data_size = indice_count * sizeof(unsigned int);
 
-    simple_sprite->vertices = (sprite_vertex_data*)memory_allocate(vertices_data_size);
+    simple_sprite->vertices = (sprite_vertex_data*)bump_alloc(get_transient_bump_allocator(), vertices_data_size);
     if (simple_sprite->vertices == 0)
     {
         NL_LOG("Unable to allocate memory for simple sprite vertices.  Returning early");
@@ -95,7 +95,7 @@ internal_function void generate_simple_sprite_using_vertices_and_indices(nl_spri
     }
     memcpy(simple_sprite->vertices, vertices, vertices_data_size);
 
-    simple_sprite->indices = (unsigned int*)memory_allocate(indice_data_size);
+    simple_sprite->indices = (unsigned int*)bump_alloc(get_transient_bump_allocator(), indice_data_size);
     if (simple_sprite->indices == 0)
     {
         NL_LOG("Unable to allocate memory for simple sprite indices. Returning early");
@@ -193,8 +193,10 @@ void render_single_sprite_colour(nl_sprite* const sprite, colour col)
 
 void free_simple_sprite(nl_sprite* const simple_sprite)
 {
-    memory_free(simple_sprite->vertices);
-    memory_free(simple_sprite->indices);
+    //memory_free(simple_sprite->vertices);
+    //memory_free(simple_sprite->indices);
+    simple_sprite->vertices = 0;
+    simple_sprite->indices = 0;
 
     // gl free buffers here
     glDeleteBuffers(1, &simple_sprite->EBO);

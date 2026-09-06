@@ -15,8 +15,6 @@ struct orthographic_camera_2d
 };
 
 
-
-
 typedef struct camera camera;
 struct camera
 {

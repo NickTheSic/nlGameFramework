@@ -91,7 +91,7 @@ void init_ui_renderer(void)
     glBindBuffer(GL_ARRAY_BUFFER, ui_renderer.vbo);
     glBufferData(GL_ARRAY_BUFFER, vertice_data, (void*)0, GL_DYNAMIC_DRAW);
 
-    unsigned int *indices = (unsigned int*)memory_allocate(indice_data);
+    unsigned int *indices = (unsigned int*)bump_alloc(get_temporary_bump_allocator(), indice_data);
     if (indices == 0)
     {
         NL_LOG("Failed to allocate memory for ui renderer indices!  Doing an early return");
@@ -114,7 +114,7 @@ void init_ui_renderer(void)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ui_renderer.ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indice_data, indices, GL_STATIC_DRAW);
 
-    memory_free(indices);
+    flush_bump_allocator(get_temporary_bump_allocator());
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

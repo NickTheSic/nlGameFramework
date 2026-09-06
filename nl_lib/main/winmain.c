@@ -31,6 +31,7 @@ int WinMain(
 #endif
     if (platform_init() == 0)
     {
+        // We could "goto" a label underneath here in main...
         NL_LOG("NL_MAIN: Failed to initialize platform layer");
     }
 
