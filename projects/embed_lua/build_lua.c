@@ -1,0 +1,42 @@
+//From Makefile output
+//FLAGS: -std=gnu99 -Wall -Wextra -DLUA_USE_LINUX
+
+// Might not need this file but I wanted to include it?
+
+#include "lua/src/lua.h"
+#include "lua/src/lualib.h"
+#include "lua/src/lauxlib.h"
+
+#include "lua/src/lapi.c"
+#include "lua/src/lcode.c"
+#include "lua/src/lctype.c"
+#include "lua/src/ldebug.c"
+#include "lua/src/ldo.c"
+#include "lua/src/ldump.c"
+#include "lua/src/lfunc.c"
+#include "lua/src/lgc.c"
+#include "lua/src/llex.c"
+#include "lua/src/lmem.c"
+#include "lua/src/lobject.c"
+#include "lua/src/lopcodes.c"
+#include "lua/src/lparser.c"
+#include "lua/src/lstate.c"
+#include "lua/src/lstring.c"
+#include "lua/src/ltable.c"
+#include "lua/src/ltm.c"
+#include "lua/src/lundump.c"
+#include "lua/src/lvm.c"
+#include "lua/src/lzio.c"
+
+#include "lua/src/lauxlib.c"
+#include "lua/src/lbaselib.c"
+#include "lua/src/lcorolib.c"
+#include "lua/src/ldblib.c"
+#include "lua/src/liolib.c"
+#include "lua/src/lmathlib.c"
+#include "lua/src/loadlib.c"
+#include "lua/src/loslib.c"
+#include "lua/src/lstrlib.c"
+#include "lua/src/ltablib.c"
+#include "lua/src/lutf8lib.c"
+#include "lua/src/linit.c"
