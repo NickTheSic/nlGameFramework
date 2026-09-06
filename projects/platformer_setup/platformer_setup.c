@@ -31,6 +31,8 @@ void app_specific_update(double dt)
     player_update(dt, &player, &controller);
     camera_controls((float)dt, &main_cam);
 
+    g_Screen_Bottom = get_screen_bottom(&main_cam);
+
     const v2i mouse_posi = get_mouse_position_from_system();
     mouse_follow.pos = (v2f){(float)mouse_posi.x, (float)mouse_posi.y};
     project_mouse_to_camera(&main_cam, &mouse_follow.pos);

@@ -48,3 +48,8 @@ void camera_controls(float dt, camera* const cam)
         set_view_matrix(&cam->view_matrix.m11);
     }
 }
+
+float get_screen_bottom(camera* const cam)
+{
+    return -camera_pos_y;
+}

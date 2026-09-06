@@ -5,5 +5,6 @@
 
 void camera_controls(float dt, camera* const cam);
 
+float get_screen_bottom(camera* const cam);
 
 #endif//__CAMERA_CONTROL_H__

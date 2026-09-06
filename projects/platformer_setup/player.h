@@ -11,6 +11,10 @@
 #define GRAVITY_RAISE (PLAYER_DOUBLE_WIDTH + PLAYER_WIDTH)
 #define GRAVITY_FALL  (GRAVITY_RAISE + PLAYER_DOUBLE_WIDTH + PLAYER_HALF_WIDTH)
 
+
+float g_Screen_Bottom = 0.0f;
+
+
 typedef struct game_object game_object;
 struct game_object
 {

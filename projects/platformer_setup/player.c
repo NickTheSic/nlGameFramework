@@ -37,13 +37,6 @@ void player_update(double dt, game_object* const _player, player_controller* con
         if (_player->vertical_speed <= 0.0f || !key_is_held(_controller->jump))
         {
             _player->vertical_speed -= (GRAVITY_FALL + 150) * (float)dt;
-
-            if (_player->pos.y < 0.0f)
-            {
-                _player->pos.y = 0.0f;
-                _player->vertical_speed = 0;
-                _player->is_grounded = 1;
-            }
         }
         else
         {
@@ -105,4 +98,11 @@ void player_update(double dt, game_object* const _player, player_controller* con
 
     _player->pos.x = estimated_movement.x;
     _player->pos.y = estimated_movement.y;
+
+    if (_player->pos.y < g_Screen_Bottom)
+    {
+        _player->pos.y = g_Screen_Bottom;
+        _player->vertical_speed = 0;
+        _player->is_grounded = 1;
+    }
 }
