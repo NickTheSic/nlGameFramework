@@ -1,5 +1,12 @@
 /*** Generic Game Ideas to Further Development of this framework ***/
 
+Visual Novel Engine:
+- Render background, sprites and text,
+- 3 main locations to place character sprite
+- 1 size box with wrapping text
+- interact to show next line
+- scripting language implementation
+
 Minesweeper:
 - handle click events
 -- click to reveal, flood fill reveal after
