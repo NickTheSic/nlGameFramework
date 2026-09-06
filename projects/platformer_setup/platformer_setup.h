@@ -1,5 +1,5 @@
-#ifndef __METROIDVANIA_H__
-#define __METROIDVANIA_H__
+#ifndef __PLATFORMER_SETUP_H__
+#define __PLATFORMER_SETUP_H__
 
 #include "player.h"
 
@@ -22,4 +22,4 @@ global_variable game_object mouse_follow = {0};
 
 global_variable camera main_cam = {0};
 
-#endif//__METROIDVANIA_H__
+#endif//__PLATFORMER_SETUP_H__

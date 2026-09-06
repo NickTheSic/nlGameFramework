@@ -1,6 +1,6 @@
 #include "nl_lib.h"
 
-#include "metroidvania.h"
+#include "platformer_setup.h"
 #include "camera_control.h"
 #include "nl_physics2d.h"
 
