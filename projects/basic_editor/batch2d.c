@@ -11,7 +11,7 @@ void init_batch(batch2d* const _batch, unsigned int count)
     const size_t indice_data  = indice_count  * sizeof(unsigned int);
 
     _batch->max_count = count;
-    _batch->vertices = (batch_vertex_data*)memory_allocate(vertice_data);
+    _batch->vertices = (batch_vertex_data*)bump_alloc(get_transient_bump_allocator(), vertice_data);
 
     glGenVertexArrays(1, &_batch->vao);
     glBindVertexArray(_batch->vao);
@@ -20,7 +20,7 @@ void init_batch(batch2d* const _batch, unsigned int count)
     glBindBuffer(GL_ARRAY_BUFFER, _batch->vbo);
     glBufferData(GL_ARRAY_BUFFER, vertice_data, (void*)0, GL_DYNAMIC_DRAW);
 
-    unsigned int *indices = (unsigned int*)memory_allocate(indice_data);
+    unsigned int *indices = (unsigned int*)bump_alloc(get_temporary_bump_allocator(), indice_data);
     unsigned int offset = 0;
     for (unsigned int i = 0; i < indice_count; i+=6)
     {
@@ -37,7 +37,7 @@ void init_batch(batch2d* const _batch, unsigned int count)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _batch->ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indice_data, indices, GL_STATIC_DRAW);
 
-    memory_free(indices);
+    flush_bump_allocator(get_temporary_bump_allocator());
 }
 
 void begin_render_batch(batch2d* const _batch)
@@ -94,5 +94,11 @@ void end_render_batch(batch2d* const _batch)
 
 void free_batch(batch2d* const _batch)
 {
-    memory_free(_batch->vertices);
+    //memory_free(_batch->vertices);
+
+    // I doubt in this project I would reuse this after calling free batch but might as well do this anyway just in case
+    // Not like the batch even checks for 0 anywhere
+    _batch->vertices = 0;
+    _batch->max_count = 0;
+    _batch->current_count = 0;
 }
