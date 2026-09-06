@@ -56,13 +56,13 @@ void OnBufferEnd(IXAudio2VoiceCallback* This, void* pBufferContext)
 
     xaudio_loaded_sound* const voice = (xaudio_loaded_sound*)pBufferContext;
     voice->is_playing = 0;
-    NL_LOG("XAudio::BufferEnd: pBufferContext is playing: %d", voice->is_playing);
+    NL_LOG("NL_XAUDIO: On BufferEnd is pBufferContext playing: %d", voice->is_playing);
 }
 
 void OnStreamEnd(IXAudio2VoiceCallback* This) 
 {
     NL_UNUSED(This); 
-    NL_LOG("On XAudio Stream End");
+    NL_LOG("NL_XAUDIO: On Stream End");
 }
 
 void OnVoiceProcessingPassEnd(IXAudio2VoiceCallback* This) 
@@ -85,20 +85,20 @@ void OnBufferStart(IXAudio2VoiceCallback* This, void* pBufferContext)
     
     xaudio_loaded_sound* const voice = (xaudio_loaded_sound*)pBufferContext;
     voice->is_playing = 1;
-    NL_LOG("XAudio::BufferStart: pBufferContext is playing: %d", voice->is_playing);
+    NL_LOG("NL_XAUDIO->OnBufferStart: is pBufferContext playing : %d", voice->is_playing);
 }
 
 void OnLoopEnd(IXAudio2VoiceCallback* This, void* pBufferContext) 
 {
     NL_UNUSED(This); NL_UNUSED(pBufferContext);
-    NL_LOG("On XAudio On Loop End");
+    NL_LOG("NL_XAUDIO: OnLoopEnd");
 }
 
 // Might be the most important of the callbacks!
 void OnVoiceError(IXAudio2VoiceCallback* This, void* pBufferContext, HRESULT Error) 
 {
     NL_UNUSED(This); NL_UNUSED(pBufferContext); NL_UNUSED(Error); 
-    NL_LOG("On XAudio Voice Error");
+    NL_LOG("NL_XAUDIO: ONVoiceError");
 }
 
 ///////////////////////////////////////////////////////////////
@@ -121,19 +121,19 @@ IXAudio2VoiceCallback xAudioCallbacks = {
 
 int init_audio_system(void)
 {
-    NL_LOG("Initializing XAudio as audio system");
+    NL_LOG("NL_XAUDIO: Initializing XAudio as audio system");
 
     HRESULT com_result ={0};
     com_result = CoInitializeEx(0, COINIT_MULTITHREADED);
     if (FAILED(com_result))
     {
-	    NL_LOG("CoInitialize returned S_Failed but this can be caused by a previous call to the function so I am continuing execution of init_audio");
+	    NL_LOG("NL_XAUDIO: CoInitialize returned S_Failed but this can be caused by a previous call to the function so I am continuing execution of init_audio");
     }
 
     local_xaudio_system = (xaudio_audio_system*)bump_alloc(get_transient_bump_allocator(), sizeof(xaudio_audio_system));
     if (0 == local_xaudio_system)
     {
-        NL_LOG("Unable to allocate space for the local xaudio system");
+        NL_LOG("NL_XAUDIO: Unable to allocate space for the local xaudio system");
         return 0;
     }
 
@@ -141,7 +141,7 @@ int init_audio_system(void)
     com_result = XAudio2Create(&local_xaudio_system->xaudio_engine, flags, XAUDIO2_DEFAULT_PROCESSOR);
 	if (FAILED(com_result))
 	{
-		NL_LOG("Failed to create xaudio2");
+		NL_LOG("NL_XAUDIO: Failed to create xaudio2");
 		return 0;
 	}
 
@@ -161,7 +161,7 @@ int init_audio_system(void)
 
 	if (FAILED(com_result))
 	{
-		NL_LOG("Failed to create mastering voice");
+		NL_LOG("NL_XAUDIO: Failed to create mastering voice");
 		return 0;
 	}
 
@@ -202,7 +202,7 @@ internal_function unsigned int load_wav_sound(const char* filename)
 {
     if (local_xaudio_system->currently_used_voices >= MAX_SOUND_BUFFERS)
     {
-        NL_LOG("Unable to load %s as currently used voices are greater than the max allowed", filename);
+        NL_LOG("NL_XAUDIO: Unable to load %s as currently used voices are greater than the max allowed", filename);
         return NL_INVALID_SOUND;
     }
 
@@ -210,7 +210,7 @@ internal_function unsigned int load_wav_sound(const char* filename)
     load_sound_from_data(filename, &sound_file, get_temporary_bump_allocator());
     if (sound_file.size == 0)
     {
-        NL_LOG("Unable to find sound file: %s", filename);
+        NL_LOG("NL_XAUDIO: Unable to find sound file: %s", filename);
         return NL_INVALID_SOUND;
     }
 
@@ -256,7 +256,7 @@ internal_function unsigned int load_wav_sound(const char* filename)
 
     if (FAILED(source_result))
     {
-    	NL_LOG("Failed to create source voice for %s", filename);
+    	NL_LOG("NL_XAUDIO: Failed to create source voice for %s", filename);
         memset(sound, 0, sizeof(xaudio_loaded_sound));
     	return NL_INVALID_SOUND;
     }
@@ -265,13 +265,13 @@ internal_function unsigned int load_wav_sound(const char* filename)
 
     if (FAILED(source_result))
     {
-        NL_LOG("Failed to start voice for %s", filename);
+        NL_LOG("NL_XAUDIO: Failed to start voice for %s", filename);
         //TODO: Some sort of error handling here
         return NL_INVALID_SOUND;
     }
 
     ++local_xaudio_system->currently_used_voices;
-    NL_LOG("Successfully loaded %s in slot %d", filename, current_voice);
+    NL_LOG("NL_XAUDIO: Successfully loaded %s in slot %d", filename, current_voice);
 
     return current_voice;
 }
@@ -285,7 +285,7 @@ unsigned int load_sound_file(const char* const filename)
         return load_wav_sound(filename);
     }
 
-    NL_LOG("No compatible audio type found for %s", file_type);
+    NL_LOG("NL_XAUDIO: No compatible audio type found for %s", file_type);
     return NL_INVALID_SOUND;
 }
 
@@ -293,14 +293,14 @@ void play_sound(unsigned int sound)
 {
     if (sound == NL_INVALID_SOUND)
     {
-        NL_LOG("Trying to play an Invalid Sound!");
+        NL_LOG("NL_XAUDIO: Trying to play an Invalid Sound!");
         return;
     }
 
     xaudio_loaded_sound* const voice = &local_xaudio_system->loaded_sounds[sound];
     if (voice->is_playing == 1)
     {
-        NL_LOG("Sound is already playing! Not playing again at this time");
+        NL_LOG("NL_XAUDIO: Sound is already playing! Not playing again at this time");
         return;
     }
     voice->is_playing = 1;
@@ -321,11 +321,11 @@ void set_sound_to_loop(unsigned int sound)
 {
     if (sound == NL_INVALID_SOUND)
     {
-        NL_LOG("Trying to loop an Invalid Sound!");
+        NL_LOG("NL_XAUDIO: Trying to loop an Invalid Sound!");
         return;
     }
 
-    NL_LOG("Setting sound: %d to loop", sound);
+    NL_LOG("NL_XAUDIO: Setting sound: %d to loop", sound);
 
     XAUDIO2_BUFFER* const buffer = &local_xaudio_system->xaudio_buffers[sound];
     buffer->LoopCount = XAUDIO2_LOOP_INFINITE;
@@ -347,7 +347,7 @@ void set_master_volume(float volume)
 {
     if (volume > 1.0f)
     {
-        NL_LOG("AUDIO: I plan to pass in the values 0 -> 1 for volume. If this is greater then I am dividing by 100 by default");
+        NL_LOG("NL_XAUDIO: I plan to pass in the values 0 -> 1 for volume. If this is greater then I am dividing by 100 by default");
         volume /= 100.0f;
     }
 
