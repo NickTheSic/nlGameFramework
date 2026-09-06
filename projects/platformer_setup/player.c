@@ -99,6 +99,8 @@ void player_update(double dt, game_object* const _player, player_controller* con
     _player->pos.x = estimated_movement.x;
     _player->pos.y = estimated_movement.y;
 
+    
+    // This is now here to help set the player to the bottom of the screen when the screen moves
     if (_player->pos.y < g_Screen_Bottom)
     {
         _player->pos.y = g_Screen_Bottom;
