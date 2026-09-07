@@ -11,11 +11,23 @@ extern "C" {
 // TODO: This was a wrapper around malloc and free so I could make my own memory allocator in the future
 // Maybe I want to consider VirtualAlloc on windows and do the Handmade Hero stuff?
 
-// verbose names? Just in case? 
-#define KB(x) ((unsigned long long)1024*x)
-#define MB(x) ((unsigned long long)1024*KB(x))
-#define GB(x) ((unsigned long long)1024*MB(x))
+// verbose names? Just in case? (lua uses KB define! I knew it)
+#define NL_SIZE_IN_KB(x) ((unsigned long long)1024*x)
+#define NL_SIZE_IN_MB(x) ((unsigned long long)1024*NL_SIZE_IN_KB(x))
+#define NL_SIZE_IN_GB(x) ((unsigned long long)1024*NL_SIZE_IN_GB(x))
 
+// Could warn about these being used?
+#ifndef KB
+#define KB(x) NL_SIZE_IN_KB(x); NL_LOG("%s: %s", __FILE__, __LINE__);
+#endif//MB
+
+#ifndef MB
+#define MB(x) NL_SIZE_IN_MB(x); NL_LOG("%s: %s", __FILE__, __LINE__);
+#endif//MB
+
+#ifndef GB
+#define GB(x) NL_SIZE_IN_KB(x); NL_LOG("%s: %s", __FILE__, __LINE__);
+#endif//GB
 
 // Note: Look into arena allocator as well probably the same name!
 // Can RESERVE a large chunk of memory and COMMIT when needed, the DECOMMIT when unused
