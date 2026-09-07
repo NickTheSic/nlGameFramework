@@ -36,6 +36,9 @@ void read_entire_file(const char* filename, file_contents* const contents, nl_bu
 
 void clear_file_read(file_contents* const content)
 {
+    // TODO: I probably will only use the bump allocator
+    // BUT if for any reason otherwise it could be good to check!
+    
     //memory_free(content->content);
     
     content->size = 0;
