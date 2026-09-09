@@ -4,6 +4,7 @@
 #include "lua/src/lualib.h"
 #include "lua/src/lauxlib.h"
 
+#include "string.h"
 
 /*
 LUA TYPES:
@@ -17,6 +18,12 @@ LUA TYPES:
     userdata (your own type)
     thread
 */
+
+global_variable lua_State* L = {0};
+global_variable file_contents lua_script = {0};
+global_variable char* lua_script_start = {0};
+global_variable char* lua_script_current = {0};
+global_variable nl_bump_allocator lua_bump_alloc = {0};
 
 static int test_lua_call(lua_State* L)
 {
@@ -33,6 +40,31 @@ static int test_lua_call(lua_State* L)
 
 void app_specific_init(void)
 {
+    make_bump_allocator(&lua_bump_alloc, NL_SIZE_IN_MB(3));
+
+    lua_State* L = luaL_newstate(); // lua_newstate(lua Allocator) -> if I need so in the future
+    
+    luaL_openlibs(L);
+
+    lua_pushcfunction(L, test_lua_call);
+    lua_setglobal(L, "myccall");
+    
+    // Load file, should name it main.lua or something in the future for consistency
+    
+    read_entire_file("data/scripts/simple_test.lua", &lua_script, &lua_bump_alloc);
+
+    if (luaL_dostring(L, lua_script.content) != LUA_OK)
+    {
+        NL_LOG("Lua Error: %s", lua_tostring(L, -1));
+    }
+
+    if (luaL_dostring(L, lua_script.content) != LUA_OK)
+    {
+        NL_LOG("Lua Error: %s", lua_tostring(L, -1));
+    }
+
+    lua_script_start = (char*)lua_script.content;
+    lua_script_current = lua_script_start;
 }
 
 void app_specific_update(double dt)
@@ -41,32 +73,55 @@ void app_specific_update(double dt)
 
     if (key_was_pressed(key_r))
     {
-        lua_State* L = luaL_newstate(); // lua_newstate(lua Allocator) -> if I need so in the future
-        luaL_openlibs(L);
-
-        lua_pushcfunction(L, test_lua_call);
-        lua_setglobal(L, "myccall");
-        
-        // Load file, should name it main.lua or something in the future for consistency
-        file_contents lua_script = {0};
-        read_entire_file("data/scripts/simple_test.lua", &lua_script, get_temporary_bump_allocator());
-        
-        luaL_dostring(L, lua_script.content);
-        lua_close(L);
-
-        clear_file_read(&lua_script);
-        flush_bump_allocator(get_temporary_bump_allocator());
+        NL_LOG("Doing entire lua script")
+        if (luaL_dostring(L, lua_script.content) != LUA_OK)
+        {
+            NL_LOG("Lua Error: %s", lua_tostring(L, -1));
+        }
     }
+
+    if (key_was_pressed(key_space))
+    {
+        NL_LOG("Trying to find lua line to execute!");
+
+        local_persist char line_to_execute[64] = {0};
+
+        int copies = 0;
+        char last_char = 'a';
+        while (copies < 63 && last_char != '\n' && last_char != '\0')
+        {
+            last_char = lua_script_current[copies];
+
+            NL_LOG("char: %c", last_char);
+
+            line_to_execute[copies] = last_char;
+
+            ++copies;
+
+        }
+        NL_LOG("Iterations %i", copies); 
+
+        NL_LOG("Doing lua string")
+        if (luaL_dostring(L, line_to_execute) != LUA_OK)
+        {
+            NL_LOG("Lua Error: %s", lua_tostring(L, -1));
+        }
+
+        lua_script_current = (lua_script_current + copies);
+    }
+
 }
 
-void app_specific_render(void)
-{
-
-}
+void app_specific_render(void) {}
 
 void app_specific_cleanup(void)
 {
+    NL_LOG("Cleanup occurring?");
 
+    lua_close(L);
+    L = 0;
+
+    free_bump_allocator(&lua_bump_alloc);
 }
 
 

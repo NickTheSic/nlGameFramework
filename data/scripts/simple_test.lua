@@ -1,8 +1,10 @@
 -- TODO: Make a simplem test file for testing lua embedding
 
--- print('Simple Lua Script Executing!')
+print('Simple Lua Script Executing!')
+print('Getting an execute line by line')
+print('for the purpose of a visual novel')
 
-print('lua rewritten')
+myccall()
+myccall(42)
 
-myccall('hello') -- this is bound in C 
-myccall2() -- this does not exist!
+mynotccall()
