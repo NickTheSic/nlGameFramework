@@ -19,7 +19,7 @@ LUA TYPES:
     thread
 */
 
-global_variable lua_State* L = {0};
+global_variable lua_State* My_L = {0};
 global_variable file_contents lua_script = {0};
 global_variable char* lua_script_start = {0};
 global_variable char* lua_script_current = {0};
@@ -42,25 +42,20 @@ void app_specific_init(void)
 {
     make_bump_allocator(&lua_bump_alloc, NL_SIZE_IN_MB(3));
 
-    lua_State* L = luaL_newstate(); // lua_newstate(lua Allocator) -> if I need so in the future
+    My_L = luaL_newstate(); // lua_newstate(lua Allocator) -> if I need so in the future
     
-    luaL_openlibs(L);
+    luaL_openlibs(My_L);
 
-    lua_pushcfunction(L, test_lua_call);
-    lua_setglobal(L, "myccall");
+    lua_pushcfunction(My_L, test_lua_call);
+    lua_setglobal(My_L, "myccall");
     
     // Load file, should name it main.lua or something in the future for consistency
     
     read_entire_file("data/scripts/simple_test.lua", &lua_script, &lua_bump_alloc);
 
-    if (luaL_dostring(L, lua_script.content) != LUA_OK)
+    if (luaL_dostring(My_L, (char*)lua_script.content) != LUA_OK)
     {
-        NL_LOG("Lua Error: %s", lua_tostring(L, -1));
-    }
-
-    if (luaL_dostring(L, lua_script.content) != LUA_OK)
-    {
-        NL_LOG("Lua Error: %s", lua_tostring(L, -1));
+        NL_LOG("Lua Error: %s", lua_tostring(My_L, -1));
     }
 
     lua_script_start = (char*)lua_script.content;
@@ -74,9 +69,9 @@ void app_specific_update(double dt)
     if (key_was_pressed(key_r))
     {
         NL_LOG("Doing entire lua script")
-        if (luaL_dostring(L, lua_script.content) != LUA_OK)
+        if (luaL_dostring(My_L, (char*)lua_script.content) != LUA_OK)
         {
-            NL_LOG("Lua Error: %s", lua_tostring(L, -1));
+            NL_LOG("Lua Error: %s", lua_tostring(My_L, -1));
         }
     }
 
@@ -102,9 +97,9 @@ void app_specific_update(double dt)
         NL_LOG("Iterations %i", copies); 
 
         NL_LOG("Doing lua string")
-        if (luaL_dostring(L, line_to_execute) != LUA_OK)
+        if (luaL_dostring(My_L, line_to_execute) != LUA_OK)
         {
-            NL_LOG("Lua Error: %s", lua_tostring(L, -1));
+            NL_LOG("Lua Error: %s", lua_tostring(My_L, -1));
         }
 
         lua_script_current = (lua_script_current + copies);
@@ -118,8 +113,8 @@ void app_specific_cleanup(void)
 {
     NL_LOG("Cleanup occurring?");
 
-    lua_close(L);
-    L = 0;
+    lua_close(My_L);
+    My_L = 0;
 
     free_bump_allocator(&lua_bump_alloc);
 }
