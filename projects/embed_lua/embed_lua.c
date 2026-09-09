@@ -36,6 +36,9 @@ static int test_lua_call(lua_State* L)
     {
         NL_LOG("One Argument Provided!");
     }
+
+    // The amount of return variables!
+    return 0;
 }
 
 void app_specific_init(void)
@@ -68,7 +71,6 @@ void app_specific_update(double dt)
 
     if (key_was_pressed(key_r))
     {
-        NL_LOG("Doing entire lua script")
         if (luaL_dostring(My_L, (char*)lua_script.content) != LUA_OK)
         {
             NL_LOG("Lua Error: %s", lua_tostring(My_L, -1));
@@ -77,26 +79,17 @@ void app_specific_update(double dt)
 
     if (key_was_pressed(key_space))
     {
-        NL_LOG("Trying to find lua line to execute!");
-
-        local_persist char line_to_execute[64] = {0};
+        char line_to_execute[64] = {0};
 
         int copies = 0;
         char last_char = 'a';
         while (copies < 63 && last_char != '\n' && last_char != '\0')
         {
             last_char = lua_script_current[copies];
-
-            NL_LOG("char: %c", last_char);
-
             line_to_execute[copies] = last_char;
-
             ++copies;
-
         }
-        NL_LOG("Iterations %i", copies); 
 
-        NL_LOG("Doing lua string")
         if (luaL_dostring(My_L, line_to_execute) != LUA_OK)
         {
             NL_LOG("Lua Error: %s", lua_tostring(My_L, -1));
