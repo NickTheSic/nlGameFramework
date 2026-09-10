@@ -31,6 +31,7 @@ extern "C" {
 
 // Note: Look into arena allocator as well probably the same name!
 // Can RESERVE a large chunk of memory and COMMIT when needed, the DECOMMIT when unused
+//      We can reserve 1GB but we only take it when we need to use it
 // Someone called it a scratch arena and using 2 scratch areana per thread to handle arbitrary function depth and
 
 typedef struct nl_bump_allocator nl_bump_allocator;
