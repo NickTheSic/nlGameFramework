@@ -52,9 +52,16 @@ void initialize_global_bump_allocators(size_t transient, size_t temporary);
 void free_global_bump_allocators();
 nl_bump_allocator* get_transient_bump_allocator(); 
 nl_bump_allocator* get_temporary_bump_allocator(); // Buffer for loaded files pretty much
-// NOTE: Could make Systems bump allocator for different things
-//       - some one mentioned Scratch, and I called it temporary
-//       - Handle the per 'scene' lifetime, per game life time
+/*
+    NOTE: Could make Systems bump allocator for different things
+    - Handle the per 'scene' lifetime, per game life time
+    - Some assets should be loaded as part of the game lifetime
+    
+    Names/Types:
+    - Persistent / System / Core / Global / Runtime / Lifetime
+    - Consistent / Data
+    - Temporary / Scratch / Frame
+*/
 
 
 void *_memory_allocate(size_t size);

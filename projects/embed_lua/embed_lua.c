@@ -46,20 +46,13 @@ void app_specific_init(void)
     make_bump_allocator(&lua_bump_alloc, NL_SIZE_IN_MB(3));
 
     My_L = luaL_newstate(); // lua_newstate(lua Allocator) -> if I need so in the future
-    
     luaL_openlibs(My_L);
 
     lua_pushcfunction(My_L, test_lua_call);
     lua_setglobal(My_L, "myccall");
     
     // Load file, should name it main.lua or something in the future for consistency
-    
     read_entire_file("data/scripts/simple_test.lua", &lua_script, &lua_bump_alloc);
-
-    if (luaL_dostring(My_L, (char*)lua_script.content) != LUA_OK)
-    {
-        NL_LOG("Lua Error: %s", lua_tostring(My_L, -1));
-    }
 
     lua_script_start = (char*)lua_script.content;
     lua_script_current = lua_script_start;
@@ -69,14 +62,7 @@ void app_specific_update(double dt)
 {
     NL_UNUSED(dt);
 
-    if (key_was_pressed(key_r))
-    {
-        if (luaL_dostring(My_L, (char*)lua_script.content) != LUA_OK)
-        {
-            NL_LOG("Lua Error: %s", lua_tostring(My_L, -1));
-        }
-    }
-
+    // This is garanteed to buffer overflow.  Really bad
     if (key_was_pressed(key_space))
     {
         char line_to_execute[64] = {0};
@@ -104,8 +90,6 @@ void app_specific_render(void) {}
 
 void app_specific_cleanup(void)
 {
-    NL_LOG("Cleanup occurring?");
-
     lua_close(My_L);
     My_L = 0;
 
