@@ -64,9 +64,6 @@ void app_specific_init(void)
     My_L = luaL_newstate(); // lua_newstate(lua Allocator) -> if I need so in the future
     luaL_openlibs(My_L);
 
-    //lua_pushcfunction(My_L, test_lua_call);
-    //lua_setglobal(My_L, "myccall");
-
     lua_pushcfunction(My_L, lua_load_sound);
     lua_setglobal(My_L, "load_sound");
     
