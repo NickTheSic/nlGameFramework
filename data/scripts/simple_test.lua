@@ -4,7 +4,7 @@ print('Simple Lua Script Executing!')
 print('Getting an execute line by line')
 print('for the purpose of a visual novel')
 
-myccall()
-myccall(42)
-
-mynotccall()
+print('Loading Sound')
+laser_sfx = load_sound('laserHit.wav')
+print('Will play sound')
+play_sound(laser_sfx)

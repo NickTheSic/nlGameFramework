@@ -25,21 +25,21 @@ global_variable char* lua_script_start = {0};
 global_variable char* lua_script_current = {0};
 global_variable nl_bump_allocator lua_bump_alloc = {0};
 
-static int test_lua_call(lua_State* L)
-{
-    int argc = lua_gettop(L);
-    if (argc == 0)
-    {
-        NL_LOG("No Arguments Provided");
-    }
-    else if (argc == 1)
-    {
-        NL_LOG("One Argument Provided!");
-    }
+// static int test_lua_call(lua_State* L)
+// {
+//     int argc = lua_gettop(L);
+//     if (argc == 0)
+//     {
+//         NL_LOG("No Arguments Provided");
+//     }
+//     else if (argc == 1)
+//     {
+//         NL_LOG("One Argument Provided!");
+//     }
 
-    // The amount of return variables!
-    return 0;
-}
+//     // The amount of return variables!
+//     return 0;
+// }
 
 static int lua_load_sound(lua_State* L)
 {
@@ -52,7 +52,24 @@ static int lua_load_sound(lua_State* L)
 
     unsigned int new_sound = load_sound_file(lua_tostring(My_L, -1));
     // push value to lua stack
-    // keep track here as well
+    lua_pushinteger(My_L, new_sound);
+
+    // keep track here as well?
+
+    return 1;
+}
+
+
+static int lua_play_sound(lua_State* L)
+{
+    int argc = lua_gettop(L);
+    if (argc != 1)
+    {
+        NL_LOG("lua load sound did not have exactly 1 input.  Not loading as sound expected");
+        return 0;
+    }
+
+    play_sound(lua_tointeger(My_L, -1));
 
     return 1;
 }
@@ -66,6 +83,10 @@ void app_specific_init(void)
 
     lua_pushcfunction(My_L, lua_load_sound);
     lua_setglobal(My_L, "load_sound");
+
+    lua_pushcfunction(My_L, lua_play_sound);
+    lua_setglobal(My_L, "play_sound");
+    
     
     // Load file, should name it main.lua or something in the future for consistency
     read_entire_file("data/scripts/simple_test.lua", &lua_script, &lua_bump_alloc);

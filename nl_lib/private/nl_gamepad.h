@@ -10,6 +10,7 @@ extern "C" {
 
 // Might as well define the variable here.  
 // Maybe in the future the player can modify it
+// Wall warns about this being unused but it is being used in a #define statement
 global_variable float default_stick_dead_zone = 0.01;
 
 int init_gamepad_system(void);
