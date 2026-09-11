@@ -41,6 +41,22 @@ static int test_lua_call(lua_State* L)
     return 0;
 }
 
+static int lua_load_sound(lua_State* L)
+{
+    int argc = lua_gettop(L);
+    if (argc != 1)
+    {
+        NL_LOG("lua load sound did not have exactly 1 input.  Not loading as sound expected");
+        return 0;
+    }
+
+    unsigned int new_sound = load_sound_file(lua_tostring(My_L, -1));
+    // push value to lua stack
+    // keep track here as well
+
+    return 1;
+}
+
 void app_specific_init(void)
 {
     make_bump_allocator(&lua_bump_alloc, NL_SIZE_IN_MB(3));
@@ -48,8 +64,11 @@ void app_specific_init(void)
     My_L = luaL_newstate(); // lua_newstate(lua Allocator) -> if I need so in the future
     luaL_openlibs(My_L);
 
-    lua_pushcfunction(My_L, test_lua_call);
-    lua_setglobal(My_L, "myccall");
+    //lua_pushcfunction(My_L, test_lua_call);
+    //lua_setglobal(My_L, "myccall");
+
+    lua_pushcfunction(My_L, lua_load_sound);
+    lua_setglobal(My_L, "load_sound");
     
     // Load file, should name it main.lua or something in the future for consistency
     read_entire_file("data/scripts/simple_test.lua", &lua_script, &lua_bump_alloc);
@@ -65,6 +84,13 @@ void app_specific_update(double dt)
     // This is garanteed to buffer overflow.  Really bad
     if (key_was_pressed(key_space))
     {
+        // Would be good to add some proper file reading error handling!
+        if (lua_script_current >= (lua_script.content + lua_script.size))
+        {
+            NL_LOG("Reached end of file!");
+            return;
+        }
+
         char line_to_execute[64] = {0};
 
         int copies = 0;
@@ -74,6 +100,12 @@ void app_specific_update(double dt)
             last_char = lua_script_current[copies];
             line_to_execute[copies] = last_char;
             ++copies;
+
+            if ((lua_script_current + copies) >= (lua_script.content + lua_script.size))
+            {
+                NL_LOG("Reached end of file!");
+                break;
+            }
         }
 
         if (luaL_dostring(My_L, line_to_execute) != LUA_OK)
