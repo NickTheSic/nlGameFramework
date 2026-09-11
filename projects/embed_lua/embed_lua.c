@@ -78,14 +78,13 @@ void app_specific_update(double dt)
 {
     NL_UNUSED(dt);
 
-    // This is garanteed to buffer overflow.  Really bad
     if (key_was_pressed(key_space))
     {
         // Would be good to add some proper file reading error handling!
-        if (lua_script_current >= (lua_script.content + lua_script.size))
+        if ((char*)(lua_script_current) >= (char*)(lua_script.content + lua_script.size))
         {
             NL_LOG("Reached end of file!");
-            return;
+            return; // Silly as we won't finish updating!
         }
 
         char line_to_execute[64] = {0};
@@ -98,7 +97,7 @@ void app_specific_update(double dt)
             line_to_execute[copies] = last_char;
             ++copies;
 
-            if ((lua_script_current + copies) >= (lua_script.content + lua_script.size))
+            if ((char*)(lua_script_current + copies) >= (char*)(lua_script.content + lua_script.size))
             {
                 NL_LOG("Reached end of file!");
                 break;

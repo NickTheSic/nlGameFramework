@@ -4,6 +4,12 @@
 
 #include <string.h>
 
+
+// THIS DOES NOT WORK with a C++ compiler!
+// Can compile with gcc as a C file
+// but compiling with g++ complains about instatiating an abstract class
+
+
 /*
     * New TODOs
     Now that I know that the pBufferContext in the xAudioCallbacks is the pContext value in the struct
@@ -14,7 +20,6 @@
     - Streaming audio from disk? 
         https://learn.microsoft.com/en-us/windows/win32/xaudio2/streaming-audio-data
         Could allow for 'pikmin' style changes by setting audio flags to trigger different tracks to play next
-
 */
 
 // Thanks to https://github.com/tsherif/xaudio2-c-demo/ for the code reference using C instead of C++ (MIT License as of 2024-12-29 0:10)
