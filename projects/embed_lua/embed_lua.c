@@ -50,15 +50,19 @@ static int lua_load_sound(lua_State* L)
         return 0;
     }
 
+    //if (luaL_checkstring(My_L, -1))
+    //{
+    //    NL_LOG("Failing to load sound, parameter is not a string");
+    //    return 0;
+    //}
+
     unsigned int new_sound = load_sound_file(lua_tostring(My_L, -1));
-    // push value to lua stack
     lua_pushinteger(My_L, new_sound);
 
     // keep track here as well?
 
     return 1;
 }
-
 
 static int lua_play_sound(lua_State* L)
 {
@@ -69,9 +73,15 @@ static int lua_play_sound(lua_State* L)
         return 0;
     }
 
+    //if (luaL_checkinteger(My_L, -1))
+    //{
+    //    NL_LOG("Failing to play sound, parameter was not an int");
+    //    return 0;
+    //}
+
     play_sound(lua_tointeger(My_L, -1));
 
-    return 1;
+    return 0;
 }
 
 void app_specific_init(void)
@@ -104,7 +114,7 @@ void app_specific_update(double dt)
         // Would be good to add some proper file reading error handling!
         if ((char*)(lua_script_current) >= (char*)(lua_script.content + lua_script.size))
         {
-            NL_LOG("Reached end of file!");
+            NL_LOG("Not checking line; Reached end of file!");
             return; // Silly as we won't finish updating!
         }
 
@@ -120,7 +130,7 @@ void app_specific_update(double dt)
 
             if ((char*)(lua_script_current + copies) >= (char*)(lua_script.content + lua_script.size))
             {
-                NL_LOG("Reached end of file!");
+                NL_LOG("Reached end of file while looping!");
                 break;
             }
         }
