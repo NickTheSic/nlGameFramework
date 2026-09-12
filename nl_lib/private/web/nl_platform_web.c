@@ -4,7 +4,7 @@
 
 int platform_init(void)
 {
-    initialize_global_bump_allocators(MB(10), MB(1));
+    initialize_global_bump_allocators(NL_SIZE_IN_MB(10), NL_SIZE_IN_MB(1));
 
     if (!initialize_window(1280,800, "Sandbox Mode"))
     {

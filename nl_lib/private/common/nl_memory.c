@@ -12,6 +12,10 @@ global_variable size_t _ESTIMATED_USED_MEMORY = {0};
 global_variable size_t _MallocCalls = {0};
 global_variable size_t _FreeCalls = {0};
 
+// TODO: In Debug we could keep track of valid pointers that malloc used
+//       This way if we free the wrong pointer we can verify it first
+//global_variable size_t _ValidPointers = {0}; 
+
 internal_function void* internal_allocate_memory(size_t size)
 {
     NL_LOG("NL_MEMORY: Debug Memory Allocated");

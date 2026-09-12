@@ -57,7 +57,7 @@ internal_function ALuint load_wav_sound(const char* filename)
     }
 
     file_contents sound_file = {0};
-    load_sound_from_data(filename, &sound_file);
+    load_sound_from_data(filename, &sound_file, get_transient_bump_allocator());
     if (sound_file.size == 0)
     {
         NL_LOG("NL_OPENAL: Unable to open sound file: %s", filename);
@@ -184,16 +184,18 @@ void cleanup_audio_system(void)
 
         alcCloseDevice(local_audio_system->device);
 
+        
         if (local_audio_system->buffers != 0)
         {
-            (local_audio_system->buffers);
+            //TODO: What Was I doing here that I left it like such...
+            //(local_audio_system->buffers);
         }
 
         if (local_audio_system->sounds  != 0)
         {
-            memory_free(local_audio_system->sounds );
+            //memory_free(local_audio_system->sounds);
         }
-        memory_free(local_audio_system);
+        //memory_free(local_audio_system);
     }
 }
 

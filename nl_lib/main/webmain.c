@@ -21,7 +21,9 @@ extern void app_specific_cleanup(void);
 
 internal_function void run()
 {
-    poll_events();
+    //NOTE: Poll events is intentionally empty; probably don't need to call it!
+    //poll_events();
+
     update_input_frame_state();
     
     double dt = get_frame_delta_time();
