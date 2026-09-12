@@ -15,7 +15,13 @@
 #include "private/gl/nl_renderer_gl_win32.c"
 #include "private/gl/nl_shader.c"
 
+
+#ifdef __cplusplus
+#include "private/win32/nl_audio_xaudio.cpp"
+#else
 #include "private/win32/nl_audio_xaudio.c"
+#endif//__cplusplus
+
 #include "private/win32/nl_deltatime_win32.c"
 #include "private/win32/nl_gamepad_xinput.c"
 #include "private/win32/nl_platform_win.c"
